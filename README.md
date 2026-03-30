@@ -19,6 +19,9 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 - **Steadycam Smoothing** — Eliminates camera sway/bobbing, consistent FOV across movement states
 
 ### Advanced Editor
+
+![Advanced Editor with search and vanilla comparison](screenshots/advanced.png)
+
 - **Full XML Editor** — Every player camera parameter exposed in a searchable, filterable DataGrid
 - **Vanilla Comparison** — Side-by-side vanilla vs. modified values; modified fields highlighted in gold
 - **Grouped by Camera State** — Collapsible sections (Player_Basic_Default, Player_Weapon_Guard, etc.)
