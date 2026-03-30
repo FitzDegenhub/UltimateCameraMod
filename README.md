@@ -2,7 +2,7 @@
 
 Standalone camera overhaul for Crimson Desert with a full GUI, live camera preview, and HUD centering.
 
-**[Download from Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/383)** | **[Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases)**
+**[Download Latest Release](https://github.com/FitzDegenhub/UltimateCameraMod/releases)** | **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/383)**
 
 ## Features
 
