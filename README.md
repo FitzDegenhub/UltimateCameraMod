@@ -89,7 +89,17 @@ src/UltimateCameraMod/
 └── UltimateCameraMod.csproj
 ```
 
-## Sharing Presets
+## Community & Sharing
+
+> **Nobody has perfected Crimson Desert's camera yet — and that's the point.**
+>
+> The vanilla game has over 150 camera states, each with dozens of parameters controlling distance, FOV, blend timing, damping, offsets, and more. No single developer can tune all of that for every playstyle and display setup. That's why UCM was built with sharing at its core.
+>
+> Every setting you tweak — whether it's a simple preset or a deep Advanced Editor override — can be exported as a string and shared with other players. If someone in the community figures out the perfect guard-camera transition, or nails the combat FOV for ultrawide, they can share it in seconds and everyone benefits.
+>
+> **This already works.** The guard-camera zoom snap that plagued the vanilla game was solved by a single user adjusting one FOV value in the Advanced Editor. That kind of community-driven fine-tuning is exactly what this tool is for.
+
+### Preset Formats
 
 UCM uses two string formats so they can't be mixed up:
 
@@ -98,7 +108,7 @@ UCM uses two string formats so they can't be mixed up:
 | `UCM:...` | Custom tab → Export/Import | Distance, height, horizontal shift |
 | `UCM_ADV:...` | Advanced editor → Export/Import | Full XML parameter overrides |
 
-Copy a string, send it to a friend, they paste it into Import. Done.
+Export your config, post it on Nexus/Discord/Reddit, and others can import it in one click. The more people tweak, the better it gets for everyone.
 
 ## Compatibility
 
