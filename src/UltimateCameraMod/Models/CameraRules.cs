@@ -749,23 +749,28 @@ public static class CameraRules
         {
             Set(m, $"{sec}/ZoomLevel[2]", "UpOffset", upStr);
             Set(m, $"{sec}/ZoomLevel[2]", "InDoorUpOffset", upStr);
+            Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", roStr);
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{zl2Dist}");
             Set(m, $"{sec}/ZoomLevel[3]", "UpOffset", upStr);
+            Set(m, $"{sec}/ZoomLevel[3]", "InDoorUpOffset", upStr);
+            Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", roStr);
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{zl3Dist}");
             Set(m, $"{sec}/ZoomLevel[4]", "UpOffset", upStr);
+            Set(m, $"{sec}/ZoomLevel[4]", "InDoorUpOffset", upStr);
+            Set(m, $"{sec}/ZoomLevel[4]", "RightOffset", roStr);
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", $"{zl4Dist}");
-            if (Math.Abs(rightOffset) > 0.01)
-            {
-                Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", roStr);
-                Set(m, $"{sec}/ZoomLevel[4]", "RightOffset", roStr);
-            }
         }
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "UpOffset", upStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "InDoorUpOffset", upStr);
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", roStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", $"{zl2Dist}");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", upStr);
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "InDoorUpOffset", upStr);
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", roStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "ZoomDistance", $"{zl3Dist}");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "UpOffset", upStr);
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "InDoorUpOffset", upStr);
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", roStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "ZoomDistance", $"{zl4Dist}");
         return m;
     }
