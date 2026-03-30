@@ -4,6 +4,8 @@ Standalone camera overhaul for Crimson Desert with a full GUI, live camera previ
 
 **[Download Latest Release](https://github.com/FitzDegenhub/UltimateCameraMod/releases)** | **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**
 
+![Presets with live camera preview](screenshots/presets.png)
+
 ## Features
 
 - **8 Camera Presets** with live preview diagram - Panoramic, Heroic, Smoothed, Close-Up, Hip/Knee/Dirt Cam, Survival
@@ -15,6 +17,8 @@ Standalone camera overhaul for Crimson Desert with a full GUI, live camera previ
 - **HUD Centering** - Adjustable width slider (1200px-3840px) to constrain HUD elements for ultrawide
 - **Steadycam Smoothing** - Eliminates camera sway/bobbing, consistent FoV across movement states
 - **Patch-proof** - Reads game files on the fly, works on any game version
+
+![Custom camera with sliders and import/export](screenshots/custom.png)
 
 ## How It Works
 
