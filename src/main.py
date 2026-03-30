@@ -18,8 +18,8 @@ import winreg
 
 VER = "1.5"
 
-NEXUS_URL = "https://www.nexusmods.com/crimsondesert/mods/383"
-GITHUB_URL = "https://github.com/FitzDegenhub/UltrawideDesert"
+NEXUS_URL = "https://www.nexusmods.com/crimsondesert/mods/438"
+GITHUB_URL = "https://github.com/FitzDegenhub/UltimateCameraMod"
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
