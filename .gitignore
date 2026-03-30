@@ -9,3 +9,5 @@ debug/
 *.dist/
 *.onefile-build/
 last_install.json
+release/
+*.zip
