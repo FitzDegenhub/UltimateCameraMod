@@ -1,0 +1,25 @@
+<Window x:Class="UltimateCameraMod.ImportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Import Preset String" Width="520" Height="360" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource BgDarkBrush}">
+    <StackPanel Margin="24">
+        <TextBlock Text="Paste a preset string below:" FontSize="14"
+                   Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+        <TextBlock Text="From NexusMods comments, Discord, etc." FontSize="11"
+                   Foreground="{StaticResource TextDimBrush}" Margin="0,0,0,10"/>
+        <TextBox x:Name="PasteBox" FontFamily="Consolas" FontSize="13" Height="90"
+                 Background="{StaticResource BgInputBrush}" Foreground="{StaticResource TextPrimaryBrush}"
+                 BorderBrush="{StaticResource BorderBrush}" TextWrapping="Wrap"
+                 Padding="10,8" TextChanged="OnTextChanged"/>
+        <TextBlock x:Name="PreviewText" FontSize="12" Foreground="{StaticResource TextDimBrush}"
+                   Margin="0,10,0,10"/>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="ImportBtn" Content="Import &amp; Save" Style="{StaticResource AccentButton}"
+                    Width="130" Height="34" Click="OnImport" IsEnabled="False"/>
+            <Button Content="Cancel" Style="{StaticResource SubtleButton}"
+                    Width="90" Height="34" Click="OnCancel" Margin="8,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

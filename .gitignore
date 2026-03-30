@@ -1,13 +1,32 @@
-__pycache__/
-*.pyc
-*.pyo
+# Build output
+bin/
+obj/
+publish/
 dist/
+
+# IDE
+.vs/
+*.user
+*.suo
+*.csproj.user
+
+# Runtime data
 backups/
-debug/
-*.exe
-*.build/
-*.dist/
-*.onefile-build/
+custom_presets/
+advanced_presets/
 last_install.json
-release/
+advanced_overrides.json
+crash.log
+debug/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Packages
+*.nupkg
+*.snupkg
+
+# Archives
 *.zip
