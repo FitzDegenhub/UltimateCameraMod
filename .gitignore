@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+dist/
+backups/
+debug/
+*.exe
+*.build/
+*.dist/
+*.onefile-build/
+last_install.json
