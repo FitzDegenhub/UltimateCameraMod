@@ -2,7 +2,10 @@
 
 Standalone camera toolkit for Crimson Desert with a full GUI, live camera preview, advanced XML editor, and HUD centering for ultrawide displays.
 
-**[Download Latest Release](https://github.com/FitzDegenhub/UltimateCameraMod/releases)** &nbsp;|&nbsp; **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**
+[![Download](https://img.shields.io/badge/Download-v2.0-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
+[![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/d0d2e8d483eae1cecca2cc6358e517d111cbad2984ba52c39d48e13cfcd2cf48?nocache=1)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 ![Presets with live camera preview](screenshots/presets.png)
 
@@ -57,7 +60,7 @@ Requires [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (or late
 
 ```bash
 cd src/UltimateCameraMod
-dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true
+dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
 ```
 
 The compiled exe will be in `bin/Release/net6.0-windows/win-x64/publish/`.
@@ -112,17 +115,24 @@ UCM modifies offline data files only. It does not touch game memory, inject code
 Normal — game updates overwrite modded files. Re-open UCM and click Install. Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
-Known false positive with self-contained .NET apps. VirusTotal consistently shows 0–1/67 detections from generic ML heuristics. Full source is available here to review and build yourself.
+Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file/d0d2e8d483eae1cecca2cc6358e517d111cbad2984ba52c39d48e13cfcd2cf48?nocache=1). Full source is available here to review and build yourself.
 
 ## Version History
 
 - **v2.0** — Complete rewrite from Python to C# / .NET 6 / WPF. Advanced XML editor, preset management, import/export, auto game detection for Steam/Epic/Xbox, settings persistence, mod-active detection.
 - **v1.5** — Python version with customtkinter GUI, camera presets, custom sliders, FOV control, HUD centering.
 
-## Credits
+## Credits & Acknowledgements
 
-- **@TheFitzy** — Development, camera tuning, ultrawide support
-- **@lazorr410** — crimson-desert-unpacker — PAZ archive tooling
+- **@TheFitzy** — UCM development, camera tuning, advanced editor, ultrawide HUD support
+
+### C# Rewrite (v2.0)
+- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** — CrimsonDesertTools — C# PAZ/PAMT parser, ChaCha20 encryption, LZ4 compression, PaChecksum, archive repacker (.NET 8, MIT)
+- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** — Pure C# ChaCha20 stream cipher implementation used inside CrimsonDesertTools (BSD)
+- **[MrIkso on Reshax](https://reshax.com/topic/18908-need-help-extracting-paz-pamt-files-from-crimson-desert-blackspace-engine/page/2/?&_rid=3118#findComment-103796)** — PAZ repacking guide: 16-byte alignment, PAMT checksum (skip first 12 bytes), PAPGT root index patching
+
+### Original Python Version (v1.5)
+- **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** — crimson-desert-unpacker — PAZ archive tooling, decryption research
 - **@Maszradine** — CDCamera — Camera rules, steadycam system, style presets
 - **@manymanecki** — CrimsonCamera — Dynamic PAZ modification architecture
 
