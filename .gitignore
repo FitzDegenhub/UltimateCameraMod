@@ -2,6 +2,7 @@
 bin/
 obj/
 publish/
+publish_single/
 dist/
 
 # IDE
