@@ -52,7 +52,7 @@ public class FovPreview : Canvas
 
         double actualRo = _centered ? 0 : 0.5 * (1.0 + (-_roff) / 0.5);
         double off = Math.Clamp(actualRo * 55, -160, 160);
-        double camX = cx - off;
+        double camX = cx + off;
 
         double lx = camX - coneLen * Math.Tan(half);
         double rx = camX + coneLen * Math.Tan(half);
