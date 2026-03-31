@@ -107,7 +107,7 @@ public static class CameraRules
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
         string upStr = $"{upOffset}";
         foreach (var sec in AllMountSections)
-            for (int level = 2; level <= 5; level++)
+            for (int level = 2; level <= 4; level++)
                 Set(mods, $"{sec}/ZoomLevel[{level}]", "UpOffset", upStr);
         return mods;
     }
@@ -118,11 +118,16 @@ public static class CameraRules
 
         foreach (var sec in HorseRideSections)
         {
+            Set(mods, $"{sec}/ZoomLevel[1]", "ZoomDistance", $"{1.8 * scale:F1}");
             Set(mods, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{7.5 * scale:F1}");
             Set(mods, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{10.5 * scale:F1}");
+            Set(mods, $"{sec}/ZoomLevel[4]", "ZoomDistance", $"{14.0 * scale:F1}");
         }
+        Set(mods, "Player_Ride_Elephant/ZoomLevel[1]", "ZoomDistance", $"{2.0 * scale:F1}");
         Set(mods, "Player_Ride_Elephant/ZoomLevel[2]", "ZoomDistance", $"{8 * scale:F1}");
         Set(mods, "Player_Ride_Elephant/ZoomLevel[3]", "ZoomDistance", $"{11 * scale:F1}");
+        Set(mods, "Player_Ride_Elephant/ZoomLevel[4]", "ZoomDistance", $"{14.0 * scale:F1}");
+        Set(mods, "Player_Ride_Wyvern/ZoomLevel[1]", "ZoomDistance", $"{4.0 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[2]", "ZoomDistance", $"{12 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", $"{16 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", $"{20 * scale:F1}");
@@ -214,8 +219,8 @@ public static class CameraRules
         Set(m, "Player_Wanted_TwoTarget", "Fov", "40");
         Set(m, "Player_Wanted_TwoTarget", "ScreenClampRate", "0.6");
 
-        // On-foot ZoomDistance normalization
-        foreach (var sec in new[] { "Player_Basic_Default_Walk", "Player_Basic_Default_Run", "Player_Basic_Default_Runfast" })
+        // On-foot ZoomDistance normalization (includes idle to prevent idle→walk zoom jumps)
+        foreach (var sec in new[] { "Player_Basic_Default", "Player_Basic_Default_Walk", "Player_Basic_Default_Run", "Player_Basic_Default_Runfast" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
@@ -240,10 +245,6 @@ public static class CameraRules
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
         }
 
-        // Guard blend: fast enter, exit synced to Default/Walk BlendInTime to avoid dead-zone snap
-        Set(m, "Player_Weapon_Guard/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Weapon_Guard/CameraBlendParameter", "BlendOutTime", "0.8");
-
         // RightOffset normalization (prevents horizontal drift during walk/run/guard)
         foreach (var sec in new[] {
             "Player_Basic_Default_Walk", "Player_Basic_Default_Run",
@@ -257,24 +258,34 @@ public static class CameraRules
             "Player_Weapon_Guard", "Player_Weapon_Rush" })
             Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", "0.5");
 
-        // OffsetByVelocity elimination
+        // Mount FoV normalization
+        Set(m, "Player_Ride_Horse_Dash", "Fov", "40");
+        Set(m, "Player_Ride_Horse_Dash_Att", "Fov", "40");
+        Set(m, "Player_Ride_Horse_Att_Thrust", "Fov", "40");
+        Set(m, "Player_Ride_Horse_Att_L", "Fov", "40");
+        Set(m, "Player_Ride_Horse_Att_R", "Fov", "40");
+        Set(m, "Player_Ride_Elephant", "Fov", "40");
+        Set(m, "Player_Ride_Wyvern", "Fov", "50");
+
+        return m;
+    }
+
+    // ── Smoothing layer (steadycam) ───────────────────────────────────
+
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildSmoothing()
+    {
+        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
+
+        // Guard blend: smooth enter/exit to prevent zoom snap on release
+        Set(m, "Player_Weapon_Guard/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Weapon_Guard/CameraBlendParameter", "BlendOutTime", "1.0");
+
+        // OffsetByVelocity elimination (removes velocity-based camera sway)
         Set(m, "Player_Basic_Default_Run/OffsetByVelocity", "OffsetLength", "0");
         Set(m, "Player_Basic_Default_Runfast/OffsetByVelocity", "OffsetLength", "0.0");
         Set(m, "Player_Weapon_Default_Run/OffsetByVelocity", "OffsetLength", "0");
         Set(m, "Player_Weapon_Default_RunFast/OffsetByVelocity", "OffsetLength", "0.0");
         Set(m, "Player_Weapon_Default_RunFast_Follow/OffsetByVelocity", "OffsetLength", "0.0");
-
-        // Smooth movement state transitions (reduces Y-axis slide between idle/walk/run)
-        foreach (var sec in new[] {
-            "Player_Basic_Default", "Player_Basic_Default_Walk",
-            "Player_Basic_Default_Run", "Player_Basic_Default_Runfast",
-            "Player_Weapon_Default", "Player_Weapon_Default_Walk",
-            "Player_Weapon_Default_Run", "Player_Weapon_Default_RunFast",
-            "Player_Weapon_Default_RunFast_Follow" })
-        {
-            Set(m, $"{sec}/CameraBlendParameter", "BlendInTime", "0.8");
-            Set(m, $"{sec}/CameraBlendParameter", "BlendOutTime", "0.8");
-        }
 
         // Animal mount smoothing
         Set(m, "Player_Animal_Default/CameraBlendParameter", "BlendInTime", "0.3");
@@ -285,9 +296,12 @@ public static class CameraRules
         Set(m, "Player_Animal_Default_Runfast/OffsetByVelocity", "DampSpeed", "0.5");
         Set(m, "Player_Animal_Default_Walk/CameraBlendParameter", "BlendInTime", "0.3");
 
-        // Horse
-        Set(m, "Player_Ride_Horse/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Horse/CameraBlendParameter", "BlendOutTime", "0.3");
+        // Horse idle smoothing
+        Set(m, "Player_Ride_Horse", "FollowYawSpeedRate", "0.8");
+        Set(m, "Player_Ride_Horse", "FollowPitchSpeedRate", "0.75");
+        Set(m, "Player_Ride_Horse", "FollowStartTime", "1");
+        Set(m, "Player_Ride_Horse/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Horse/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Horse/OffsetByVelocity", "OffsetLength", "0.0");
 
         Set(m, "Player_Ride_Horse_Run", "FollowPitchSpeedRate", "0.8");
@@ -297,58 +311,70 @@ public static class CameraRules
         Set(m, "Player_Ride_Horse_Fast_Run", "FollowPitchSpeedRate", "0.8");
         Set(m, "Player_Ride_Horse_Fast_Run", "FollowStartTime", "1");
         Set(m, "Player_Ride_Horse_Fast_Run", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Fast_Run/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Horse_Fast_Run/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Ride_Horse_Fast_Run/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Horse_Fast_Run/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Horse_Fast_Run/OffsetByVelocity", "DampSpeed", "0.5");
         Set(m, "Player_Ride_Horse_Fast_Run/OffsetByVelocity", "OffsetLength", "0.0");
 
-        Set(m, "Player_Ride_Horse_Dash", "Fov", "40");
         Set(m, "Player_Ride_Horse_Dash", "FollowPitchSpeedRate", "0.8");
         Set(m, "Player_Ride_Horse_Dash", "FollowStartTime", "1");
         Set(m, "Player_Ride_Horse_Dash", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Dash/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Horse_Dash/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Ride_Horse_Dash/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Horse_Dash/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Horse_Dash/OffsetByVelocity", "DampSpeed", "0.5");
         Set(m, "Player_Ride_Horse_Dash/OffsetByVelocity", "OffsetLength", "0.0");
 
-        Set(m, "Player_Ride_Horse_Dash_Att", "Fov", "40");
         Set(m, "Player_Ride_Horse_Dash_Att", "FollowPitchSpeedRate", "0.8");
         Set(m, "Player_Ride_Horse_Dash_Att", "FollowStartTime", "1");
         Set(m, "Player_Ride_Horse_Dash_Att", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Dash_Att/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Horse_Dash_Att/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Ride_Horse_Dash_Att/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Horse_Dash_Att/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Horse_Dash_Att/CameraDamping", "PivotDampingMaxDistance", "0.5");
         Set(m, "Player_Ride_Horse_Dash_Att/OffsetByVelocity", "DampSpeed", "0.5");
         Set(m, "Player_Ride_Horse_Dash_Att/OffsetByVelocity", "OffsetLength", "0.0");
 
-        Set(m, "Player_Ride_Horse_Att_Thrust", "Fov", "40");
         Set(m, "Player_Ride_Horse_Att_Thrust", "FollowPitchSpeedRate", "0.8");
         Set(m, "Player_Ride_Horse_Att_Thrust", "FollowStartTime", "1");
         Set(m, "Player_Ride_Horse_Att_Thrust", "FollowYawSpeedRate", "0.8");
 
-        Set(m, "Player_Ride_Horse_Att_L", "Fov", "40");
-        Set(m, "Player_Ride_Horse_Att_L/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Horse_Att_L/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Ride_Horse_Att_L/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Horse_Att_L/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Horse_Att_L/OffsetByVelocity", "OffsetLength", "0.0");
-        Set(m, "Player_Ride_Horse_Att_R", "Fov", "40");
-        Set(m, "Player_Ride_Horse_Att_R/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Horse_Att_R/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Ride_Horse_Att_R/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Horse_Att_R/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Horse_Att_R/OffsetByVelocity", "OffsetLength", "0.0");
 
         // Elephant
-        Set(m, "Player_Ride_Elephant", "Fov", "40");
         Set(m, "Player_Ride_Elephant", "FollowPitchSpeedRate", "0.8");
         Set(m, "Player_Ride_Elephant", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Elephant/CameraBlendParameter", "BlendInTime", "0.3");
-        Set(m, "Player_Ride_Elephant/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Ride_Elephant/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Elephant/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Ride_Elephant/CameraDamping", "PivotDampingMaxDistance", "0.5");
         Set(m, "Player_Ride_Elephant/OffsetByVelocity", "OffsetLength", "0.0");
 
         // Wyvern
-        Set(m, "Player_Ride_Wyvern", "Fov", "50");
         Set(m, "Player_Ride_Wyvern", "FollowStartTime", "1");
         Set(m, "Player_Ride_Wyvern", "FollowYawSpeedRate", "0.8");
         Set(m, "Player_Ride_Wyvern/OffsetByVelocity", "OffsetLength", "0.0");
+
+        // Mount ZoomDistance normalization — anchor ALL zoom levels across all
+        // ride sub-states to consistent values so speed/dash transitions
+        // don't cause zoom in/out snaps.
+        foreach (var sec in HorseRideSections)
+        {
+            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", "1.8");
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "7.5");
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "10.5");
+            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "14.0");
+        }
+        Set(m, "Player_Ride_Elephant/ZoomLevel[1]", "ZoomDistance", "2.0");
+        Set(m, "Player_Ride_Elephant/ZoomLevel[2]", "ZoomDistance", "8.0");
+        Set(m, "Player_Ride_Elephant/ZoomLevel[3]", "ZoomDistance", "11.0");
+        Set(m, "Player_Ride_Elephant/ZoomLevel[4]", "ZoomDistance", "14.0");
+        Set(m, "Player_Ride_Wyvern/ZoomLevel[1]", "ZoomDistance", "4.0");
+        Set(m, "Player_Ride_Wyvern/ZoomLevel[2]", "ZoomDistance", "12.0");
+        Set(m, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", "16.0");
+        Set(m, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", "20.0");
 
         return m;
     }
@@ -359,6 +385,7 @@ public static class CameraRules
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
 
+        Set(m, "Player_Basic_Default/ZoomLevel[2]", "UpOffset", "0.0");
         Set(m, "Player_Basic_Default/ZoomLevel[3]", "UpOffset", "0.0");
         Set(m, "Player_Basic_Default/ZoomLevel[4]", "UpOffset", "0.0");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", "0.0");
@@ -372,8 +399,78 @@ public static class CameraRules
 
         foreach (var sec in WeaponSections)
         {
+            Set(m, $"{sec}/ZoomLevel[2]", "UpOffset", "0.0");
             Set(m, $"{sec}/ZoomLevel[3]", "UpOffset", "0.0");
             Set(m, $"{sec}/ZoomLevel[4]", "UpOffset", "0.0");
+        }
+
+        return m;
+    }
+
+    // ── Extra zoom (ZL5 + ZL6) ────────────────────────────────────────
+
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildExtraZoom()
+    {
+        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
+
+        foreach (var sec in AllMain)
+        {
+            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.85");
+            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.25");
+            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24");
+            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "2.45");
+            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.40");
+            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48");
+        }
+
+        foreach (var sec in HorseRideSections)
+        {
+            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.15");
+            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.15");
+            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24.6");
+            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "1.55");
+            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.30");
+            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48.6");
+        }
+
+        foreach (var sec in new[] { "Player_Ride_Elephant", "Player_Ride_Wyvern" })
+        {
+            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.40");
+            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.25");
+            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24");
+            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "1.90");
+            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.40");
+            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48");
+        }
+
+        return m;
+    }
+
+    // ── Horse first-person (ZL0 with eye-bone pivot) ────────────────
+
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildHorseFirstPerson()
+    {
+        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
+
+        foreach (var sec in HorseRideSections)
+        {
+            Set(m, sec, "PivotSetType", "FocusActor");
+            Set(m, sec, "DisableHidePivotActor", "True");
+
+            Set(m, $"{sec}/ZoomLevel[0]", "PivotBoneName", "B_Eyeball_L");
+            Set(m, $"{sec}/ZoomLevel[0]", "RightOffset", "0");
+            Set(m, $"{sec}/ZoomLevel[0]", "UpOffset", "0.10");
+            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", "0.0");
+            Set(m, $"{sec}/ZoomLevel[0]", "Fov", "75");
+            Set(m, $"{sec}/ZoomLevel[0]", "OverlapCharacterHide", "False");
+            Set(m, $"{sec}/ZoomLevel[0]", "MeshCutOffset", "-0.16");
+
+            if (sec == "Player_Ride_Horse_Dash" || sec == "Player_Ride_Horse_Dash_Att")
+                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.20");
+            else if (sec == "Player_Ride_Horse_Fast_Run")
+                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.15");
+            else
+                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.05");
         }
 
         return m;
@@ -742,7 +839,7 @@ public static class CameraRules
         double zl3Dist = Math.Round(distance, 1);
         double zl4Dist = Math.Round(distance * 1.5, 1);
         string upStr = $"{upOffset:F2}";
-        string roStr = $"{rightOffset:F2}";
+        string roStr = $"{-rightOffset:F2}";
 
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -762,16 +859,53 @@ public static class CameraRules
         }
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "UpOffset", upStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "InDoorUpOffset", upStr);
-        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", roStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", $"{zl2Dist}");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", upStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "InDoorUpOffset", upStr);
-        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", roStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "ZoomDistance", $"{zl3Dist}");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "UpOffset", upStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "InDoorUpOffset", upStr);
-        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", roStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "ZoomDistance", $"{zl4Dist}");
+
+        if (rightOffset >= 0)
+        {
+            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "-0.50");
+            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "-0.60");
+            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", "-0.60");
+
+            Set(m, "Player_Taeguk_Aim/ZoomLevel[2]", "RightOffset", "-0.50");
+            Set(m, "Player_Taeguk_Aim/ZoomLevel[3]", "RightOffset", "-0.60");
+
+            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[2]", "RightOffset", "-0.80");
+            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[3]", "RightOffset", "-0.90");
+
+            Set(m, "Player_Weapon_Zoom/ZoomLevel[2]", "RightOffset", "-0.68");
+            Set(m, "Player_Weapon_Zoom/ZoomLevel[3]", "RightOffset", "-0.60");
+            Set(m, "Player_Weapon_Zoom/ZoomLevel[4]", "RightOffset", "-0.90");
+
+            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[2]", "RightOffset", "-0.68");
+            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[3]", "RightOffset", "-0.68");
+        }
+        else if (rightOffset < 0)
+        {
+            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.50");
+            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.60");
+            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", "0.60");
+
+            Set(m, "Player_Taeguk_Aim/ZoomLevel[2]", "RightOffset", "0.50");
+            Set(m, "Player_Taeguk_Aim/ZoomLevel[3]", "RightOffset", "0.60");
+
+            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.80");
+            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.90");
+
+            Set(m, "Player_Weapon_Zoom/ZoomLevel[2]", "RightOffset", "0.68");
+            Set(m, "Player_Weapon_Zoom/ZoomLevel[3]", "RightOffset", "0.60");
+            Set(m, "Player_Weapon_Zoom/ZoomLevel[4]", "RightOffset", "0.90");
+
+            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[2]", "RightOffset", "0.68");
+            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[3]", "RightOffset", "0.68");
+        }
+
         return m;
     }
 
@@ -787,13 +921,20 @@ public static class CameraRules
     }
 
     public static ModificationSet BuildModifications(string style, int fov, bool bane, string combat,
-        bool mountHeight = false, double? customUp = null)
+        bool mountHeight = false, double? customUp = null, bool steadycam = true,
+        bool extraZoom = false, bool horseFirstPerson = false)
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
 
-        // Layer 1: shared base
+        // Layer 1: shared base (positioning: FOV, distances, offsets)
         Merge(mods, BuildSharedBase());
-        Merge(mods, BuildSharedSteadycam());
+
+        // Layer 1b: steadycam smoothing (blends, damping, velocity offsets, UpOffset zeroing)
+        if (steadycam)
+        {
+            Merge(mods, BuildSmoothing());
+            Merge(mods, BuildSharedSteadycam());
+        }
 
         // Layer 2: style overrides
         if (StyleBuilders.TryGetValue(style, out var builder))
@@ -813,6 +954,14 @@ public static class CameraRules
             double up = customUp ?? (StyleUpOffset.TryGetValue(style, out var u) ? u : 0.0);
             Merge(mods, BuildMountHeightMods(up));
         }
+
+        // Layer 6: extra zoom levels (ZL5 + ZL6)
+        if (extraZoom)
+            Merge(mods, BuildExtraZoom());
+
+        // Layer 7: horse first-person (ZL0 with eye-bone pivot)
+        if (horseFirstPerson)
+            Merge(mods, BuildHorseFirstPerson());
 
         return new ModificationSet { ElementMods = mods, FovValue = fov };
     }

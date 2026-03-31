@@ -2,7 +2,7 @@
 
 Standalone camera toolkit for Crimson Desert with a full GUI, live camera preview, advanced XML editor, and HUD centering for ultrawide displays.
 
-[![Download](https://img.shields.io/badge/Download-v2.0-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
+[![Download](https://img.shields.io/badge/Download-v2.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/d0d2e8d483eae1cecca2cc6358e517d111cbad2984ba52c39d48e13cfcd2cf48?nocache=1)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
@@ -12,14 +12,18 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 ## Features
 
 ### Simple Mode
-- **8 Camera Presets** with live preview — Panoramic, Heroic, Smoothed, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival
-- **Custom Camera** — Slider control over distance, height, and horizontal offset. Save unlimited named presets, share via import/export codes (`UCM:` strings)
-- **Field of View** — Adjustable from vanilla 40° up to 80°, with recommendations per aspect ratio
+- **8 Camera Presets** with live preview — Panoramic, Heroic, Vanilla, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival
+- **Custom Camera** — Slider control over distance, height, and horizontal shift (-1 to +1). Save unlimited named presets, share via import/export codes (`UCM:` strings)
+- **Field of View** — Adjustable from vanilla 40° up to 80°, with universal FoV consistency across all camera states (guard, aim, mount, glide, cinematic) to eliminate jarring transitions
 - **Centered Camera** — Character dead center, eliminating the left-offset shoulder cam across 150+ camera states
 - **Combat Camera** — Three lock-on zoom levels: Default, Wider, Maximum
 - **Mount Camera Sync** — Mount cameras match your chosen player camera height
-- **HUD Centering** — Adjustable width slider (1200–3840px) to constrain HUD elements for ultrawide
-- **Steadycam Smoothing** — Eliminates camera sway/bobbing, consistent FOV across movement states
+- **Extra Zoom Levels** — Two additional zoom-out levels (ZL5 + ZL6) on foot and mounted. Scroll further out than vanilla allows
+- **Horse First Person (Experimental)** — First-person camera while mounted. Scroll all the way in to see through your character's eyes. Works well at walk/trot; may clip during dashes
+- **Skill Aiming Side-Consistency** — Lantern, Blinding Flash, Bow, and all aim/zoom skills respect your horizontal shift setting. The camera no longer snaps to the opposite side when activating abilities
+- **Steadycam Smoothing** — Completely revamped camera smoothing system. Normalizes blend timing and FOV across all movement states (idle, walk, run, sprint, combat, guard, mount) to eliminate the jarring zoom-in/zoom-out transitions the vanilla game applies when switching between states. The game has over 150 camera states, each with independent FOV, blend time, and damping values that cause the camera to constantly bob, sway, and shift. Steadycam sets consistent values across these states so the camera feels stable and predictable. This is an ongoing community effort — the sheer number of camera parameters means there's always room for improvement, and the Advanced Editor lets anyone fine-tune it further.
+- **HUD Centering** — Adjustable width slider (1200–3840px) to constrain HUD elements for ultrawide. *Currently disabled — a recent game update added integrity checks that trigger a Coherent Gameface watermark. Controls will be re-enabled once a workaround is found.*
+- **Update Notifications** — Automatically checks GitHub releases on launch and shows a banner when a new version is available
 
 ### Advanced Editor
 
@@ -30,6 +34,8 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 - **Grouped by Camera State** — Collapsible sections (Player_Basic_Default, Player_Weapon_Guard, etc.)
 - **Save/Load/Delete** named advanced presets
 - **Import/Export** advanced configurations as shareable strings (`UCM_ADV:` prefix, distinct from simple presets)
+- **Import XML** — Load a `playercamerapreset.xml` file from other mods and merge the values into the editor
+- **Expand/Collapse All** — One-click toggle to expand or collapse all section groups
 - **Reset to Defaults** — One click to revert all advanced changes
 
 ### Quality of Life
@@ -129,12 +135,14 @@ Known false positive with self-contained .NET apps. [VirusTotal scan is clean](h
 
 ## Version History
 
+- **v2.2** — Major feature release. Added Steadycam toggle (revamped smoothing system), Extra Zoom Levels, Horse First Person (experimental), Horizontal Shift slider, universal FoV consistency across all camera states, skill aiming side-consistency (Lantern/Blinding Flash/Bow respect your camera side), Import XML in Advanced Editor, preset sharing via copy-paste codes, update notifications, Expand/Collapse All in Advanced Editor. Fixed horizontal shift direction, Reset Defaults crash, guard release zoom snap, horse mount camera jolt, extra zoom on horseback, Advanced Editor stability and performance. HUD centering temporarily disabled due to game update integrity checks.
+- **v2.1** — Fixed custom preset sliders not writing InDoorUpOffset and RightOffset to all zoom levels.
 - **v2.0** — Complete rewrite from Python to C# / .NET 6 / WPF. Advanced XML editor, preset management, import/export, auto game detection for Steam/Epic/Xbox, settings persistence, mod-active detection.
 - **v1.5** — Python version with customtkinter GUI, camera presets, custom sliders, FOV control, HUD centering.
 
 ## Credits & Acknowledgements
 
-- **@TheFitzy** — UCM development, camera tuning, advanced editor, ultrawide HUD support
+- **0xFitz** — UCM development, camera tuning, advanced editor, ultrawide HUD support
 
 ### C# Rewrite (v2.0)
 - **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** — CrimsonDesertTools — C# PAZ/PAMT parser, ChaCha20 encryption, LZ4 compression, PaChecksum, archive repacker (.NET 8, MIT)

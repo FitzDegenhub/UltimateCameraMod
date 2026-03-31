@@ -48,6 +48,36 @@ public static class ArchiveWriter
         return padded;
     }
 
+    private static byte[] PadWithRandomComment(byte[] data, int origSize)
+    {
+        if (data.Length >= origSize)
+            return PadToOrigSize(data, origSize);
+
+        int gap = origSize - data.Length;
+        // <!-- ... --> = 7 bytes overhead; need at least 8 bytes gap for a useful comment
+        if (gap < 8)
+            return PadToOrigSize(data, origSize);
+
+        int bodyLen = gap - 7; // 4 for "<!--" + 3 for "-->"
+        byte[] body = MakeXmlSafeRandomContent(bodyLen);
+
+        byte[] result = new byte[origSize];
+        Array.Copy(data, result, data.Length);
+
+        int pos = data.Length;
+        result[pos++] = 0x3C; // <
+        result[pos++] = 0x21; // !
+        result[pos++] = 0x2D; // -
+        result[pos++] = 0x2D; // -
+        Array.Copy(body, 0, result, pos, bodyLen);
+        pos += bodyLen;
+        result[pos++] = 0x2D; // -
+        result[pos++] = 0x2D; // -
+        result[pos++] = 0x3E; // >
+
+        return result;
+    }
+
     private static List<(int Start, int End)> FindXmlComments(byte[] data)
     {
         var comments = new List<(int, int)>();
@@ -91,26 +121,30 @@ public static class ArchiveWriter
         int excess = data.Length - origSize;
         var result = new List<byte>(data);
 
-        var comments = FindXmlComments(result.ToArray());
-        comments.Sort((a, b) => (b.End - b.Start).CompareTo(a.End - a.Start));
-
-        foreach (var (cstart, cend) in comments)
+        // Strategy 1: trim comment bodies (recalculate after each removal)
+        while (excess > 0)
         {
-            if (excess <= 0) break;
-            int bodyLen = cend - cstart;
-            int removable = bodyLen - 1;
-            if (removable <= 0) continue;
-            int toRemove = Math.Min(removable, excess);
-            result.RemoveRange(cstart + 1, toRemove);
-            excess -= toRemove;
-            if (excess <= 0) break;
-            comments = FindXmlComments(result.ToArray());
+            var comments = FindXmlComments(result.ToArray());
             comments.Sort((a, b) => (b.End - b.Start).CompareTo(a.End - a.Start));
+            bool trimmed = false;
+            foreach (var (cstart, cend) in comments)
+            {
+                int bodyLen = cend - cstart;
+                int removable = bodyLen - 1;
+                if (removable <= 0) continue;
+                int toRemove = Math.Min(removable, excess);
+                result.RemoveRange(cstart + 1, toRemove);
+                excess -= toRemove;
+                trimmed = true;
+                break;
+            }
+            if (!trimmed) break;
         }
 
         if (excess <= 0)
             return FinalizeToSize(result, origSize);
 
+        // Strategy 2: remove adjacent duplicate whitespace
         for (int i = result.Count - 1; i > 0 && excess > 0; i--)
         {
             if (IsWhitespace(result[i]) && IsWhitespace(result[i - 1]))
@@ -123,21 +157,27 @@ public static class ArchiveWriter
         if (excess <= 0)
             return FinalizeToSize(result, origSize);
 
-        comments = FindXmlComments(result.ToArray());
-        foreach (var (cstart, cend) in comments)
+        // Strategy 3: remove entire comments including delimiters
+        while (excess > 0)
         {
-            if (excess <= 0) break;
-            int fullStart = cstart - 4;
-            int fullEnd = cend + 3;
-            int removable = fullEnd - fullStart;
-            if (removable <= excess + 7)
+            var comments = FindXmlComments(result.ToArray());
+            if (comments.Count == 0) break;
+            bool removed = false;
+            foreach (var (cstart, cend) in comments)
             {
-                int toRemove = Math.Min(removable, excess);
-                result.RemoveRange(fullStart, toRemove);
-                excess -= toRemove;
-                if (excess <= 0) break;
-                comments = FindXmlComments(result.ToArray());
+                int fullStart = cstart - 4;
+                int fullEnd = cend + 3;
+                int removable = fullEnd - fullStart;
+                if (removable <= excess + 7)
+                {
+                    int toRemove = Math.Min(removable, excess);
+                    result.RemoveRange(fullStart, toRemove);
+                    excess -= toRemove;
+                    removed = true;
+                    break;
+                }
             }
+            if (!removed) break;
         }
 
         if (result.Count > origSize)
@@ -500,18 +540,153 @@ public static class ArchiveWriter
         return null;
     }
 
+    private static byte[]? PadWithScatteredComments(byte[] plaintext, int targetCompSize, int targetOrigSize)
+    {
+        int gap = targetOrigSize - plaintext.Length;
+        if (gap < 8) return null;
+
+        // Find all newline positions as potential comment insertion points
+        var newlines = new List<int>();
+        for (int i = 0; i < plaintext.Length; i++)
+            if (plaintext[i] == 0x0A) newlines.Add(i);
+        if (newlines.Count < 4) return null;
+
+        // Try different slot counts to find one that works
+        foreach (int targetSlots in new[] { 20, 50, 100, 200, 400, Math.Min(800, newlines.Count / 2) })
+        {
+            int numSlots = Math.Min(targetSlots, newlines.Count);
+            if (numSlots < 1) continue;
+
+            int step = newlines.Count / numSlots;
+            var slots = new List<int>();
+            for (int i = 0; i < newlines.Count && slots.Count < numSlots; i += step)
+                slots.Add(newlines[i]);
+            if (slots.Count == 0) continue;
+
+            int overhead = slots.Count * 7; // 7 bytes per <!--X-->
+            if (overhead >= gap) continue;
+            int maxTotalBody = gap - overhead;
+
+            for (int attempt = 0; attempt < 6; attempt++)
+            {
+                byte[] randPool = MakeXmlSafeRandomContent(maxTotalBody + 64);
+                int slotCount = slots.Count;
+
+                byte[] BuildTrial(int totalBody)
+                {
+                    int perSlot = totalBody / slotCount;
+                    int remainder = totalBody % slotCount;
+
+                    // Build insertions in reverse order so positions stay valid
+                    var output = new List<byte>(plaintext);
+                    int poolOff = 0;
+                    for (int si = slotCount - 1; si >= 0; si--)
+                    {
+                        int bodyLen = perSlot + (si < remainder ? 1 : 0);
+                        int insertAt = Math.Min(slots[si] + 1, output.Count);
+
+                        // Build comment: <!--body-->
+                        var comment = new List<byte>(bodyLen + 7);
+                        comment.Add(0x3C); comment.Add(0x21); comment.Add(0x2D); comment.Add(0x2D);
+                        for (int b = 0; b < bodyLen; b++)
+                            comment.Add(randPool[(poolOff + b) % randPool.Length]);
+                        poolOff += bodyLen;
+                        comment.Add(0x2D); comment.Add(0x2D); comment.Add(0x3E);
+
+                        output.InsertRange(insertAt, comment);
+                    }
+
+                    byte[] result = new byte[targetOrigSize];
+                    int copyLen = Math.Min(output.Count, targetOrigSize);
+                    for (int i = 0; i < copyLen; i++)
+                        result[i] = output[i];
+                    return result;
+                }
+
+                // Binary search on totalBody
+                int cMin = CompressionUtils.Lz4Compress(BuildTrial(0)).Length;
+                int cMax = CompressionUtils.Lz4Compress(BuildTrial(maxTotalBody)).Length;
+
+                if (targetCompSize < cMin || targetCompSize > cMax) continue;
+
+                int lo = 0, hi = maxTotalBody;
+                while (lo <= hi)
+                {
+                    int mid = (lo + hi) / 2;
+                    int c = CompressionUtils.Lz4Compress(BuildTrial(mid)).Length;
+                    if (c == targetCompSize) return BuildTrial(mid);
+                    else if (c < targetCompSize) lo = mid + 1;
+                    else hi = mid - 1;
+                }
+
+                // Linear scan near the boundary
+                for (int n = Math.Max(0, lo - 40); n < Math.Min(lo + 40, maxTotalBody + 1); n++)
+                {
+                    var trial = BuildTrial(n);
+                    if (CompressionUtils.Lz4Compress(trial).Length == targetCompSize)
+                        return trial;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private static byte[]? InflateByRandomCommentPadding(byte[] plaintext, int targetCompSize, int targetOrigSize)
+    {
+        // Binary search on random comment body length to hit the exact compressed size.
+        // We append <!--RANDOM_BODY--> then pad remaining bytes with nulls.
+        int available = targetOrigSize - plaintext.Length;
+        if (available < 8) return null; // not enough room for <!-- + X + -->
+
+        int maxBody = available - 7;
+
+        for (int attempt = 0; attempt < 10; attempt++)
+        {
+            byte[] randPool = MakeXmlSafeRandomContent(maxBody);
+
+            byte[] BuildTrial(int bodyLen)
+            {
+                byte[] buf = new byte[targetOrigSize];
+                Array.Copy(plaintext, buf, plaintext.Length);
+                int pos = plaintext.Length;
+                buf[pos++] = 0x3C; buf[pos++] = 0x21; buf[pos++] = 0x2D; buf[pos++] = 0x2D;
+                Array.Copy(randPool, 0, buf, pos, bodyLen);
+                pos += bodyLen;
+                buf[pos++] = 0x2D; buf[pos++] = 0x2D; buf[pos++] = 0x3E;
+                return buf;
+            }
+
+            int cMin = CompressionUtils.Lz4Compress(BuildTrial(1)).Length;
+            int cMax = CompressionUtils.Lz4Compress(BuildTrial(maxBody)).Length;
+            if (targetCompSize < cMin || targetCompSize > cMax) continue;
+
+            int lo = 1, hi = maxBody;
+            while (lo <= hi)
+            {
+                int mid = (lo + hi) / 2;
+                int c = CompressionUtils.Lz4Compress(BuildTrial(mid)).Length;
+                if (c == targetCompSize) return BuildTrial(mid);
+                else if (c < targetCompSize) lo = mid + 1;
+                else hi = mid - 1;
+            }
+
+            for (int n = Math.Max(1, lo - 30); n < Math.Min(lo + 30, maxBody + 1); n++)
+            {
+                var trial = BuildTrial(n);
+                if (CompressionUtils.Lz4Compress(trial).Length == targetCompSize)
+                    return trial;
+            }
+        }
+
+        return null;
+    }
+
     public static byte[] MatchCompressedSize(byte[] plaintext, int targetCompSize, int targetOrigSize)
     {
         byte[] padded;
         if (plaintext.Length > targetOrigSize)
         {
-            int excess = plaintext.Length - targetOrigSize;
-            var comments = FindXmlComments(plaintext);
-            int commentRoom = comments.Sum(c => Math.Max(0, c.End - c.Start - 1));
-            if (commentRoom < excess)
-                throw new InvalidOperationException(
-                    $"Modified file is {excess} bytes over orig_size ({targetOrigSize}) " +
-                    $"with only {commentRoom} bytes of XML comment content available to trim.");
             padded = ShrinkToOrigSize(plaintext, targetOrigSize);
         }
         else
@@ -527,7 +702,13 @@ public static class ArchiveWriter
 
         if (delta < 0)
         {
-            var result = InflateWithComments(padded, plaintext.Length, targetCompSize, targetOrigSize);
+            // The file compresses too well. Scatter random XML comments throughout
+            // the content to break LZ4's pattern matching and increase compressed size.
+            var result = PadWithScatteredComments(plaintext, targetCompSize, targetOrigSize);
+            if (result != null) return result;
+
+            int effectiveLen = Math.Min(plaintext.Length, targetOrigSize);
+            result = InflateWithComments(padded, effectiveLen, targetCompSize, targetOrigSize);
             if (result != null) return result;
 
             result = InflateByReplacingCommentBodies(padded, targetCompSize);

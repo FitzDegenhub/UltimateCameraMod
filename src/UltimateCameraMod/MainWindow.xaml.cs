@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -16,7 +17,7 @@ namespace UltimateCameraMod;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "2.0";
+    private const string Ver = "2.2";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
 
@@ -45,7 +46,7 @@ public partial class MainWindow : Window
     {
         ("western",   "Heroic  -  Shoulder-level OTS, great framing"),
         ("cinematic", "Panoramic  -  Head-height wide pullback, filmic"),
-        ("default",   "Smoothed  -  Vanilla framing + smoothing"),
+        ("default",   "Vanilla  -  Default framing + steadycam smoothing"),
         ("immersive", "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
         ("lowcam",    "Low Rider  -  Hip-level, full body + horizon"),
         ("vlowcam",   "Knee Cam  -  Knee-height dramatic low angle"),
@@ -178,6 +179,7 @@ public partial class MainWindow : Window
         }
 
         CheckForUpdate();
+        CheckGitHubVersion();
         SyncPreview();
     }
 
@@ -229,11 +231,15 @@ public partial class MainWindow : Window
 
         BaneCheck.IsChecked = GetBool(_savedState, "bane");
         MountHeightCheck.IsChecked = GetBool(_savedState, "mount_height");
+        SteadycamCheck.IsChecked = GetBool(_savedState, "steadycam", true);
+        ExtraZoomCheck.IsChecked = GetBool(_savedState, "extra_zoom");
+        HorseFirstPersonCheck.IsChecked = GetBool(_savedState, "horse_first_person");
 
-        int savedHudWidth = GetInt(_savedState, "hud_width", 0);
-        HudCheck.IsChecked = savedHudWidth > 0;
-        HudWidthSlider.Value = savedHudWidth > 0 ? savedHudWidth : 2520;
-        ApplyHudLock();
+        // HUD mods disabled — recent game update causes publisher watermark
+        HudCheck.IsChecked = false;
+        HudHeightCheck.IsChecked = false;
+        HudWidthSlider.Value = 2520;
+        HudHeightSlider.Value = 1080;
 
         RefreshPresetCombo();
 
@@ -281,13 +287,18 @@ public partial class MainWindow : Window
     }
 
     private void SaveInstallState(int compSize, string style, int fov, bool bane, string combat,
-        Dictionary<string, double>? customParams, bool mountHeight, int hudWidth)
+        Dictionary<string, double>? customParams, bool mountHeight, int hudWidth,
+        int hudHeight = 0, bool steadycam = true, bool extraZoom = false,
+        bool horseFirstPerson = false)
     {
         var state = new Dictionary<string, object>
         {
             ["comp_size"] = compSize, ["style"] = style, ["fov"] = fov,
             ["bane"] = bane, ["combat"] = combat, ["mount_height"] = mountHeight,
-            ["hud_width"] = hudWidth,
+            ["hud_width"] = hudWidth, ["hud_height"] = hudHeight,
+            ["steadycam"] = steadycam,
+            ["extra_zoom"] = extraZoom,
+            ["horse_first_person"] = horseFirstPerson,
         };
         if (customParams != null) state["custom"] = customParams;
         if (style == "custom" && PresetCombo.SelectedIndex > 0)
@@ -338,6 +349,60 @@ public partial class MainWindow : Window
         }
         catch { BannerPanel.Visibility = Visibility.Collapsed; }
     }
+
+    // ── GitHub version check ─────────────────────────────────────────
+
+    private async void CheckGitHubVersion()
+    {
+        try
+        {
+            using var http = new HttpClient();
+            http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/" + Ver);
+            http.Timeout = TimeSpan.FromSeconds(8);
+            string json = await http.GetStringAsync(
+                "https://api.github.com/repos/FitzDegenhub/UltimateCameraMod/releases/latest");
+            using var doc = JsonDocument.Parse(json);
+            string tag = doc.RootElement.GetProperty("tag_name").GetString() ?? "";
+            string latest = tag.TrimStart('v', 'V');
+
+            string pad(string v) => v.Contains('.') && v.Split('.').Length == 2 ? v + ".0" : v;
+            bool isOutdated = !string.IsNullOrEmpty(latest)
+                && Version.TryParse(pad(latest), out var remote)
+                && Version.TryParse(pad(Ver), out var local)
+                && remote > local;
+
+            Dispatcher.Invoke(() =>
+            {
+                if (isOutdated)
+                {
+                    VersionDot.Fill = new SolidColorBrush(Color.FromRgb(0xF4, 0x43, 0x36));
+                    VersionStatus.Text = $"v{latest} available";
+                    VersionStatus.Foreground = new SolidColorBrush(Color.FromRgb(0xF4, 0x43, 0x36));
+                    VersionUpdateBtn.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    VersionDot.Fill = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
+                    VersionStatus.Text = "up to date";
+                    VersionStatus.Foreground = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
+                }
+            });
+        }
+        catch
+        {
+            Dispatcher.Invoke(() =>
+            {
+                VersionDot.Fill = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
+                VersionStatus.Text = "offline";
+                VersionStatus.Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
+            });
+        }
+    }
+
+    private void OnUpdateNexusClick(object s, RoutedEventArgs e)
+        => Process.Start(new ProcessStartInfo(NexusUrl) { UseShellExecute = true });
+    private void OnUpdateGitHubClick(object s, RoutedEventArgs e)
+        => Process.Start(new ProcessStartInfo(GitHubUrl + "/releases/latest") { UseShellExecute = true });
 
     // ── Tab switching ────────────────────────────────────────────────
 
@@ -413,8 +478,10 @@ public partial class MainWindow : Window
     private void OnHudSliderChanged(object s, RoutedPropertyChangedEventArgs<double> e)
     {
         if (_suppressEvents || !IsLoaded) return;
-        int w = (int)Math.Round(HudWidthSlider.Value);
-        HudWidthLabel.Text = $"{w}px";
+        if (HudCheck.IsChecked == true)
+            HudWidthLabel.Text = $"{(int)Math.Round(HudWidthSlider.Value)}px";
+        if (HudHeightCheck.IsChecked == true)
+            HudHeightLabel.Text = $"{(int)Math.Round(HudHeightSlider.Value)}px";
     }
 
     private void ApplyCenteredLock()
@@ -437,12 +504,20 @@ public partial class MainWindow : Window
 
     private void ApplyHudLock()
     {
-        bool enabled = HudCheck.IsChecked == true;
-        HudWidthSlider.IsEnabled = enabled;
-        HudWidthLabel.Text = enabled ? $"{(int)HudWidthSlider.Value}px" : "Off";
-        HudWidthLabel.Foreground = enabled
-            ? (Brush)FindResource("TextPrimaryBrush")
-            : (Brush)FindResource("TextDimBrush");
+        bool on = HudCheck.IsChecked == true;
+        HudWidthSlider.IsEnabled = on;
+        HudWidthLabel.Text = on ? $"{(int)HudWidthSlider.Value}px" : "Off";
+        HudWidthLabel.Foreground = (Brush)FindResource(on ? "TextPrimaryBrush" : "TextDimBrush");
+    }
+
+    private void OnHudHeightToggle(object s, RoutedEventArgs e) { if (!IsLoaded) return; ApplyHudHeightLock(); }
+
+    private void ApplyHudHeightLock()
+    {
+        bool on = HudHeightCheck.IsChecked == true;
+        HudHeightSlider.IsEnabled = on;
+        HudHeightLabel.Text = on ? $"{(int)HudHeightSlider.Value}px" : "Off";
+        HudHeightLabel.Foreground = (Brush)FindResource(on ? "TextPrimaryBrush" : "TextDimBrush");
     }
 
     // ── Selections ───────────────────────────────────────────────────
@@ -619,7 +694,11 @@ public partial class MainWindow : Window
         string combat = GetSelectedCombat();
         bool bane = BaneCheck.IsChecked == true;
         bool mountHeight = MountHeightCheck.IsChecked == true;
+        bool steadycam = SteadycamCheck.IsChecked == true;
+        bool extraZoom = ExtraZoomCheck.IsChecked == true;
+        bool horseFirstPerson = HorseFirstPersonCheck.IsChecked == true;
         int hudWidth = HudCheck.IsChecked == true ? (int)HudWidthSlider.Value : 0;
+        int hudHeight = HudHeightCheck.IsChecked == true ? (int)HudHeightSlider.Value : 0;
 
         Dictionary<string, double>? customParams = null;
         double? customUp = null;
@@ -640,14 +719,15 @@ public partial class MainWindow : Window
             try
             {
                 var result = CameraMod.InstallCameraMod(_gameDir, styleId, fov, bane, combat,
-                    mountHeight: mountHeight, customUp: customUp,
+                    mountHeight: mountHeight, customUp: customUp, steadycam: steadycam,
+                    extraZoom: extraZoom, horseFirstPerson: horseFirstPerson,
                     log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
                 bool ok = result.GetValueOrDefault("status")?.ToString() == "ok";
                 int compSize = ok && result.ContainsKey("comp_size") ? (int)result["comp_size"] : 0;
 
                 if (ok && hudWidth > 0)
                 {
-                    var hudResult = HudMod.InstallCenteredHud(_gameDir, hudWidth,
+                    var hudResult = HudMod.InstallCenteredHud(_gameDir, hudWidth, hudHeight,
                         log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
                     if (hudResult.GetValueOrDefault("status")?.ToString() != "ok") ok = false;
                 }
@@ -661,7 +741,7 @@ public partial class MainWindow : Window
                     if (ok)
                     {
                         SetStatus("Installed! Launch the game.", "Success");
-                        SaveInstallState(compSize, styleId, fov, bane, combat, customParams, mountHeight, hudWidth);
+                        SaveInstallState(compSize, styleId, fov, bane, combat, customParams, mountHeight, hudWidth, hudHeight, steadycam, extraZoom, horseFirstPerson);
                     }
                     else
                     {
@@ -894,6 +974,37 @@ public partial class MainWindow : Window
         AdvUpdateRowCount();
     }
 
+    private void OnAdvExpandAll(object sender, RoutedEventArgs e)
+    {
+        bool expanding = (sender as System.Windows.Controls.Button)?.Content?.ToString() == "Expand All";
+        AdvDataGrid.GroupStyle.Clear();
+        AdvDataGrid.GroupStyle.Add(BuildAdvGroupStyle(expanding));
+        if (sender is System.Windows.Controls.Button btn)
+            btn.Content = expanding ? "Collapse All" : "Expand All";
+    }
+
+    private static GroupStyle BuildAdvGroupStyle(bool expanded)
+    {
+        string xaml =
+            "<GroupStyle xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>" +
+            "<GroupStyle.ContainerStyle>" +
+            "<Style TargetType='GroupItem'>" +
+            "<Setter Property='Template'><Setter.Value>" +
+            "<ControlTemplate TargetType='GroupItem'>" +
+            "<Expander IsExpanded='" + (expanded ? "True" : "False") + "' Background='Transparent' BorderThickness='0'>" +
+            "<Expander.Header>" +
+            "<TextBlock Text='{Binding Name}' FontSize='11' FontWeight='SemiBold' Foreground='#c8a24e' Margin='4,2'/>" +
+            "</Expander.Header>" +
+            "<ItemsPresenter/>" +
+            "</Expander>" +
+            "</ControlTemplate>" +
+            "</Setter.Value></Setter>" +
+            "</Style>" +
+            "</GroupStyle.ContainerStyle>" +
+            "</GroupStyle>";
+        return (GroupStyle)System.Windows.Markup.XamlReader.Parse(xaml);
+    }
+
     private void OnAdvResetDefaults(object sender, RoutedEventArgs e)
     {
         try
@@ -911,11 +1022,16 @@ public partial class MainWindow : Window
                 CameraRules.RegisterCustomStyle(DistSlider.Value, HeightSlider.Value, HShiftSlider.Value);
                 customUp = HeightSlider.Value;
             }
-            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combat, mountHeight: mount, customUp: customUp);
+            bool sc = SteadycamCheck.IsChecked == true;
+            bool ez = ExtraZoomCheck.IsChecked == true;
+            bool hfp = HorseFirstPersonCheck.IsChecked == true;
+            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combat, mountHeight: mount, customUp: customUp, steadycam: sc, extraZoom: ez, horseFirstPerson: hfp);
             vanillaXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
             var defaultRows = CameraMod.ParseXmlToRows(vanillaXml);
-            var lookup = defaultRows.ToDictionary(r => r.FullKey, r => r.Value);
+            var lookup = new Dictionary<string, string>();
+            foreach (var dr in defaultRows)
+                lookup[dr.FullKey] = dr.Value;
 
             foreach (var row in _advAllRows)
                 row.Value = lookup.TryGetValue(row.FullKey, out string? val) ? val : row.VanillaValue;
@@ -934,7 +1050,8 @@ public partial class MainWindow : Window
         var modified = _advAllRows.Where(r => r.IsModified).ToList();
         if (modified.Count == 0) { SetStatus("No modified values to export.", "TextSecondary"); return; }
 
-        var payload = modified.ToDictionary(r => r.FullKey, r => r.Value);
+        var payload = new Dictionary<string, string>();
+        foreach (var r in modified) payload[r.FullKey] = r.Value;
         string json = JsonSerializer.Serialize(payload);
         string encoded = "UCM_ADV:" + Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
 
@@ -949,7 +1066,8 @@ public partial class MainWindow : Window
         if (dlg.ShowDialog() != true || dlg.Result == null) return;
 
         int applied = 0;
-        var lookup = _advAllRows.ToDictionary(r => r.FullKey, r => r);
+        var lookup = new Dictionary<string, AdvancedRow>();
+        foreach (var r in _advAllRows) lookup[r.FullKey] = r;
         foreach (var (key, val) in dlg.Result)
         {
             if (lookup.TryGetValue(key, out var row)) { row.Value = val; applied++; }
@@ -957,6 +1075,43 @@ public partial class MainWindow : Window
 
         AdvApplyFilter();
         SetStatus($"Imported {applied} values.", "Success");
+    }
+
+    private void OnAdvImportXml(object sender, RoutedEventArgs e)
+    {
+        var ofd = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Import playercamerapreset.xml",
+            Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
+            FileName = "playercamerapreset.xml"
+        };
+        if (ofd.ShowDialog(this) != true) return;
+
+        try
+        {
+            string xml = File.ReadAllText(ofd.FileName);
+            var importedRows = CameraMod.ParseXmlToRows(xml);
+            var lookup = new Dictionary<string, string>();
+            foreach (var r in importedRows)
+                lookup[r.FullKey] = r.Value;
+
+            int applied = 0;
+            foreach (var row in _advAllRows)
+            {
+                if (lookup.TryGetValue(row.FullKey, out string? val) && val != row.Value)
+                {
+                    row.Value = val;
+                    applied++;
+                }
+            }
+
+            AdvApplyFilter();
+            SetStatus($"Imported {applied} values from {Path.GetFileName(ofd.FileName)}.", "Success");
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"XML import failed: {ex.Message}", "Error");
+        }
     }
 
     private void OnAdvApply(object sender, RoutedEventArgs e)
@@ -1007,8 +1162,8 @@ public partial class MainWindow : Window
     {
         try
         {
-            var modified = _advAllRows.Where(r => r.IsModified)
-                .ToDictionary(r => r.FullKey, r => r.Value);
+            var modified = new Dictionary<string, string>();
+            foreach (var r in _advAllRows.Where(r => r.IsModified)) modified[r.FullKey] = r.Value;
             if (modified.Count == 0) { if (File.Exists(AdvOverridesPath)) File.Delete(AdvOverridesPath); return; }
             File.WriteAllText(AdvOverridesPath,
                 JsonSerializer.Serialize(modified, new JsonSerializerOptions { WriteIndented = true }));
@@ -1024,7 +1179,8 @@ public partial class MainWindow : Window
             string json = File.ReadAllText(AdvOverridesPath);
             var overrides = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
             if (overrides == null) return;
-            var lookup = _advAllRows.ToDictionary(r => r.FullKey, r => r);
+            var lookup = new Dictionary<string, AdvancedRow>();
+            foreach (var r in _advAllRows) lookup[r.FullKey] = r;
             foreach (var (key, val) in overrides)
                 if (lookup.TryGetValue(key, out var row)) row.Value = val;
         }
@@ -1057,7 +1213,8 @@ public partial class MainWindow : Window
 
             foreach (var row in _advAllRows) row.Value = row.VanillaValue;
 
-            var lookup = _advAllRows.ToDictionary(r => r.FullKey, r => r);
+            var lookup = new Dictionary<string, AdvancedRow>();
+            foreach (var r in _advAllRows) lookup[r.FullKey] = r;
             int applied = 0;
             foreach (var (key, val) in overrides)
                 if (lookup.TryGetValue(key, out var row)) { row.Value = val; applied++; }
@@ -1090,8 +1247,8 @@ public partial class MainWindow : Window
 
         try
         {
-            var modified = _advAllRows.Where(r => r.IsModified)
-                .ToDictionary(r => r.FullKey, r => r.Value);
+            var modified = new Dictionary<string, string>();
+            foreach (var r in _advAllRows.Where(r => r.IsModified)) modified[r.FullKey] = r.Value;
 
             if (modified.Count == 0) { SetStatus("No modified values to save.", "TextSecondary"); return; }
 
@@ -1131,9 +1288,9 @@ public partial class MainWindow : Window
         return int.TryParse(val.ToString(), out int r) ? r : def;
     }
 
-    private static bool GetBool(Dictionary<string, object>? dict, string key)
+    private static bool GetBool(Dictionary<string, object>? dict, string key, bool defaultVal = false)
     {
-        if (dict == null || !dict.TryGetValue(key, out var val)) return false;
+        if (dict == null || !dict.TryGetValue(key, out var val)) return defaultVal;
         if (val is JsonElement je) return je.ValueKind == JsonValueKind.True;
         return bool.TryParse(val.ToString(), out bool b) && b;
     }

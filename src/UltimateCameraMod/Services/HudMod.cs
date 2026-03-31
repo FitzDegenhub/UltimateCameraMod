@@ -151,23 +151,36 @@ public static class HudMod
 
     // ── CSS modification ─────────────────────────────────────────────
 
-    private static string ModifyCss(string text, int maxWidth = DefaultMaxWidth)
+    private static string ModifyCss(string text, int maxWidth = DefaultMaxWidth, int maxHeight = 0)
     {
         var pat = new Regex(@"(\.ui-view-max-size-21-9\s*\{)([^}]*)(\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
         var m = pat.Match(text);
         if (!m.Success) throw new InvalidOperationException(".ui-view-max-size-21-9 not found in CSS");
 
         string body = m.Groups[2].Value;
-        var propRe = new Regex(@"(max-width\s*:\s*)([^;]+)(;)", RegexOptions.IgnoreCase);
+
+        var widthRe = new Regex(@"(max-width\s*:\s*)([^;]+)(;)", RegexOptions.IgnoreCase);
         string newBody;
-        if (propRe.IsMatch(body))
-            newBody = propRe.Replace(body, $"${{1}}{maxWidth}px${{3}}", 1);
+        if (widthRe.IsMatch(body))
+            newBody = widthRe.Replace(body, $"${{1}}{maxWidth}px${{3}}", 1);
         else
         {
             newBody = body.TrimEnd();
             if (newBody.Length > 0 && !newBody.EndsWith(';')) newBody += ";";
             newBody += $" max-width: {maxWidth}px;";
         }
+
+        if (maxHeight > 0)
+        {
+            var heightRe = new Regex(@"max-height\s*:\s*[^;]+;", RegexOptions.IgnoreCase);
+            var marginRe = new Regex(@"margin\s*:\s*[^;]+;", RegexOptions.IgnoreCase);
+            newBody = heightRe.Replace(newBody, "");
+            newBody = marginRe.Replace(newBody, "");
+            newBody = newBody.TrimEnd();
+            if (newBody.Length > 0 && !newBody.EndsWith(';')) newBody += ";";
+            newBody += $" max-height: {maxHeight}px; margin: auto;";
+        }
+
         return text[..m.Groups[2].Index] + newBody + text[(m.Groups[2].Index + m.Groups[2].Length)..];
     }
 
@@ -264,9 +277,9 @@ public static class HudMod
     // ── Public API ───────────────────────────────────────────────────
 
     public static Dictionary<string, object> InstallCenteredHud(string gameDir,
-        int maxWidth = DefaultMaxWidth, Action<string>? log = null)
+        int maxWidth = DefaultMaxWidth, int maxHeight = 0, Action<string>? log = null)
     {
-        log?.Invoke($"[HUD] Finding UI entries (max-width: {maxWidth}px)...");
+        log?.Invoke($"[HUD] Finding UI entries (max-width: {maxWidth}px" + (maxHeight > 0 ? $", max-height: {maxHeight}px" : "") + ")...");
         var entries = FindUiEntries(gameDir);
 
         var decoded = new Dictionary<string, (string Text, bool Encrypted)>();
@@ -299,7 +312,7 @@ public static class HudMod
             if (entry.Path.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
                 modified = ModifyHtml(entry.Path, text);
             else if (entry.Path.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
-                modified = ModifyCss(text, maxWidth);
+                modified = ModifyCss(text, maxWidth, maxHeight);
             else continue;
 
             if (modified == text) continue;

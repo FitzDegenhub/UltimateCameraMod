@@ -8,7 +8,7 @@ namespace UltimateCameraMod.Models;
 /// </summary>
 public static class PresetCodec
 {
-    private const string Prefix = "UWD:";
+    private const string Prefix = "UCM:";
 
     public static string Encode(string name, double distance, double height, double rightOffset)
     {
@@ -23,7 +23,7 @@ public static class PresetCodec
     {
         text = text.Trim();
         if (!text.StartsWith(Prefix))
-            throw new FormatException("Not a valid preset string (must start with UWD:)");
+            throw new FormatException("Not a valid preset string (must start with UCM:)");
 
         string b64 = text[Prefix.Length..].Replace('-', '+').Replace('_', '/');
         int pad = (4 - b64.Length % 4) % 4;

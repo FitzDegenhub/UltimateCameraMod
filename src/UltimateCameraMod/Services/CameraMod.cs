@@ -37,6 +37,7 @@ public static class CameraMod
         var depthStack = new List<(string Tag, bool IsSection)>();
         var keyCounter = new Dictionary<string, int>();
         var result = new List<string>();
+        var appliedZoomLevels = new HashSet<string>();
 
         foreach (var line in lines)
         {
@@ -44,6 +45,35 @@ public static class CameraMod
 
             if (stripped == "</>")
             {
+                if (depthStack.Count > 0 && depthStack[^1].Tag == "ZoomLevelInfo")
+                {
+                    string sectionTag = "";
+                    for (int i = depthStack.Count - 1; i >= 0; i--)
+                    {
+                        if (depthStack[i].IsSection) { sectionTag = depthStack[i].Tag; break; }
+                    }
+                    if (!string.IsNullOrEmpty(sectionTag))
+                    {
+                        var prefix = $"{sectionTag}/ZoomLevel[";
+                        var pending = new List<(int level, string xmlLine)>();
+                        foreach (var (modKey, modAttrs) in elementMods)
+                        {
+                            if (!modKey.StartsWith(prefix)) continue;
+                            if (appliedZoomLevels.Contains(modKey)) continue;
+                            string levelStr = modKey.Substring(prefix.Length).TrimEnd(']');
+                            if (!int.TryParse(levelStr, out int levelNum)) continue;
+                            var parts = new List<string> { $"Level=\"{levelStr}\"" };
+                            foreach (var (attr, (_, val)) in modAttrs)
+                                parts.Add($"{attr}=\"{val}\"");
+                            string indent = new string('\t', depthStack.Count);
+                            pending.Add((levelNum, $"{indent}<ZoomLevel {string.Join(" ", parts)}/>"));
+                        }
+                        pending.Sort((a, b) => a.level.CompareTo(b.level));
+                        foreach (var (_, xmlLine) in pending)
+                            result.Add(xmlLine);
+                    }
+                }
+
                 result.Add(line);
                 if (depthStack.Count > 0)
                     depthStack.RemoveAt(depthStack.Count - 1);
@@ -53,8 +83,40 @@ public static class CameraMod
             var bm = BareOpenRe.Match(stripped);
             if (bm.Success)
             {
-                depthStack.Add((bm.Groups[1].Value, false));
+                string bareTag = bm.Groups[1].Value;
+                depthStack.Add((bareTag, false));
                 result.Add(line);
+
+                if (bareTag == "ZoomLevelInfo")
+                {
+                    string sectionTag = "";
+                    for (int i = depthStack.Count - 1; i >= 0; i--)
+                    {
+                        if (depthStack[i].IsSection) { sectionTag = depthStack[i].Tag; break; }
+                    }
+                    if (!string.IsNullOrEmpty(sectionTag))
+                    {
+                        var prefix = $"{sectionTag}/ZoomLevel[";
+                        var earlyLevels = new List<(int level, string xmlLine)>();
+                        foreach (var (modKey, modAttrs) in elementMods)
+                        {
+                            if (!modKey.StartsWith(prefix)) continue;
+                            string levelStr = modKey.Substring(prefix.Length).TrimEnd(']');
+                            if (!int.TryParse(levelStr, out int levelNum)) continue;
+                            if (levelNum >= 1) continue;
+                            var parts = new List<string> { $"Level=\"{levelStr}\"" };
+                            foreach (var (attr, (_, val)) in modAttrs)
+                                parts.Add($"{attr}=\"{val}\"");
+                            string indent = new string('\t', depthStack.Count);
+                            earlyLevels.Add((levelNum, $"{indent}<ZoomLevel {string.Join(" ", parts)}/>"));
+                            appliedZoomLevels.Add(modKey);
+                        }
+                        earlyLevels.Sort((a, b) => a.level.CompareTo(b.level));
+                        foreach (var (_, xmlLine) in earlyLevels)
+                            result.Add(xmlLine);
+                    }
+                }
+
                 continue;
             }
 
@@ -102,6 +164,9 @@ public static class CameraMod
 
             if (matchKey != null)
             {
+                if (tag == "ZoomLevel")
+                    appliedZoomLevels.Add(matchKey);
+
                 foreach (var (attr, (action, value)) in elementMods[matchKey])
                 {
                     if (action == "SET")
@@ -127,7 +192,9 @@ public static class CameraMod
             if (fovValue > 0)
             {
                 string section = (SubElementTags.Contains(tag) || tag == "ZoomLevel") ? parentTag : tag;
-                bool applyFov = section.StartsWith("Player_Basic_Default") || section.StartsWith("Player_Weapon_Default");
+                    bool applyFov = section.StartsWith("Player_")
+                        || section.StartsWith("Cinematic_")
+                        || section.StartsWith("Glide_");
 
                 if (applyFov)
                 {
@@ -154,6 +221,38 @@ public static class CameraMod
 
             if (!SubElementTags.Contains(tag) && tag != "ZoomLevel" && !selfClosing)
                 depthStack.Add((tag, true));
+        }
+
+        return string.Join("\n", result);
+    }
+
+    public static string StripComments(string xmlText)
+    {
+        var lines = xmlText.Split('\n');
+        var result = new List<string>();
+        bool inComment = false;
+
+        foreach (var line in lines)
+        {
+            string stripped = line.Trim();
+
+            if (inComment)
+            {
+                if (stripped.Contains("-->")) inComment = false;
+                continue;
+            }
+
+            if (stripped.Contains("<!--") && !stripped.Contains("-->"))
+            {
+                inComment = true;
+                continue;
+            }
+
+            if (stripped.StartsWith("<!--") && stripped.EndsWith("-->")) continue;
+
+            if (string.IsNullOrEmpty(stripped)) continue;
+
+            result.Add(line);
         }
 
         return string.Join("\n", result);
@@ -487,7 +586,7 @@ public static class CameraMod
         var entry = FindCameraEntry(gameDir);
         EnsureBackup(entry);
         string xml = GetVanillaXml(entry);
-        return StripHeaderComments(xml);
+        return StripComments(xml);
     }
 
     public static Dictionary<string, object> InstallWithModSet(string gameDir, ModificationSet modSet, Action<string>? log = null)
@@ -531,6 +630,7 @@ public static class CameraMod
 
     public static Dictionary<string, object> InstallCameraMod(string gameDir, string style, int fov,
         bool bane, string combat, bool mountHeight = false, double? customUp = null,
+        bool steadycam = true, bool extraZoom = false, bool horseFirstPerson = false,
         Action<string>? log = null)
     {
         log?.Invoke("Finding camera entry...");
@@ -543,18 +643,36 @@ public static class CameraMod
         log?.Invoke("Extracting vanilla XML...");
         string vanillaXml = GetVanillaXml(entry);
 
-        log?.Invoke("Stripping header comments...");
-        vanillaXml = StripHeaderComments(vanillaXml);
+        bool needsInjection = extraZoom || horseFirstPerson;
+        if (needsInjection)
+        {
+            log?.Invoke("Stripping all comments (making room for injected elements)...");
+            vanillaXml = StripComments(vanillaXml);
+        }
+        else
+        {
+            log?.Invoke("Stripping header comments...");
+            vanillaXml = StripHeaderComments(vanillaXml);
+        }
 
         log?.Invoke("Building modification rules...");
         var modSet = CameraRules.BuildModifications(style, fov, bane, combat,
-            mountHeight: mountHeight, customUp: customUp);
+            mountHeight: mountHeight, customUp: customUp, steadycam: steadycam,
+            extraZoom: extraZoom, horseFirstPerson: horseFirstPerson);
         int modCount = modSet.ElementMods.Values.Sum(v => v.Count);
         log?.Invoke($"Rules: {modCount} attribute changes" +
             (modSet.FovValue > 0 ? $", FoV=+{modSet.FovValue}" : ""));
 
         log?.Invoke("Applying modifications...");
         string modifiedXml = ApplyModifications(vanillaXml, modSet);
+
+        try
+        {
+            string debugPath = Path.Combine(BackupsDir, "debug_modified.xml");
+            File.WriteAllText(debugPath, modifiedXml);
+            log?.Invoke($"Debug XML written to: {debugPath}");
+        }
+        catch { }
 
         log?.Invoke("Encoding and size-matching...");
         byte[] xmlBytes = new UTF8Encoding(true).GetBytes(modifiedXml);
