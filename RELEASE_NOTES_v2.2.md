@@ -34,3 +34,9 @@
 - **HUD Centering Disabled** -- A recent Crimson Desert update added integrity checks to UI files. Modifying them triggers a Coherent Gameface watermark overlay. HUD X/Y controls are temporarily disabled until a workaround is found.
 - **Horse First Person clipping** -- Dashing/sprinting in first-person on horseback can cause camera clipping. Experimental feature; proper first-person needs engine support from Pearl Abyss.
 - **Bow aiming with far-left camera** -- When horizontal shift is negative (character on right side), bow aiming may briefly swap sides. Niche edge case.
+
+## Verification
+
+**SHA-256:** `A734F49ABB8A47D9AB02E0039A0FC0FF6A08A96F7E16B3781283F5AE77060E50`
+
+**VirusTotal:** [Scan Results](https://www.virustotal.com/gui/file/a734f49abb8a47d9ab02e0039a0fc0ff6a08a96f7e16b3781283f5ae77060e50)
