@@ -90,6 +90,10 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
+        System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+        System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
+        System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+
         InitializeComponent();
         Loaded += OnLoaded;
         Closing += OnWindowClosing;
