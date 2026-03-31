@@ -34,4 +34,4 @@ If the mod appears to have no effect, try a clean reinstall:
 ---
 
 **SHA-256:** `2015E460DC9A3AC018A7E0CD8876C736BBAE37FE086A9CAEFC31B450126381AA`
-**VirusTotal:** [Scan Results](https://www.virustotal.com/gui/file-analysis/Zjk0MzQwNDZjOWE5ZDJhMDVlMDRjZmRkZTI3ZTgxZjM6MTc3NDk3MjMxOQ==)
+**VirusTotal:** [Scan Results](https://www.virustotal.com/gui/file-analysis/NmExZjI4MDFlYzg3M2U3ODg4ODZlOTJkZjcxMTA2NDc6MTc3NDk3MzIwMw==)
