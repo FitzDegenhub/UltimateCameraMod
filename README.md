@@ -2,9 +2,9 @@
 
 Standalone camera toolkit for Crimson Desert with a full GUI, live camera preview, advanced XML editor, and HUD centering for ultrawide displays.
 
-[![Download](https://img.shields.io/badge/Download-v2.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
+[![Download](https://img.shields.io/badge/Download-v2.3-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/a734f49abb8a47d9ab02e0039a0fc0ff6a08a96f7e16b3781283f5ae77060e50)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWJkODAyNzY3ZmQ5ZjA5OTY0OWVlZDg3OWUzZjI2OGM6MTc3NDk2MTE5Mg==)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 ![Presets with live camera preview](screenshots/presets.png)
@@ -13,7 +13,7 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 
 ### Simple Mode
 - **8 Camera Presets** with live preview — Panoramic, Heroic, Vanilla, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival
-- **Custom Camera** — Slider control over distance, height, and horizontal shift (-1 to +1). Save unlimited named presets, share via import/export codes (`UCM:` strings)
+- **Custom Camera** — Slider control over distance, height, and horizontal shift (-3 to +3). Save unlimited named presets, share via import/export codes (`UCM:` strings)
 - **Field of View** — Adjustable from vanilla 40° up to 80°, with universal FoV consistency across all camera states (guard, aim, mount, glide, cinematic) to eliminate jarring transitions
 - **Centered Camera** — Character dead center, eliminating the left-offset shoulder cam across 150+ camera states
 - **Combat Camera** — Three lock-on zoom levels: Default, Wider, Maximum
@@ -131,10 +131,11 @@ UCM modifies offline data files only. It does not touch game memory, inject code
 Normal — game updates overwrite modded files. Re-open UCM and click Install. Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
-Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file/a734f49abb8a47d9ab02e0039a0fc0ff6a08a96f7e16b3781283f5ae77060e50). Full source is available here to review and build yourself.
+Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file-analysis/ZWJkODAyNzY3ZmQ5ZjA5OTY0OWVlZDg3OWUzZjI2OGM6MTc3NDk2MTE5Mg==). Full source is available here to review and build yourself.
 
 ## Version History
 
+- **v2.3** — Critical fix for horizontal shift not working on 16:9 displays. v2.2 used flat absolute RightOffset values that fought against the game's escalating per-zoom-level offsets, causing the camera to center itself on ZL3/ZL4. Now uses proportional scaling so the character holds screen position across all zoom levels. Slider is delta-based (0 = vanilla). Range expanded to -3..3. Fixed false "Centered" detection, slider labels not populating on startup, banner not updating after install. Banner now shows full install config from saved state. Auto-switches to Custom tab on reopen.
 - **v2.2** — Major feature release. Added Steadycam toggle (revamped smoothing system), Extra Zoom Levels, Horse First Person (experimental), Horizontal Shift slider, universal FoV consistency across all camera states, skill aiming side-consistency (Lantern/Blinding Flash/Bow respect your camera side), Import XML in Advanced Editor, preset sharing via copy-paste codes, update notifications, Expand/Collapse All in Advanced Editor. Fixed horizontal shift direction, Reset Defaults crash, guard release zoom snap, horse mount camera jolt, extra zoom on horseback, Advanced Editor stability and performance. HUD centering temporarily disabled due to game update integrity checks.
 - **v2.1** — Fixed custom preset sliders not writing InDoorUpOffset and RightOffset to all zoom levels.
 - **v2.0** — Complete rewrite from Python to C# / .NET 6 / WPF. Advanced XML editor, preset management, import/export, auto game detection for Steam/Epic/Xbox, settings persistence, mod-active detection.
