@@ -8,7 +8,6 @@ namespace UltimateCameraMod.Controls;
 public class FovPreview : Canvas
 {
     private const double W = 420, H = 270;
-    private const double CamY = 240, CharY = 170, ConeLen = 165;
 
     private static readonly Brush BgBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1e1e1e"));
     private static readonly Brush CharBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c8a24e"));
@@ -21,6 +20,7 @@ public class FovPreview : Canvas
 
     private int _fov = 25;
     private double _roff;
+    private double _dist = 5.0;
     private bool _centered;
 
     public FovPreview()
@@ -31,9 +31,9 @@ public class FovPreview : Canvas
         Redraw();
     }
 
-    public void UpdateParams(int fovDelta, double roff, bool centered)
+    public void UpdateParams(int fovDelta, double roff, bool centered, double distance = 5.0)
     {
-        _fov = fovDelta; _roff = roff; _centered = centered;
+        _fov = fovDelta; _roff = roff; _centered = centered; _dist = distance;
         Redraw();
     }
 
@@ -43,12 +43,20 @@ public class FovPreview : Canvas
         double total = 40 + _fov;
         double half = total / 2 * Math.PI / 180;
         double cx = W / 2;
-        double off = _centered ? 0 : Math.Clamp(_roff * 35, -160, 160);
-        double camX = cx - off, camYPos = CamY;
 
-        double lx = camX - ConeLen * Math.Tan(half);
-        double rx = camX + ConeLen * Math.Tan(half);
-        double ty = camYPos - ConeLen;
+        // Scale cam-to-player gap from distance (5.0 default = 110px gap, range ~50-180px)
+        double gap = Math.Clamp(_dist * 16, 50, 180);
+        double charY = 100;
+        double camYPos = charY + gap;
+        double coneLen = gap + 60;
+
+        double actualRo = _centered ? 0 : 0.5 * (1.0 + (-_roff) / 0.5);
+        double off = Math.Clamp(actualRo * 55, -160, 160);
+        double camX = cx - off;
+
+        double lx = camX - coneLen * Math.Tan(half);
+        double rx = camX + coneLen * Math.Tan(half);
+        double ty = camYPos - coneLen;
 
         var cone = new Polygon
         {
@@ -61,9 +69,9 @@ public class FovPreview : Canvas
         AddDashedLine(camX, camYPos, rx, ty, ConeLineBrush, 4, 4);
 
         var charDot = new Ellipse { Width = 16, Height = 16, Fill = CharBrush };
-        SetLeft(charDot, cx - 8); SetTop(charDot, CharY - 8);
+        SetLeft(charDot, cx - 8); SetTop(charDot, charY - 8);
         Children.Add(charDot);
-        AddText(cx, CharY + 16, "player", LabelBrush, 9);
+        AddText(cx, charY + 16, "player", LabelBrush, 9);
 
         var camIcon = new Rectangle
         {
@@ -75,7 +83,7 @@ public class FovPreview : Canvas
         Children.Add(camIcon);
         AddText(camX, camYPos + 14, "cam", LabelBrush, 9);
 
-        double fovTextY = (CharY + 20 + camYPos) / 2;
+        double fovTextY = (charY + 20 + camYPos) / 2;
         AddText(camX, fovTextY, $"{total:F0}\u00b0 FoV", ConeLineBrush, 14,
             fontFamily: "Consolas", fontWeight: FontWeights.Bold);
 

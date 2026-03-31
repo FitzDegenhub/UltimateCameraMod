@@ -22,6 +22,7 @@ public static class CameraMod
     private static readonly HashSet<string> VanillaFovValues = new() { "45", "53", "40" };
 
     public static Func<string>? BackupsDirOverride { get; set; }
+    public static string? AppVersion { get; set; }
 
     private static string BackupsDir => BackupsDirOverride?.Invoke()
         ?? Path.Combine(AppContext.BaseDirectory, "backups");
@@ -509,14 +510,22 @@ public static class CameraMod
         if (File.Exists(backupPath) && File.Exists(metaPath))
         {
             string meta = File.ReadAllText(metaPath);
-            foreach (var part in meta.Split())
+            var parts = meta.Split();
+            bool compMatch = false;
+            bool versionMatch = string.IsNullOrEmpty(AppVersion);
+            foreach (var part in parts)
             {
                 if (part.StartsWith("comp_size="))
-                {
-                    if (int.TryParse(part["comp_size=".Length..], out int savedComp) && savedComp == entry.CompSize)
-                        return;
-                }
+                    compMatch = int.TryParse(part["comp_size=".Length..], out int savedComp) && savedComp == entry.CompSize;
+                if (part.StartsWith("ucm_version="))
+                    versionMatch = part["ucm_version=".Length..] == AppVersion;
             }
+
+            if (compMatch && versionMatch)
+                return;
+
+            if (!versionMatch)
+                log?.Invoke("UCM version changed -- refreshing vanilla backup...");
         }
 
         Directory.CreateDirectory(bdir);
@@ -557,7 +566,8 @@ public static class CameraMod
             }
 
             File.WriteAllBytes(backupPath, data);
-            File.WriteAllText(metaPath, $"comp_size={entry.CompSize} orig_size={entry.OrigSize}");
+            string verTag = string.IsNullOrEmpty(AppVersion) ? "" : $" ucm_version={AppVersion}";
+            File.WriteAllText(metaPath, $"comp_size={entry.CompSize} orig_size={entry.OrigSize}{verTag}");
             log?.Invoke($"Backup saved ({entry.CompSize} bytes)");
         }
     }

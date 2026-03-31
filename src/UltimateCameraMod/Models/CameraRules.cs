@@ -258,12 +258,9 @@ public static class CameraRules
             "Player_Weapon_Guard", "Player_Weapon_Rush" })
             Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", "0.5");
 
-        // Mount FoV normalization
-        Set(m, "Player_Ride_Horse_Dash", "Fov", "40");
-        Set(m, "Player_Ride_Horse_Dash_Att", "Fov", "40");
-        Set(m, "Player_Ride_Horse_Att_Thrust", "Fov", "40");
-        Set(m, "Player_Ride_Horse_Att_L", "Fov", "40");
-        Set(m, "Player_Ride_Horse_Att_R", "Fov", "40");
+        // Mount FoV normalization -- ALL horse states to 40 to prevent FoV pops on transitions
+        foreach (var sec in HorseRideSections)
+            Set(m, sec, "Fov", "40");
         Set(m, "Player_Ride_Elephant", "Fov", "40");
         Set(m, "Player_Ride_Wyvern", "Fov", "50");
 
@@ -296,53 +293,29 @@ public static class CameraRules
         Set(m, "Player_Animal_Default_Runfast/OffsetByVelocity", "DampSpeed", "0.5");
         Set(m, "Player_Animal_Default_Walk/CameraBlendParameter", "BlendInTime", "0.3");
 
-        // Horse idle smoothing
-        Set(m, "Player_Ride_Horse", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse", "FollowPitchSpeedRate", "0.75");
-        Set(m, "Player_Ride_Horse", "FollowStartTime", "1");
-        Set(m, "Player_Ride_Horse/CameraBlendParameter", "BlendInTime", "1.0");
-        Set(m, "Player_Ride_Horse/CameraBlendParameter", "BlendOutTime", "1.0");
-        Set(m, "Player_Ride_Horse/OffsetByVelocity", "OffsetLength", "0.0");
-
-        Set(m, "Player_Ride_Horse_Run", "FollowPitchSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Run", "FollowStartTime", "1");
-        Set(m, "Player_Ride_Horse_Run/OffsetByVelocity", "OffsetLength", "0.0");
-
-        Set(m, "Player_Ride_Horse_Fast_Run", "FollowPitchSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Fast_Run", "FollowStartTime", "1");
-        Set(m, "Player_Ride_Horse_Fast_Run", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Fast_Run/CameraBlendParameter", "BlendInTime", "1.0");
-        Set(m, "Player_Ride_Horse_Fast_Run/CameraBlendParameter", "BlendOutTime", "1.0");
-        Set(m, "Player_Ride_Horse_Fast_Run/OffsetByVelocity", "DampSpeed", "0.5");
-        Set(m, "Player_Ride_Horse_Fast_Run/OffsetByVelocity", "OffsetLength", "0.0");
-
-        Set(m, "Player_Ride_Horse_Dash", "FollowPitchSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Dash", "FollowStartTime", "1");
-        Set(m, "Player_Ride_Horse_Dash", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Dash/CameraBlendParameter", "BlendInTime", "1.0");
-        Set(m, "Player_Ride_Horse_Dash/CameraBlendParameter", "BlendOutTime", "1.0");
-        Set(m, "Player_Ride_Horse_Dash/OffsetByVelocity", "DampSpeed", "0.5");
-        Set(m, "Player_Ride_Horse_Dash/OffsetByVelocity", "OffsetLength", "0.0");
-
-        Set(m, "Player_Ride_Horse_Dash_Att", "FollowPitchSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Dash_Att", "FollowStartTime", "1");
-        Set(m, "Player_Ride_Horse_Dash_Att", "FollowYawSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Dash_Att/CameraBlendParameter", "BlendInTime", "1.0");
-        Set(m, "Player_Ride_Horse_Dash_Att/CameraBlendParameter", "BlendOutTime", "1.0");
-        Set(m, "Player_Ride_Horse_Dash_Att/CameraDamping", "PivotDampingMaxDistance", "0.5");
-        Set(m, "Player_Ride_Horse_Dash_Att/OffsetByVelocity", "DampSpeed", "0.5");
-        Set(m, "Player_Ride_Horse_Dash_Att/OffsetByVelocity", "OffsetLength", "0.0");
-
-        Set(m, "Player_Ride_Horse_Att_Thrust", "FollowPitchSpeedRate", "0.8");
-        Set(m, "Player_Ride_Horse_Att_Thrust", "FollowStartTime", "1");
-        Set(m, "Player_Ride_Horse_Att_Thrust", "FollowYawSpeedRate", "0.8");
-
-        Set(m, "Player_Ride_Horse_Att_L/CameraBlendParameter", "BlendInTime", "1.0");
-        Set(m, "Player_Ride_Horse_Att_L/CameraBlendParameter", "BlendOutTime", "1.0");
-        Set(m, "Player_Ride_Horse_Att_L/OffsetByVelocity", "OffsetLength", "0.0");
-        Set(m, "Player_Ride_Horse_Att_R/CameraBlendParameter", "BlendInTime", "1.0");
-        Set(m, "Player_Ride_Horse_Att_R/CameraBlendParameter", "BlendOutTime", "1.0");
-        Set(m, "Player_Ride_Horse_Att_R/OffsetByVelocity", "OffsetLength", "0.0");
+        // Horse normalization -- flatten ALL ride states so transitions are invisible.
+        // Uniform follow rates, blend times, velocity offset, damping, pitch, and
+        // lateral position (RightOffset) across every horse sub-state.
+        foreach (var sec in HorseRideSections)
+        {
+            Set(m, sec, "FollowYawSpeedRate", "0.8");
+            Set(m, sec, "FollowPitchSpeedRate", "0.8");
+            Set(m, sec, "FollowStartTime", "1");
+            Set(m, sec, "FollowDefaultPitch", "13");
+            Set(m, $"{sec}/CameraBlendParameter", "BlendInTime", "1.0");
+            Set(m, $"{sec}/CameraBlendParameter", "BlendOutTime", "1.0");
+            Set(m, $"{sec}/CameraDamping", "PivotDampingMaxDistance", "0.5");
+            Set(m, $"{sec}/OffsetByVelocity", "OffsetLength", "0.0");
+            Set(m, $"{sec}/OffsetByVelocity", "DampSpeed", "0.5");
+            Set(m, $"{sec}/ZoomLevel[0]", "RightOffset", "0.8");
+            Set(m, $"{sec}/ZoomLevel[0]", "UpOffset", "0.2");
+            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", "1.8");
+            Set(m, $"{sec}/ZoomLevel[1]", "RightOffset", "1.1");
+            Set(m, $"{sec}/ZoomLevel[1]", "UpOffset", "0.3");
+            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", "3.5");
+            Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", "1.45");
+            Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", "1.8");
+        }
 
         // Elephant
         Set(m, "Player_Ride_Elephant", "FollowPitchSpeedRate", "0.8");
@@ -357,21 +330,16 @@ public static class CameraRules
         Set(m, "Player_Ride_Wyvern", "FollowYawSpeedRate", "0.8");
         Set(m, "Player_Ride_Wyvern/OffsetByVelocity", "OffsetLength", "0.0");
 
-        // Mount ZoomDistance normalization — anchor ALL zoom levels across all
-        // ride sub-states to consistent values so speed/dash transitions
-        // don't cause zoom in/out snaps.
+        // Mount ZoomDistance normalization -- only target zoom levels that exist in
+        // vanilla to avoid injecting phantom ZL elements. Horse/Elephant have ZL2+ZL3;
+        // Wyvern has ZL2+ZL3+ZL4.
         foreach (var sec in HorseRideSections)
         {
-            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", "1.8");
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "7.5");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "10.5");
-            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "14.0");
         }
-        Set(m, "Player_Ride_Elephant/ZoomLevel[1]", "ZoomDistance", "2.0");
         Set(m, "Player_Ride_Elephant/ZoomLevel[2]", "ZoomDistance", "8.0");
         Set(m, "Player_Ride_Elephant/ZoomLevel[3]", "ZoomDistance", "11.0");
-        Set(m, "Player_Ride_Elephant/ZoomLevel[4]", "ZoomDistance", "14.0");
-        Set(m, "Player_Ride_Wyvern/ZoomLevel[1]", "ZoomDistance", "4.0");
         Set(m, "Player_Ride_Wyvern/ZoomLevel[2]", "ZoomDistance", "12.0");
         Set(m, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", "16.0");
         Set(m, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", "20.0");
@@ -853,6 +821,84 @@ public static class CameraRules
     private const double VanillaRoZL3 = 0.8;
     private const double VanillaRoZL4 = 1.1;
 
+    // Mount vanilla RightOffset baselines (section, zl, vanilla value)
+    private static readonly (string Section, int ZL, double Vanilla)[] MountRoBaselines = BuildMountBaselines();
+
+    // Aim, interaction, and focus RightOffset baselines.
+    // Use on-foot baselines (0.5/0.8/1.1) for sections that transition from normal
+    // gameplay so the camera doesn't snap horizontally when activating abilities.
+    private static readonly (string Section, int ZL, double Vanilla)[] AimInteractionRoBaselines =
+    {
+        // Lantern / spotlight -- match each ZL to its corresponding normal camera baseline
+        ("Player_Basic_Default_Aim_Zoom", 2, VanillaRoZL2),
+        ("Player_Basic_Default_Aim_Zoom", 3, VanillaRoZL3),
+        ("Player_Basic_Default_Aim_Zoom", 4, VanillaRoZL4),
+        // Blinding flash
+        ("Player_Taeguk_Aim", 2, VanillaRoZL2),
+        ("Player_Taeguk_Aim", 3, VanillaRoZL3),
+        // Weapon aim/zoom
+        ("Player_Weapon_Aim_Zoom", 2, VanillaRoZL3),
+        ("Player_Weapon_Aim_Zoom", 3, VanillaRoZL4),
+        ("Player_Weapon_Zoom", 2, VanillaRoZL3),
+        ("Player_Weapon_Zoom", 3, VanillaRoZL3),
+        ("Player_Weapon_Zoom", 4, VanillaRoZL4),
+        ("Player_Weapon_Zoom_Light", 2, VanillaRoZL3),
+        ("Player_Weapon_Zoom_Light", 3, VanillaRoZL3),
+        ("Player_Weapon_Zoom_Out", 2, VanillaRoZL3),
+        ("Player_Weapon_Zoom_Out", 3, VanillaRoZL3),
+        // Bow
+        ("Player_Bow_Aim_Zoom_Start", 2, VanillaRoZL3),
+        ("Player_Bow_Aim_Zoom_Ing", 2, VanillaRoZL3),
+        ("Player_Bow_Aim_Zoom", 2, VanillaRoZL3),
+        ("Player_Bow_Aim_LockOn", 2, VanillaRoZL3),
+        // Ride aim
+        ("Player_Ride_Aim_Zoom", 2, VanillaRoZL3),
+        // Interaction / focus (CTRL)
+        ("Player_Interaction_LockOn", 2, VanillaRoZL3),
+        ("Interaction_LookAt", 2, VanillaRoZL3),
+        // Glide aim
+        ("Glide_Kick_Aim_Zoom", 2, VanillaRoZL4),
+        ("Glide_Bow_Aim_Zoom", 2, VanillaRoZL4),
+        // Freefall aim
+        ("Player_Basic_FreeFall_Aim", 2, VanillaRoZL3),
+        ("Player_Basic_FreeFall_Aim", 3, VanillaRoZL3),
+        // Tool aim
+        ("Player_Tool_Aim_Melee", 2, VanillaRoZL2),
+        // Throw aim
+        ("Player_Throw_Aim", 2, VanillaRoZL2),
+        // Weapon aim boss
+        ("Player_Weapon_Aim_BossAttack", 2, VanillaRoZL2),
+        ("Player_Weapon_Aim_BossAttack", 3, VanillaRoZL3),
+        ("Player_Weapon_Aim_SmallBossAttack", 2, VanillaRoZL2),
+        ("Player_Weapon_Aim_SmallBossAttack", 3, VanillaRoZL2),
+    };
+
+    private static (string, int, double)[] BuildMountBaselines()
+    {
+        var list = new List<(string, int, double)>();
+        foreach (var sec in HorseRideSections)
+        {
+            list.Add((sec, 0, 0.8));
+            list.Add((sec, 1, 1.1));
+            list.Add((sec, 2, 1.45));
+            list.Add((sec, 3, 1.8));
+        }
+        list.Add(("Player_Ride_Elephant", 2, 1.3));
+        list.Add(("Player_Ride_Elephant", 3, 1.6));
+        list.Add(("Player_Ride_Wyvern", 2, 3.0));
+        list.Add(("Player_Ride_Wyvern", 3, 4.0));
+        list.Add(("Player_Ride_Wyvern", 4, 5.0));
+        list.Add(("Player_Ride_Canoe", 2, 0.9));
+        list.Add(("Player_Ride_Canoe", 3, 1.1));
+        list.Add(("Player_Ride_Warmachine", 2, 2.4));
+        list.Add(("Player_Ride_Warmachine", 3, 2.8));
+        list.Add(("Player_Ride_Warmachine_Aim", 2, 1.8));
+        list.Add(("Player_Ride_Warmachine_Dash", 2, 0.8));
+        list.Add(("Player_Ride_Broom", 2, 0.3));
+        list.Add(("Player_Ride_Broom", 3, 0.4));
+        return list.ToArray();
+    }
+
     public static Dictionary<string, Dictionary<string, (string, string)>> BuildCustom(
         double distance, double upOffset, double rightOffset)
     {
@@ -894,44 +940,28 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "InDoorUpOffset", upStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "ZoomDistance", $"{zl4Dist}");
 
-        if (rightOffset > 0)
+        // Apply horizontal shift to ALL mount sections (same proportional factor)
+        foreach (var (sec, zl, vanilla) in MountRoBaselines)
+            Set(m, $"{sec}/ZoomLevel[{zl}]", "RightOffset", $"{vanilla * factor:F2}");
+
+        // Scale horse zoom distances from the user's distance value
+        double horseZL0Dist = Math.Round(distance * 0.36, 1);
+        double horseZL1Dist = Math.Round(distance * 0.7, 1);
+        double horseZL2Dist = Math.Round(distance * 1.5, 1);
+        double horseZL3Dist = Math.Round(distance * 2.1, 1);
+        foreach (var sec in HorseRideSections)
         {
-            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "-0.50");
-            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "-0.60");
-            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", "-0.60");
-
-            Set(m, "Player_Taeguk_Aim/ZoomLevel[2]", "RightOffset", "-0.50");
-            Set(m, "Player_Taeguk_Aim/ZoomLevel[3]", "RightOffset", "-0.60");
-
-            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[2]", "RightOffset", "-0.80");
-            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[3]", "RightOffset", "-0.90");
-
-            Set(m, "Player_Weapon_Zoom/ZoomLevel[2]", "RightOffset", "-0.68");
-            Set(m, "Player_Weapon_Zoom/ZoomLevel[3]", "RightOffset", "-0.60");
-            Set(m, "Player_Weapon_Zoom/ZoomLevel[4]", "RightOffset", "-0.90");
-
-            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[2]", "RightOffset", "-0.68");
-            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[3]", "RightOffset", "-0.68");
+            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", $"{horseZL0Dist}");
+            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", $"{horseZL1Dist}");
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{horseZL2Dist}");
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{horseZL3Dist}");
         }
-        else if (rightOffset <= 0)
-        {
-            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.50");
-            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.60");
-            Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", "0.60");
 
-            Set(m, "Player_Taeguk_Aim/ZoomLevel[2]", "RightOffset", "0.50");
-            Set(m, "Player_Taeguk_Aim/ZoomLevel[3]", "RightOffset", "0.60");
-
-            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.80");
-            Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.90");
-
-            Set(m, "Player_Weapon_Zoom/ZoomLevel[2]", "RightOffset", "0.68");
-            Set(m, "Player_Weapon_Zoom/ZoomLevel[3]", "RightOffset", "0.60");
-            Set(m, "Player_Weapon_Zoom/ZoomLevel[4]", "RightOffset", "0.90");
-
-            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[2]", "RightOffset", "0.68");
-            Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[3]", "RightOffset", "0.68");
-        }
+        // Apply horizontal shift to aim, interaction, and focus sections so the
+        // camera doesn't snap to a different position when activating abilities
+        // (lantern, blinding flash, bow, CTRL focus, etc.)
+        foreach (var (sec, zl, vanilla) in AimInteractionRoBaselines)
+            Set(m, $"{sec}/ZoomLevel[{zl}]", "RightOffset", $"{vanilla * factor:F2}");
 
         return m;
     }

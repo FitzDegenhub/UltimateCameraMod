@@ -17,7 +17,7 @@ namespace UltimateCameraMod;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "2.3";
+    private const string Ver = "2.4";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
 
@@ -86,10 +86,37 @@ public partial class MainWindow : Window
 
     // ── Constructor ──────────────────────────────────────────────────
 
+    private static string WindowStatePath => Path.Combine(ExeDir, "window_state.json");
+
     public MainWindow()
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        Closing += OnWindowClosing;
+        RestoreWindowSize();
+    }
+
+    private void RestoreWindowSize()
+    {
+        try
+        {
+            if (!File.Exists(WindowStatePath)) return;
+            var doc = JsonDocument.Parse(File.ReadAllText(WindowStatePath));
+            double w = doc.RootElement.GetProperty("width").GetDouble();
+            double h = doc.RootElement.GetProperty("height").GetDouble();
+            if (w >= 800 && h >= 600) { Width = w; Height = h; }
+        }
+        catch { }
+    }
+
+    private void OnWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        try
+        {
+            string json = JsonSerializer.Serialize(new { width = Width, height = Height });
+            File.WriteAllText(WindowStatePath, json);
+        }
+        catch { }
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -157,8 +184,10 @@ public partial class MainWindow : Window
     {
         string backupsDir = Path.Combine(ExeDir, "backups");
         CameraMod.BackupsDirOverride = () => backupsDir;
+        CameraMod.AppVersion = Ver;
         HudMod.BackupsDirOverride = () => Path.Combine(backupsDir, "hud");
 
+        CleanStaleData(backupsDir);
         _savedState = LoadInstallState();
 
         string pt = _gameDir;
@@ -280,6 +309,36 @@ public partial class MainWindow : Window
         SyncPreview();
     }
 
+    // ── Stale data cleanup ───────────────────────────────────────────
+
+    private void CleanStaleData(string backupsDir)
+    {
+        try
+        {
+            string metaPath = Path.Combine(backupsDir, "backup_meta.txt");
+            if (!File.Exists(metaPath)) return;
+
+            string meta = File.ReadAllText(metaPath);
+            string savedVer = "";
+            foreach (var part in meta.Split())
+            {
+                if (part.StartsWith("ucm_version="))
+                    savedVer = part["ucm_version=".Length..];
+            }
+
+            if (savedVer == Ver) return;
+
+            // Version mismatch -- wipe stale backups and saved state
+            if (Directory.Exists(backupsDir))
+                Directory.Delete(backupsDir, true);
+            if (File.Exists(StatePath))
+                File.Delete(StatePath);
+
+            SetStatus($"Cleaned old v{(string.IsNullOrEmpty(savedVer) ? "?" : savedVer)} data. Please click Install to apply your settings.", "Warn");
+        }
+        catch { }
+    }
+
     // ── State persistence ────────────────────────────────────────────
 
     private static string StatePath => Path.Combine(ExeDir, "last_install.json");
@@ -290,7 +349,14 @@ public partial class MainWindow : Window
         {
             if (!File.Exists(StatePath)) return null;
             string json = File.ReadAllText(StatePath);
-            return JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+            var state = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+            if (state != null)
+            {
+                string savedVer = state.GetValueOrDefault("ucm_version")?.ToString() ?? "";
+                if (savedVer != Ver)
+                    return null;
+            }
+            return state;
         }
         catch { return null; }
     }
@@ -302,6 +368,7 @@ public partial class MainWindow : Window
     {
         var state = new Dictionary<string, object>
         {
+            ["ucm_version"] = Ver,
             ["comp_size"] = compSize, ["style"] = style, ["fov"] = fov,
             ["bane"] = bane, ["combat"] = combat, ["mount_height"] = mountHeight,
             ["hud_width"] = hudWidth, ["hud_height"] = hudHeight,
@@ -509,7 +576,7 @@ public partial class MainWindow : Window
         {
             double d = DistSlider.Value, h = HeightSlider.Value, ro = HShiftSlider.Value;
             Preview.UpdateParams(d, h, "Custom");
-            FovPreviewCtrl.UpdateParams(fov, ro, centered);
+            FovPreviewCtrl.UpdateParams(fov, ro, centered, d);
         }
         else
         {
@@ -519,7 +586,7 @@ public partial class MainWindow : Window
             foreach (var (id, lbl) in Styles)
                 if (id == sid) { name = lbl.Split("  -  ")[0]; break; }
             Preview.UpdateParams(d, u, name);
-            FovPreviewCtrl.UpdateParams(fov, ro, centered);
+            FovPreviewCtrl.UpdateParams(fov, ro, centered, d);
         }
     }
 
@@ -558,13 +625,13 @@ public partial class MainWindow : Window
             HShiftSlider.IsEnabled = false;
             HShiftLabel.Text = "0.0";
             HShiftLabel.Foreground = (Brush)FindResource("TextDimBrush");
-            HShiftTip.Text = "\u26A0 Locked to 0 \u2014 untick Centered Camera to adjust";
+            HShiftTip.Text = "\u26A0 Centered Camera forces character to screen center \u2014 untick to adjust";
         }
         else
         {
             HShiftSlider.IsEnabled = true;
             HShiftLabel.Foreground = (Brush)FindResource("TextPrimaryBrush");
-            HShiftTip.Text = "0 = vanilla position. Negative = character left, positive = character right.";
+            HShiftTip.Text = "0 = vanilla (character slightly left). Center is ~0.5. Negative = further left, positive = further right.";
         }
     }
 
@@ -1349,6 +1416,11 @@ public partial class MainWindow : Window
 
     private void OnNexusClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(NexusUrl) { UseShellExecute = true });
     private void OnGitHubClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(GitHubUrl) { UseShellExecute = true });
+    private void OnOpenGameFolder(object s, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_gameDir) && Directory.Exists(_gameDir))
+            Process.Start(new ProcessStartInfo(_gameDir) { UseShellExecute = true });
+    }
 
     private static int GetInt(Dictionary<string, object>? dict, string key, int def = 0)
     {
