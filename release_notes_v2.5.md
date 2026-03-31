@@ -32,3 +32,4 @@ v2.5 forces `InvariantCulture` (period decimal separator) for all number formatt
 ---
 
 **SHA-256:** `091BDB6456DF85B25CE80A90D26710AE1A7F55EDF189F8921CBAFB153262074A`
+**VirusTotal:** [Scan Results](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
