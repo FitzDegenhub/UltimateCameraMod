@@ -47,7 +47,7 @@ public static class PresetCodec
 
         distance = Math.Clamp(distance, 1.5, 12.0);
         height = Math.Clamp(height, -1.6, 0.5);
-        rightOffset = Math.Clamp(rightOffset, -1.0, 1.0);
+        rightOffset = Math.Clamp(rightOffset, -3.0, 3.0);
 
         return (name, distance, height, rightOffset);
     }

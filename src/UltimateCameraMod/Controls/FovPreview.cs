@@ -43,7 +43,7 @@ public class FovPreview : Canvas
         double total = 40 + _fov;
         double half = total / 2 * Math.PI / 180;
         double cx = W / 2;
-        double off = _centered ? 0 : _roff * 35;
+        double off = _centered ? 0 : Math.Clamp(_roff * 35, -160, 160);
         double camX = cx - off, camYPos = CamY;
 
         double lx = camX - ConeLen * Math.Tan(half);

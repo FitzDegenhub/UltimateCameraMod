@@ -24,7 +24,7 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
                     <TextBlock Text="ULTIMATE CAMERA MOD" FontSize="15" FontWeight="Bold"
                                Foreground="{StaticResource AccentBrush}"/>
-                    <TextBlock Text="  v2.2  |  by 0xFitz" FontSize="10"
+                    <TextBlock Text="  v2.3  |  by 0xFitz" FontSize="10"
                                Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
                     <Ellipse x:Name="VersionDot" Width="7" Height="7" Fill="#555" Margin="12,0,0,0" VerticalAlignment="Center"/>
                     <TextBlock x:Name="VersionStatus" Text="checking..." FontSize="9"
@@ -143,7 +143,7 @@
 
                                 <TextBlock Text="Horizontal shift" Style="{StaticResource FieldLabel}" Grid.Row="4"/>
                                 <Slider x:Name="HShiftSlider" Grid.Row="4" Grid.Column="1"
-                                        Minimum="-1" Maximum="1" Value="0" TickFrequency="0.1"
+                                        Minimum="-3" Maximum="3" Value="0" TickFrequency="0.1"
                                         IsSnapToTickEnabled="True" ValueChanged="OnSliderChanged"/>
                                 <TextBlock x:Name="HShiftLabel" Grid.Row="4" Grid.Column="2"
                                            FontFamily="Consolas" FontSize="11"
@@ -178,7 +178,7 @@
                             </StackPanel>
 
                             <TextBlock FontSize="9" Foreground="{StaticResource TextDimBrush}" Margin="0,6,0,0"
-                                       Text="Limits: Dist 1.5-12.0  |  Height -1.6 to 0.5  |  Shift -1.0 to 1.0"/>
+                                       Text="Limits: Dist 1.5-12.0  |  Height -1.6 to 0.5  |  Shift -3.0 to 3.0"/>
                         </StackPanel>
                     </Border>
 

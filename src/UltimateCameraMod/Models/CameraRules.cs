@@ -47,7 +47,7 @@ public static class CameraRules
     private static readonly string[] AllMain = BasicSections.Concat(WeaponSections).ToArray();
 
     private static readonly string[] BaneSections =
-        BasicSections.Concat(new[] { "Player_Basic_Default_Aim_Zoom" }).Concat(WeaponSections).ToArray();
+        BasicSections.Concat(WeaponSections).ToArray();
 
     private static readonly string[] HorseRideSections =
     {
@@ -663,7 +663,7 @@ public static class CameraRules
     private static Dictionary<string, Dictionary<string, (string, string)>> BuildBaneMods()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-        var indoorRightZl2 = new HashSet<string> { "Player_Basic_Default", "Player_Basic_Default_Aim_Zoom", "Player_Weapon_Default" };
+        var indoorRightZl2 = new HashSet<string> { "Player_Basic_Default", "Player_Weapon_Default" };
 
         foreach (var sec in BaneSections)
         {
@@ -718,8 +718,6 @@ public static class CameraRules
             "Player_Weapon_Rush/ZoomLevel[2]", "Player_Weapon_Rush/ZoomLevel[3]", "Player_Weapon_Rush/ZoomLevel[4]",
             "Player_Weapon_Down/ZoomLevel[2]", "Player_Weapon_Down/ZoomLevel[3]", "Player_Weapon_Down/ZoomLevel[4]",
             "Player_Weapon_Indoor/ZoomLevel[3]",
-            "Player_Weapon_Zoom/ZoomLevel[2]", "Player_Weapon_Zoom/ZoomLevel[3]", "Player_Weapon_Zoom/ZoomLevel[4]",
-            "Player_Weapon_Zoom_Light/ZoomLevel[2]", "Player_Weapon_Zoom_Light/ZoomLevel[3]",
             "Player_Weapon_Zoom_Out/ZoomLevel[2]", "Player_Weapon_Zoom_Out/ZoomLevel[3]",
             "Player_Weapon_LockOn_System/ZoomLevel[2]", "Player_Weapon_LockOn_System/ZoomLevel[3]", "Player_Weapon_LockOn_System/ZoomLevel[4]",
             "Player_Revive_LockOn_System/ZoomLevel[2]", "Player_Revive_LockOn_System/ZoomLevel[3]", "Player_Revive_LockOn_System/ZoomLevel[4]",
@@ -763,6 +761,24 @@ public static class CameraRules
             "Player_Ride_Wyvern/ZoomLevel[2]", "Player_Ride_Wyvern/ZoomLevel[3]", "Player_Ride_Wyvern/ZoomLevel[4]",
         })
             Set(m, key, "RightOffset", "0.0");
+
+        // Aim sections: keep positive offsets so aiming moves camera naturally
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.50");
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.60");
+        Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "RightOffset", "0.60");
+
+        Set(m, "Player_Taeguk_Aim/ZoomLevel[2]", "RightOffset", "0.50");
+        Set(m, "Player_Taeguk_Aim/ZoomLevel[3]", "RightOffset", "0.60");
+
+        Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.80");
+        Set(m, "Player_Weapon_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.90");
+
+        Set(m, "Player_Weapon_Zoom/ZoomLevel[2]", "RightOffset", "0.68");
+        Set(m, "Player_Weapon_Zoom/ZoomLevel[3]", "RightOffset", "0.60");
+        Set(m, "Player_Weapon_Zoom/ZoomLevel[4]", "RightOffset", "0.90");
+
+        Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[2]", "RightOffset", "0.68");
+        Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[3]", "RightOffset", "0.68");
 
         return m;
     }
@@ -832,6 +848,11 @@ public static class CameraRules
 
     // ── Custom style builder ─────────────────────────────────────────
 
+    // Vanilla RightOffset baselines per zoom level (from playercamerapreset.xml)
+    private const double VanillaRoZL2 = 0.5;
+    private const double VanillaRoZL3 = 0.8;
+    private const double VanillaRoZL4 = 1.1;
+
     public static Dictionary<string, Dictionary<string, (string, string)>> BuildCustom(
         double distance, double upOffset, double rightOffset)
     {
@@ -839,22 +860,28 @@ public static class CameraRules
         double zl3Dist = Math.Round(distance, 1);
         double zl4Dist = Math.Round(distance * 1.5, 1);
         string upStr = $"{upOffset:F2}";
-        string roStr = $"{-rightOffset:F2}";
+
+        // Slider is a delta: 0 = vanilla, negative = character further left, positive = further right.
+        // Scale proportionally so the character holds screen position across all zoom levels.
+        double factor = 1.0 + (-rightOffset) / VanillaRoZL2;
+        string roZL2 = $"{VanillaRoZL2 * factor:F2}";
+        string roZL3 = $"{VanillaRoZL3 * factor:F2}";
+        string roZL4 = $"{VanillaRoZL4 * factor:F2}";
 
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
         {
             Set(m, $"{sec}/ZoomLevel[2]", "UpOffset", upStr);
             Set(m, $"{sec}/ZoomLevel[2]", "InDoorUpOffset", upStr);
-            Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", roStr);
+            Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", roZL2);
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{zl2Dist}");
             Set(m, $"{sec}/ZoomLevel[3]", "UpOffset", upStr);
             Set(m, $"{sec}/ZoomLevel[3]", "InDoorUpOffset", upStr);
-            Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", roStr);
+            Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", roZL3);
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{zl3Dist}");
             Set(m, $"{sec}/ZoomLevel[4]", "UpOffset", upStr);
             Set(m, $"{sec}/ZoomLevel[4]", "InDoorUpOffset", upStr);
-            Set(m, $"{sec}/ZoomLevel[4]", "RightOffset", roStr);
+            Set(m, $"{sec}/ZoomLevel[4]", "RightOffset", roZL4);
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", $"{zl4Dist}");
         }
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "UpOffset", upStr);
@@ -867,7 +894,7 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "InDoorUpOffset", upStr);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[4]", "ZoomDistance", $"{zl4Dist}");
 
-        if (rightOffset >= 0)
+        if (rightOffset > 0)
         {
             Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "-0.50");
             Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "-0.60");
@@ -886,7 +913,7 @@ public static class CameraRules
             Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[2]", "RightOffset", "-0.68");
             Set(m, "Player_Weapon_Zoom_Light/ZoomLevel[3]", "RightOffset", "-0.68");
         }
-        else if (rightOffset < 0)
+        else if (rightOffset <= 0)
         {
             Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "RightOffset", "0.50");
             Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "RightOffset", "0.60");

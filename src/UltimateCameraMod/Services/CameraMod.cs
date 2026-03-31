@@ -443,9 +443,15 @@ public static class CameraMod
             fovChanged = !VanillaFovValues.Contains(status.DetectedFov);
         }
 
-        // Centered camera: bane mod sets RightOffset="0.0" on ZoomLevel children
-        status.CenteredCamera = Regex.IsMatch(xml,
-            @"<ZoomLevel\s+[^>]*?RightOffset=""0\.0""");
+        // Centered camera: check Player_Basic_Default_Run ZL2 specifically.
+        // Vanilla has RightOffset="0.5"; only Bane sets it to "0.0".
+        var baneCheck = Regex.Match(xml,
+            @"<Player_Basic_Default_Run\b[^>]*>[\s\S]*?<ZoomLevel\s+([^>]*?)/?>");
+        if (baneCheck.Success)
+        {
+            string ro = ExtractAttr(baneCheck.Groups[1].Value, "RightOffset") ?? "0.5";
+            status.CenteredCamera = ro == "0.0" || ro == "0.00" || ro == "0";
+        }
 
         // Combat: our mod sets TargetRate="0.25" on Player_Weapon_LockOn (vanilla is 0.5)
         var lockOnMatch = Regex.Match(xml,

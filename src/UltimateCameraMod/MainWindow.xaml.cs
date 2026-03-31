@@ -17,7 +17,7 @@ namespace UltimateCameraMod;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "2.2";
+    private const string Ver = "2.3";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
 
@@ -266,9 +266,18 @@ public partial class MainWindow : Window
                     }
                 }
             }
+
+            if (savedStyle == "custom")
+                SwitchTab("custom");
         }
 
         _suppressEvents = false;
+
+        DistLabel.Text = $"{DistSlider.Value:F1}";
+        HeightLabel.Text = $"{HeightSlider.Value:F1}";
+        HShiftLabel.Text = $"{HShiftSlider.Value:F1}";
+        ApplyCenteredLock();
+        SyncPreview();
     }
 
     // ── State persistence ────────────────────────────────────────────
@@ -313,41 +322,98 @@ public partial class MainWindow : Window
     {
         try
         {
-            var status = CameraMod.DetectLiveStatus(_gameDir);
-            bool hudModded = HudMod.DetectHudModified(_gameDir);
-
-            if (!status.IsModified && !hudModded)
+            if (_savedState == null)
             {
                 BannerPanel.Visibility = Visibility.Collapsed;
                 return;
             }
-
-            BannerPanel.Visibility = Visibility.Visible;
-
-            var parts = new List<string>();
-
-            if (status.FovDelta != 0)
-                parts.Add($"FoV {(status.FovDelta > 0 ? "+" : "")}{status.FovDelta}\u00b0");
-            if (status.StyleModified)
-                parts.Add("Camera style");
-            if (status.CenteredCamera)
-                parts.Add("Centered");
-            if (status.CombatModified)
-                parts.Add("Combat camera");
-            if (status.MountModified)
-                parts.Add("Mount camera");
-            if (hudModded)
-                parts.Add("HUD centered");
-            if (status.IsModified && parts.Count == 0)
-                parts.Add("Camera modified");
-
-            string details = parts.Count > 0 ? string.Join("  |  ", parts) : "modified";
-
-            BannerPanel.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x1F, 0x00));
-            BannerText.Text = $"\u26A0  Game files modified:  {details}";
-            BannerText.Foreground = FindResource("WarnBrush") as Brush;
+            ShowBannerFromState(_savedState);
         }
         catch { BannerPanel.Visibility = Visibility.Collapsed; }
+    }
+
+    private void ShowBannerFromState(Dictionary<string, object> state)
+    {
+        int fov = GetInt(state, "fov", 0);
+        string style = state.GetValueOrDefault("style")?.ToString() ?? "default";
+        bool bane = GetBool(state, "bane");
+        string combat = state.GetValueOrDefault("combat")?.ToString() ?? "default";
+        bool mountH = GetBool(state, "mount_height");
+        bool steadycam = GetBool(state, "steadycam", true);
+        bool extraZoom = GetBool(state, "extra_zoom");
+        bool horseFP = GetBool(state, "horse_first_person");
+
+        double dist = 5.0, height = 0.0, hshift = 0.0;
+        if (state.ContainsKey("custom"))
+        {
+            try
+            {
+                var custom = JsonSerializer.Deserialize<JsonElement>(state["custom"].ToString()!);
+                dist = custom.TryGetProperty("distance", out var d) ? d.GetDouble() : 5.0;
+                height = custom.TryGetProperty("height", out var h) ? h.GetDouble() : 0.0;
+                hshift = custom.TryGetProperty("right_offset", out var r) ? r.GetDouble() : 0.0;
+            }
+            catch { }
+        }
+
+        string styleName = style;
+        foreach (var (id, lbl) in Styles)
+            if (id == style) { styleName = lbl.Split("  -  ")[0]; break; }
+        if (style == "custom") styleName = "Custom";
+
+        var parts = new List<string>();
+
+        if (fov != 0)
+            parts.Add($"FoV +{fov}\u00b0");
+
+        if (style == "custom")
+            parts.Add($"Dist {dist:F1}  |  Height {height:F1}  |  Shift {hshift:F1}");
+        else
+            parts.Add(styleName);
+
+        if (bane) parts.Add("Centered");
+
+        var globals = new List<string>();
+        if (combat != "default") globals.Add("Combat");
+        if (mountH) globals.Add("Mount cam");
+        if (steadycam) globals.Add("Steadycam");
+        if (extraZoom) globals.Add("Extra zoom");
+        if (horseFP) globals.Add("Horse FP");
+        if (globals.Count > 0)
+            parts.Add(string.Join(", ", globals));
+
+        if (parts.Count == 0)
+        {
+            BannerPanel.Visibility = Visibility.Collapsed;
+            return;
+        }
+
+        BannerPanel.Visibility = Visibility.Visible;
+        BannerPanel.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x1F, 0x00));
+        BannerText.Text = $"\u26A0  Game files modified:  {string.Join("  |  ", parts)}";
+        BannerText.Foreground = FindResource("WarnBrush") as Brush;
+    }
+
+    private void UpdateBannerFromInstall(int fov, string style, bool bane, string combat, bool mount, bool hud)
+    {
+        if (_savedState != null)
+        {
+            ShowBannerFromState(_savedState);
+            return;
+        }
+
+        var parts = new List<string>();
+        if (fov != 0) parts.Add($"FoV +{fov}\u00b0");
+        if (style != "default") parts.Add(style == "custom" ? "Custom" : "Preset");
+        if (bane) parts.Add("Centered");
+        if (combat != "default") parts.Add("Combat");
+        if (mount) parts.Add("Mount cam, Steadycam");
+        if (parts.Count == 0) { BannerPanel.Visibility = Visibility.Collapsed; return; }
+
+        BannerPanel.Visibility = Visibility.Visible;
+        BannerPanel.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x1F, 0x00));
+        BannerText.Text = $"\u26A0  Game files modified:  {string.Join("  |  ", parts)}";
+        BannerText.Foreground = FindResource("WarnBrush") as Brush;
     }
 
     // ── GitHub version check ─────────────────────────────────────────
@@ -498,7 +564,7 @@ public partial class MainWindow : Window
         {
             HShiftSlider.IsEnabled = true;
             HShiftLabel.Foreground = (Brush)FindResource("TextPrimaryBrush");
-            HShiftTip.Text = "How far left/right the camera sits from the character. Centered camera locks this to 0.";
+            HShiftTip.Text = "0 = vanilla position. Negative = character left, positive = character right.";
         }
     }
 
@@ -578,7 +644,7 @@ public partial class MainWindow : Window
             _suppressEvents = true;
             DistSlider.Value = Math.Clamp(data.GetValueOrDefault("distance", 5.0), 1.5, 12.0);
             HeightSlider.Value = Math.Clamp(data.GetValueOrDefault("height", 0.0), -1.6, 0.5);
-            HShiftSlider.Value = Math.Clamp(data.GetValueOrDefault("right_offset", 0.0), -1.0, 1.0);
+            HShiftSlider.Value = Math.Clamp(data.GetValueOrDefault("right_offset", 0.0), -3.0, 3.0);
             DistLabel.Text = $"{DistSlider.Value:F1}";
             HeightLabel.Text = $"{HeightSlider.Value:F1}";
             HShiftLabel.Text = $"{HShiftSlider.Value:F1}";
@@ -742,12 +808,14 @@ public partial class MainWindow : Window
                     {
                         SetStatus("Installed! Launch the game.", "Success");
                         SaveInstallState(compSize, styleId, fov, bane, combat, customParams, mountHeight, hudWidth, hudHeight, steadycam, extraZoom, horseFirstPerson);
+                        _savedState = LoadInstallState();
+                        CheckForUpdate();
                     }
                     else
                     {
                         SetStatus("Install failed. Is the game running?", "Error");
+                        CheckForUpdate();
                     }
-                    CheckForUpdate();
                     SetButtons(true);
                 });
             }
@@ -756,6 +824,7 @@ public partial class MainWindow : Window
                 Dispatcher.Invoke(() =>
                 {
                     SetStatus($"Error: {ex.Message}", "Error");
+                    CheckForUpdate();
                     SetButtons(true);
                 });
             }
