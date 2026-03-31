@@ -614,7 +614,7 @@ public static class CameraMod
         EnsureBackup(entry, log);
 
         log?.Invoke("Reading vanilla XML...");
-        string vanillaXml = StripHeaderComments(GetVanillaXml(entry));
+        string vanillaXml = StripComments(GetVanillaXml(entry));
 
         log?.Invoke("Applying modifications...");
         string modifiedXml = ApplyModifications(vanillaXml, modSet);
@@ -659,7 +659,7 @@ public static class CameraMod
         log?.Invoke("Extracting vanilla XML...");
         string vanillaXml = GetVanillaXml(entry);
 
-        bool needsInjection = extraZoom || horseFirstPerson;
+        bool needsInjection = extraZoom || horseFirstPerson || steadycam;
         if (needsInjection)
         {
             log?.Invoke("Stripping all comments (making room for injected elements)...");
