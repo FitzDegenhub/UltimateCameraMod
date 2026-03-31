@@ -17,7 +17,7 @@ namespace UltimateCameraMod;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "2.4";
+    private const string Ver = "2.5";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
 

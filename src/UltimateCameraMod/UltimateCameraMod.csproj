@@ -10,7 +10,7 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <AssemblyName>UltimateCameraMod</AssemblyName>
     <RootNamespace>UltimateCameraMod</RootNamespace>
-    <Version>2.4.0</Version>
+    <Version>2.5.0</Version>
     <Authors>0xFitz</Authors>
     <Description>Camera configuration tool for Crimson Desert</Description>
 
