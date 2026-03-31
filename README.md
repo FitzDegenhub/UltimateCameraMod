@@ -4,7 +4,7 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 
 [![Download](https://img.shields.io/badge/Download-v2.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/d0d2e8d483eae1cecca2cc6358e517d111cbad2984ba52c39d48e13cfcd2cf48?nocache=1)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/NDFkN2U3M2U5ZjA2ZDI4Mzc4ZjE1MDVkZjFhNTgwNzg6MTc3NDk1Mjg0Mw==)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 ![Presets with live camera preview](screenshots/presets.png)
@@ -131,7 +131,7 @@ UCM modifies offline data files only. It does not touch game memory, inject code
 Normal — game updates overwrite modded files. Re-open UCM and click Install. Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
-Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file/d0d2e8d483eae1cecca2cc6358e517d111cbad2984ba52c39d48e13cfcd2cf48?nocache=1). Full source is available here to review and build yourself.
+Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file-analysis/NDFkN2U3M2U5ZjA2ZDI4Mzc4ZjE1MDVkZjFhNTgwNzg6MTc3NDk1Mjg0Mw==). Full source is available here to review and build yourself.
 
 ## Version History
 
