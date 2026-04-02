@@ -15,7 +15,6 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 | **Windows taskbar icon** | `SetCurrentProcessExplicitAppUserModelID` plus **`SHGetPropertyStoreForWindow`**: `System.AppUserModel.ID` and **`RelaunchIconResource`** (with `ucm.ico` next to the exe and under `Assets/`). Complements `WM_SETICON` / class-icon retries for title bar + shell. |
 | **Preset JSON** | `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` for preset files; header string extraction decodes JSON escapes (fixes garbled `+` / `\u002B` in descriptions). |
 | **Game patch awareness** | `GameInstallBaselineTracker` saves install metadata (incl. Steam `appmanifest` where applicable) after a successful apply; UI can warn when the install may have changed — reinstall / re-export after updates. |
-| **Maintainer tool** | `tools/ReadVanillaQuickBaseline` — CLI check: prints the same Quick baseline triple as the app for a given game directory (optional self-contained build; see tool `.csproj`). |
 
 ### Build & run v3 (Windows)
 
@@ -127,8 +126,6 @@ src/UltimateCameraMod.V3/       # v3 export-first UI (links shared Models/Servic
 ├── ApplicationIdentity.cs
 ├── Assets/ucm.ico
 └── UltimateCameraMod.V3.csproj
-
-tools/ReadVanillaQuickBaseline/ # Optional: verify vanilla Quick baseline from a game folder
 ```
 
 ## Support
@@ -181,7 +178,7 @@ v2.4 automatically cleans stale data from previous versions on first launch. If 
 
 ## Version History
 
-- **v3.0-dev** (`v3-dev` branch) — Export-first preset workflow, file-based preset manager, true Vanilla preset from raw game XML + Quick baseline sync, Windows taskbar identity (`RelaunchIconResource`), preset JSON escaping fixes, game install baseline tracker, expanded Export JSON UI, new app icon assets, `ReadVanillaQuickBaseline` maintainer tool. *Not yet on GitHub Releases — build from source or use CI artifacts when available.*
+- **v3.0-dev** (`v3-dev` branch) — Export-first preset workflow, file-based preset manager, true Vanilla preset from raw game XML + Quick baseline sync, Windows taskbar identity (`RelaunchIconResource`), preset JSON escaping fixes, game install baseline tracker, expanded Export JSON UI, new app icon assets. *Not yet on GitHub Releases — build from source or use CI artifacts when available.*
 - **v2.4** — Proportional horizontal shift (fixes drift across zoom levels), horizontal shift on all mounts and all aim/interaction abilities, horse camera overhaul (all 8 states normalized, 4 zoom levels, distance scales with Custom slider), fixed phantom zoom level injection, version-aware backups with auto-cleanup, lantern aim baselines matched per zoom level, FoV preview distance-aware, game path in header with folder shortcut, resizable window with size persistence, improved tooltips.
 - **v2.3** — Critical fix for horizontal shift not working on 16:9 displays. Delta-based slider (0 = vanilla). Range expanded to -3..3. Fixed false "Centered" detection, banner shows full install config from saved state.
 - **v2.2** — Major feature release. Steadycam toggle, Extra Zoom Levels, Horse First Person, Horizontal Shift slider, universal FoV consistency, skill aiming side-consistency, Import XML in Advanced Editor, preset sharing, update notifications, Expand/Collapse All. HUD centering temporarily disabled.

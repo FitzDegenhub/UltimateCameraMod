@@ -13,7 +13,7 @@ release/
 *.suo
 *.csproj.user
 
-# Claude Code worktrees
+# Local-only worktree under src (do not commit)
 src/.claude/
 
 # Runtime data
