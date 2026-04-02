@@ -1,5 +1,121 @@
 namespace UltimateCameraMod.Models;
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// CameraRules — Architecture Overview
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// This file is the entire camera modification rule engine. It produces a
+// ModificationSet (a dictionary of XML attribute patches) that CameraMod.cs
+// applies to the vanilla playercamerapreset.xml inside the game's 0.paz file.
+//
+// ── Layering order (BuildModifications) ─────────────────────────────────────
+//
+//  1. BuildSharedBase()
+//     Global normalisation: FOV=40 across all sections, on-foot ZoomDistance
+//     set to 3.4/6/8 for ZL2/ZL3/ZL4, combat/guard distances matched to on-foot
+//     so idle→walk→run→combat transitions have no distance jump.
+//
+//  2. BuildSmoothing()  [only when Steadycam is enabled]
+//     Smooths every camera transition the user will notice:
+//     - CameraBlendParameter (BlendInTime/BlendOutTime) on all major sections
+//     - OffsetByVelocity damping so the camera doesn't sway on run/dash
+//     - MaxZoomDistance=30 on all lock-on and finisher sections so vanilla
+//       ceilings (e.g. "5") never clamp the camera when the user has a high
+//       custom distance set
+//     - Blend smoothing on stealth finishers (SilenceKill) and combat
+//       finisher (Weapon_Down) so kill animations ease in instead of snapping
+//     NOTE: ZoomDistance is NOT set here for lock-on/finisher sections.
+//           That is handled by BuildLockOnDistances() called from each style
+//           builder so distances always match the user's chosen style.
+//
+//  2b. BuildSharedSteadycam()  [only when Steadycam is enabled]
+//      UpOffset zeroing on horse/mount sections so the camera height doesn't
+//      jump when mounting.
+//
+//  3. BuildLockOnDistances(zl2, zl3, zl4)  [seeded with default 3.4/6/8]
+//     Sets ZoomDistance on ALL lock-on sections, stealth finishers, and the
+//     combat finisher (Weapon_Down) to match the style's on-foot distances.
+//     This is the key fix for the "zoom-in on lock-on" problem:
+//     - Vanilla lock-on sections have fixed low ZoomDistance values (e.g. 1.2,
+//       3, 4) with MaxZoomDistance ceilings as low as 5 that clamp the camera
+//       inward the moment lock-on engages.
+//     - Every style builder calls Merge(m, BuildLockOnDistances(...)) with its
+//       own distances so lock-on always mirrors on-foot.
+//     - BuildModifications seeds the default (3.4/6/8) before the style layer
+//       so "default" style and custom presets are also covered.
+//     - After Fine Tune or God Mode overrides are applied, BuildCuratedSessionXml
+//       and BuildGodModeSessionXml re-read the actual on-foot ZL2/ZL3/ZL4 from
+//       the resulting XML and call BuildLockOnDistancesPublic() again so manual
+//       ZoomDistance edits are also reflected in lock-on.
+//
+//  4. Style builder (BuildWestern / BuildCinematic / BuildImmersive /
+//                    BuildLowcamVariant / BuildRe2 / BuildCustom)
+//     Sets ZoomDistance, UpOffset, RightOffset for AllMain sections.
+//     Each builder ends with Merge(m, BuildLockOnDistances(zl2, zl3, zl4))
+//     using its own distances so lock-on is always in sync.
+//
+//  5. BuildBaneMods()  [optional]
+//     Centres the camera (RightOffset=0) for the Bane centred-camera option.
+//
+//  6. CombatLockOn (wide / max)  [optional]
+//     Pushes specific boss/wide lock-on sections further out than the base.
+//     These override BuildLockOnDistances for only the sections that benefit.
+//
+//  7. BuildMountHeightMods()  [optional]
+//     Matches horse camera height to the player's UpOffset setting.
+//
+// ── Lock-on zoom problem & fix ───────────────────────────────────────────────
+//
+//  Problem: When you lock onto a target the game switches to a lock-on camera
+//  section (Player_Weapon_LockOn, Player_Weapon_TwoTarget, etc.). Vanilla these
+//  sections have hardcoded ZoomDistance values much lower than on-foot, AND
+//  MaxZoomDistance ceilings (e.g. 5) that clamp the camera inward. At a custom
+//  distance of 12 the on-foot camera is at ZL3=12 but lock-on snaps to ZL3=4
+//  with a ceiling of 5 — a brutal zoom-in.
+//
+//  Fix applied in two places:
+//  a) BuildSmoothing sets MaxZoomDistance=30 on all lock-on/finisher ZLs
+//     (a non-constraining ceiling — no gameplay downside).
+//  b) BuildLockOnDistances sets ZoomDistance to match the style's on-foot
+//     values, called by every style builder and seeded as a default in
+//     BuildModifications before the style layer runs.
+//
+// ── Sections that are NOT in AllMain but need distance scaling ───────────────
+//
+//  Player_Weapon_LockOn, Player_Weapon_TwoTarget, Player_Weapon_LockOn_System,
+//  Player_Revive_LockOn_System, Player_FollowLearn_LockOn_Boss,
+//  Player_Weapon_LockOn_Non_Rotate, Player_Weapon_LockOn_WrestleOnly,
+//  Player_Interaction_TwoTarget  → handled by BuildLockOnDistances (ZL2/3/4)
+//
+//  Player_SilenceKill, Player_SilenceKill_Back  → stealth finishers, only ZL2,
+//  vanilla ZoomDistance=1.2 (extreme close-up).
+//  !! DO NOT MODIFY THESE SECTIONS !! Changing any attribute (ZoomDistance,
+//  MaxZoomDistance, or CameraBlendParameter) on either SilenceKill section
+//  causes an immediate game crash on load. Confirmed via bisect testing.
+//  Root cause unknown — likely the engine treats these sections specially.
+//  Leave them at vanilla values.
+//
+//  Player_Weapon_Down  → combat finisher when enemy is downed, vanilla 3/4/6
+//  fixed distances with BlendInTime=0.5 (hard snap). Scaled via
+//  BuildLockOnDistances; blend softened in BuildSmoothing.
+//
+//  Player_Weapon_Guard  → IS in AllMain (WeaponSections) so it gets distance
+//  scaling from the style builder automatically. Guard distance matches on-foot.
+//
+// ── XML injection ────────────────────────────────────────────────────────────
+//
+//  Some lock-on sections only have ZL1 or ZL2 in vanilla. When BuildSmoothing
+//  or BuildLockOnDistances targets ZL3/ZL4 on those sections, CameraMod.cs
+//  auto-injects the missing ZoomLevel nodes when it closes the ZoomLevelInfo
+//  block. This is intentional — all lock-on sections should have ZL2/3/4 so
+//  the game never forces a zoom level change on transition.
+//  CAUTION: injected nodes increase XML payload size. The compressed result
+//  must fit within the original PAZ slot (orig_size). If the game crashes on
+//  load after a fresh Steam verify, check install_trace.txt — comp_size must
+//  be <= orig_size. If it exceeds it, reduce the number of injections.
+//
+// ═══════════════════════════════════════════════════════════════════════════════
+
 /// <summary>
 /// Complete camera modification rule engine. Port of camera_rules.py.
 /// All presets, styles, section lists, and the layered composition system.
@@ -359,6 +475,10 @@ public static class CameraRules
         Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[2]", "MaxZoomDistance", "30");
         Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[3]", "MaxZoomDistance", "30");
 
+        // Combat finisher (Player_Weapon_Down) -- vanilla BlendInTime=0.5 snaps hard on kill
+        Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendInTime", "1.2");
+        Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendOutTime", "1.5");
+
         // Lock-on blend smoothing -- soften transitions into and out of lock-on cameras
         Set(m, "Player_Weapon_LockOn/CameraBlendParameter", "BlendInTime", "1.25");
         Set(m, "Player_Weapon_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
@@ -444,6 +564,10 @@ public static class CameraRules
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
         }
+        // Player_Weapon_Down distance scaling -- scale with user's distance
+        Set(m, "Player_Weapon_Down/ZoomLevel[2]", "ZoomDistance", zl2s);
+        Set(m, "Player_Weapon_Down/ZoomLevel[3]", "ZoomDistance", zl3s);
+        Set(m, "Player_Weapon_Down/ZoomLevel[4]", "ZoomDistance", zl4s);
         return m;
     }
 
