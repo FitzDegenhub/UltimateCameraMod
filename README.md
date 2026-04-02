@@ -39,13 +39,14 @@ v3 includes every camera feature from v2 plus a redesigned UI, file-based preset
 | **Centered camera** | Dead-center character across 150+ camera states, eliminating the left-offset shoulder cam |
 | **Combat camera** | Three lock-on zoom levels: Default, Wider, Maximum |
 | **Mount camera sync** | Mount cameras match your chosen player camera height |
-| **Extra zoom levels** | Two additional zoom-out levels (ZL5 + ZL6) on foot and mounted |
-| **Horse first person** | Scroll all the way in to see through your character's eyes. Works at walk/trot; may clip during dashes |
-| **Horse camera overhaul** | All 8 horse states normalized — identical FoV, blend times, follow rates, damping. 4 zoom levels that scale with your distance slider. No jolts during speed transitions |
 | **Horizontal shift on all mounts** | Horse, elephant, wyvern, canoe, warmachine, and broom all respect your shift setting with proportional scaling |
 | **Skill aiming consistency** | Lantern, Blinding Flash, Bow, and all aim/zoom/interaction skills respect horizontal shift. No camera snap when activating abilities |
 | **Steadycam smoothing** | Normalized blend timing and FoV across idle, walk, run, sprint, combat, guard, and mount states. Community-tunable via the editor |
 | **HUD centering** | Width slider (1200–3840 px) for ultrawide. *Currently disabled — a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found.* |
+
+> **v3 design philosophy: value edits only, no structural injection.**
+>
+> Earlier versions injected new XML lines into the camera file (extra zoom levels, horse first-person mode, horse camera overhaul with additional zoom tiers). v3 removes these features intentionally. Injecting structure has a much higher chance of breaking after game updates, and personal preferences for niche camera modes are better served by dedicated mods distributed through mod managers. UCM now modifies only existing values — the same line count, the same element structure, the same attributes. This makes presets safer to share and more resilient across game patches.
 
 ### Three-tier editor (v3)
 
