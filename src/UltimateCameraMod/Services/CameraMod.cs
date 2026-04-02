@@ -401,6 +401,32 @@ public static class CameraMod
         }
     }
 
+    /// <summary>
+    /// Reads the three on-foot ZoomDistance values (ZL2/ZL3/ZL4) from
+    /// <c>Player_Basic_Default</c> in the given XML string.
+    /// Returns true only if all three are present and parseable.
+    /// </summary>
+    public static bool TryParseOnFootZoomDistances(string xml,
+        out double zl2, out double zl3, out double zl4)
+    {
+        zl2 = zl3 = zl4 = 0;
+        try
+        {
+            var rows = ParseXmlToRows(xml);
+            var lookup = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var r in rows)
+                lookup[r.FullKey] = r.Value;
+
+            static bool TryD(string? s, out double d) =>
+                double.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out d);
+
+            return lookup.TryGetValue("Player_Basic_Default/ZoomLevel[2].ZoomDistance", out var s2) && TryD(s2, out zl2)
+                && lookup.TryGetValue("Player_Basic_Default/ZoomLevel[3].ZoomDistance", out var s3) && TryD(s3, out zl3)
+                && lookup.TryGetValue("Player_Basic_Default/ZoomLevel[4].ZoomDistance", out var s4) && TryD(s4, out zl4);
+        }
+        catch { return false; }
+    }
+
     // ── Entry finding ────────────────────────────────────────────────
 
     public static PazEntry FindCameraEntry(string gameDir)

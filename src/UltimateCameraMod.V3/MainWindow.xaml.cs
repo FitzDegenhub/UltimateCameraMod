@@ -1559,64 +1559,140 @@ public partial class MainWindow : Window
     private bool IsActivePresetEditingLocked() =>
         _selectedPresetManagerItem?.IsLocked == true;
 
-    /// <summary>Disables editors when the selected preset is locked (sidebar padlock).</summary>
+    /// <summary>
+    /// True when the active preset is a UCM preset and the user is on Fine Tune or God Mode.
+    /// UCM Quick remains editable for all presets (personal preference sliders can't break a preset).
+    /// Fine Tune and God Mode can silently corrupt a UCM preset's carefully tuned values.
+    /// </summary>
+    private bool IsActivePresetDeepEditLocked() =>
+        _selectedPresetManagerItem?.IsUcmPreset == true &&
+        (_activeMode == "advanced" || _activeMode == "expert");
+
+    /// <summary>
+    /// True when UCM Quick Global Settings (FOV, Combat, Steadycam, etc.) should be blocked.
+    /// Only fires for non-UCM presets the user has manually padlocked.
+    /// UCM presets always allow Global Settings edits — they are personal preferences.
+    /// </summary>
+    private bool IsQuickEditLocked() =>
+        IsActivePresetEditingLocked() && _selectedPresetManagerItem?.IsUcmPreset == false;
+
+    /// <summary>
+    /// True when the Custom Offsets sliders (Distance, Height, H-Shift) should be blocked.
+    /// Blocked for UCM presets (hard-locked by design) and manually padlocked user presets.
+    /// </summary>
+    private bool IsOffsetsEditLocked() =>
+        _selectedPresetManagerItem?.IsUcmPreset == true || IsActivePresetEditingLocked();
+
+    /// <summary>
+    /// Applies the two-tier preset lock to the editor UI using opacity-based greying.
+    /// Controls remain visible and readable but are visually dimmed and non-interactive.
+    ///
+    /// Tier 1 — full lock (user-toggled padlock on a non-UCM preset):
+    ///   Everything greyed out including UCM Quick.
+    ///
+    /// Tier 2 — UCM preset:
+    ///   Quick panels are fully live (personal preferences — can't corrupt a preset).
+    ///   Fine Tune sliders and God Mode grid are greyed out (read-only).
+    ///   Fine Tune / God Mode tab buttons are dimmed to signal read-only entry.
+    /// </summary>
     private void ApplyPresetEditingLockUi()
     {
-        bool locked = IsActivePresetEditingLocked();
+        bool isUcmPreset = _selectedPresetManagerItem?.IsUcmPreset == true;
+        bool quickLocked = IsQuickEditLocked();
+        bool deepLocked  = isUcmPreset || IsActivePresetEditingLocked();
 
-        if (locked)
+        // Custom Offsets panel: greyed for UCM presets (hard-locked by design) and padlocked user presets
+        bool offsetsLocked = isUcmPreset || quickLocked;
+        double offsetsOpacity = offsetsLocked ? 0.45 : 1.0;
+        QuickOffsetsPanel.Opacity = offsetsOpacity;
+        QuickOffsetsPanel.IsHitTestVisible = !offsetsLocked;
+        // Also disable the sliders directly so the thumb style's IsEnabled=False trigger fires
+        _suppressEvents = true;
+        try
         {
-            _suppressEvents = true;
-            try
-            {
-                DistSlider.IsEnabled = false;
-                HeightSlider.IsEnabled = false;
-                HShiftSlider.IsEnabled = false;
-            }
-            finally
-            {
-                _suppressEvents = false;
-            }
-
-            FovCombo.IsEnabled = false;
-            CombatCombo.IsEnabled = false;
-            BaneCheck.IsEnabled = false;
-            MountHeightCheck.IsEnabled = false;
-            SteadycamCheck.IsEnabled = false;
+            DistSlider.IsEnabled = !offsetsLocked;
+            HeightSlider.IsEnabled = !offsetsLocked;
+            HShiftSlider.IsEnabled = !offsetsLocked;
         }
-        else
-        {
-            DistSlider.IsEnabled = true;
-            HeightSlider.IsEnabled = true;
-            HShiftSlider.IsEnabled = true;
-            FovCombo.IsEnabled = true;
-            CombatCombo.IsEnabled = true;
-            BaneCheck.IsEnabled = true;
-            MountHeightCheck.IsEnabled = true;
-            SteadycamCheck.IsEnabled = true;
+        finally { _suppressEvents = false; }
+
+        // Global Settings panel: always full brightness and interactive (FOV, Combat, Steadycam are personal preferences)
+        QuickGlobalPanel.Opacity = quickLocked ? 0.45 : 1.0;
+        QuickGlobalPanel.IsHitTestVisible = !quickLocked;
+
+        if (!quickLocked)
             ApplyCenteredLock();
-        }
 
-        // Disable Fine Tune sliders individually (not the panel — expanders must still work)
+        // Fine Tune sliders: grey out for UCM presets and hard-locked presets
+        double deepOpacity = deepLocked ? 0.38 : 1.0;
         foreach (var (_, slider) in _advCtrlSliders)
-            if (slider != null) slider.IsEnabled = !locked;
-        ExpertDataGrid.IsReadOnly = locked;
+            if (slider != null) { slider.IsEnabled = !deepLocked; slider.Opacity = 1.0; }
+        ExpertDataGrid.IsReadOnly = deepLocked;
+        ExpertDataGrid.Opacity = deepOpacity;
 
+        // Tab buttons: dim Fine Tune + God Mode for UCM presets to signal read-only
+        TabFineTune.Opacity = isUcmPreset ? 0.5 : 1.0;
+        TabGodMode.Opacity  = isUcmPreset ? 0.5 : 1.0;
+
+        if (!deepLocked)
+            ApplySteadycamSliderLock();
+    }
+
+    /// <summary>
+    /// Disables fine-tune sliders for parameters that Steadycam controls when Steadycam is active,
+    /// so manual adjustments can't silently conflict with Steadycam's applied values.
+    /// </summary>
+    private void ApplySteadycamSliderLock()
+    {
+        if (_advCtrlSliders.Count == 0) return;
+        _steadycamKeys ??= CameraRules.GetSteadycamKeys();
+        bool steadycamOn = SteadycamCheck.IsChecked == true;
+        bool presetLocked = IsActivePresetEditingLocked() || IsActivePresetDeepEditLocked();
+
+        var alreadyProcessed = new HashSet<Slider>(ReferenceEqualityComparer.Instance);
+        foreach (var (key, slider) in _advCtrlSliders)
+        {
+            if (slider == null || alreadyProcessed.Contains(slider)) continue;
+            if (!_steadycamKeys.Contains(key)) continue;
+            alreadyProcessed.Add(slider);
+
+            bool shouldLock = steadycamOn && !presetLocked;
+            slider.IsEnabled = !shouldLock;
+            slider.Opacity = shouldLock ? 0.38 : 1.0;
+            if (_advCtrlValueLabels.TryGetValue(key, out var lbl) && lbl != null)
+                lbl.Opacity = shouldLock ? 0.38 : 1.0;
+            if (shouldLock)
+                slider.ToolTip = "Controlled by Steadycam — uncheck Steadycam to adjust manually";
+        }
     }
 
     private DateTime _lastLockedToastTime = DateTime.MinValue;
 
+    private void OnEditorPreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (IsActivePresetEditingLocked())
+            ShowLockedToastIfNeeded();
+    }
+
     /// <summary>Shows a "locked" toast if the user tries to edit while preset is locked. Throttled to 3s.</summary>
     private void ShowLockedToastIfNeeded()
     {
-        if (!IsActivePresetEditingLocked()) return;
+        bool hard = IsActivePresetEditingLocked();
+        bool deep = !hard && IsActivePresetDeepEditLocked();
+        bool offsets = !hard && !deep && IsOffsetsEditLocked();
+        if (!hard && !deep && !offsets) return;
         if ((DateTime.Now - _lastLockedToastTime).TotalSeconds > 3)
         {
             _lastLockedToastTime = DateTime.Now;
-            bool isUcm = _selectedPresetManagerItem?.IsUcmPreset == true;
-            string msg = isUcm
-                ? "\uD83D\uDD12 UCM preset \u2014 duplicate to create an editable copy"
-                : "\uD83D\uDD12 Preset is locked \u2014 unlock the padlock to edit";
+            string msg;
+            if (deep)
+                msg = "\uD83D\uDD12 UCM preset \u2014 duplicate it to use Fine Tune or God Mode";
+            else if (offsets)
+                msg = "\uD83D\uDD12 UCM preset \u2014 duplicate to adjust distance and height";
+            else if (_selectedPresetManagerItem?.IsUcmPreset == true)
+                msg = "\uD83D\uDD12 UCM preset \u2014 duplicate to create an editable copy";
+            else
+                msg = "\uD83D\uDD12 Preset is locked \u2014 unlock the padlock to edit";
             QueueSavedToast(msg, isError: true);
         }
     }
@@ -1744,7 +1820,7 @@ public partial class MainWindow : Window
                     }
 
                     SetLoadedPresetContext(item.Name, item.KindLabel, item.SourceLabel,
-                        item.StatusText, item.SummaryText);
+                        item.StatusText, item.SummaryText, item.Url);
                     break;
                 }
             }
@@ -1934,7 +2010,7 @@ public partial class MainWindow : Window
 
             string sidebarSource = string.IsNullOrWhiteSpace(author)
                 ? sourceDisplayName
-                : $"{sourceDisplayName} — by {author}";
+                : author;
 
             item = new PresetManagerItem
             {
@@ -1959,11 +2035,7 @@ public partial class MainWindow : Window
     private string BuildImportedPresetSummaryText(ImportedPreset preset)
     {
         if (!string.IsNullOrWhiteSpace(preset.Description))
-        {
-            string desc = preset.Description.Replace("\n", " ").Trim();
-            if (desc.Length > 200) desc = desc[..197] + "...";
-            return desc;
-        }
+            return preset.Description.Replace("\n", " ").Trim();
         return $"Imported from {preset.SourceType.ToUpperInvariant()} ({preset.SourceDisplayName})";
     }
 
@@ -2033,11 +2105,11 @@ public partial class MainWindow : Window
             {
                 try
                 {
-                    // Read only the first 2KB to extract metadata without parsing the huge session_xml
+                    // Read the first 4KB to extract metadata without parsing the huge session_xml
                     string header;
                     using (var reader = new StreamReader(file))
                     {
-                        var buf = new char[2048];
+                        var buf = new char[4096];
                         int read = reader.Read(buf, 0, buf.Length);
                         header = new string(buf, 0, read);
                     }
@@ -2047,6 +2119,7 @@ public partial class MainWindow : Window
                     string desc = ExtractJsonStringField(header, "description") ?? "";
                     string kind = kindOverride ?? ExtractJsonStringField(header, "kind") ?? "user";
                     bool isLocked = ExtractJsonBoolField(header, "locked") ?? defaultLocked;
+                    string url = ExtractJsonStringField(header, "url") ?? "";
 
                     items.Add(new PresetManagerItem
                     {
@@ -2063,11 +2136,12 @@ public partial class MainWindow : Window
                         SourceLabel = author,
                         StatusText = desc,
                         SummaryText = string.IsNullOrEmpty(desc)
-                            ? (string.IsNullOrEmpty(author) ? "Custom preset." : $"by {author}")
-                            : $"{desc}{(string.IsNullOrEmpty(author) ? "" : $" — by {author}")}",
+                            ? "Custom preset."
+                            : desc,
                         FilePath = file,
                         CanRebuild = false,
-                        IsLocked = isLocked
+                        IsLocked = isLocked,
+                        Url = url
                     });
                 }
                 catch { /* skip malformed preset files */ }
@@ -2191,6 +2265,8 @@ public partial class MainWindow : Window
 
         if (updateDetails)
             UpdatePresetManagerDetails();
+
+        ApplyPresetEditingLockUi();
     }
 
     private PresetManagerItem? RequireSelectedPresetManagerItem()
@@ -2868,7 +2944,8 @@ public partial class MainWindow : Window
         bool centered = BaneCheck.IsChecked == true;
 
         double d = DistSlider.Value, h = HeightSlider.Value, ro = HShiftSlider.Value;
-        Preview.UpdateParams(d, h, "Custom");
+        string previewLabel = _selectedPresetManagerItem?.Name ?? "Custom";
+        Preview.UpdateParams(d, h, previewLabel);
         FovPreviewCtrl.UpdateParams(fov, ro, centered, d);
     }
 
@@ -2908,7 +2985,10 @@ public partial class MainWindow : Window
             string xml = BuildSimpleSessionXml();
             _sessionXml = xml;
             if (_advCtrlSliders.Count > 0)
+            {
                 ApplySessionXmlToAdvancedControls(xml);
+                ApplySteadycamSliderLock();
+            }
             _advCtrlNeedsRefresh = true;
             _expertNeedsRefresh = true;
         }
@@ -2918,7 +2998,7 @@ public partial class MainWindow : Window
     private void OnSettingChanged(object s, RoutedEventArgs e)
     {
         if (!IsLoaded || _suppressEvents) return;
-        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        if (IsQuickEditLocked()) { ShowLockedToastIfNeeded(); return; }
         _sessionIsFullPreset = false;
         ApplyCenteredLock();
         ScheduleCoalescedPreviewSync();
@@ -2930,7 +3010,7 @@ public partial class MainWindow : Window
     private void OnSettingChanged(object s, SelectionChangedEventArgs e)
     {
         if (!IsLoaded || _suppressEvents) return;
-        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        if (IsQuickEditLocked()) { ShowLockedToastIfNeeded(); return; }
         _sessionIsFullPreset = false;
         ApplyCenteredLock();
         ScheduleCoalescedPreviewSync();
@@ -2942,14 +3022,14 @@ public partial class MainWindow : Window
     private void OnSliderChanged(object s, RoutedPropertyChangedEventArgs<double> e)
     {
         if (_suppressEvents || !IsLoaded) return;
-        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        if (IsOffsetsEditLocked()) { ShowLockedToastIfNeeded(); return; }
         _sessionIsFullPreset = false;
         DistLabel.Text = $"{DistSlider.Value:F1}";
         HeightLabel.Text = $"{HeightSlider.Value:F1}";
         HShiftLabel.Text = $"{HShiftSlider.Value:F1}";
         _selectedStyleId = "custom";
         CaptureCustomDraft(markDirty: true, updateSelector: true);
-        ScheduleDebouncedPreviewSync();
+        SyncPreview();
         ScheduleSyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
@@ -2958,7 +3038,7 @@ public partial class MainWindow : Window
     private void OnBaneChanged(object s, RoutedEventArgs e)
     {
         if (!IsLoaded || _suppressEvents) return;
-        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        if (IsQuickEditLocked()) { ShowLockedToastIfNeeded(); return; }
         _sessionIsFullPreset = false;
         ApplyCenteredLock();
         CaptureCustomDraft(markDirty: true, updateSelector: true);
@@ -3298,6 +3378,22 @@ public partial class MainWindow : Window
             return;
         }
 
+        // UCM presets are read-only in Fine Tune and God Mode to prevent accidental corruption.
+        // Offer to duplicate before entering these tabs.
+        if ((tab == "advanced" || tab == "expert") && _selectedPresetManagerItem?.IsUcmPreset == true)
+        {
+            string tabName = tab == "advanced" ? "Fine Tune" : "God Mode";
+            var result = MessageBox.Show(
+                $"UCM presets are protected — {tabName} changes could corrupt the preset's carefully tuned values.\n\n" +
+                "Duplicate this preset first to create your own editable copy, then use Fine Tune or God Mode freely.\n\n" +
+                $"Open {tabName} in read-only mode anyway? (You can browse values but changes won't save.)",
+                $"UCM Preset — {tabName}",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Information);
+            if (result == MessageBoxResult.No)
+                return;
+        }
+
         // Hide all editor views
         SimpleView.Visibility = Visibility.Collapsed;
         AdvancedControlsView.Visibility = Visibility.Collapsed;
@@ -3393,13 +3489,29 @@ public partial class MainWindow : Window
         if (_advCtrlSliders.Count == 0)
             return xml;
 
-        return CameraMod.ApplyModifications(xml, BuildAdvancedControlsModSet());
+        xml = CameraMod.ApplyModifications(xml, BuildAdvancedControlsModSet());
+
+        // If Steadycam is on, re-sync lock-on ZoomDistances to whatever on-foot ZoomDistances
+        // ended up in the XML after Fine Tune overrides. Fine Tune may have changed ZL2/ZL3/ZL4
+        // on Player_Basic_Default, so we read them back and re-apply BuildLockOnDistances so
+        // lock-on always mirrors the user's actual chosen distances.
+        if (SteadycamCheck.IsChecked == true
+            && CameraMod.TryParseOnFootZoomDistances(xml, out double zl2, out double zl3, out double zl4))
+        {
+            var lockOnSync = new ModificationSet { ElementMods = CameraRules.BuildLockOnDistancesPublic(zl2, zl3, zl4), FovValue = 0 };
+            xml = CameraMod.ApplyModifications(xml, lockOnSync);
+        }
+
+        return xml;
     }
 
     private string BuildGodModeSessionXml()
     {
-        string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
-        return CameraMod.ApplyModifications(vanillaXml, BuildExpertModSet());
+        // Start from the simple session (Steadycam, style, FOV, bane, etc. already applied)
+        // then layer God Mode's explicit overrides on top. This ensures Steadycam and all
+        // Quick settings are present in exports even when the user is on the God Mode tab.
+        string baseXml = BuildSimpleSessionXml();
+        return CameraMod.ApplyModifications(baseXml, BuildExpertModSet());
     }
 
     private ModificationSet BuildExpertModSet()
@@ -3903,6 +4015,8 @@ public partial class MainWindow : Window
     private readonly Dictionary<string, Slider> _advCtrlSliders = new();
     private readonly Dictionary<string, TextBlock> _advCtrlValueLabels = new();
     private readonly Dictionary<string, string> _advCtrlVanilla = new();
+    // Keys controlled by Steadycam -- sliders for these are locked when Steadycam is on
+    private HashSet<string>? _steadycamKeys;
 
     // ── Cached resources (avoid repeated FindResource lookups) ──
     private Style? _accentButtonStyle;
@@ -4060,7 +4174,7 @@ public partial class MainWindow : Window
         slider.ValueChanged += (s, e) =>
         {
             if (_suppressEvents) return;
-            if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); slider.Value = e.OldValue; return; }
+            if (IsActivePresetEditingLocked() || IsActivePresetDeepEditLocked()) { ShowLockedToastIfNeeded(); slider.Value = e.OldValue; return; }
             valueLabel.Text = $"{e.NewValue:F2}";
             bool changed = Math.Abs(e.NewValue - vanillaVal) > 0.001;
             valueLabel.Foreground = changed
@@ -4402,16 +4516,17 @@ public partial class MainWindow : Window
         panel.Children.Add(WrapInCard("Lock-On Tracking", trackingSliders.ToArray()));
 
         // ZoomDistance per lock-on section per zoom level
+        // All sections now expose ZL2+ZL3+ZL4; missing levels are injected by Steadycam.
         var lockOnSections = new[]
         {
-            ("Player_Weapon_LockOn",    new[] { 2, 3 }),
-            ("Player_Weapon_TwoTarget", new[] { 1, 2 }),
-            ("Player_Interaction_TwoTarget", new[] { 1, 2 }),
-            ("Player_FollowLearn_LockOn_Boss", new[] { 2, 3 }),
-            ("Player_Weapon_LockOn_System", new[] { 2, 3 }),
-            ("Player_Revive_LockOn_System", new[] { 2, 3 }),
-            ("Player_Weapon_LockOn_Non_Rotate", new[] { 3 }),
-            ("Player_Weapon_LockOn_WrestleOnly", new[] { 3 }),
+            ("Player_Weapon_LockOn",              new[] { 2, 3, 4 }),
+            ("Player_Weapon_TwoTarget",           new[] { 1, 2, 3, 4 }),
+            ("Player_Interaction_TwoTarget",      new[] { 1, 2, 3, 4 }),
+            ("Player_FollowLearn_LockOn_Boss",    new[] { 2, 3, 4 }),
+            ("Player_Weapon_LockOn_System",       new[] { 2, 3, 4 }),
+            ("Player_Revive_LockOn_System",       new[] { 2, 3, 4 }),
+            ("Player_Weapon_LockOn_Non_Rotate",   new[] { 2, 3, 4 }),
+            ("Player_Weapon_LockOn_WrestleOnly",  new[] { 2, 3, 4 }),
         };
 
         foreach (var (sec, levels) in lockOnSections)
@@ -4472,6 +4587,12 @@ public partial class MainWindow : Window
             ("Player_Animal_Default_Runfast/CameraBlendParameter", "BlendInTime", 0.0, 3.0, 0.1, "Animal sprint blend-in"),
             ("Player_Animal_Default_Runfast/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, "Animal sprint sway"),
             ("Player_Animal_Default_Runfast/OffsetByVelocity", "DampSpeed",    0.0, 2.0, 0.1, "Animal sprint damp"),
+            ("Player_Weapon_LockOn/CameraBlendParameter",               "BlendInTime",  0.0, 3.0, 0.1, "LockOn blend-in"),
+            ("Player_Weapon_LockOn/CameraBlendParameter",               "BlendOutTime", 0.0, 3.0, 0.1, "LockOn blend-out"),
+            ("Player_Weapon_LockOn_System/CameraBlendParameter",        "BlendInTime",  0.0, 3.0, 0.1, "LockOn System blend-in"),
+            ("Player_Weapon_LockOn_System/CameraBlendParameter",        "BlendOutTime", 0.0, 3.0, 0.1, "LockOn System blend-out"),
+            ("Player_FollowLearn_LockOn_Boss/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Boss LockOn blend-in"),
+            ("Player_FollowLearn_LockOn_Boss/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Boss LockOn blend-out"),
         };
 
         foreach (var (modKey, attr, min, max, step, friendlyName) in smoothEntries)
@@ -4964,6 +5085,15 @@ public partial class MainWindow : Window
             }
             else
             {
+                // Update the name field inside the preset file, then rename
+                try
+                {
+                    string json = File.ReadAllText(item.FilePath);
+                    var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(json) ?? new();
+                    dict["name"] = dlg.ResponseText.Trim();
+                    File.WriteAllText(item.FilePath, JsonSerializer.Serialize(dict, PresetFileJsonOptions));
+                }
+                catch { /* proceed with rename even if internal update fails */ }
                 File.Move(item.FilePath, newPath);
             }
 

@@ -423,9 +423,14 @@ public static class CameraRules
     // ── Lock-on distance helper ──────────────────────────────────────
 
     /// <summary>
-    /// Sets ZoomDistance on all lock-on sections to match the style's on-foot distances.
-    /// Called by every style builder so lock-on always tracks the user's chosen distance.
+    /// Sets ZoomDistance on all lock-on sections to match the given on-foot distances.
+    /// Called by every style builder (private) and exposed publicly so the Fine Tune
+    /// layer can re-sync lock-on after user overrides are applied.
     /// </summary>
+    public static Dictionary<string, Dictionary<string, (string, string)>> BuildLockOnDistancesPublic(
+        double zl2, double zl3, double zl4)
+        => BuildLockOnDistances(zl2, zl3, zl4);
+
     private static Dictionary<string, Dictionary<string, (string, string)>> BuildLockOnDistances(
         double zl2, double zl3, double zl4)
     {
