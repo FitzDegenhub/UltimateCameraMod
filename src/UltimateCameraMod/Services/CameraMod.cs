@@ -692,6 +692,17 @@ public static class CameraMod
         log?.Invoke($"Backup saved ({entry.CompSize} bytes)");
     }
 
+    /// <summary>
+    /// Re-copies the camera entry from the live <c>0.paz</c> into <c>original_backup.bin</c>, bypassing the
+    /// usual skip when <c>backup_meta.txt</c> still matches. Call after the game install changes (e.g. Steam
+    /// patch) so the backup matches on-disk data. Throws if live data fails the same vanilla checks used when creating a backup.
+    /// </summary>
+    public static void RefreshVanillaBackupFromLivePaz(string gameDir, Action<string>? log = null)
+    {
+        var entry = FindCameraEntry(gameDir);
+        EnsureBackup(entry, log, forceRefreshFromPaz: true);
+    }
+
     private static string GetVanillaXml(PazEntry entry)
     {
         string backupPath = Path.Combine(BackupsDir, "original_backup.bin");
@@ -948,6 +959,28 @@ public static class CameraMod
         if (string.IsNullOrEmpty(sourceGroup)) sourceGroup = "0010";
 
         return (decompressed, entry.Path, sourceGroup);
+    }
+
+    /// <summary>
+    /// True when the encrypted camera chunk in the live PAZ matches <c>original_backup.bin</c>.
+    /// <see cref="JsonModExporter.ExportFromXml"/> diffs against the live chunk, so patch
+    /// <c>original</c> hex must match vanilla for tools like CDUMM; that only holds when live
+    /// still matches the backup UCM took from a validated vanilla install.
+    /// </summary>
+    public static bool IsLiveCameraPayloadMatchingStoredBackup(string gameDir, Action<string>? log = null)
+    {
+        var entry = FindCameraEntry(gameDir);
+        EnsureBackup(entry, log);
+        string backupPath = Path.Combine(BackupsDir, "original_backup.bin");
+        byte[] live = ReadLiveCameraPayloadBytes(entry);
+        byte[] backup = File.ReadAllBytes(backupPath);
+        if (live.Length != backup.Length)
+        {
+            log?.Invoke($"Live camera payload ({live.Length} bytes) != backup ({backup.Length} bytes).");
+            return false;
+        }
+
+        return live.AsSpan().SequenceEqual(backup);
     }
 
     /// <summary>

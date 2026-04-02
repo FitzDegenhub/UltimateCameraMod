@@ -29,5 +29,11 @@ public partial class ImportPresetDialog : Window
         DialogResult = true;
     }
 
+    private void OnImportUcmPreset(object sender, RoutedEventArgs e)
+    {
+        SelectedMode = "ucmpreset";
+        DialogResult = true;
+    }
+
     private void OnCancel(object sender, RoutedEventArgs e) => DialogResult = false;
 }

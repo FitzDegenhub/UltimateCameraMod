@@ -6,7 +6,7 @@
 
 ## Summary
 
-Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/UltimateCameraMod.V3/`) aimed at an **export-first** workflow—tune the camera in-app, **export JSON** for **Crimson Desert Mod Manager**, and treat direct PAZ install as secondary compared to **v2.x** on `main`. Core PAZ/XML logic stays in **`src/UltimateCameraMod/`** and is **shared** with v3.
+Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/UltimateCameraMod.V3/`) aimed at an **export-first** workflow—tune the camera in-app, **export `.json`** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and treat direct PAZ install as secondary compared to **v2.x** on `main`. Core PAZ/XML logic stays in **`src/UltimateCameraMod/`** and is **shared** with v3.
 
 **v2.x** remains the shipping line on **GitHub Releases** until v3 is explicitly released; this PR is the integration vehicle for that future cut.
 
@@ -16,7 +16,7 @@ Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/Ultimate
 
 - Preset workflow centered on **real JSON files** (shareable, versionable) instead of only in-app state.
 - **One session XML** driving **UCM Quick**, **Fine Tune**, and **God Mode** where possible.
-- **JSON patch export** aligned with current **Mod Manager** expectations.
+- **JSON patch export** aligned with **JSON Mod Manager** and **Crimson Desert Ultimate Mods Manager** (byte patches, `modinfo`, decompressed offsets).
 - **True “Vanilla” built-in preset** that matches stock game camera data and Quick-slider baselines.
 - **Windows polish**: correct **taskbar grouping and icon** for the v3 exe.
 - **Game-update awareness**: optional warnings when install metadata drifts after patches.
@@ -29,7 +29,7 @@ Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/Ultimate
 
 - **Two-panel shell**: sidebar **preset manager** + tabbed editor (**UCM Quick** / **Fine Tune** / **God Mode**).
 - **Preset groups**: built-ins under `ucm_presets/`, user presets under `my_presets/`, **import** flows; migration from legacy `presets/` layout.
-- **Dialogs**: **Export JSON** wizard (`ExportJsonDialog`), **import preset** (`ImportPresetDialog`), **new preset** (`NewPresetDialog`).
+- **Dialogs**: **Export for sharing** wizard (`ExportJsonDialog` — JSON / XML / 0.paz / `.ucmpreset`), **import preset** (`ImportPresetDialog`), **new preset** (`NewPresetDialog`).
 - **Performance-minded UI**: cached resources, debounced search, async file I/O where appropriate, lighter sidebar refresh for large `session_xml` (partial header reads).
 - **Branding / shell**: `ucm.ico` + PNG asset; **App User Model ID** + **`RelaunchIconResource`** via `SHGetPropertyStoreForWindow` (`ShellTaskbarPropertyStore`, `ApplicationIdentity`) in addition to existing icon/class tricks.
 
@@ -85,6 +85,13 @@ Use this subsection when updating the PR after newer `v3-dev` commits land.
 - **Built-in Vanilla.json** now stores **`right_offset`** using that delta so the Quick panel matches true vanilla XML (~0.5 → slider 0).
 - **`CameraMod.TryParseUcmQuickFootBaselineFromXml`** documentation updated to spell out literal vs delta.
 
+### JSON mod managers — verified compatibility, UI, and vanilla guard
+
+- **Tested with** **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (Nexus mod 113) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM, Nexus mod 207): same `.json` shape (`patches`, `game_file`, `changes` with `offset` / `original` / `patched` / `label`).
+- **`ExportJsonDialog`**: format chip **JSON · mod managers**; header + format help + post-prepare hint use **clickable Nexus links** and explicit product names; copy explains that recipients do not need UCM.
+- **`CameraMod.IsLiveCameraPayloadMatchingStoredBackup`**: **blocks JSON Prepare** when the live `playercamerapreset` PAZ payload no longer matches `original_backup.bin`, so patch `original` bytes stay valid for mod managers that expect vanilla (verify game / revert camera first).
+- **README**: branch table, multi-format table, tagline, FAQ, and version history call out both managers and the vanilla requirement.
+
 ### Import / metadata / UI (`c1b83b1` + `430a8db`)
 
 - **Save toast** can show **error styling** (`_pendingSaveToastIsError`) for failed saves.
@@ -136,11 +143,11 @@ v2.x publish flow is unchanged; see README **Building from Source (v2.x)**.
 ## Checklist (for maintainers)
 
 - [ ] v2.x: backup / install / restore still sane on `main`-equivalent + this branch’s shared changes  
-- [ ] v3: preset create / duplicate / import / export JSON round-trip  
+- [ ] v3: preset create / duplicate / import / export **JSON** round-trip (spot-check import in **JSON Mod Manager** and/or **CDUMM** after Steam verify)  
 - [ ] v3: Vanilla built-in preset matches expected stock XML + Quick sliders  
 - [ ] v3: taskbar icon + window title icon on a clean Windows profile  
 - [ ] README / release messaging updated when v3 actually ships on Releases  
 
 ---
 
-*Last refreshed: April 2026 — documents embedded shipped presets (e.g. RDR2), Vanilla Quick delta alignment, and import metadata/UI follow-ups. Match the branch tip on GitHub for the exact commit.*
+*Last refreshed: April 2026 — documents JSON export for JSON Mod Manager + CDUMM (Nexus links), Export dialog UX, vanilla guard for JSON Prepare, embedded shipped presets (e.g. RDR2), Vanilla Quick delta alignment, and import metadata/UI follow-ups. Match the branch tip on GitHub for the exact commit.*

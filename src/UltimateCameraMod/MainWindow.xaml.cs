@@ -2026,6 +2026,27 @@ public partial class MainWindow : Window
         };
         if (ofd.ShowDialog(this) != true) return;
 
+        try
+        {
+            if (!CameraMod.IsLiveCameraPayloadMatchingStoredBackup(_gameDir))
+            {
+                MessageBox.Show(
+                    "The camera data in your game folder does not match UCM's vanilla backup.\n\n" +
+                    "JSON patches for external mod managers must use vanilla \"original\" bytes. " +
+                    "Verify the game in Steam (or revert camera changes in your mod manager), then try again.",
+                    "Cannot export JSON",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                SetStatus("JSON export needs vanilla camera files first.", "Warn");
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Could not verify camera files: {ex.Message}", "Error");
+            return;
+        }
+
         // Capture UI values on UI thread before going async
         string xmlPath = ofd.FileName;
         var info = BuildJsonModInfo();

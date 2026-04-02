@@ -34,6 +34,7 @@ public partial class MainWindow : Window
     private const string LegacyPresetsDirName = "presets";
     private const string UcmPresetsDirName = "ucm_presets";
     private const string MyPresetsDirName = "my_presets";
+    private const string CommunityPresetsDirName = "community_presets";
     private const string ImportPresetsDirName = "import_presets";
     private const string LegacyImportedPresetsDirName = "imported_presets";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
@@ -78,6 +79,8 @@ public partial class MainWindow : Window
     private string? _customDraftPresetName;
     private bool _customDraftDirty = true;
     private bool _gameUpdateNoticeSessionDismissed;
+    private bool _gameUpdateAutoBackupDispatched;
+    private string? _gameUpdatePostRefreshNote;
     private bool _taskbarIconContentRenderedDone;
     private bool _taskbarIconActivatedDone;
     private bool _shellTaskbarPropertyStoreApplied;
@@ -137,6 +140,11 @@ public partial class MainWindow : Window
     private static string MyPresetsDir
     {
         get { string d = Path.Combine(ExeDir, MyPresetsDirName); Directory.CreateDirectory(d); return d; }
+    }
+
+    private static string CommunityPresetsDir
+    {
+        get { string d = Path.Combine(ExeDir, CommunityPresetsDirName); Directory.CreateDirectory(d); return d; }
     }
 
     private static bool _legacyPresetFoldersMigrated;
@@ -659,6 +667,11 @@ public partial class MainWindow : Window
             else
             {
                 OnGameDirResolved();
+                // Migrate legacy .json presets to .ucmpreset before generating built-ins
+                MigrateJsonToUcmPreset(UcmPresetsDir);
+                MigrateJsonToUcmPreset(MyPresetsDir);
+                MigrateJsonToUcmPreset(CommunityPresetsDir);
+                // Don't migrate import_presets — different schema
                 GenerateBuiltInPresets();
                 TryRestoreLastInstallSessionAfterGameDirResolved();
             }
@@ -804,7 +817,17 @@ public partial class MainWindow : Window
 
     private static bool VanillaBuiltInPresetNeedsRefresh(string filePath)
     {
-        if (!File.Exists(filePath)) return true;
+        // Check both .ucmpreset and .json variants
+        if (!File.Exists(filePath))
+        {
+            string alt = Path.GetExtension(filePath).Equals(".ucmpreset", StringComparison.OrdinalIgnoreCase)
+                ? Path.ChangeExtension(filePath, ".json")
+                : Path.ChangeExtension(filePath, ".ucmpreset");
+            if (File.Exists(alt))
+                filePath = alt;
+            else
+                return true;
+        }
         try
         {
             using var reader = new StreamReader(filePath);
@@ -822,6 +845,21 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>Rename .json preset files to .ucmpreset during startup migration (skip if .ucmpreset already exists).</summary>
+    private static void MigrateJsonToUcmPreset(string dir)
+    {
+        if (!Directory.Exists(dir)) return;
+        foreach (string jsonFile in Directory.GetFiles(dir, "*.json"))
+        {
+            string ucmPresetFile = Path.ChangeExtension(jsonFile, ".ucmpreset");
+            if (!File.Exists(ucmPresetFile))
+            {
+                try { File.Move(jsonFile, ucmPresetFile); }
+                catch { /* skip if rename fails */ }
+            }
+        }
+    }
+
     private void GenerateBuiltInPresets()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
@@ -831,7 +869,7 @@ public partial class MainWindow : Window
             foreach (var (id, label) in Styles)
             {
                 string styleName = label.Split("  -  ")[0].Trim();
-                string fileName = styleName + ".json";
+                string fileName = styleName + ".ucmpreset";
                 string path = Path.Combine(UcmPresetsDir, fileName);
                 if (id == "default")
                 {
@@ -940,8 +978,10 @@ public partial class MainWindow : Window
                 string name = root.TryGetProperty("Name", out var nv) ? nv.GetString() ?? "" : "";
                 if (string.IsNullOrWhiteSpace(name)) continue;
 
-                string destPath = Path.Combine(UcmPresetsDir, name + ".json");
-                if (File.Exists(destPath)) continue; // Don't overwrite if user deleted/modified
+                string destPath = Path.Combine(UcmPresetsDir, name + ".ucmpreset");
+                // Also skip if legacy .json version exists (user may have modified it)
+                string legacyPath = Path.Combine(UcmPresetsDir, name + ".json");
+                if (File.Exists(destPath) || File.Exists(legacyPath)) continue;
 
                 string author = root.TryGetProperty("Author", out var av) ? av.GetString() ?? "" : "";
                 string desc = root.TryGetProperty("Description", out var dv) ? dv.GetString() ?? "" : "";
@@ -1944,8 +1984,12 @@ public partial class MainWindow : Window
             }
         }
 
+        AppendDir(sb, Path.Combine(ExeDir, UcmPresetsDirName), "*.ucmpreset");
         AppendDir(sb, Path.Combine(ExeDir, UcmPresetsDirName), "*.json");
+        AppendDir(sb, Path.Combine(ExeDir, MyPresetsDirName), "*.ucmpreset");
         AppendDir(sb, Path.Combine(ExeDir, MyPresetsDirName), "*.json");
+        AppendDir(sb, Path.Combine(ExeDir, CommunityPresetsDirName), "*.ucmpreset");
+        AppendDir(sb, Path.Combine(ExeDir, CommunityPresetsDirName), "*.json");
         AppendDir(sb, Path.Combine(ExeDir, LegacyPresetsDirName), "*.json");
         AppendDir(sb, Path.Combine(ExeDir, ImportPresetsDirName), "*.json");
     }
@@ -1967,16 +2011,25 @@ public partial class MainWindow : Window
         return BuildCatalogFingerprintCore(gameFp, _gameDir ?? "");
     }
 
+    /// <summary>Get both .ucmpreset and .json files from a directory (for backwards-compatible preset scanning).</summary>
+    private static IEnumerable<string> GetPresetFiles(string dir)
+    {
+        if (!Directory.Exists(dir)) return Enumerable.Empty<string>();
+        return Directory.GetFiles(dir, "*.ucmpreset")
+            .Concat(Directory.GetFiles(dir, "*.json"))
+            .OrderBy(f => f, StringComparer.OrdinalIgnoreCase);
+    }
+
     private List<PresetManagerItem> BuildPresetManagerItems(ImportedPresetFingerprint? gameFingerprint)
     {
         var items = new List<PresetManagerItem>();
 
-        void AppendSessionJsonPresetsFromDir(string directory, bool defaultLocked)
+        void AppendSessionJsonPresetsFromDir(string directory, bool defaultLocked, string? kindOverride)
         {
             if (!Directory.Exists(directory))
                 return;
 
-            foreach (string file in Directory.GetFiles(directory, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
+            foreach (string file in GetPresetFiles(directory))
             {
                 try
                 {
@@ -1992,7 +2045,7 @@ public partial class MainWindow : Window
                     string name = ExtractJsonStringField(header, "name") ?? Path.GetFileNameWithoutExtension(file);
                     string author = ExtractJsonStringField(header, "author") ?? "";
                     string desc = ExtractJsonStringField(header, "description") ?? "";
-                    string kind = ExtractJsonStringField(header, "kind") ?? "user";
+                    string kind = kindOverride ?? ExtractJsonStringField(header, "kind") ?? "user";
                     bool isLocked = ExtractJsonBoolField(header, "locked") ?? defaultLocked;
 
                     items.Add(new PresetManagerItem
@@ -2003,6 +2056,7 @@ public partial class MainWindow : Window
                         {
                             "default" => "Default",
                             "style" => "UCM style",
+                            "community" => "Community",
                             "imported" => "Imported",
                             _ => "My preset"
                         },
@@ -2020,8 +2074,25 @@ public partial class MainWindow : Window
             }
         }
 
-        AppendSessionJsonPresetsFromDir(UcmPresetsDir, defaultLocked: true);
-        AppendSessionJsonPresetsFromDir(MyPresetsDir, defaultLocked: false);
+        AppendSessionJsonPresetsFromDir(UcmPresetsDir, defaultLocked: true, kindOverride: null);
+        AppendSessionJsonPresetsFromDir(CommunityPresetsDir, defaultLocked: true, kindOverride: "community");
+
+        // Ensure "Community presets" group header always shows so the download icon is visible.
+        // Use a hidden placeholder — the lock button in the ItemTemplate won't render for empty names.
+        if (!items.Any(i => i.KindId == "community"))
+        {
+            items.Add(new PresetManagerItem
+            {
+                Name = "\0",
+                KindId = "community",
+                KindLabel = "Community",
+                FilePath = "",
+                IsLocked = true,
+                IsPlaceholder = true
+            });
+        }
+
+        AppendSessionJsonPresetsFromDir(MyPresetsDir, defaultLocked: false, kindOverride: null);
 
         // Imported presets (from ImportedPresetsDir)
         foreach (string file in Directory.GetFiles(ImportedPresetsDir, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
@@ -2032,14 +2103,15 @@ public partial class MainWindow : Window
             items.Add(importedItem);
         }
 
-        // Sort: UCM presets (default + style), then my_presets (user), then import_presets (Imported)
+        // Sort: UCM presets (default + style), community, then my_presets (user), then import_presets (Imported)
         int GroupOrder(string kind) => kind switch
         {
             "default" => 0,
             "style" => 0,
-            "user" => 1,
-            "imported" => 2,
-            _ => 3
+            "community" => 1,
+            "user" => 2,
+            "imported" => 3,
+            _ => 4
         };
 
         return items
@@ -2594,15 +2666,12 @@ public partial class MainWindow : Window
     {
         try
         {
-            if (!IsLoaded || _gameUpdateNoticeSessionDismissed)
-            {
-                if (IsLoaded) GameUpdateStrip.Visibility = Visibility.Collapsed;
+            if (!IsLoaded)
                 return;
-            }
 
             if (string.IsNullOrWhiteSpace(_gameDir))
             {
-                GameUpdateStrip.Visibility = Visibility.Collapsed;
+                if (IsLoaded) GameUpdateStrip.Visibility = Visibility.Collapsed;
                 return;
             }
 
@@ -2610,11 +2679,51 @@ public partial class MainWindow : Window
             var ev = GameInstallBaselineTracker.Evaluate(ExeDir, Ver, _gameDir, _detectedPlatform, backupsDir);
             if (!ev.ShowWarning)
             {
+                _gameUpdateAutoBackupDispatched = false;
+                _gameUpdatePostRefreshNote = null;
+                if (!_gameUpdateNoticeSessionDismissed)
+                    GameUpdateStrip.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            // Drift vs last Install baseline: re-snapshot camera from live 0.paz once (even if the strip is dismissed).
+            if (!_gameUpdateAutoBackupDispatched)
+            {
+                _gameUpdateAutoBackupDispatched = true;
+                string gameDir = _gameDir;
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        CameraMod.RefreshVanillaBackupFromLivePaz(gameDir, _ => { });
+                        Dispatcher.BeginInvoke(() =>
+                        {
+                            _gameUpdatePostRefreshNote =
+                                "Camera backup was refreshed from your current game files. Use Install when you are ready to re-apply your preset.";
+                            RefreshGameUpdateNotice();
+                        }, DispatcherPriority.Background);
+                    }
+                    catch
+                    {
+                        Dispatcher.BeginInvoke(() =>
+                        {
+                            _gameUpdatePostRefreshNote =
+                                "Could not refresh camera backup automatically. If the camera is still modded, verify game files in Steam and restart UCM.";
+                            RefreshGameUpdateNotice();
+                        }, DispatcherPriority.Background);
+                    }
+                });
+            }
+
+            if (_gameUpdateNoticeSessionDismissed)
+            {
                 GameUpdateStrip.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            GameUpdateText.Text = ev.Message;
+            GameUpdateText.Text = string.IsNullOrEmpty(_gameUpdatePostRefreshNote)
+                ? ev.Message
+                : ev.Message + "\n\n" + _gameUpdatePostRefreshNote;
             GameUpdateStrip.Visibility = Visibility.Visible;
         }
         catch
@@ -3010,6 +3119,18 @@ public partial class MainWindow : Window
     }
 
     // â”€â”€ Restore â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+    private void OnBrowseCommunity(object sender, RoutedEventArgs e)
+    {
+        var dlg = new CommunityBrowserDialog(CommunityPresetsDir, () =>
+        {
+            Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
+        })
+        {
+            Owner = this
+        };
+        dlg.ShowDialog();
+    }
 
     private void OnRestore(object s, RoutedEventArgs e)
     {
@@ -4738,7 +4859,7 @@ public partial class MainWindow : Window
                 }
             };
 
-            File.WriteAllText(Path.Combine(MyPresetsDir, $"{safeName}.json"),
+            File.WriteAllText(Path.Combine(MyPresetsDir, $"{safeName}.ucmpreset"),
                 JsonSerializer.Serialize(preset, PresetFileJsonOptions));
             RefreshPresetManagerLists(preserveSelection: false);
             QueueSavedToast($"Preset '{name}' created");
@@ -4824,7 +4945,7 @@ public partial class MainWindow : Window
         {
             string newPath = item.KindId == "imported"
                 ? ImportedPresetPath(newName)
-                : Path.Combine(Path.GetDirectoryName(item.FilePath) ?? ExeDir, $"{newName}.json");
+                : Path.Combine(Path.GetDirectoryName(item.FilePath) ?? ExeDir, $"{newName}.ucmpreset");
 
             if (File.Exists(newPath))
             {
@@ -4887,8 +5008,8 @@ public partial class MainWindow : Window
             string newPath = item.KindId == "imported"
                 ? ImportedPresetPath(newName)
                 : promoteUcmToMyPresets
-                    ? Path.Combine(MyPresetsDir, $"{newName}.json")
-                    : Path.Combine(Path.GetDirectoryName(item.FilePath) ?? ExeDir, $"{newName}.json");
+                    ? Path.Combine(MyPresetsDir, $"{newName}.ucmpreset")
+                    : Path.Combine(Path.GetDirectoryName(item.FilePath) ?? ExeDir, $"{newName}.ucmpreset");
 
             if (File.Exists(newPath))
             {
@@ -4989,6 +5110,7 @@ public partial class MainWindow : Window
             case "mod_package": ImportModManagerPackage(); break;
             case "xml": ImportRawXml(); break;
             case "paz": ImportFromPaz(); break;
+            case "ucmpreset": ImportUcmPreset(); break;
         }
     }
 
@@ -5214,6 +5336,50 @@ public partial class MainWindow : Window
         {
             SetGlobalBusy(false);
             SetStatus($"0.paz import failed: {ex.Message}", "Error");
+        }
+    }
+
+    private void ImportUcmPreset()
+    {
+        var ofd = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Import UCM Preset",
+            Filter = "UCM Preset (*.ucmpreset)|*.ucmpreset|JSON files (*.json)|*.json|All files (*.*)|*.*",
+            FileName = ""
+        };
+        if (ofd.ShowDialog(this) != true) return;
+
+        try
+        {
+            string json = File.ReadAllText(ofd.FileName);
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+
+            if (!root.TryGetProperty("session_xml", out _) && !root.TryGetProperty("RawXml", out _))
+            {
+                SetStatus("This file doesn't appear to be a UCM preset (no session_xml found).", "Error");
+                return;
+            }
+
+            string name = root.TryGetProperty("name", out var nv) ? nv.GetString() ?? "" : Path.GetFileNameWithoutExtension(ofd.FileName);
+            string safeName = new string(name.Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c).ToArray());
+            string destPath = Path.Combine(MyPresetsDir, $"{safeName}.ucmpreset");
+
+            if (File.Exists(destPath))
+            {
+                var overwrite = MessageBox.Show($"A preset named '{name}' already exists. Overwrite?",
+                    "Import UCM Preset", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (overwrite != MessageBoxResult.Yes) return;
+            }
+
+            File.Copy(ofd.FileName, destPath, true);
+            RefreshPresetManagerLists(preserveSelection: false);
+            QueueSavedToast($"Imported '{name}'");
+            SetStatus($"Imported UCM preset '{name}'.", "Success");
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Import failed: {ex.Message}", "Error");
         }
     }
 

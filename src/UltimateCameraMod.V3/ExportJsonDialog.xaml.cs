@@ -1,6 +1,9 @@
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using UltimateCameraMod.Services;
 
 namespace UltimateCameraMod.V3;
@@ -23,6 +26,7 @@ public partial class ExportJsonDialog : Window
         FormatJsonRadio.Checked += OnExportFormatChanged;
         FormatXmlRadio.Checked += OnExportFormatChanged;
         FormatPazRadio.Checked += OnExportFormatChanged;
+        FormatPresetRadio.Checked += OnExportFormatChanged;
         RefreshFormatDependentUi();
     }
 
@@ -30,13 +34,16 @@ public partial class ExportJsonDialog : Window
     {
         Json,
         Xml,
-        Paz
+        Paz,
+        UcmPreset
     }
 
     private ShareExportFormat SelectedFormat
     {
         get
         {
+            if (FormatPresetRadio.IsChecked == true)
+                return ShareExportFormat.UcmPreset;
             if (FormatPazRadio.IsChecked == true)
                 return ShareExportFormat.Paz;
             if (FormatXmlRadio.IsChecked == true)
@@ -56,11 +63,7 @@ public partial class ExportJsonDialog : Window
         switch (SelectedFormat)
         {
             case ShareExportFormat.Json:
-                HelpDetailText.Text =
-                    "Generates a .json patch compatible with Crimson Desert JSON Mod Manager v8. " +
-                    "Players drop it into Mods/ — UCM is not required. " +
-                    "The mod manager only applies patches when the expected (original) bytes still match the game; " +
-                    "after a game update, re-export from a PC with the current install.";
+                SetJsonFormatHelpDetail();
                 Step2Body.Text =
                     "Uses your live UCM session (Quick, Fine Tune, or God Mode). " +
                     "Pick a preset in the sidebar or use Import if you are starting from XML or a PAZ on disk.";
@@ -76,13 +79,71 @@ public partial class ExportJsonDialog : Window
             case ShareExportFormat.Paz:
                 HelpDetailText.Text =
                     "Nexus-style “drop-in” archive: a copy of your game’s 0010/0.paz with only the camera data updated " +
-                    "to match your current UCM session — players who don’t use the JSON mod manager can replace one file. " +
+                    "to match your current UCM session — players who don’t use a JSON mod manager can replace one file. " +
                     "It only works for the same game patch as your install (same archive layout); say that on the mod page. " +
                     "Tell downloaders to back up vanilla 0010/0.paz before swapping.";
                 Step2Body.Text =
                     "Prepare verifies encoding against your game folder. Save writes a full patched 0.paz (large file). " +
                     "Session source is the same as the other formats — sidebar preset or Import first if needed.";
                 break;
+            case ShareExportFormat.UcmPreset:
+                HelpDetailText.Text =
+                    "Exports your current session as a .ucmpreset file that other UCM users can drop into their " +
+                    "presets folder or share via the community catalog. Contains your full camera configuration " +
+                    "including all Quick, Fine Tune, and God Mode settings.";
+                Step2Body.Text =
+                    "No encoding needed — saves your session directly. Fill in the info fields above so others " +
+                    "know what they're getting.";
+                break;
+        }
+    }
+
+    private const string NexusJsonModManagerUrl = "https://www.nexusmods.com/crimsondesert/mods/113";
+    private const string NexusCdummUrl = "https://www.nexusmods.com/crimsondesert/mods/207";
+
+    private void SetJsonFormatHelpDetail()
+    {
+        HelpDetailText.Text = null;
+        HelpDetailText.Inlines.Clear();
+
+        Brush accent = (Brush)FindResource("AccentBrush");
+        var mono = new FontFamily("Consolas");
+
+        void AddRun(string text) => HelpDetailText.Inlines.Add(new Run(text));
+
+        void AddLink(string label, string url)
+        {
+            var link = new Hyperlink(new Run(label))
+            {
+                NavigateUri = new Uri(url),
+                Foreground = accent,
+            };
+            link.RequestNavigate += OnExportHelpHyperlinkNavigate;
+            HelpDetailText.Inlines.Add(link);
+        }
+
+        AddRun("Exports a byte-patch ");
+        HelpDetailText.Inlines.Add(new Run(".json") { FontFamily = mono });
+        AddRun(" you can import into ");
+        AddLink("JSON Mod Manager", NexusJsonModManagerUrl);
+        AddRun(" (Nexus mod 113) or ");
+        AddLink("Crimson Desert Ultimate Mods Manager", NexusCdummUrl);
+        AddRun(" (CDUMM, Nexus mod 207). Use whichever mod manager you prefer — recipients do not need UCM.\n\n");
+        AddRun("Prepare is only available when your live ");
+        HelpDetailText.Inlines.Add(new Run("playercamerapreset") { FontFamily = mono });
+        AddRun(" entry still matches UCM's vanilla backup (e.g. verify game files in Steam if you already applied UCM or another camera mod). After a game update, re-export from a PC on the same build.");
+    }
+
+    private void OnExportHelpHyperlinkNavigate(object sender, RequestNavigateEventArgs e)
+    {
+        e.Handled = true;
+        try
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+        }
+        catch
+        {
+            // Browser / shell may be unavailable; ignore.
         }
     }
 
@@ -121,6 +182,32 @@ public partial class ExportJsonDialog : Window
         switch (SelectedFormat)
         {
             case ShareExportFormat.Json:
+                try
+                {
+                    if (!CameraMod.IsLiveCameraPayloadMatchingStoredBackup(_gameDir,
+                            msg => Dispatcher.Invoke(() => SetStatus(msg, false))))
+                    {
+                        MessageBox.Show(
+                            "The camera data in your game folder does not match UCM's vanilla backup.\n\n" +
+                            "JSON patches for JSON Mod Manager or Crimson Desert Ultimate Mods Manager must use " +
+                            "vanilla \"original\" bytes. If UCM or another tool has already changed " +
+                            "playercamerapreset in 0.paz, exported JSON will not apply for other players.\n\n" +
+                            "Fix: Steam → Crimson Desert → Properties → Installed Files → " +
+                            "\"Verify integrity of game files\", then reopen UCM and export again. " +
+                            "If you use a mod manager, revert camera changes there before verifying.",
+                            "Cannot export JSON",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                        SetStatus("JSON export needs vanilla camera files (verify game, then try again).", true);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    SetStatus($"Could not verify camera files: {ex.Message}", true);
+                    return;
+                }
+
                 var jsonInfo = BuildJsonModInfo();
                 RunJsonGenerate(() =>
                 {
@@ -131,6 +218,23 @@ public partial class ExportJsonDialog : Window
             case ShareExportFormat.Xml:
             case ShareExportFormat.Paz:
                 RunValidateThenReady(xml);
+                break;
+            case ShareExportFormat.UcmPreset:
+                if (string.IsNullOrWhiteSpace(xml))
+                {
+                    SetStatus("Session XML is empty.", true);
+                    return;
+                }
+                _preparedXml = xml;
+                _jsonLastJson = null;
+                _jsonLastPatches = null;
+                ExportPreviewPanel.Visibility = Visibility.Visible;
+                JsonStatsPanel.Visibility = Visibility.Collapsed;
+                XmlSaveHint.Visibility = Visibility.Collapsed;
+                PazSaveHint.Visibility = Visibility.Collapsed;
+                FingerprintLabel.Text = $"Session XML: {xml.Length:N0} characters";
+                SaveExportButton.Content = "Save .ucmpreset...";
+                SetStatus("Ready to save. Click Save when ready.", false);
                 break;
         }
     }
@@ -236,6 +340,9 @@ public partial class ExportJsonDialog : Window
                 break;
             case ShareExportFormat.Paz:
                 SavePazExport();
+                break;
+            case ShareExportFormat.UcmPreset:
+                SaveUcmPresetExport();
                 break;
         }
     }
@@ -351,6 +458,68 @@ public partial class ExportJsonDialog : Window
                 });
             }
         });
+    }
+
+    private void SaveUcmPresetExport()
+    {
+        if (string.IsNullOrWhiteSpace(_preparedXml))
+        {
+            SetStatus("Prepare first.", true);
+            return;
+        }
+
+        string title = JsonTitleBox.Text.Trim();
+        string safeName = string.IsNullOrWhiteSpace(title)
+            ? "ucm_preset"
+            : new string(title.Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c).ToArray());
+
+        var sfd = new Microsoft.Win32.SaveFileDialog
+        {
+            Title = "Save UCM Preset",
+            Filter = "UCM Preset (*.ucmpreset)|*.ucmpreset|All files (*.*)|*.*",
+            FileName = $"{safeName}.ucmpreset"
+        };
+        if (sfd.ShowDialog(this) != true) return;
+
+        try
+        {
+            var preset = new Dictionary<string, object>
+            {
+                ["name"] = string.IsNullOrWhiteSpace(title) ? "Exported Preset" : title,
+                ["author"] = JsonAuthorBox.Text.Trim(),
+                ["description"] = JsonDescBox.Text.Trim(),
+                ["kind"] = "user",
+                ["session_xml"] = _preparedXml,
+                ["settings"] = new Dictionary<string, object>
+                {
+                    ["distance"] = 5.0,
+                    ["height"] = 0.0,
+                    ["right_offset"] = 0.0,
+                    ["fov"] = 0,
+                    ["combat"] = "default",
+                    ["centered"] = false,
+                    ["mount_height"] = false,
+                    ["steadycam"] = true
+                }
+            };
+
+            string url = JsonNexusBox.Text.Trim();
+            if (!string.IsNullOrWhiteSpace(url))
+                preset["url"] = url;
+
+            string json = System.Text.Json.JsonSerializer.Serialize(preset,
+                new System.Text.Json.JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                });
+            File.WriteAllText(sfd.FileName, json, new UTF8Encoding(false));
+            SetStatus($"Saved {Path.GetFileName(sfd.FileName)}", false);
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Save failed: {ex.Message}", true);
+        }
     }
 
     private JsonModExporter.ModInfo BuildJsonModInfo() => new(

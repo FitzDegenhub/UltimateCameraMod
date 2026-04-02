@@ -103,7 +103,7 @@
                         <Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,2,0,8"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                             <Button Content="Import" Style="{StaticResource SubtleButton}"
-                                    Click="OnImportPreset" Height="26" FontSize="10" Padding="10,0"
+                                    Click="OnImportPreset" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
                                     ToolTip="Import a camera XML or PAZ archive as a preset"/>
                             <Button Content="Export" Style="{StaticResource SubtleButton}"
                                     Click="OnExportJson" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
@@ -128,29 +128,101 @@
                                 <GroupStyle.ContainerStyle>
                                     <Style TargetType="GroupItem">
                                         <Setter Property="Margin" Value="0,0,0,2"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="GroupItem">
+                                                    <Expander IsExpanded="True" Background="Transparent" BorderThickness="0"
+                                                              Margin="0,6,0,0"
+                                                              ExpandDirection="Down">
+                                                        <Expander.Style>
+                                                            <Style TargetType="Expander">
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="Expander">
+                                                                            <StackPanel>
+                                                                                <ToggleButton IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                                                              Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                                                                              HorizontalContentAlignment="Stretch"
+                                                                                              Padding="0" Margin="0,0,0,4">
+                                                                                    <ToggleButton.Template>
+                                                                                        <ControlTemplate TargetType="ToggleButton">
+                                                                                            <Border Background="Transparent" Padding="0,4,0,6"
+                                                                                                    BorderBrush="{StaticResource BorderBrush}"
+                                                                                                    BorderThickness="0,0,0,1">
+                                                                                                <ContentPresenter/>
+                                                                                            </Border>
+                                                                                        </ControlTemplate>
+                                                                                    </ToggleButton.Template>
+                                                                                    <ContentPresenter ContentSource="Header"/>
+                                                                                </ToggleButton>
+                                                                                <ContentPresenter x:Name="ExpanderContent" Visibility="Visible"/>
+                                                                            </StackPanel>
+                                                                            <ControlTemplate.Triggers>
+                                                                                <Trigger Property="IsExpanded" Value="False">
+                                                                                    <Setter TargetName="ExpanderContent" Property="Visibility" Value="Collapsed"/>
+                                                                                </Trigger>
+                                                                            </ControlTemplate.Triggers>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </Expander.Style>
+                                                        <Expander.Header>
+                                                            <DockPanel Width="{Binding RelativeSource={RelativeSource AncestorType=Expander}, Path=ActualWidth}">
+                                                                <Button DockPanel.Dock="Right" Content="&#x2B07; Browse"
+                                                                        FontSize="9" Height="20" Padding="6,0"
+                                                                        ToolTip="Browse and download community camera presets"
+                                                                        Click="OnBrowseCommunity"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="#1a1a1a" FontWeight="SemiBold"
+                                                                        Margin="0,0,20,0">
+                                                                    <Button.Style>
+                                                                        <Style TargetType="Button" BasedOn="{StaticResource AccentButton}">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="Community presets">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Button.Style>
+                                                                </Button>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Border Width="3" MinHeight="13" MaxHeight="13"
+                                                                            Background="{StaticResource AccentBrush}"
+                                                                            CornerRadius="1" Margin="0,2,8,0"
+                                                                            VerticalAlignment="Top"/>
+                                                                    <TextBlock Text="{Binding Name}"
+                                                                               FontSize="10" FontWeight="SemiBold"
+                                                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                                                               VerticalAlignment="Center"/>
+                                                                    <TextBlock FontSize="10" Margin="5,1,0,0"
+                                                                               Foreground="{StaticResource TextDimBrush}"
+                                                                               VerticalAlignment="Center"
+                                                                               Text="&#x25BE;"/>
+                                                                </StackPanel>
+                                                            </DockPanel>
+                                                        </Expander.Header>
+                                                        <ItemsPresenter Margin="0,4,0,0"/>
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Style>
                                 </GroupStyle.ContainerStyle>
-                                <GroupStyle.HeaderTemplate>
-                                    <DataTemplate>
-                                        <Border Margin="0,12,0,6" Padding="0,0,0,8"
-                                                BorderBrush="{StaticResource BorderBrush}"
-                                                BorderThickness="0,0,0,1">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Border Width="3" MinHeight="13" MaxHeight="13"
-                                                        Background="{StaticResource AccentBrush}"
-                                                        CornerRadius="1" Margin="0,2,10,0"
-                                                        VerticalAlignment="Top"/>
-                                                <TextBlock Text="{Binding Name}"
-                                                           FontSize="10" FontWeight="SemiBold"
-                                                           Foreground="{StaticResource TextSecondaryBrush}"
-                                                           VerticalAlignment="Center"
-                                                           TextOptions.TextRenderingMode="ClearType"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </GroupStyle.HeaderTemplate>
                             </GroupStyle>
                         </ListBox.GroupStyle>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource SidebarPresetListBoxItem}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsPlaceholder}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="IsHitTestVisible" Value="False"/>
+                                        <Setter Property="Height" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>

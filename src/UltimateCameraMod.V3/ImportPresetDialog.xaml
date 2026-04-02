@@ -20,6 +20,10 @@
                 Height="38" FontSize="12" Click="OnImportPaz" Margin="0,0,0,8"
                 ToolTip="Select a 0.paz file — UCM will extract the camera XML from it"/>
 
+        <Button Content="UCM Preset (.ucmpreset)" Style="{StaticResource SubtleButton}"
+                Height="38" FontSize="12" Click="OnImportUcmPreset" Margin="0,0,0,8"
+                ToolTip="Import a .ucmpreset file shared by another UCM user"/>
+
         <TextBlock Text="Imports are saved in the import_presets folder next to this app and listed under Imported in the sidebar."
                    FontSize="10" Foreground="{StaticResource TextDimBrush}" TextWrapping="Wrap"
                    Margin="0,12,0,0"/>

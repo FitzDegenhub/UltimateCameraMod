@@ -81,8 +81,18 @@
             <StackPanel>
                 <TextBlock Text="EXPORT FOR SHARING" FontSize="14" FontWeight="Bold"
                            Foreground="{StaticResource AccentBrush}"/>
-                <TextBlock Text="Everything here exports your current UCM session. Use Import or a sidebar preset first if you need to pull camera data from disk."
-                           FontSize="11" Foreground="{StaticResource TextDimBrush}" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                <TextBlock FontSize="11" Foreground="{StaticResource TextDimBrush}" Margin="0,4,0,0" TextWrapping="Wrap">
+                    <Run Text="Everything here exports your current UCM session. "/>
+                    <Run Text="JSON goes straight into "/>
+                    <Hyperlink NavigateUri="https://www.nexusmods.com/crimsondesert/mods/113"
+                               Foreground="{StaticResource AccentBrush}"
+                               RequestNavigate="OnExportHelpHyperlinkNavigate">JSON Mod Manager</Hyperlink>
+                    <Run Text=" or "/>
+                    <Hyperlink NavigateUri="https://www.nexusmods.com/crimsondesert/mods/207"
+                               Foreground="{StaticResource AccentBrush}"
+                               RequestNavigate="OnExportHelpHyperlinkNavigate">Crimson Desert Ultimate Mods Manager</Hyperlink>
+                    <Run Text=". Use Import or a sidebar preset first if you need to pull camera data from disk."/>
+                </TextBlock>
             </StackPanel>
         </Border>
         <Border Grid.Row="1" Background="{StaticResource BorderBrush}"/>
@@ -100,12 +110,14 @@
                                    Foreground="{StaticResource TextDimBrush}" Margin="0,0,0,10"/>
                         <WrapPanel Margin="0,0,0,14">
                             <RadioButton x:Name="FormatJsonRadio" GroupName="ExportFormat"
-                                         Content="JSON · Mod Manager" Style="{StaticResource ExportFormatRadioStyle}"
+                                         Content="JSON · mod managers" Style="{StaticResource ExportFormatRadioStyle}"
                                          IsChecked="True"/>
                             <RadioButton x:Name="FormatXmlRadio" GroupName="ExportFormat"
                                          Content="XML" Style="{StaticResource ExportFormatRadioStyle}"/>
                             <RadioButton x:Name="FormatPazRadio" GroupName="ExportFormat"
                                          Content="0.paz" Style="{StaticResource ExportFormatRadioStyle}"/>
+                            <RadioButton x:Name="FormatPresetRadio" GroupName="ExportFormat"
+                                         Content="UCM Preset (.ucmpreset)" Style="{StaticResource ExportFormatRadioStyle}"/>
                         </WrapPanel>
                         <Border Background="{StaticResource BgInputBrush}" CornerRadius="6" Padding="12,10"
                                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
@@ -238,8 +250,15 @@
                             </StackPanel>
                             <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
                                        LineHeight="18" Margin="0,0,0,4">
-                                Save the <Run FontFamily="Consolas">.json</Run> into your JSON Mod Manager
-                                <Run FontFamily="Consolas">Mods</Run> folder.
+                                Save the <Run FontFamily="Consolas">.json</Run>, then import it in
+                                <Hyperlink NavigateUri="https://www.nexusmods.com/crimsondesert/mods/113"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           RequestNavigate="OnExportHelpHyperlinkNavigate">JSON Mod Manager</Hyperlink>
+                                or
+                                <Hyperlink NavigateUri="https://www.nexusmods.com/crimsondesert/mods/207"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           RequestNavigate="OnExportHelpHyperlinkNavigate">Crimson Desert Ultimate Mods Manager</Hyperlink>
+                                (follow that tool’s import / Mods folder instructions).
                             </TextBlock>
                         </StackPanel>
 

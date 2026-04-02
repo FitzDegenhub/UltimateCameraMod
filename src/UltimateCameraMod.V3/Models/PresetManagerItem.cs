@@ -16,6 +16,9 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
     public string FilePath { get; set; } = "";
     public bool CanRebuild { get; set; }
 
+    /// <summary>Invisible placeholder used to keep a group header visible when no real items exist.</summary>
+    public bool IsPlaceholder { get; set; }
+
     /// <summary>
     /// When true, the preset file is treated as read-only in the editor (toggled via sidebar padlock).
     /// Persisted as <c>locked</c> in session JSON or <c>Locked</c> on imported presets.
@@ -50,11 +53,12 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
 
     public string SecondaryLine => StatusText;
 
-    /// <summary>Group label for sidebar display (ucm_presets, my_presets, import_presets).</summary>
+    /// <summary>Group label for sidebar display (ucm_presets, community_presets, my_presets, import_presets).</summary>
     public string GroupLabel => KindId switch
     {
         "default" => "UCM presets",
         "style" => "UCM presets",
+        "community" => "Community presets",
         "user" => "My presets",
         "imported" => "Imported",
         _ => "Other"
