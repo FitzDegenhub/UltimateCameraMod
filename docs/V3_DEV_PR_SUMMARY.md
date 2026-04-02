@@ -76,7 +76,7 @@ Use this subsection when updating the PR after newer `v3-dev` commits land.
 - **Save toast** can show **error styling** (`_pendingSaveToastIsError`) for failed saves.
 - **`ExportJsonDialog`**: minor alignment with current export flow.
 - **`MainWindow.xaml`**: layout / copy tweaks for the above.
-- **`screenshots/banner.png`**: repo asset for README or store pages (add a markdown image link when you want it visible on GitHub).
+- **`screenshots/banner.png`**: hero image in the root **README** (centered, responsive width).
 
 ---
 

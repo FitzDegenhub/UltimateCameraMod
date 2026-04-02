@@ -4,6 +4,10 @@
 
 Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, three editing tiers, file-based presets, JSON export for Mod Manager, and ultrawide HUD support.
 
+<p align="center">
+  <img src="screenshots/banner.png" alt="Ultimate Camera Mod — Crimson Desert banner" width="100%" />
+</p>
+
 [![Download](https://img.shields.io/badge/Download-v2.5-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
