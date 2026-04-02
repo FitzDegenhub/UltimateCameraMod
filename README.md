@@ -10,7 +10,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-<a href="https://ko-fi.com/0xfitz"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-fi" /></a>
+[![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
 ---
 
@@ -235,6 +235,12 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 - **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** — crimson-desert-unpacker — PAZ archive tooling, decryption research
 - **@Maszradine** — CDCamera — Camera rules, steadycam system, style presets
 - **@manymanecki** — CrimsonCamera — Dynamic PAZ modification architecture
+
+## Support
+
+If you find this useful, consider supporting development:
+
+[![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
 ## License
 
