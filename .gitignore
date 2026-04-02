@@ -4,21 +4,34 @@ obj/
 publish/
 publish_single/
 dist/
+release/
 
 # IDE
 .vs/
+.cursor/
 *.user
 *.suo
 *.csproj.user
+
+# Claude Code worktrees
+src/.claude/
 
 # Runtime data
 backups/
 custom_presets/
 advanced_presets/
+ucm_presets/
+my_presets/
+import_presets/
+imported_presets/
+presets/
 last_install.json
 advanced_overrides.json
+window_state.json
+u3_draft_slot.json
 crash.log
 debug/
+*.marker
 
 # OS
 Thumbs.db
@@ -29,5 +42,12 @@ Desktop.ini
 *.nupkg
 *.snupkg
 
-# Archives
+# Archives / binaries
 *.zip
+*.exe
+*.pdb
+*.dll
+
+# Reference resources (local only)
+Additional Resources/
+LLM-Handoff-Notes/
