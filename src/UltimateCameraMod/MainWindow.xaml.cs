@@ -20,6 +20,7 @@ public partial class MainWindow : Window
     private const string Ver = "2.5";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
+    private const string KoFiUrl = "https://ko-fi.com/0xfitz";
 
     private static readonly string ExeDir =
         Path.GetDirectoryName(Environment.ProcessPath) ?? AppContext.BaseDirectory;
@@ -2121,6 +2122,7 @@ public partial class MainWindow : Window
 
     private void OnNexusClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(NexusUrl) { UseShellExecute = true });
     private void OnGitHubClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(GitHubUrl) { UseShellExecute = true });
+    private void OnKofiClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(KoFiUrl) { UseShellExecute = true });
     private void OnOpenGameFolder(object s, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(_gameDir) && Directory.Exists(_gameDir))

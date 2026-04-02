@@ -12,7 +12,24 @@
     <Version>3.0.0</Version>
     <Authors>0xFitz</Authors>
     <Description>Export-first camera workflow for Crimson Desert Mod Manager</Description>
+    <ApplicationIcon>Assets\ucm.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ucm.ico" />
+    <Resource Include="Assets\ucm-app-icon.png" />
+  </ItemGroup>
+
+  <!-- Loose copy for LoadImage(LR_LOADFROMFILE) fallback when taskbar ignores WPF Window.Icon -->
+  <Target Name="CopyUcmIcoToOutput" AfterTargets="Build">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Assets\ucm.ico"
+          DestinationFolder="$(OutputPath)Assets"
+          SkipUnchangedFiles="true" />
+    <!-- Second copy: LoadImage fallback next to exe if shell probes before Assets exists -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Assets\ucm.ico"
+          DestinationFiles="$(OutputPath)ucm.ico"
+          SkipUnchangedFiles="true" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="K4os.Compression.LZ4" Version="1.3.8" />
@@ -36,6 +53,9 @@
     </Compile>
     <Compile Include="..\UltimateCameraMod\Services\GameDetector.cs">
       <Link>Shared\Services\GameDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Services\GameInstallBaselineTracker.cs">
+      <Link>Shared\Services\GameInstallBaselineTracker.cs</Link>
     </Compile>
     <Compile Include="..\UltimateCameraMod\Services\JsonModExporter.cs">
       <Link>Shared\Services\JsonModExporter.cs</Link>

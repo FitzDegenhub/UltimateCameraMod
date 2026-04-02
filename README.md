@@ -1,18 +1,35 @@
-Hi guys, apologies for my page going down on Nexus - the nexus team are currently reviewing all my files. As I'm a new author on the platform they wish todo some checks on source code before allowing the project to be able to download on Nexs, which honestly makes total sense. 
-
-I've already been in contact with them and they've been helpful, so just have to wait it out for us to be back on Nexus. 
-
-v3 is already being worked on. 
-
-Cheers. 
-
+> **Nexus Mods:** New-author source review is in progress; the listing may be temporarily unavailable. **v2.5** downloads remain on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. **v3** is under active development on branch **`v3-dev`** (export-first / Mod Manager workflow).
 
 # Ultimate Camera Mod — Crimson Desert
 
 Standalone camera toolkit for Crimson Desert with a full GUI, live camera preview, advanced XML editor, and HUD centering for ultrawide displays.
 
+## v3 development (`v3-dev` branch)
+
+**v3** targets an **export-first** flow: tune the camera in-app, **export JSON**, and activate it in **Crimson Desert Mod Manager**. The classic **v2.x** app on `main` still supports direct install into the game PAZ and ships from **Releases**.
+
+| Area | What landed |
+|------|-------------|
+| **Presets** | File-backed catalog (`ucm_presets/`, `my_presets/`), migration from legacy `presets/`, sidebar manager, lock / import / export, unified session XML loading. |
+| **Vanilla preset** | True stock camera: embedded `session_xml` is **raw** decoded `playercamerapreset` from your game backup / live PAZ — **no** `BuildModifications` layer. Quick sliders are filled from **`Player_Basic_Default/ZoomLevel[2]`** (`ZoomDistance`, `UpOffset`, `RightOffset`) via `CameraMod.TryParseUcmQuickFootBaselineFromXml`, so JSON `settings` match the XML. `vanilla_preset_rev` forces regeneration when bumped. **Steadycam** defaults **off** on Vanilla; turn it on if you want UCM smoothing on top of stock. |
+| **Windows taskbar icon** | `SetCurrentProcessExplicitAppUserModelID` plus **`SHGetPropertyStoreForWindow`**: `System.AppUserModel.ID` and **`RelaunchIconResource`** (with `ucm.ico` next to the exe and under `Assets/`). Complements `WM_SETICON` / class-icon retries for title bar + shell. |
+| **Preset JSON** | `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` for preset files; header string extraction decodes JSON escapes (fixes garbled `+` / `\u002B` in descriptions). |
+| **Game patch awareness** | `GameInstallBaselineTracker` saves install metadata (incl. Steam `appmanifest` where applicable) after a successful apply; UI can warn when the install may have changed — reinstall / re-export after updates. |
+| **Maintainer tool** | `tools/ReadVanillaQuickBaseline` — CLI check: prints the same Quick baseline triple as the app for a given game directory (optional self-contained build; see tool `.csproj`). |
+
+### Build & run v3 (Windows)
+
+Requires [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0). **Close any running `UltimateCameraMod.V3`** before building, or the exe copy step fails (file in use).
+
+```powershell
+Stop-Process -Name "UltimateCameraMod.V3" -Force -ErrorAction SilentlyContinue
+dotnet build "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release
+Start-Process "src/UltimateCameraMod.V3/bin/Release/net6.0-windows/UltimateCameraMod.V3.exe"
+```
+
 [![Download](https://img.shields.io/badge/Download-v2.5-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 [![Reddit](https://img.shields.io/badge/Reddit-Discussion-ff4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1s8vllh/ultimate_camera_mod_ucm_v25_full_camera_toolkit/)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
@@ -68,7 +85,7 @@ HUD modifications follow the same pipeline for `ui/minimaphudview2.html`, `ui/st
 
 No DLL injection, no memory hacking, no internet connection required — pure data file modification.
 
-## Building from Source
+## Building from Source (v2.x)
 
 Requires [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (or later).
 
@@ -86,6 +103,8 @@ cd src/UltimateCameraMod
 dotnet run
 ```
 
+For **v3**, use the **Build & run v3** block in the section above (different `.csproj` path).
+
 ### Dependencies (NuGet, restored automatically)
 
 - [K4os.Compression.LZ4](https://www.nuget.org/packages/K4os.Compression.LZ4/) — LZ4 block compression/decompression
@@ -93,15 +112,28 @@ dotnet run
 ## Project Structure
 
 ```
-src/UltimateCameraMod/
-├── Controls/           # WPF custom controls (camera preview, FOV preview)
-├── Models/             # Data models (AdvancedRow, CameraRules, PresetCodec)
-├── Paz/                # PAZ archive handling (ChaCha20, LZ4, Jenkins hash, PAMT parsing)
-├── Services/           # Core logic (CameraMod, GameDetector, HudMod)
-├── MainWindow.xaml     # Main application UI (Simple + Advanced modes)
-├── App.xaml            # Application resources and dark theme
+src/UltimateCameraMod/          # v2.x WPF app (direct PAZ install) + shared library code
+├── Controls/
+├── Models/
+├── Paz/
+├── Services/                   # CameraMod, GameDetector, JsonModExporter, GameInstallBaselineTracker, …
+├── MainWindow.xaml
+├── App.xaml
 └── UltimateCameraMod.csproj
+
+src/UltimateCameraMod.V3/       # v3 export-first UI (links shared Models/Services/Paz from above)
+├── MainWindow.xaml
+├── ShellTaskbarPropertyStore.cs
+├── ApplicationIdentity.cs
+├── Assets/ucm.ico
+└── UltimateCameraMod.V3.csproj
+
+tools/ReadVanillaQuickBaseline/ # Optional: verify vanilla Quick baseline from a game folder
 ```
+
+## Support
+
+If UCM helps your playthrough, you can tip the author on **[Ko-fi](https://ko-fi.com/0xfitz)**. Thanks.
 
 ## Community & Sharing
 
@@ -149,6 +181,7 @@ v2.4 automatically cleans stale data from previous versions on first launch. If 
 
 ## Version History
 
+- **v3.0-dev** (`v3-dev` branch) — Export-first preset workflow, file-based preset manager, true Vanilla preset from raw game XML + Quick baseline sync, Windows taskbar identity (`RelaunchIconResource`), preset JSON escaping fixes, game install baseline tracker, expanded Export JSON UI, new app icon assets, `ReadVanillaQuickBaseline` maintainer tool. *Not yet on GitHub Releases — build from source or use CI artifacts when available.*
 - **v2.4** — Proportional horizontal shift (fixes drift across zoom levels), horizontal shift on all mounts and all aim/interaction abilities, horse camera overhaul (all 8 states normalized, 4 zoom levels, distance scales with Custom slider), fixed phantom zoom level injection, version-aware backups with auto-cleanup, lantern aim baselines matched per zoom level, FoV preview distance-aware, game path in header with folder shortcut, resizable window with size persistence, improved tooltips.
 - **v2.3** — Critical fix for horizontal shift not working on 16:9 displays. Delta-based slider (0 = vanilla). Range expanded to -3..3. Fixed false "Centered" detection, banner shows full install config from saved state.
 - **v2.2** — Major feature release. Steadycam toggle, Extra Zoom Levels, Horse First Person, Horizontal Shift slider, universal FoV consistency, skill aiming side-consistency, Import XML in Advanced Editor, preset sharing, update notifications, Expand/Collapse All. HUD centering temporarily disabled.

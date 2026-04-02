@@ -772,10 +772,19 @@ public static class ArchiveWriter
 
     public static void UpdateEntry(PazEntry entry, byte[] payload)
     {
-        var restoreTs = SaveTimestamps(entry.PazFile);
-        using (var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Write))
+        UpdateEntryAt(entry.PazFile, entry.Offset, payload);
+    }
+
+    /// <summary>
+    /// Writes encrypted payload bytes at <paramref name="offset"/> inside an existing <c>.paz</c> file
+    /// (e.g. a copy of the game archive for export, without modifying the live install).
+    /// </summary>
+    public static void UpdateEntryAt(string pazFilePath, long offset, byte[] payload)
+    {
+        var restoreTs = SaveTimestamps(pazFilePath);
+        using (var fs = new FileStream(pazFilePath, FileMode.Open, FileAccess.Write))
         {
-            fs.Seek(entry.Offset, SeekOrigin.Begin);
+            fs.Seek(offset, SeekOrigin.Begin);
             fs.Write(payload);
         }
         restoreTs();

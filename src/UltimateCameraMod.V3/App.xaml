@@ -109,6 +109,38 @@
                 <Setter Property="FontSize" Value="12"/>
             </Style>
 
+            <!-- Preset row padlock: no chrome so it reads as a glyph, not a boxed button -->
+            <Style x:Key="PresetSidebarLockButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="8,0,0,0"/>
+                <Setter Property="Width" Value="22"/>
+                <Setter Property="Height" Value="22"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.45"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <!-- Preset nav list: rounded rows, hover + accent strip when selected -->
             <Style x:Key="SidebarPresetListBoxItem" TargetType="ListBoxItem">
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -391,6 +423,10 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="TextAlignment" Value="Right"/>
                 <Setter Property="Margin" Value="0,0,12,8"/>
+            </Style>
+
+            <Style TargetType="Window">
+                <Setter Property="Icon" Value="pack://application:,,,/Assets/ucm.ico"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

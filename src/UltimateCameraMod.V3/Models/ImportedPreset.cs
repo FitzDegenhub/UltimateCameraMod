@@ -20,6 +20,9 @@ public sealed class ImportedPreset
     public Dictionary<string, string> Values { get; set; } =
         new(StringComparer.OrdinalIgnoreCase);
 
+    /// <summary>When true, sidebar shows locked and the editor does not apply changes to this preset.</summary>
+    public bool Locked { get; set; }
+
     [JsonIgnore]
     public bool HasValues => Values.Count > 0;
 }

@@ -5,8 +5,8 @@ using UltimateCameraMod.Models;
 namespace UltimateCameraMod.Services;
 
 /// <summary>
-/// Generates Crimson Desert Mod Manager v8 compatible JSON patch files by
-/// binary-diffing vanilla encrypted camera bytes against UCM-modified bytes.
+/// Generates Crimson Desert JSON Mod Manager compatible patch files by binary-diffing the
+/// <strong>decompressed</strong> camera entry payload (same buffer the manager patches after decompress).
 /// </summary>
 public static class JsonModExporter
 {
@@ -80,9 +80,7 @@ public static class JsonModExporter
 
     /// <summary>
     /// Ensures each change's <c>original</c> matches <paramref name="vanillaBytes"/> and that applying
-    /// all changes yields <paramref name="modifiedBytes"/> exactly. If this passes, the JSON is
-    /// internally consistent; if an external mod manager still skips, it is using different vanilla bytes
-    /// or a different <c>game_file</c> resolution than UCM's <see cref="CameraMod.ReadVanillaBackupBytesWithMeta"/>.
+    /// all changes yields <paramref name="modifiedBytes"/> exactly.
     /// </summary>
     private static void VerifyPatchesRoundTrip(byte[] vanillaBytes, byte[] modifiedBytes, List<PatchChange> changes)
     {
@@ -123,16 +121,14 @@ public static class JsonModExporter
 
     // ── JSON builder ─────────────────────────────────────────────────
 
-    /// <param name="pazPayloadBase">
-    /// Absolute offset of the camera entry inside the host <c>*.paz</c> file. CD JSON Mod Manager treats
-    /// <c>offset</c> as absolute within that archive; UCM diffs are relative to the entry blob only.
-    /// </param>
+    /// <summary>
+    /// CD JSON Mod Manager v1: <c>offset</c> is absolute within the decompressed entry buffer (0-based).
+    /// </summary>
     public static string BuildJson(
         ModInfo info,
         List<PatchChange> changes,
         string gameFile,
-        string sourceGroup,
-        long pazPayloadBase = 0)
+        string sourceGroup)
     {
         using var ms = new MemoryStream();
         using var writer = new Utf8JsonWriter(ms, new JsonWriterOptions { Indented = true });
@@ -156,7 +152,7 @@ public static class JsonModExporter
         foreach (var c in changes)
         {
             writer.WriteStartObject();
-            writer.WriteNumber("offset", c.Offset + pazPayloadBase);
+            writer.WriteNumber("offset", c.Offset);
             writer.WriteString("original", c.Original);
             writer.WriteString("patched", c.Patched);
             writer.WriteString("label", c.Label);
@@ -176,8 +172,7 @@ public static class JsonModExporter
     // ── Full pipeline ────────────────────────────────────────────────
 
     /// <summary>
-    /// Reads vanilla backup bytes, applies current settings to produce modified bytes,
-    /// diffs them, and writes the resulting JSON patch file.
+    /// Reads vanilla backup, applies current settings, diffs decompressed payloads, writes JSON.
     /// </summary>
     public static (List<PatchChange> Changes, string Json) ExportFromModSet(
         string gameDir,
@@ -185,24 +180,24 @@ public static class JsonModExporter
         ModificationSet modSet,
         Action<string>? log = null)
     {
-        log?.Invoke("Reading vanilla backup bytes...");
-        var (vanillaBytes, gameFile, sourceGroup, pazPayloadOffset) = CameraMod.ReadVanillaBackupBytesWithMeta(gameDir, log);
+        log?.Invoke("Reading stored vanilla backup (decompressed baseline)...");
+        var (baselineBytes, gameFile, sourceGroup) = CameraMod.ReadStoredVanillaDecompressedPayloadForJson(gameDir, log);
 
-        log?.Invoke("Building modified bytes...");
-        byte[] modifiedBytes = CameraMod.BuildModifiedBytes(gameDir, modSet, log);
+        log?.Invoke("Building modified decompressed payload...");
+        byte[] modifiedBytes = CameraMod.BuildModifiedDecompressedPayload(gameDir, modSet, log);
 
-        log?.Invoke($"Diffing {vanillaBytes.Length} bytes...");
-        var changes = GeneratePatches(vanillaBytes, modifiedBytes);
-        VerifyPatchesRoundTrip(vanillaBytes, modifiedBytes, changes);
+        log?.Invoke($"Diffing {baselineBytes.Length} bytes (decompressed)...");
+        var changes = GeneratePatches(baselineBytes, modifiedBytes);
+        VerifyPatchesRoundTrip(baselineBytes, modifiedBytes, changes);
         log?.Invoke($"Found {changes.Count} patch regions ({changes.Sum(c => c.Original.Length / 2)} bytes changed); round-trip OK.");
-        log?.Invoke($"Patch target: game_file={gameFile} source_group={sourceGroup} paz_payload_offset={pazPayloadOffset}");
+        log?.Invoke($"Patch target: game_file={gameFile} source_group={sourceGroup} (offsets in decompressed buffer)");
 
-        string json = BuildJson(info, changes, gameFile, sourceGroup, pazPayloadOffset);
+        string json = BuildJson(info, changes, gameFile, sourceGroup);
         return (changes, json);
     }
 
     /// <summary>
-    /// Applies a raw XML string through the pipeline, diffs against vanilla, and returns patch JSON.
+    /// Applies raw XML through the pipeline, diffs decompressed payloads, returns patch JSON.
     /// </summary>
     public static (List<PatchChange> Changes, string Json) ExportFromXml(
         string gameDir,
@@ -210,19 +205,19 @@ public static class JsonModExporter
         string xmlText,
         Action<string>? log = null)
     {
-        log?.Invoke("Reading vanilla backup bytes...");
-        var (vanillaBytes, gameFile, sourceGroup, pazPayloadOffset) = CameraMod.ReadVanillaBackupBytesWithMeta(gameDir, log);
+        log?.Invoke("Reading live camera chunk (decompressed baseline)...");
+        var (baselineBytes, gameFile, sourceGroup) = CameraMod.ReadLiveCameraDecompressedPayloadForJson(gameDir, log);
 
-        log?.Invoke("Building modified bytes from XML...");
-        byte[] modifiedBytes = CameraMod.BuildModifiedBytesFromXml(gameDir, xmlText, log);
+        log?.Invoke("Building modified decompressed payload from XML...");
+        byte[] modifiedBytes = CameraMod.BuildModifiedDecompressedPayloadFromXml(gameDir, xmlText, log);
 
-        log?.Invoke($"Diffing {vanillaBytes.Length} bytes...");
-        var changes = GeneratePatches(vanillaBytes, modifiedBytes);
-        VerifyPatchesRoundTrip(vanillaBytes, modifiedBytes, changes);
+        log?.Invoke($"Diffing {baselineBytes.Length} bytes (decompressed)...");
+        var changes = GeneratePatches(baselineBytes, modifiedBytes);
+        VerifyPatchesRoundTrip(baselineBytes, modifiedBytes, changes);
         log?.Invoke($"Found {changes.Count} patch regions ({changes.Sum(c => c.Original.Length / 2)} bytes changed); round-trip OK.");
-        log?.Invoke($"Patch target: game_file={gameFile} source_group={sourceGroup} paz_payload_offset={pazPayloadOffset}");
+        log?.Invoke($"Patch target: game_file={gameFile} source_group={sourceGroup} (offsets in decompressed buffer)");
 
-        string json = BuildJson(info, changes, gameFile, sourceGroup, pazPayloadOffset);
+        string json = BuildJson(info, changes, gameFile, sourceGroup);
         return (changes, json);
     }
 }

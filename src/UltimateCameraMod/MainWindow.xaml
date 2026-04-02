@@ -40,7 +40,11 @@
                             Foreground="#d98f40" Click="OnNexusClick" Margin="0,0,4,0"
                             BorderThickness="0" FontSize="10" Padding="8,4"/>
                     <Button Content="⚑  GitHub" Style="{StaticResource SubtleButton}"
-                            Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4"/>
+                            Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4" Margin="0,0,4,0"/>
+                    <Button Content="☕ Buy me a coffee" Style="{StaticResource SubtleButton}"
+                            Click="OnKofiClick" BorderThickness="0" FontSize="10" Padding="8,4"
+                            ToolTip="Opens Ko-fi — tips help keep UCM going"
+                            Foreground="#FF5E5B"/>
                 </StackPanel>
             </DockPanel>
         </Border>

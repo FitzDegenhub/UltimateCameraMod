@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -31,6 +34,13 @@ public partial class MainWindow : Window
     private const string LegacyImportedPresetsDirName = "imported_presets";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
+    private const string KoFiUrl = "https://ko-fi.com/0xfitz";
+
+    private static readonly JsonSerializerOptions PresetFileJsonOptions = new()
+    {
+        WriteIndented = true,
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+    };
 
     private static readonly string ExeDir =
         Path.GetDirectoryName(Environment.ProcessPath) ?? AppContext.BaseDirectory;
@@ -62,6 +72,10 @@ public partial class MainWindow : Window
     private double _customDraftRightOffset;
     private string? _customDraftPresetName;
     private bool _customDraftDirty = true;
+    private bool _gameUpdateNoticeSessionDismissed;
+    private bool _taskbarIconContentRenderedDone;
+    private bool _taskbarIconActivatedDone;
+    private bool _shellTaskbarPropertyStoreApplied;
 
     // â”€â”€ Mode state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     private string _activeMode = "simple";
@@ -229,7 +243,7 @@ public partial class MainWindow : Window
     {
         ("western",   "Heroic  -  Shoulder-level OTS, great framing"),
         ("cinematic", "Panoramic  -  Head-height wide pullback, filmic"),
-        ("default",   "Vanilla  -  Default framing + steadycam smoothing"),
+        ("default",   "Vanilla  -  Unmodified game camera (use Steadycam for UCM smoothing)"),
         ("immersive", "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
         ("lowcam",    "Low Rider  -  Hip-level, full body + horizon"),
         ("vlowcam",   "Knee Cam  -  Knee-height dramatic low angle"),
@@ -278,6 +292,25 @@ public partial class MainWindow : Window
         System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
         InitializeComponent();
+
+        // WPF applies Window.Icon after HWND creation and can overwrite WM_SETICON; re-apply on later dispatcher phases.
+        SourceInitialized += (_, _) =>
+        {
+            IntPtr shellHwnd = new WindowInteropHelper(this).Handle;
+            if (shellHwnd != IntPtr.Zero && !_shellTaskbarPropertyStoreApplied)
+            {
+                // Taskbar group icon is driven by window property store (not WM_SETICON alone). See ShellTaskbarPropertyStore.
+                _shellTaskbarPropertyStoreApplied = ShellTaskbarPropertyStore.TryApply(shellHwnd, ExeDir);
+            }
+
+            Dispatcher.BeginInvoke(ApplyNativeWindowIcons, DispatcherPriority.Loaded);
+            Dispatcher.BeginInvoke(ApplyNativeWindowIcons, DispatcherPriority.Render);
+            Dispatcher.BeginInvoke(ApplyNativeWindowIcons, DispatcherPriority.ApplicationIdle);
+        };
+
+        ContentRendered += OnMainWindowContentRendered;
+        Activated += OnMainWindowFirstActivated;
+        IsVisibleChanged += OnMainWindowIsVisibleChanged;
 
         Loaded += OnLoaded;
         Closing += OnWindowClosing;
@@ -413,6 +446,9 @@ public partial class MainWindow : Window
 
     private void SavePresetManagerItemSession(PresetManagerItem item)
     {
+        if (item.IsLocked)
+            return;
+
         if (string.IsNullOrWhiteSpace(_sessionXml))
             return;
 
@@ -444,13 +480,13 @@ public partial class MainWindow : Window
             ["author"] = item.SourceLabel,
             ["description"] = item.StatusText,
             ["kind"] = item.KindId,
+            ["locked"] = item.IsLocked,
             ["style_id"] = GetSelectedStyleId(),
             ["session_xml"] = _sessionXml,
             ["settings"] = BuildCurrentPresetSettingsPayload()
         };
 
-        File.WriteAllText(item.FilePath,
-            JsonSerializer.Serialize(preset, new JsonSerializerOptions { WriteIndented = true }));
+        File.WriteAllText(item.FilePath, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
     }
 
     private void AutosaveActivePresetFileIfNeeded()
@@ -458,7 +494,7 @@ public partial class MainWindow : Window
         try
         {
             var item = FindPresetItemByKey(_activePickerKey);
-            if (item == null)
+            if (item == null || item.IsLocked)
                 return;
 
             SavePresetManagerItemSession(item);
@@ -565,6 +601,12 @@ public partial class MainWindow : Window
     {
         try
         {
+            if (_shellTaskbarPropertyStoreApplied)
+            {
+                IntPtr hwnd = new WindowInteropHelper(this).Handle;
+                ShellTaskbarPropertyStore.TryClear(hwnd);
+            }
+
             _installStateDebounceTimer?.Stop();
             _previewDebounceTimer?.Stop();
             FlushInstallStateWriteIfNeeded();
@@ -580,6 +622,14 @@ public partial class MainWindow : Window
         try
         {
             ApplyDarkTitlebar();
+            ApplyNativeWindowIcons();
+
+            if (!_shellTaskbarPropertyStoreApplied)
+            {
+                IntPtr h = new WindowInteropHelper(this).Handle;
+                if (h != IntPtr.Zero)
+                    _shellTaskbarPropertyStoreApplied = ShellTaskbarPropertyStore.TryApply(h, ExeDir);
+            }
 
             _savedState = LoadInstallState();
             PopulateControls();
@@ -604,8 +654,11 @@ public partial class MainWindow : Window
             }
 
             SwitchEditorTab("simple");
+            ApplyPresetEditingLockUi();
 
             ExpertDataGrid.LayoutUpdated += ExpertDataGrid_OnLayoutUpdated;
+
+            ScheduleTaskbarIconDelayedRetries();
         }
         catch (Exception ex)
         {
@@ -736,6 +789,29 @@ public partial class MainWindow : Window
         return "";
     }
 
+    /// <summary>Bump when built-in Vanilla.json must be rewritten (true game baseline, not UCM-tuned).</summary>
+    private const int VanillaBuiltinPresetRevision = 3;
+
+    private static bool VanillaBuiltInPresetNeedsRefresh(string filePath)
+    {
+        if (!File.Exists(filePath)) return true;
+        try
+        {
+            using var reader = new StreamReader(filePath);
+            var buf = new char[8192];
+            int read = reader.Read(buf, 0, buf.Length);
+            string head = new string(buf, 0, read);
+            string needle = $"\"vanilla_preset_rev\":{VanillaBuiltinPresetRevision}";
+            string needleSpaced = $"\"vanilla_preset_rev\": {VanillaBuiltinPresetRevision}";
+            return !head.Contains(needle, StringComparison.Ordinal)
+                   && !head.Contains(needleSpaced, StringComparison.Ordinal);
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
     private void GenerateBuiltInPresets()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
@@ -747,23 +823,44 @@ public partial class MainWindow : Window
                 string styleName = label.Split("  -  ")[0].Trim();
                 string fileName = styleName + ".json";
                 string path = Path.Combine(UcmPresetsDir, fileName);
-                if (File.Exists(path)) continue;
+                if (id == "default")
+                {
+                    if (!VanillaBuiltInPresetNeedsRefresh(path)) continue;
+                }
+                else if (File.Exists(path))
+                {
+                    continue;
+                }
 
                 var (dist, up, ro) = StyleParams[id];
-                var modSet = CameraRules.BuildModifications(id, 25, false, "default",
-                    mountHeight: false, steadycam: true);
-                string xml = CameraMod.ApplyModifications(vanillaXml, modSet);
+                string xml;
+                Dictionary<string, object> settings;
 
-                string desc = label.Contains("  -  ") ? label.Split("  -  ")[1].Trim() : "";
-                var preset = new Dictionary<string, object>
+                if (string.Equals(id, "default", StringComparison.OrdinalIgnoreCase))
                 {
-                    ["name"] = styleName,
-                    ["author"] = "0xFitz",
-                    ["description"] = desc,
-                    ["kind"] = id == "default" ? "default" : "style",
-                    ["style_id"] = id,
-                    ["session_xml"] = xml,
-                    ["settings"] = new Dictionary<string, object>
+                    // True vanilla: no BuildModifications — raw game XML from backup/live PAZ.
+                    xml = vanillaXml;
+                    // Quick sliders must match embedded XML (Player_Basic_Default / ZL2), not StyleParams placeholders.
+                    if (!CameraMod.TryParseUcmQuickFootBaselineFromXml(vanillaXml, out dist, out up, out ro))
+                        (dist, up, ro) = StyleParams[id];
+                    settings = new Dictionary<string, object>
+                    {
+                        ["distance"] = Math.Round(dist, 2),
+                        ["height"] = Math.Round(up, 2),
+                        ["right_offset"] = Math.Round(ro, 2),
+                        ["fov"] = 0,
+                        ["combat"] = "default",
+                        ["centered"] = false,
+                        ["mount_height"] = false,
+                        ["steadycam"] = false
+                    };
+                }
+                else
+                {
+                    var modSet = CameraRules.BuildModifications(id, 25, false, "default",
+                        mountHeight: false, steadycam: true);
+                    xml = CameraMod.ApplyModifications(vanillaXml, modSet);
+                    settings = new Dictionary<string, object>
                     {
                         ["distance"] = Math.Round(dist, 2),
                         ["height"] = Math.Round(up, 2),
@@ -773,9 +870,25 @@ public partial class MainWindow : Window
                         ["centered"] = false,
                         ["mount_height"] = false,
                         ["steadycam"] = true
-                    }
+                    };
+                }
+
+                string desc = label.Contains("  -  ") ? label.Split("  -  ")[1].Trim() : "";
+                var preset = new Dictionary<string, object>
+                {
+                    ["name"] = styleName,
+                    ["author"] = "0xFitz",
+                    ["description"] = desc,
+                    ["kind"] = id == "default" ? "default" : "style",
+                    ["locked"] = true,
+                    ["style_id"] = id,
+                    ["session_xml"] = xml,
+                    ["settings"] = settings
                 };
-                File.WriteAllText(path, JsonSerializer.Serialize(preset, new JsonSerializerOptions { WriteIndented = true }));
+                if (string.Equals(id, "default", StringComparison.OrdinalIgnoreCase))
+                    preset["vanilla_preset_rev"] = VanillaBuiltinPresetRevision;
+
+                File.WriteAllText(path, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
             }
         }
         catch (Exception ex)
@@ -837,6 +950,7 @@ public partial class MainWindow : Window
 
         CheckForUpdate();
         CheckGitHubVersion();
+        RefreshGameUpdateNotice();
 
         if (string.IsNullOrWhiteSpace(_gameDir))
         {
@@ -882,6 +996,7 @@ public partial class MainWindow : Window
                 SyncPreview();
                 _activePickerKey = null;
                 UpdateLoadedPresetContextUi();
+                RefreshGameUpdateNotice();
             });
         }
         catch (Exception ex)
@@ -899,6 +1014,163 @@ public partial class MainWindow : Window
 
     [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute", PreserveSig = true)]
     private static extern int SetWindowThemeAttribute(IntPtr hwnd, int attr, ref int value, int size);
+
+    private const int WM_SETICON = 0x0080;
+    private const int ICON_SMALL = 0;
+    private const int ICON_BIG = 1;
+    private const int ICON_SMALL2 = 2;
+    private const uint IMAGE_ICON = 1;
+    private const uint LR_DEFAULTCOLOR = 0;
+    private const uint LR_LOADFROMFILE = 0x00000010;
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    private static extern IntPtr LoadImage(IntPtr hInst, IntPtr lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
+
+    [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern IntPtr LoadImage(IntPtr hInst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+    private static extern IntPtr GetModuleHandle(string? lpModuleName);
+
+    private const int GCLP_HICON = -14;
+    private const int GCLP_HICONSM = -34;
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr SetClassLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+    private static readonly object TaskbarIconLock = new();
+    private static IntPtr _hIcon16;
+    private static IntPtr _hIcon24;
+    private static IntPtr _hIconBig;
+
+    private static IEnumerable<string> EnumerateUcmIcoFilePaths()
+    {
+        string assets = Path.Combine(ExeDir, "Assets", "ucm.ico");
+        string root = Path.Combine(ExeDir, "ucm.ico");
+        if (File.Exists(assets)) yield return assets;
+        if (File.Exists(root) && !string.Equals(assets, root, StringComparison.OrdinalIgnoreCase))
+            yield return root;
+    }
+
+    /// <summary>Load icon handles once per process; fill any missing size (PE + file). Do not bail after partial success — taskbar needs BIG.</summary>
+    private static void EnsureTaskbarIconAssets()
+    {
+        lock (TaskbarIconLock)
+        {
+            if (_hIcon16 != IntPtr.Zero && _hIcon24 != IntPtr.Zero && _hIconBig != IntPtr.Zero)
+                return;
+
+            IntPtr mod = GetModuleHandle(null);
+            if (_hIcon16 == IntPtr.Zero)
+                _hIcon16 = LoadImage(mod, (IntPtr)1, IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+            if (_hIcon24 == IntPtr.Zero)
+                _hIcon24 = LoadImage(mod, (IntPtr)1, IMAGE_ICON, 24, 24, LR_DEFAULTCOLOR);
+            if (_hIconBig == IntPtr.Zero)
+                _hIconBig = LoadImage(mod, (IntPtr)1, IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR);
+            if (_hIconBig == IntPtr.Zero)
+                _hIconBig = LoadImage(mod, (IntPtr)1, IMAGE_ICON, 48, 48, LR_DEFAULTCOLOR);
+            if (_hIconBig == IntPtr.Zero)
+                _hIconBig = LoadImage(mod, (IntPtr)1, IMAGE_ICON, 256, 256, LR_DEFAULTCOLOR);
+
+            foreach (string icoPath in EnumerateUcmIcoFilePaths())
+            {
+                if (_hIcon16 == IntPtr.Zero)
+                    _hIcon16 = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
+                if (_hIcon24 == IntPtr.Zero)
+                    _hIcon24 = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 24, 24, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
+                if (_hIconBig == IntPtr.Zero)
+                    _hIconBig = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
+                if (_hIconBig == IntPtr.Zero)
+                    _hIconBig = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 48, 48, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
+                if (_hIconBig == IntPtr.Zero)
+                    _hIconBig = LoadImage(IntPtr.Zero, icoPath, IMAGE_ICON, 256, 256, LR_DEFAULTCOLOR | LR_LOADFROMFILE);
+                if (_hIcon16 != IntPtr.Zero && _hIcon24 != IntPtr.Zero && _hIconBig != IntPtr.Zero)
+                    break;
+            }
+
+            if (_hIcon24 == IntPtr.Zero && _hIcon16 != IntPtr.Zero)
+                _hIcon24 = _hIcon16;
+            if (_hIconBig == IntPtr.Zero && _hIcon16 != IntPtr.Zero)
+                _hIconBig = _hIcon16;
+        }
+    }
+
+    private void OnMainWindowContentRendered(object? sender, EventArgs e)
+    {
+        if (_taskbarIconContentRenderedDone) return;
+        _taskbarIconContentRenderedDone = true;
+        ApplyNativeWindowIcons();
+    }
+
+    private void OnMainWindowFirstActivated(object? sender, EventArgs e)
+    {
+        if (_taskbarIconActivatedDone) return;
+        _taskbarIconActivatedDone = true;
+        ApplyNativeWindowIcons();
+        Activated -= OnMainWindowFirstActivated;
+    }
+
+    private void OnMainWindowIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue is bool vis && vis && IsLoaded)
+            ApplyNativeWindowIcons();
+    }
+
+    private void ScheduleTaskbarIconDelayedRetries()
+    {
+        void Kick(int ms)
+        {
+            var t = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(ms) };
+            t.Tick += (_, _) =>
+            {
+                t.Stop();
+                ApplyNativeWindowIcons();
+            };
+            t.Start();
+        }
+
+        Kick(120);
+        Kick(400);
+        Kick(1200);
+        Kick(2500);
+        Kick(4500);
+    }
+
+    /// <summary>
+    /// Windows taskbar often uses Win32 window icons, not only WPF <see cref="Window.Icon"/>.
+    /// WPF can reset HWND icons after <see cref="SourceInitializedEventArgs"/>; call again from <see cref="OnLoaded"/> and deferred priorities.
+    /// </summary>
+    private void ApplyNativeWindowIcons()
+    {
+        try
+        {
+            IntPtr hwnd = new WindowInteropHelper(this).Handle;
+            if (hwnd == IntPtr.Zero) return;
+
+            EnsureTaskbarIconAssets();
+
+            IntPtr mid = _hIcon24 != IntPtr.Zero ? _hIcon24 : _hIcon16;
+            if (_hIcon16 != IntPtr.Zero)
+                SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_SMALL, _hIcon16);
+            if (mid != IntPtr.Zero)
+                SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_SMALL2, mid);
+            if (_hIconBig != IntPtr.Zero)
+                SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_BIG, _hIconBig);
+
+            // Some shell paths read class icons on cold start; mirror WM_SETICON here.
+            if (_hIconBig != IntPtr.Zero)
+                SetClassLongPtr(hwnd, GCLP_HICON, _hIconBig);
+            if (_hIcon16 != IntPtr.Zero)
+                SetClassLongPtr(hwnd, GCLP_HICONSM, _hIcon16);
+        }
+        catch
+        {
+            // Non-fatal: title bar pack URI icon still applies where supported.
+        }
+    }
 
     private void ApplyDarkTitlebar()
     {
@@ -998,6 +1270,7 @@ public partial class MainWindow : Window
                 Directory.Delete(backupsDir, true);
             if (File.Exists(StatePath))
                 File.Delete(StatePath);
+            GameInstallBaselineTracker.Delete(ExeDir);
 
             SetStatus($"Cleaned old v{(string.IsNullOrEmpty(savedVer) ? "?" : savedVer)} data. v3 now exports JSON only.", "Warn");
         }
@@ -1073,26 +1346,15 @@ public partial class MainWindow : Window
     {
         try
         {
-            var rows = CameraMod.ParseXmlToRows(xml);
-            var lookup = new Dictionary<string, string>(StringComparer.Ordinal);
-            foreach (var r in rows)
-                lookup[r.FullKey] = r.Value;
-
-            static bool TryDist(string? s, out double d) =>
-                double.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out d);
+            if (!CameraMod.TryParseUcmQuickFootBaselineFromXml(xml, out double dist, out double upv, out double rov))
+                return;
 
             _suppressEvents = true;
             try
             {
-                if (lookup.TryGetValue("Player_Basic_Default/ZoomLevel[2].ZoomDistance", out var zd) &&
-                    TryDist(zd, out double dist))
-                    DistSlider.Value = Math.Clamp(dist, DistSlider.Minimum, DistSlider.Maximum);
-                if (lookup.TryGetValue("Player_Basic_Default/ZoomLevel[2].UpOffset", out var up) &&
-                    TryDist(up, out double upv))
-                    HeightSlider.Value = Math.Clamp(upv, HeightSlider.Minimum, HeightSlider.Maximum);
-                if (lookup.TryGetValue("Player_Basic_Default/ZoomLevel[2].RightOffset", out var ro) &&
-                    TryDist(ro, out double rov))
-                    HShiftSlider.Value = Math.Clamp(rov, HShiftSlider.Minimum, HShiftSlider.Maximum);
+                DistSlider.Value = Math.Clamp(dist, DistSlider.Minimum, DistSlider.Maximum);
+                HeightSlider.Value = Math.Clamp(upv, HeightSlider.Minimum, HeightSlider.Maximum);
+                HShiftSlider.Value = Math.Clamp(rov, HShiftSlider.Minimum, HShiftSlider.Maximum);
             }
             finally
             {
@@ -1131,6 +1393,9 @@ public partial class MainWindow : Window
         _sessionXml = xml;
         // Full session snapshots replace God Mode overlay file so stale overrides cannot fight the grid.
         TryClearAdvOverridesFile();
+        // UCM Quick sliders must track _sessionXml even on the default tab (imported presets / Picker loads
+        // only ran ApplySessionXmlToAdvancedControls when Advanced was visible — left distance/height/shift stale).
+        TryApplyQuickSlidersFromSessionXml(xml);
         // Mark editors as needing refresh — they'll pick up _sessionXml when the user switches tabs
         _advCtrlNeedsRefresh = true;
         _expertNeedsRefresh = true;
@@ -1148,6 +1413,51 @@ public partial class MainWindow : Window
         }
         SyncPreview();
         SaveCurrentUiState();
+        ApplyPresetEditingLockUi();
+    }
+
+    private bool IsActivePresetEditingLocked() =>
+        _selectedPresetManagerItem?.IsLocked == true;
+
+    /// <summary>Disables editors when the selected preset is locked (sidebar padlock).</summary>
+    private void ApplyPresetEditingLockUi()
+    {
+        bool locked = IsActivePresetEditingLocked();
+
+        if (locked)
+        {
+            _suppressEvents = true;
+            try
+            {
+                DistSlider.IsEnabled = false;
+                HeightSlider.IsEnabled = false;
+                HShiftSlider.IsEnabled = false;
+            }
+            finally
+            {
+                _suppressEvents = false;
+            }
+
+            FovCombo.IsEnabled = false;
+            CombatCombo.IsEnabled = false;
+            BaneCheck.IsEnabled = false;
+            MountHeightCheck.IsEnabled = false;
+            SteadycamCheck.IsEnabled = false;
+        }
+        else
+        {
+            DistSlider.IsEnabled = true;
+            HeightSlider.IsEnabled = true;
+            FovCombo.IsEnabled = true;
+            CombatCombo.IsEnabled = true;
+            BaneCheck.IsEnabled = true;
+            MountHeightCheck.IsEnabled = true;
+            SteadycamCheck.IsEnabled = true;
+            ApplyCenteredLock();
+        }
+
+        AdvCtrlPanel.IsEnabled = !locked;
+        ExpertDataGrid.IsReadOnly = locked;
     }
 
     private void ActivatePickerFromSelection(PresetManagerItem item, bool skipCapture = false)
@@ -1184,6 +1494,7 @@ public partial class MainWindow : Window
                 case "imported":
                 {
                     var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded.");
+                    item.IsLocked = preset.Locked;
                     _selectedImportedPreset = preset;
                     LoadImportedPresetIntoSession(preset);
                     break;
@@ -1283,6 +1594,9 @@ public partial class MainWindow : Window
             _activePickerKey = previousPickerKey;
             SetStatus($"Could not activate preset: {ex.Message}", "Error");
         }
+
+        if (string.Equals(_activePickerKey, slotKey, StringComparison.Ordinal))
+            ApplyPresetEditingLockUi();
     }
 
     private static bool TrySelectComboItem(ComboBox combo, string name)
@@ -1414,6 +1728,12 @@ public partial class MainWindow : Window
             ImportedPresetFingerprint? lastBuilt = ReadLastBuiltAgainstFromJson(root);
             string statusText = BuildImportedPresetStatusTextFromMetadata(lastBuilt, currentGameFp);
 
+            bool locked = false;
+            if (root.TryGetProperty("Locked", out var lk))
+                locked = lk.ValueKind == JsonValueKind.True;
+            else if (root.TryGetProperty("locked", out var lk2))
+                locked = lk2.ValueKind == JsonValueKind.True;
+
             item = new PresetManagerItem
             {
                 Name = fileStem,
@@ -1424,7 +1744,8 @@ public partial class MainWindow : Window
                 SummaryText =
                     $"{displayName} | source: {sourceDisplayName} | {valueCount} saved values | type: {sourceType.ToUpperInvariant()}",
                 FilePath = filePath,
-                CanRebuild = true
+                CanRebuild = true,
+                IsLocked = locked
             };
             return true;
         }
@@ -1483,7 +1804,7 @@ public partial class MainWindow : Window
     {
         var items = new List<PresetManagerItem>();
 
-        void AppendSessionJsonPresetsFromDir(string directory)
+        void AppendSessionJsonPresetsFromDir(string directory, bool defaultLocked)
         {
             if (!Directory.Exists(directory))
                 return;
@@ -1505,6 +1826,7 @@ public partial class MainWindow : Window
                     string author = ExtractJsonStringField(header, "author") ?? "";
                     string desc = ExtractJsonStringField(header, "description") ?? "";
                     string kind = ExtractJsonStringField(header, "kind") ?? "user";
+                    bool isLocked = ExtractJsonBoolField(header, "locked") ?? defaultLocked;
 
                     items.Add(new PresetManagerItem
                     {
@@ -1523,15 +1845,16 @@ public partial class MainWindow : Window
                             ? (string.IsNullOrEmpty(author) ? "Custom preset." : $"by {author}")
                             : $"{desc}{(string.IsNullOrEmpty(author) ? "" : $" — by {author}")}",
                         FilePath = file,
-                        CanRebuild = false
+                        CanRebuild = false,
+                        IsLocked = isLocked
                     });
                 }
                 catch { /* skip malformed preset files */ }
             }
         }
 
-        AppendSessionJsonPresetsFromDir(UcmPresetsDir);
-        AppendSessionJsonPresetsFromDir(MyPresetsDir);
+        AppendSessionJsonPresetsFromDir(UcmPresetsDir, defaultLocked: true);
+        AppendSessionJsonPresetsFromDir(MyPresetsDir, defaultLocked: false);
 
         // Imported presets (from ImportedPresetsDir)
         foreach (string file in Directory.GetFiles(ImportedPresetsDir, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
@@ -1675,7 +1998,7 @@ public partial class MainWindow : Window
         return "Imported XML";
     }
 
-    /// <summary>Fast extraction of a JSON string field from a partial file header (avoids full parse).</summary>
+    /// <summary>Fast extraction of a JSON string field from a partial file header (avoids parsing session_xml).</summary>
     private static string? ExtractJsonStringField(string json, string fieldName)
     {
         string pattern = $"\"{fieldName}\"";
@@ -1683,11 +2006,67 @@ public partial class MainWindow : Window
         if (idx < 0) return null;
         int colon = json.IndexOf(':', idx + pattern.Length);
         if (colon < 0) return null;
-        int quote1 = json.IndexOf('"', colon + 1);
-        if (quote1 < 0) return null;
-        int quote2 = json.IndexOf('"', quote1 + 1);
-        if (quote2 < 0) return null;
-        return json[( quote1 + 1)..quote2].Replace("\\n", " ").Replace("\\\"", "\"");
+        int i = colon + 1;
+        while (i < json.Length && char.IsWhiteSpace(json[i])) i++;
+        if (i >= json.Length || json[i] != '"') return null;
+        int startQuote = i;
+        i++;
+        while (i < json.Length)
+        {
+            char c = json[i];
+            if (c == '\\' && i + 1 < json.Length)
+            {
+                char e = json[i + 1];
+                if (e == 'u' && i + 6 <= json.Length && Is4HexDigits(json, i + 2))
+                {
+                    i += 6;
+                    continue;
+                }
+                i += 2;
+                continue;
+            }
+            if (c == '"')
+            {
+                string token = json[startQuote..(i + 1)];
+                try
+                {
+                    string? s = JsonSerializer.Deserialize<string>(token);
+                    return s?.Replace("\n", " ", StringComparison.Ordinal);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            i++;
+        }
+        return null;
+    }
+
+    private static bool Is4HexDigits(string json, int start)
+    {
+        if (start + 4 > json.Length) return false;
+        for (int k = 0; k < 4; k++)
+        {
+            if (!Uri.IsHexDigit(json[start + k])) return false;
+        }
+        return true;
+    }
+
+    private static bool? ExtractJsonBoolField(string json, string fieldName)
+    {
+        string pattern = $"\"{fieldName}\"";
+        int idx = json.IndexOf(pattern, StringComparison.Ordinal);
+        if (idx < 0) return null;
+        int colon = json.IndexOf(':', idx + pattern.Length);
+        if (colon < 0) return null;
+        int i = colon + 1;
+        while (i < json.Length && char.IsWhiteSpace(json[i])) i++;
+        if (i >= json.Length) return null;
+        ReadOnlySpan<char> rest = json.AsSpan(i);
+        if (rest.StartsWith("true", StringComparison.Ordinal)) return true;
+        if (rest.StartsWith("false", StringComparison.Ordinal)) return false;
+        return null;
     }
 
     private static string SanitizeFileStem(string text)
@@ -1724,7 +2103,58 @@ public partial class MainWindow : Window
     {
         preset.Name = string.IsNullOrWhiteSpace(preset.Name) ? "imported_preset" : preset.Name.Trim();
         string path = ImportedPresetPath(preset.Name);
-        File.WriteAllText(path, JsonSerializer.Serialize(preset, new JsonSerializerOptions { WriteIndented = true }));
+        File.WriteAllText(path, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
+    }
+
+    private void PersistPresetLockField(PresetManagerItem item)
+    {
+        if (string.IsNullOrWhiteSpace(item.FilePath) || !File.Exists(item.FilePath))
+            return;
+
+        try
+        {
+            if (string.Equals(item.KindId, "imported", StringComparison.OrdinalIgnoreCase))
+            {
+                var preset = LoadImportedPreset(item.Name);
+                if (preset == null) return;
+                preset.Locked = item.IsLocked;
+                SaveImportedPreset(preset);
+                _selectedImportedPreset = preset;
+                return;
+            }
+
+            string text = File.ReadAllText(item.FilePath);
+            JsonNode? root = JsonNode.Parse(text);
+            if (root is not JsonObject obj) return;
+            obj["locked"] = item.IsLocked;
+            File.WriteAllText(item.FilePath, root.ToJsonString(PresetFileJsonOptions));
+        }
+        catch
+        {
+            // Keep UI lock state even if disk write fails; next refresh may resync from file.
+        }
+    }
+
+    private void OnPresetSidebarLockClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button btn || btn.DataContext is not PresetManagerItem item)
+            return;
+
+        item.IsLocked = !item.IsLocked;
+        PersistPresetLockField(item);
+
+        if (_selectedImportedPreset != null
+            && string.Equals(item.KindId, "imported", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(item.Name, _selectedImportedPreset.Name, StringComparison.OrdinalIgnoreCase))
+            _selectedImportedPreset.Locked = item.IsLocked;
+
+        if (ReferenceEquals(_selectedPresetManagerItem, item))
+            ApplyPresetEditingLockUi();
+
+        SetStatus(item.IsLocked
+                ? $"Preset '{item.Name}' is locked — unlock the padlock to edit."
+                : $"Preset '{item.Name}' is unlocked.",
+            item.IsLocked ? "Warn" : "TextDim");
     }
 
     private string PromptForImportedPresetName(string suggestedName)
@@ -1964,6 +2394,51 @@ public partial class MainWindow : Window
             ShowBannerFromState(_savedState);
         }
         catch { BannerPanel.Visibility = Visibility.Collapsed; }
+    }
+
+    private void RefreshGameUpdateNotice()
+    {
+        try
+        {
+            if (!IsLoaded || _gameUpdateNoticeSessionDismissed)
+            {
+                if (IsLoaded) GameUpdateStrip.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_gameDir))
+            {
+                GameUpdateStrip.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            string backupsDir = Path.Combine(ExeDir, "backups");
+            var ev = GameInstallBaselineTracker.Evaluate(ExeDir, Ver, _gameDir, _detectedPlatform, backupsDir);
+            if (!ev.ShowWarning)
+            {
+                GameUpdateStrip.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            GameUpdateText.Text = ev.Message;
+            GameUpdateStrip.Visibility = Visibility.Visible;
+        }
+        catch
+        {
+            if (IsLoaded) GameUpdateStrip.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private void OnGameUpdateDismissClick(object sender, RoutedEventArgs e)
+    {
+        _gameUpdateNoticeSessionDismissed = true;
+        GameUpdateStrip.Visibility = Visibility.Collapsed;
+    }
+
+    private void OnGameUpdateSnoozeClick(object sender, RoutedEventArgs e)
+    {
+        GameInstallBaselineTracker.SetSnooze(ExeDir, TimeSpan.FromDays(7));
+        RefreshGameUpdateNotice();
     }
 
     private void ShowBannerFromState(Dictionary<string, object> state)
@@ -2213,6 +2688,7 @@ public partial class MainWindow : Window
         }
 
         string gameDir = _gameDir;
+        string platform = _detectedPlatform;
         string activeMode = _activeMode;
         string styleId = GetSelectedStyleId();
 
@@ -2267,6 +2743,15 @@ public partial class MainWindow : Window
                         return;
                     }
 
+                    try
+                    {
+                        GameInstallBaselineTracker.SaveAfterSuccessfulInstall(ExeDir, Ver, gameDir, platform);
+                        _gameUpdateNoticeSessionDismissed = false;
+                    }
+                    catch { }
+
+                    RefreshGameUpdateNotice();
+
                     SetStatus(
                         payloadChanged
                             ? $"Installed current session to game. PAZ bytes changed. Trace: {Path.GetFileName(tracePath)}"
@@ -2316,6 +2801,7 @@ public partial class MainWindow : Window
                             break;
                         case "stale_backup":
                             SetStatus("Backup was stale after a game update and has been cleared. Verify files, then install again.", "Warn");
+                            RefreshGameUpdateNotice();
                             break;
                         default:
                             SetStatus("Restore finished with an unknown result.", "Warn");
@@ -2432,8 +2918,12 @@ public partial class MainWindow : Window
 
     private void OnExportJson(object sender, RoutedEventArgs e)
     {
-        CaptureSessionXml();
-        var dlg = new ExportJsonDialog(_gameDir, _sessionXml) { Owner = this };
+        var dlg = new ExportJsonDialog(_gameDir, () =>
+        {
+            CaptureSessionXml();
+            return _sessionXml;
+        })
+        { Owner = this };
         dlg.ShowDialog();
     }
 
@@ -2453,7 +2943,7 @@ public partial class MainWindow : Window
 
         if (tab != "simple" && string.IsNullOrEmpty(_gameDir))
         {
-            MessageBox.Show("Game-file install is not available in v3. Export JSON instead.",
+            MessageBox.Show("Game-file install is not available in v3. Use Export (sidebar) for JSON, XML, or 0.paz sharing.",
                 "Ultimate Camera Mod", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
@@ -2492,6 +2982,8 @@ public partial class MainWindow : Window
                 EnterExpertMode();
                 break;
         }
+
+        ApplyPresetEditingLockUi();
     }
 
     // Legacy compat shim — internal callers still use SwitchAppMode in some flows.
@@ -2652,6 +3144,8 @@ public partial class MainWindow : Window
                 MessageBoxButton.OK, MessageBoxImage.Error);
             SwitchAppMode("simple");
         }
+
+        ApplyPresetEditingLockUi();
     }
 
     private void AdvBindGrid()
@@ -2731,6 +3225,9 @@ public partial class MainWindow : Window
 
     private void OnExpertCellEditEnding(object? sender, DataGridCellEditEndingEventArgs e)
     {
+        if (IsActivePresetEditingLocked())
+            return;
+
         if (e.EditAction != DataGridEditAction.Commit)
             return;
 
@@ -2787,6 +3284,12 @@ public partial class MainWindow : Window
 
     private void OnAdvResetDefaults(object sender, RoutedEventArgs e)
     {
+        if (IsActivePresetEditingLocked())
+        {
+            SetStatus("Unlock this preset in the sidebar to reset God Mode values.", "Warn");
+            return;
+        }
+
         try
         {
             string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
@@ -2941,6 +3444,10 @@ public partial class MainWindow : Window
 
     // â”€â”€ XML Export / Import â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+    /// <summary>
+    /// Decodes the live camera entry from the game PAZ (no v3 UI button; kept for parity / future use).
+    /// Sidebar Export opens <see cref="ExportJsonDialog"/> for session/preset XML, JSON, or patched 0.paz.
+    /// </summary>
     private async void OnExportXmlFile(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrEmpty(_gameDir))
@@ -2997,6 +3504,7 @@ public partial class MainWindow : Window
         if (confirm != MessageBoxResult.Yes) return;
 
         string gameDir = _gameDir;
+        string platform = _detectedPlatform;
         string srcPath = ofd.FileName;
         SetGlobalBusy(true, "Installing camera XML\u2026");
         try
@@ -3006,6 +3514,13 @@ public partial class MainWindow : Window
                 string xml = File.ReadAllText(srcPath);
                 CameraMod.InstallRawXml(gameDir, xml);
             }).ConfigureAwait(true);
+            try
+            {
+                GameInstallBaselineTracker.SaveAfterSuccessfulInstall(ExeDir, Ver, gameDir, platform);
+                _gameUpdateNoticeSessionDismissed = false;
+            }
+            catch { }
+            RefreshGameUpdateNotice();
             SetStatus($"Installed {Path.GetFileName(srcPath)} to game.", "Success");
         }
         catch (Exception ex)
@@ -3040,6 +3555,7 @@ public partial class MainWindow : Window
         {
             string xml = _sessionXml ?? BuildCuratedSessionXml();
             ApplySessionXmlToAdvancedControls(xml);
+            ApplyPresetEditingLockUi();
             return;
         }
 
@@ -3082,6 +3598,8 @@ public partial class MainWindow : Window
                 MessageBoxButton.OK, MessageBoxImage.Error);
             SwitchAppMode("simple");
         }
+
+        ApplyPresetEditingLockUi();
     }
 
     // â”€â”€ Control builder helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -3886,6 +4404,7 @@ public partial class MainWindow : Window
             UpdateImportedPresetDetails();
 
         UpdatePresetManagerDetails();
+        ApplyPresetEditingLockUi();
     }
 
     private void OnPresetManagerOpen(object sender, RoutedEventArgs e)
@@ -3913,6 +4432,7 @@ public partial class MainWindow : Window
                 ["author"] = dlg.AuthorName,
                 ["description"] = dlg.Description,
                 ["kind"] = "user",
+                ["locked"] = false,
                 ["style_id"] = GetSelectedStyleId(),
                 ["session_xml"] = xml,
                 ["settings"] = new Dictionary<string, object>
@@ -3929,7 +4449,7 @@ public partial class MainWindow : Window
             };
 
             File.WriteAllText(Path.Combine(MyPresetsDir, $"{safeName}.json"),
-                JsonSerializer.Serialize(preset, new JsonSerializerOptions { WriteIndented = true }));
+                JsonSerializer.Serialize(preset, PresetFileJsonOptions));
             RefreshPresetManagerLists(preserveSelection: false);
             QueueSavedToast($"Preset '{name}' created");
             SetStatus($"Created preset '{name}'.", "Success");
@@ -4070,9 +4590,15 @@ public partial class MainWindow : Window
         string newName = SanitizeFileStem(dlg.ResponseText);
         try
         {
+            bool promoteUcmToMyPresets = !string.Equals(item.KindId, "imported", StringComparison.OrdinalIgnoreCase)
+                && (string.Equals(item.KindId, "default", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(item.KindId, "style", StringComparison.OrdinalIgnoreCase));
+
             string newPath = item.KindId == "imported"
                 ? ImportedPresetPath(newName)
-                : Path.Combine(Path.GetDirectoryName(item.FilePath) ?? ExeDir, $"{newName}.json");
+                : promoteUcmToMyPresets
+                    ? Path.Combine(MyPresetsDir, $"{newName}.json")
+                    : Path.Combine(Path.GetDirectoryName(item.FilePath) ?? ExeDir, $"{newName}.json");
 
             if (File.Exists(newPath))
             {
@@ -4084,21 +4610,25 @@ public partial class MainWindow : Window
             {
                 var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded.");
                 preset.Name = newName;
+                preset.Locked = false;
                 SaveImportedPreset(preset);
             }
             else
             {
                 // Copy file but update the name field inside the JSON
                 string json = File.ReadAllText(item.FilePath);
-                using var doc = JsonDocument.Parse(json);
                 var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(json)
                     ?? new Dictionary<string, object>();
                 dict["name"] = dlg.ResponseText.Trim();
-                File.WriteAllText(newPath, JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true }));
+                dict["locked"] = false;
+                if (promoteUcmToMyPresets)
+                    dict["kind"] = "user";
+                File.WriteAllText(newPath, JsonSerializer.Serialize(dict, PresetFileJsonOptions));
             }
 
             RefreshPresetManagerLists(preserveSelection: false);
-            var duplicated = _presetManagerItems.FirstOrDefault(i => i.KindId == item.KindId && i.Name == newName);
+            var duplicated = _presetManagerItems.FirstOrDefault(i =>
+                string.Equals(i.FilePath, newPath, StringComparison.OrdinalIgnoreCase));
             if (duplicated != null)
                 SetSelectedPresetManagerItem(duplicated, updateDetails: true);
 
@@ -4433,9 +4963,10 @@ public partial class MainWindow : Window
             return;
         }
 
+        string rebuiltXml;
         try
         {
-            string rebuiltXml = BuildRebuiltXmlFromImportedPreset(preset);
+            rebuiltXml = BuildRebuiltXmlFromImportedPreset(preset);
             _sessionXml = rebuiltXml;
             MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
         }
@@ -4445,7 +4976,8 @@ public partial class MainWindow : Window
             return;
         }
 
-        var dlg = new ExportJsonDialog(_gameDir, _sessionXml) { Owner = this };
+        // Use rebuilt XML directly — CaptureSessionXml() would rebuild from God Mode UI and can diverge.
+        var dlg = new ExportJsonDialog(_gameDir, () => rebuiltXml) { Owner = this };
         dlg.ShowDialog();
     }
 
@@ -4472,6 +5004,7 @@ public partial class MainWindow : Window
 
     private void OnNexusClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(NexusUrl) { UseShellExecute = true });
     private void OnGitHubClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(GitHubUrl) { UseShellExecute = true });
+    private void OnKofiClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(KoFiUrl) { UseShellExecute = true });
     private void OnOpenGameFolder(object s, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(_gameDir) && Directory.Exists(_gameDir))

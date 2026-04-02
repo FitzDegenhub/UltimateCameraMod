@@ -1,7 +1,12 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace UltimateCameraMod.V3.Models;
 
-public sealed class PresetManagerItem
+public sealed class PresetManagerItem : INotifyPropertyChanged
 {
+    private bool _isLocked;
+
     public string Name { get; set; } = "";
     public string KindId { get; set; } = "";
     public string KindLabel { get; set; } = "";
@@ -10,6 +15,31 @@ public sealed class PresetManagerItem
     public string SummaryText { get; set; } = "";
     public string FilePath { get; set; } = "";
     public bool CanRebuild { get; set; }
+
+    /// <summary>
+    /// When true, the preset file is treated as read-only in the editor (toggled via sidebar padlock).
+    /// Persisted as <c>locked</c> in session JSON or <c>Locked</c> on imported presets.
+    /// </summary>
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set
+        {
+            if (_isLocked == value) return;
+            _isLocked = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(LockGlyph));
+            OnPropertyChanged(nameof(LockToolTip));
+        }
+    }
+
+    /// <summary>Sidebar padlock icon (closed = locked).</summary>
+    public string LockGlyph => IsLocked ? "\uD83D\uDD12" : "\uD83D\uDD13";
+
+    public string LockToolTip =>
+        IsLocked
+            ? "Locked — click to allow editing this preset"
+            : "Unlocked — click to lock and prevent changes";
 
     public string DisplayName => Name;
 
@@ -24,4 +54,9 @@ public sealed class PresetManagerItem
         "imported" => "Imported",
         _ => "Other"
     };
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }

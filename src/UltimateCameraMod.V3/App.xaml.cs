@@ -1,12 +1,19 @@
-﻿using System.Windows;
+using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace UltimateCameraMod.V3;
 
 public partial class App : Application
 {
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+    private static extern int SetCurrentProcessExplicitAppUserModelID(string appID);
+
     protected override void OnStartup(StartupEventArgs e)
     {
+        // Stable taskbar / jump list identity (must run before any HWND is created).
+        try { SetCurrentProcessExplicitAppUserModelID(ApplicationIdentity.AppUserModelId); } catch { }
+
         DispatcherUnhandledException += OnUnhandledException;
         AppDomain.CurrentDomain.UnhandledException += OnDomainException;
         try
