@@ -3511,7 +3511,18 @@ public partial class MainWindow : Window
         // then layer God Mode's explicit overrides on top. This ensures Steadycam and all
         // Quick settings are present in exports even when the user is on the God Mode tab.
         string baseXml = BuildSimpleSessionXml();
-        return CameraMod.ApplyModifications(baseXml, BuildExpertModSet());
+        string xml = CameraMod.ApplyModifications(baseXml, BuildExpertModSet());
+
+        // Re-sync lock-on distances to whatever on-foot ZoomDistances ended up in the XML
+        // after God Mode overrides, same as we do for Fine Tune.
+        if (SteadycamCheck.IsChecked == true
+            && CameraMod.TryParseOnFootZoomDistances(xml, out double zl2, out double zl3, out double zl4))
+        {
+            var lockOnSync = new ModificationSet { ElementMods = CameraRules.BuildLockOnDistancesPublic(zl2, zl3, zl4), FovValue = 0 };
+            xml = CameraMod.ApplyModifications(xml, lockOnSync);
+        }
+
+        return xml;
     }
 
     private ModificationSet BuildExpertModSet()
