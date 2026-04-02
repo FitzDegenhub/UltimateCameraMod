@@ -53,9 +53,25 @@ Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/Ultimate
 
 ---
 
-## v3-dev — April 2026 batch (this push)
+## v3-dev — recent feature notes (after the original PR summary)
 
 Use this subsection when updating the PR after newer `v3-dev` commits land.
+
+### Import metadata, editors, and shell (`4460b42` and follow-ups)
+
+- **`ImportMetadataDialog`**: optional **author / description / URL** when importing; fields persist on **`ImportedPreset`** and flow through save/build paths.
+- **Active preset header**: **clickable preset URL** when metadata includes a link.
+- **Locked presets**: edits surface a **toast** (instead of hard-disabling controls) so the rule is visible without dead UI.
+- **UCM Quick → editors**: Quick slider changes **sync into Fine Tune and God Mode** so deeper tabs stay consistent with the session.
+- **Fine Tune**: section groups in **bordered cards**; **wider label column** for readability.
+- **Tab bar**: **DockPanel** layout so **God Mode** stays visually anchored on the right.
+- **`PresetManagerItem`**: link/metadata plumbing for sidebar and selection summaries.
+- **README**: Reddit badge removed; **Ko-fi / support** callouts added in separate doc commits (`4b27964`, `bd3f3b5`, `e57b591`).
+- **`issue_body.md`**: tracked write-up of the **Coherent Gameface / HUD watermark** situation (archive `0012`), for GitHub issues or cross-linking.
+
+### Shared `JsonModExporter` — patch region labels (`4460b42`)
+
+- Builds an **XML offset map** over vanilla bytes and labels each diff region with a **human-readable hint** (e.g. which camera/XML area) instead of a generic “Camera parameter change” string everywhere. Improves Mod Manager JSON reviewability.
 
 ### Shipped community presets (embedded)
 
@@ -69,14 +85,13 @@ Use this subsection when updating the PR after newer `v3-dev` commits land.
 - **Built-in Vanilla.json** now stores **`right_offset`** using that delta so the Quick panel matches true vanilla XML (~0.5 → slider 0).
 - **`CameraMod.TryParseUcmQuickFootBaselineFromXml`** documentation updated to spell out literal vs delta.
 
-### Import / metadata / UI
+### Import / metadata / UI (`c1b83b1` + `430a8db`)
 
-- **`ImportedPreset`**: optional **`Author`**, **`Description`**, **`Url`** on the model (alongside existing fields).
-- **Import preset** and **import metadata** dialogs and **MainWindow** wiring for richer preset cards, sidebar summary, active-preset banner, and status text where applicable.
 - **Save toast** can show **error styling** (`_pendingSaveToastIsError`) for failed saves.
 - **`ExportJsonDialog`**: minor alignment with current export flow.
-- **`MainWindow.xaml`**: layout / copy tweaks for the above.
-- **`screenshots/banner.png`**: hero image in the root **README** (centered, responsive width).
+- **`MainWindow.xaml`**: layout / copy / tooltip text (e.g. horizontal shift help aligned with **UCM Quick**).
+- **Startup**: **first** preset-manager refresh runs **before** game detection so **my_presets** / imports are visible without the game. When a game folder is present, **`OnGameDirResolved`** kicks off an **async** camera scan that **refreshes the sidebar again** (alongside built-in + shipped JSON written in `OnLoaded`).
+- **`screenshots/banner.png`**: hero image in the root **README** (centered, responsive width; `430a8db`).
 
 ---
 
@@ -84,11 +99,16 @@ Use this subsection when updating the PR after newer `v3-dev` commits land.
 
 | Commit   | Topic |
 |----------|--------|
-| `c9f3657` | Repo cleanup: release notes, `.gitignore`, remove tracked binaries |
-| `ae8ba3c` | README (Nexus / releases note) |
-| `a8f4ce7` | v3.0-dev: UI redesign + file-based preset system |
-| `8d1f328` | Taskbar/icon, vanilla baseline sync, JSON + baseline tracker, README/docs |
+| `430a8db` | README: wire `screenshots/banner.png` hero image |
+| `c1b83b1` | Embedded shipped presets (RDR2), Vanilla Quick delta, import/export UI touches |
+| `4460b42` | Import metadata dialog, locked-preset toasts, Quick→Fine/God sync, Fine Tune cards, JSON patch labels |
+| `4b27964` / `bd3f3b5` / `e57b591` | README: Ko-fi / support presentation tweaks |
+| `44260b9` | Add this PR summary doc for GitHub |
 | `4a78a84` | Remove `ReadVanillaQuickBaseline`; neutral `.gitignore` comment for local worktree path |
+| `8d1f328` | Taskbar/icon, vanilla baseline sync, JSON + baseline tracker, README/docs |
+| `a8f4ce7` | v3.0-dev: UI redesign + file-based preset system |
+| `ae8ba3c` | README (Nexus / releases note) |
+| `c9f3657` | Repo cleanup: release notes, `.gitignore`, remove tracked binaries |
 
 ---
 
