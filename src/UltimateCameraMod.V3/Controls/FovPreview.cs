@@ -7,7 +7,7 @@ namespace UltimateCameraMod.V3.Controls;
 
 public class FovPreview : Canvas
 {
-    private const double W = 420, H = 270;
+    private const double W = 420, H = 370;
 
     private static readonly Brush BgBrush = Freeze(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1e1e1e")));
     private static readonly Brush CharBrush = Freeze(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c8a24e")));
@@ -19,7 +19,9 @@ public class FovPreview : Canvas
     private static readonly Brush DimBrush = Freeze(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#777777")));
     private static readonly Brush CamStrokeBrush = Freeze(new SolidColorBrush(Color.FromRgb(0xAA, 0xAA, 0xAA)));
 
+    private static readonly Brush MeasureBrush = Freeze(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#666666")));
     private static readonly DoubleCollection ConeDash = FreezeCollection(new DoubleCollection { 4, 4 });
+    private static readonly DoubleCollection MeasureDash = FreezeCollection(new DoubleCollection { 3, 3 });
 
     private static readonly FontFamily SegoeUI = new("Segoe UI");
     private static readonly FontFamily Consolas = new("Consolas");
@@ -50,14 +52,14 @@ public class FovPreview : Canvas
         double half = total / 2 * Math.PI / 180;
         double cx = W / 2;
 
-        // Scale cam-to-player gap from distance (5.0 default = 110px gap, range ~50-180px)
-        double gap = Math.Clamp(_dist * 16, 50, 180);
-        double charY = 100;
+        // Scale cam-to-player gap from distance (5.0 default = 140px gap, range ~70-240px)
+        double gap = Math.Clamp(_dist * 22, 70, 240);
+        double charY = 120;
         double camYPos = charY + gap;
-        double coneLen = gap + 60;
+        double coneLen = gap + 80;
 
         double actualRo = _centered ? 0 : 0.5 * (1.0 + (-_roff) / 0.5);
-        double off = Math.Clamp(actualRo * 55, -160, 160);
+        double off = Math.Clamp(actualRo * 70, -180, 180);
         double camX = cx + off;
 
         double lx = camX - coneLen * Math.Tan(half);
@@ -92,6 +94,14 @@ public class FovPreview : Canvas
         double fovTextY = (charY + 20 + camYPos) / 2;
         AddText(camX, fovTextY, $"{total:F0}\u00b0 FoV", ConeLineBrush, 14,
             fontFamily: Consolas, fontWeight: FontWeights.Bold);
+
+        // Distance measurement between player and camera
+        double distLineX = Math.Min(cx, camX) - 30;
+        AddDashedLine(distLineX, charY, distLineX, camYPos, MeasureBrush, MeasureDash);
+        AddLine(distLineX - 3, charY, distLineX + 3, charY, MeasureBrush, 1);
+        AddLine(distLineX - 3, camYPos, distLineX + 3, camYPos, MeasureBrush, 1);
+        AddText(distLineX - 8, (charY + camYPos) / 2, $"{_dist:F1}", LabelBrush, 9,
+            fontFamily: Consolas);
 
         AddText(W / 2, 12, "FIELD OF VIEW  (top-down)", DimBrush, 10);
 

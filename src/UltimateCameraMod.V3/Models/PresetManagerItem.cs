@@ -15,6 +15,7 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
     public string SummaryText { get; set; } = "";
     public string FilePath { get; set; } = "";
     public bool CanRebuild { get; set; }
+    public string Url { get; set; } = "";
 
     /// <summary>Invisible placeholder used to keep a group header visible when no real items exist.</summary>
     public bool IsPlaceholder { get; set; }

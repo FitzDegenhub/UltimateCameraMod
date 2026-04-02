@@ -322,6 +322,10 @@
                                      Width="16" Height="16" Stroke="{StaticResource BgDarkBrush}"
                                      StrokeThickness="2"/>
                             <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Dot" Property="Fill" Value="{StaticResource TextDimBrush}"/>
+                                    <Setter TargetName="Dot" Property="Stroke" Value="{StaticResource BgDarkBrush}"/>
+                                </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="Dot" Property="Fill" Value="{StaticResource AccentHoverBrush}"/>
                                     <Setter TargetName="Dot" Property="Width" Value="18"/>
