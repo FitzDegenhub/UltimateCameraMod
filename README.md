@@ -1,3 +1,12 @@
+Hi guys, apologies for my page going down on Nexus - the nexus team are currently reviewing all my files. As I'm a new author on the platform they wish todo some checks on source code before allowing the project to be able to download on Nexs, which honestly makes total sense. 
+
+I've already been in contact with them and they've been helpful, so just have to wait it out for us to be back on Nexus. 
+
+v3 is already being worked on. 
+
+Cheers. 
+
+
 # Ultimate Camera Mod — Crimson Desert
 
 Standalone camera toolkit for Crimson Desert with a full GUI, live camera preview, advanced XML editor, and HUD centering for ultrawide displays.
