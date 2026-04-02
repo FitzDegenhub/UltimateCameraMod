@@ -11,6 +11,9 @@ public sealed class ImportedPreset
     public string SourceType { get; set; } = "";
     public string SourceDisplayName { get; set; } = "";
     public string? SourcePath { get; set; }
+    public string? Author { get; set; }
+    public string? Description { get; set; }
+    public string? Url { get; set; }
     public DateTime ImportedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime? LastBuiltAtUtc { get; set; }
     public string RawXml { get; set; } = "";

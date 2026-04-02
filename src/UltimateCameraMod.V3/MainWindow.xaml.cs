@@ -95,6 +95,7 @@ public partial class MainWindow : Window
     private string _loadedPresetSourceLabel = "Live session";
     private string _loadedPresetStatusText = "No preset loaded yet.";
     private string _loadedPresetSummaryText = "Start from UCM Quick, load something from Preset Manager, or import a creator preset.";
+    private string? _loadedPresetUrl;
     private readonly ObservableCollection<PresetManagerItem> _presetManagerItems = new();
 
     private bool _suppressPresetPickerActivation;
@@ -1334,7 +1335,7 @@ public partial class MainWindow : Window
             _sessionXml = xml;
             _advCtrlNeedsRefresh = true;
             _expertNeedsRefresh = true;
-            TryApplyQuickSlidersFromSessionXml(xml);
+            // Don't override Quick sliders — preset loader sets them from settings block.
         }
         catch { }
     }
@@ -1388,14 +1389,15 @@ public partial class MainWindow : Window
     }
 
 
-    private void RefreshUIFromSessionXml(string xml)
+    private void RefreshUIFromSessionXml(string xml, bool skipQuickSliders = false)
     {
         _sessionXml = xml;
         // Full session snapshots replace God Mode overlay file so stale overrides cannot fight the grid.
         TryClearAdvOverridesFile();
         // UCM Quick sliders must track _sessionXml even on the default tab (imported presets / Picker loads
         // only ran ApplySessionXmlToAdvancedControls when Advanced was visible — left distance/height/shift stale).
-        TryApplyQuickSlidersFromSessionXml(xml);
+        if (!skipQuickSliders)
+            TryApplyQuickSlidersFromSessionXml(xml);
         // Mark editors as needing refresh — they'll pick up _sessionXml when the user switches tabs
         _advCtrlNeedsRefresh = true;
         _expertNeedsRefresh = true;
@@ -1448,6 +1450,7 @@ public partial class MainWindow : Window
         {
             DistSlider.IsEnabled = true;
             HeightSlider.IsEnabled = true;
+            HShiftSlider.IsEnabled = true;
             FovCombo.IsEnabled = true;
             CombatCombo.IsEnabled = true;
             BaneCheck.IsEnabled = true;
@@ -1456,8 +1459,23 @@ public partial class MainWindow : Window
             ApplyCenteredLock();
         }
 
-        AdvCtrlPanel.IsEnabled = !locked;
+        // Disable Fine Tune sliders individually (not the panel — expanders must still work)
+        foreach (var (_, slider) in _advCtrlSliders)
+            if (slider != null) slider.IsEnabled = !locked;
         ExpertDataGrid.IsReadOnly = locked;
+    }
+
+    private DateTime _lastLockedToastTime = DateTime.MinValue;
+
+    /// <summary>Shows a "locked" toast if the user tries to edit while preset is locked. Throttled to 3s.</summary>
+    private void ShowLockedToastIfNeeded()
+    {
+        if (!IsActivePresetEditingLocked()) return;
+        if ((DateTime.Now - _lastLockedToastTime).TotalSeconds > 3)
+        {
+            _lastLockedToastTime = DateTime.Now;
+            QueueSavedToast("\uD83D\uDD12 Preset is locked \u2014 unlock the padlock to edit");
+        }
     }
 
     private void ActivatePickerFromSelection(PresetManagerItem item, bool skipCapture = false)
@@ -1572,7 +1590,7 @@ public partial class MainWindow : Window
                         string? xml = xmlEl.GetString();
                         long t4 = sw.ElapsedMilliseconds;
                         if (!string.IsNullOrWhiteSpace(xml))
-                            RefreshUIFromSessionXml(xml);
+                            RefreshUIFromSessionXml(xml, skipQuickSliders: true);
                         long t5 = sw.ElapsedMilliseconds;
                         File.WriteAllText(Path.Combine(ExeDir, "load_timing.txt"),
                             $"File.Read: {t1}ms\nJsonParse: {t2-t1}ms\nSettings: {t3-t2}ms\nGetXml: {t4-t3}ms\nRefreshUI: {t5-t4}ms\nTotal: {t5}ms\nXML len: {xml?.Length ?? 0}");
@@ -1613,13 +1631,14 @@ public partial class MainWindow : Window
         return false;
     }
 
-    private void SetLoadedPresetContext(string name, string kindLabel, string sourceLabel, string statusText, string summaryText)
+    private void SetLoadedPresetContext(string name, string kindLabel, string sourceLabel, string statusText, string summaryText, string? url = null)
     {
         _loadedPresetName = name;
         _loadedPresetKindLabel = kindLabel;
         _loadedPresetSourceLabel = sourceLabel;
         _loadedPresetStatusText = statusText;
         _loadedPresetSummaryText = summaryText;
+        _loadedPresetUrl = url;
         UpdateLoadedPresetContextUi();
     }
 
@@ -1636,6 +1655,29 @@ public partial class MainWindow : Window
                 ? ""
                 : $"by {src}";
         }
+        if (ActivePresetUrl != null)
+        {
+            if (!string.IsNullOrWhiteSpace(_loadedPresetUrl))
+            {
+                ActivePresetUrl.Text = _loadedPresetUrl;
+                ActivePresetUrl.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ActivePresetUrl.Text = "";
+                ActivePresetUrl.Visibility = Visibility.Collapsed;
+            }
+        }
+    }
+
+    private void OnActivePresetUrlClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(_loadedPresetUrl)) return;
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(_loadedPresetUrl) { UseShellExecute = true });
+        }
+        catch { }
     }
 
     private string BuildImportedPresetStatusText(ImportedPreset preset) =>
@@ -1725,6 +1767,14 @@ public partial class MainWindow : Window
                     valueCount++;
             }
 
+            string author = "";
+            if (root.TryGetProperty("Author", out var au) && au.ValueKind == JsonValueKind.String)
+                author = au.GetString() ?? "";
+
+            string description = "";
+            if (root.TryGetProperty("Description", out var desc) && desc.ValueKind == JsonValueKind.String)
+                description = desc.GetString() ?? "";
+
             ImportedPresetFingerprint? lastBuilt = ReadLastBuiltAgainstFromJson(root);
             string statusText = BuildImportedPresetStatusTextFromMetadata(lastBuilt, currentGameFp);
 
@@ -1734,15 +1784,31 @@ public partial class MainWindow : Window
             else if (root.TryGetProperty("locked", out var lk2))
                 locked = lk2.ValueKind == JsonValueKind.True;
 
+            var summaryParts = new List<string> { displayName };
+            if (!string.IsNullOrWhiteSpace(author))
+                summaryParts.Add($"by {author}");
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                string shortDesc = description.Replace("\n", " ").Trim();
+                if (shortDesc.Length > 120) shortDesc = shortDesc[..117] + "...";
+                summaryParts.Add(shortDesc);
+            }
+            summaryParts.Add($"source: {sourceDisplayName}");
+            summaryParts.Add($"{valueCount} saved values");
+            summaryParts.Add($"type: {sourceType.ToUpperInvariant()}");
+
+            string sidebarSource = string.IsNullOrWhiteSpace(author)
+                ? sourceDisplayName
+                : $"{sourceDisplayName} — by {author}";
+
             item = new PresetManagerItem
             {
                 Name = fileStem,
                 KindId = "imported",
                 KindLabel = ImportedPresetKindLabel(sourceType),
-                SourceLabel = sourceDisplayName,
+                SourceLabel = sidebarSource,
                 StatusText = statusText,
-                SummaryText =
-                    $"{displayName} | source: {sourceDisplayName} | {valueCount} saved values | type: {sourceType.ToUpperInvariant()}",
+                SummaryText = string.Join(" | ", summaryParts),
                 FilePath = filePath,
                 CanRebuild = true,
                 IsLocked = locked
@@ -1757,7 +1823,19 @@ public partial class MainWindow : Window
 
     private string BuildImportedPresetSummaryText(ImportedPreset preset)
     {
-        return $"{preset.Name} | source: {preset.SourceDisplayName} | {preset.Values.Count} saved values | type: {preset.SourceType.ToUpperInvariant()}";
+        var parts = new List<string> { preset.Name };
+        if (!string.IsNullOrWhiteSpace(preset.Author))
+            parts.Add($"by {preset.Author}");
+        if (!string.IsNullOrWhiteSpace(preset.Description))
+        {
+            string desc = preset.Description.Replace("\n", " ").Trim();
+            if (desc.Length > 120) desc = desc[..117] + "...";
+            parts.Add(desc);
+        }
+        parts.Add($"source: {preset.SourceDisplayName}");
+        parts.Add($"{preset.Values.Count} saved values");
+        parts.Add($"type: {preset.SourceType.ToUpperInvariant()}");
+        return string.Join(" | ", parts);
     }
 
     private static void AppendPresetCatalogDirFingerprints(StringBuilder sb)
@@ -1979,11 +2057,17 @@ public partial class MainWindow : Window
         string xml = BuildRebuiltXmlFromImportedPreset(preset);
         RefreshUIFromSessionXml(xml);
         MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
+
+        string authorOrSource = !string.IsNullOrWhiteSpace(preset.Author)
+            ? preset.Author
+            : preset.SourceDisplayName;
+
         SetLoadedPresetContext(preset.Name,
             ImportedPresetKindLabel(preset.SourceType),
-            preset.SourceDisplayName,
+            authorOrSource,
             BuildImportedPresetStatusText(preset),
-            BuildImportedPresetSummaryText(preset));
+            BuildImportedPresetSummaryText(preset),
+            preset.Url);
     }
 
     private static string ImportedPresetPath(string name) =>
@@ -2229,7 +2313,8 @@ public partial class MainWindow : Window
     }
 
     private ImportedPreset BuildImportedPreset(string name, string sourceType, string sourceDisplayName,
-        string? sourcePath, string xml, ImportedPresetFingerprint? importedFingerprint = null)
+        string? sourcePath, string xml, ImportedPresetFingerprint? importedFingerprint = null,
+        string? author = null, string? description = null, string? url = null)
     {
         return new ImportedPreset
         {
@@ -2237,6 +2322,9 @@ public partial class MainWindow : Window
             SourceType = sourceType,
             SourceDisplayName = sourceDisplayName,
             SourcePath = sourcePath,
+            Author = author,
+            Description = description,
+            Url = url,
             ImportedAtUtc = DateTime.UtcNow,
             RawXml = xml,
             ImportedSourceFingerprint = importedFingerprint,
@@ -2571,20 +2659,45 @@ public partial class MainWindow : Window
 
     // â”€â”€ Event handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+    /// <summary>
+    /// When Quick settings change (FoV, combat, steadycam, etc.), rebuild session XML
+    /// and push to Fine Tune / God Mode if their sliders are built.
+    /// </summary>
+    private void SyncQuickSettingsToEditors()
+    {
+        if (string.IsNullOrEmpty(_gameDir)) return;
+        try
+        {
+            // Build from Quick settings ONLY — don't layer Fine Tune overrides on top,
+            // otherwise the old Fine Tune FoV values overwrite the new Quick FoV.
+            string xml = BuildSimpleSessionXml();
+            _sessionXml = xml;
+            if (_advCtrlSliders.Count > 0)
+                ApplySessionXmlToAdvancedControls(xml);
+            _advCtrlNeedsRefresh = true;
+            _expertNeedsRefresh = true;
+        }
+        catch { }
+    }
+
     private void OnSettingChanged(object s, RoutedEventArgs e)
     {
-        if (!IsLoaded) return;
+        if (!IsLoaded || _suppressEvents) return;
+        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
         ApplyCenteredLock();
         ScheduleCoalescedPreviewSync();
+        SyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
 
     private void OnSettingChanged(object s, SelectionChangedEventArgs e)
     {
-        if (!IsLoaded) return;
+        if (!IsLoaded || _suppressEvents) return;
+        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
         ApplyCenteredLock();
         ScheduleCoalescedPreviewSync();
+        SyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
@@ -2592,6 +2705,7 @@ public partial class MainWindow : Window
     private void OnSliderChanged(object s, RoutedPropertyChangedEventArgs<double> e)
     {
         if (_suppressEvents || !IsLoaded) return;
+        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
         DistLabel.Text = $"{DistSlider.Value:F1}";
         HeightLabel.Text = $"{HeightSlider.Value:F1}";
         HShiftLabel.Text = $"{HShiftSlider.Value:F1}";
@@ -2599,16 +2713,19 @@ public partial class MainWindow : Window
         _selectedStyleId = "custom";
         CaptureCustomDraft(markDirty: true, updateSelector: true);
         ScheduleDebouncedPreviewSync();
+        SyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
 
     private void OnBaneChanged(object s, RoutedEventArgs e)
     {
-        if (!IsLoaded) return;
+        if (!IsLoaded || _suppressEvents) return;
+        if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
         ApplyCenteredLock();
         CaptureCustomDraft(markDirty: true, updateSelector: true);
         ScheduleCoalescedPreviewSync();
+        SyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
@@ -2834,7 +2951,7 @@ public partial class MainWindow : Window
 
     private void QueueSavedToast(string text = "Saved")
     {
-        if (!IsLoaded || _saveToastDelayTimer == null || _saveToastHideTimer == null)
+        if (!IsLoaded || _suppressEvents || _saveToastDelayTimer == null || _saveToastHideTimer == null)
             return;
 
         _pendingSaveToastText = text;
@@ -2932,13 +3049,8 @@ public partial class MainWindow : Window
         if (tab != "simple" && tab != "advanced" && tab != "expert")
             return;
 
-        bool preserveLoadedSessionOnFirstAdvancedOpen =
-            _activeMode == "simple" &&
-            tab == "advanced" &&
-            _advCtrlSliders.Count == 0 &&
-            !string.IsNullOrWhiteSpace(_sessionXml);
-
-        if (captureCurrent && _activeMode != tab && !preserveLoadedSessionOnFirstAdvancedOpen)
+        // Always rebuild session XML from current Quick settings when switching tabs.
+        if (captureCurrent && _activeMode != tab)
             CaptureSessionXml();
 
         if (tab != "simple" && string.IsNullOrEmpty(_gameDir))
@@ -3615,7 +3727,7 @@ public partial class MainWindow : Window
 
         string searchText = $"{modKey} {attribute} {tooltip ?? CameraParamDocs.Get(attribute)}";
         var row = new Grid { Margin = new Thickness(0, 2, 0, 2), Tag = searchText };
-        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(130), MinWidth = 130 });
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200), MinWidth = 130 });
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MinWidth = 60 });
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(46), MinWidth = 46 });
         row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(46), MinWidth = 46 });
@@ -3695,6 +3807,8 @@ public partial class MainWindow : Window
 
         slider.ValueChanged += (s, e) =>
         {
+            if (_suppressEvents) return;
+            if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); slider.Value = e.OldValue; return; }
             valueLabel.Text = $"{e.NewValue:F2}";
             bool changed = Math.Abs(e.NewValue - vanillaVal) > 0.001;
             valueLabel.Foreground = changed
@@ -3726,6 +3840,34 @@ public partial class MainWindow : Window
             FontWeight = FontWeights.SemiBold,
             Foreground = _textSecondaryBrush,
             Margin = new Thickness(0, 10, 0, 4)
+        };
+    }
+
+    /// <summary>Wraps child elements in a bordered card with a title — same style as zoom level groups.</summary>
+    private Border WrapInCard(string title, params UIElement[] children)
+    {
+        var stack = new StackPanel();
+        stack.Children.Add(new TextBlock
+        {
+            Text = title,
+            FontSize = 11,
+            FontWeight = FontWeights.SemiBold,
+            Foreground = _accentBrush,
+            Margin = new Thickness(0, 0, 0, 8)
+        });
+        foreach (var child in children)
+            stack.Children.Add(child);
+
+        return new Border
+        {
+            Background = (Brush)FindResource("BgInputBrush"),
+            BorderBrush = (Brush)FindResource("BorderBrush"),
+            BorderThickness = new Thickness(1),
+            CornerRadius = new CornerRadius(6),
+            Padding = new Thickness(12, 10, 10, 10),
+            Margin = new Thickness(0, 8, 0, 6),
+            Tag = title,
+            Child = stack
         };
     }
 
@@ -3840,14 +3982,14 @@ public partial class MainWindow : Window
     {
         var panel = new StackPanel();
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Shared FoV"));
-        panel.Children.Add(BuildSharedSliderRow("On-foot FoV",
+        var sharedFovSliders = new List<UIElement>();
+        sharedFovSliders.Add(BuildSharedSliderRow("On-foot FoV",
             new[]
             {
                 "Player_Basic_Default_Run", "Player_Basic_Default_Runfast", "Player_Basic_Default_Walk"
             },
             "Fov", 25.0, 75.0, 1.0, "Shared field of view for the main on-foot movement cameras."));
-        panel.Children.Add(BuildSharedSliderRow("Combat FoV",
+        sharedFovSliders.Add(BuildSharedSliderRow("Combat FoV",
             new[]
             {
                 "Player_Weapon_Default", "Player_Weapon_Default_Run", "Player_Weapon_Default_RunFast",
@@ -3855,38 +3997,55 @@ public partial class MainWindow : Window
                 "Player_Weapon_Rush", "Player_Weapon_Guard"
             },
             "Fov", 25.0, 75.0, 1.0, "Shared field of view for the core weapon and combat movement cameras."));
-        panel.Children.Add(BuildSharedSliderRow("Force/Titan/Cinematic FoV",
+        sharedFovSliders.Add(BuildSharedSliderRow("Force/Titan/Cinematic FoV",
             new[]
             {
                 "Player_Force_LockOn", "Player_LockOn_Titan", "Cinematic_LockOn"
             },
             "Fov", 25.0, 75.0, 1.0));
-        panel.Children.Add(BuildSharedSliderRow("Warmachine/Broom FoV",
+        sharedFovSliders.Add(BuildSharedSliderRow("Warmachine/Broom FoV",
             new[]
             {
                 "Player_Ride_Warmachine", "Player_Ride_Warmachine_Aim",
                 "Player_Ride_Warmachine_Dash", "Player_Ride_Broom"
             },
             "Fov", 25.0, 75.0, 1.0));
-        panel.Children.Add(BuildSliderRow("Player_Ride_Elephant", "Fov", 25.0, 75.0, 1.0, "Elephant field of view."));
-        if (panel.Children[^1] is Grid elephantFovRow && elephantFovRow.Children[0] is TextBlock elephantFovLabel)
-            elephantFovLabel.Text = "Elephant FoV";
-        panel.Children.Add(BuildSliderRow("Player_Ride_Wyvern", "Fov", 25.0, 75.0, 1.0, "Wyvern field of view."));
-        if (panel.Children[^1] is Grid wyvernFovRow && wyvernFovRow.Children[0] is TextBlock wyvernFovLabel)
-            wyvernFovLabel.Text = "Wyvern FoV";
-        panel.Children.Add(BuildSliderRow("Player_Swim_Default", "Fov", 25.0, 75.0, 1.0, "Swimming field of view."));
-        if (panel.Children[^1] is Grid swimFovRow && swimFovRow.Children[0] is TextBlock swimFovLabel)
-            swimFovLabel.Text = "Swim FoV";
+        {
+            var elephantFovRow = BuildSliderRow("Player_Ride_Elephant", "Fov", 25.0, 75.0, 1.0, "Elephant field of view.");
+            if (elephantFovRow.Children[0] is TextBlock elephantFovLabel)
+                elephantFovLabel.Text = "Elephant FoV";
+            sharedFovSliders.Add(elephantFovRow);
+        }
+        {
+            var wyvernFovRow = BuildSliderRow("Player_Ride_Wyvern", "Fov", 25.0, 75.0, 1.0, "Wyvern field of view.");
+            if (wyvernFovRow.Children[0] is TextBlock wyvernFovLabel)
+                wyvernFovLabel.Text = "Wyvern FoV";
+            sharedFovSliders.Add(wyvernFovRow);
+        }
+        {
+            var swimFovRow = BuildSliderRow("Player_Swim_Default", "Fov", 25.0, 75.0, 1.0, "Swimming field of view.");
+            if (swimFovRow.Children[0] is TextBlock swimFovLabel)
+                swimFovLabel.Text = "Swim FoV";
+            sharedFovSliders.Add(swimFovRow);
+        }
+        panel.Children.Add(WrapInCard("Shared FoV", sharedFovSliders.ToArray()));
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Two-target framing"));
-        panel.Children.Add(BuildSliderRow("Player_Interaction_TwoTarget/ZoomLevel[3]", "MaxZoomDistance", 4.0, 20.0, 0.5));
-        if (panel.Children[^1] is Grid interactionZl3Row && interactionZl3Row.Children[0] is TextBlock interactionZl3Label)
-            interactionZl3Label.Text = "Interaction ZL3 Max";
-        panel.Children.Add(BuildSliderRow("Player_Interaction_TwoTarget/ZoomLevel[4]", "MaxZoomDistance", 4.0, 20.0, 0.5));
-        if (panel.Children[^1] is Grid interactionZl4Row && interactionZl4Row.Children[0] is TextBlock interactionZl4Label)
-            interactionZl4Label.Text = "Interaction ZL4 Max";
+        var twoTargetSliders = new List<UIElement>();
+        {
+            var interactionZl3Row = BuildSliderRow("Player_Interaction_TwoTarget/ZoomLevel[3]", "MaxZoomDistance", 4.0, 20.0, 0.5);
+            if (interactionZl3Row.Children[0] is TextBlock interactionZl3Label)
+                interactionZl3Label.Text = "Interaction ZL3 Max";
+            twoTargetSliders.Add(interactionZl3Row);
+        }
+        {
+            var interactionZl4Row = BuildSliderRow("Player_Interaction_TwoTarget/ZoomLevel[4]", "MaxZoomDistance", 4.0, 20.0, 0.5);
+            if (interactionZl4Row.Children[0] is TextBlock interactionZl4Label)
+                interactionZl4Label.Text = "Interaction ZL4 Max";
+            twoTargetSliders.Add(interactionZl4Row);
+        }
+        panel.Children.Add(WrapInCard("Two-target framing", twoTargetSliders.ToArray()));
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Traversal FoV"));
+        var traversalFovSliders = new List<UIElement>();
         foreach (var (modKey, labelText) in new[]
         {
             ("Player_Swim_Default", "Swim FoV"),
@@ -3895,10 +4054,12 @@ public partial class MainWindow : Window
             ("Player_Basic_FreeFall", "Freefall FoV")
         })
         {
-            panel.Children.Add(BuildSliderRow(modKey, "Fov", 25.0, 75.0, 1.0));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow(modKey, "Fov", 25.0, 75.0, 1.0);
+            if (row.Children[0] is TextBlock label)
                 label.Text = labelText;
+            traversalFovSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("Traversal FoV", traversalFovSliders.ToArray()));
 
         AdvCtrlGlobalGrid.Children.Add(panel);
     }
@@ -3907,29 +4068,34 @@ public partial class MainWindow : Window
     {
         var panel = new StackPanel();
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Elephant"));
+        var elephantSliders = new List<UIElement>();
         foreach (int zl in new[] { 1, 2, 3, 4 })
         {
-            panel.Children.Add(BuildSliderRow($"Player_Ride_Elephant/ZoomLevel[{zl}]", "ZoomDistance", 0.5, 25.0, 0.1));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow($"Player_Ride_Elephant/ZoomLevel[{zl}]", "ZoomDistance", 0.5, 25.0, 0.1);
+            if (row.Children[0] is TextBlock label)
                 label.Text = $"Elephant ZL{zl}";
+            elephantSliders.Add(row);
         }
         foreach (int zl in new[] { 2, 3, 4 })
         {
-            panel.Children.Add(BuildSliderRow($"Player_Ride_Elephant/ZoomLevel[{zl}]", "UpOffset", -2.0, 3.0, 0.1));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow($"Player_Ride_Elephant/ZoomLevel[{zl}]", "UpOffset", -2.0, 3.0, 0.1);
+            if (row.Children[0] is TextBlock label)
                 label.Text = $"Elephant ZL{zl} Height";
+            elephantSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("Elephant", elephantSliders.ToArray()));
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Wyvern"));
+        var wyvernSliders = new List<UIElement>();
         foreach (int zl in new[] { 1, 2, 3, 4 })
         {
-            panel.Children.Add(BuildSliderRow($"Player_Ride_Wyvern/ZoomLevel[{zl}]", "ZoomDistance", 1.0, 30.0, 0.1));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow($"Player_Ride_Wyvern/ZoomLevel[{zl}]", "ZoomDistance", 1.0, 30.0, 0.1);
+            if (row.Children[0] is TextBlock label)
                 label.Text = $"Wyvern ZL{zl}";
+            wyvernSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("Wyvern", wyvernSliders.ToArray()));
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Canoe / Warmachine / Broom"));
+        var canoeMiscSliders = new List<UIElement>();
         foreach (var (modKey, attr, min, max, step, labelText) in new[]
         {
             ("Player_Ride_Canoe/ZoomLevel[2]", "ZoomDistance", 1.0, 20.0, 0.1, "Canoe ZL2"),
@@ -3940,10 +4106,12 @@ public partial class MainWindow : Window
             ("Player_Ride_Broom/ZoomLevel[3]", "ZoomDistance", 1.0, 24.0, 0.1, "Broom ZL3")
         })
         {
-            panel.Children.Add(BuildSliderRow(modKey, attr, min, max, step));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow(modKey, attr, min, max, step);
+            if (row.Children[0] is TextBlock label)
                 label.Text = labelText;
+            canoeMiscSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("Canoe / Warmachine / Broom", canoeMiscSliders.ToArray()));
 
         AdvCtrlSpecialMountGrid.Children.Add(panel);
     }
@@ -3971,21 +4139,15 @@ public partial class MainWindow : Window
             ("Player_Wanted_TwoTarget", "ScreenClampRate", 0.0, 1.0, 0.05),
         };
 
-        panel.Children.Add(new TextBlock
-        {
-            Text = "Lock-On Tracking",
-            FontSize = 11, FontWeight = FontWeights.SemiBold,
-            Foreground = _textSecondaryBrush,
-            Margin = new Thickness(0, 8, 0, 4)
-        });
+        var trackingSliders = new List<UIElement>();
         foreach (var (sec, attr, min, max, step) in sectionAttrs)
         {
             var row = BuildSliderRow(sec, attr, min, max, step);
-            // Prefix label with section name for clarity
             if (row.Children[0] is TextBlock lbl)
                 lbl.Text = $"{sec.Replace("Player_", "")} - {attr}";
-            panel.Children.Add(row);
+            trackingSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("Lock-On Tracking", trackingSliders.ToArray()));
 
         // ZoomDistance per lock-on section per zoom level
         var lockOnSections = new[]
@@ -4002,22 +4164,17 @@ public partial class MainWindow : Window
 
         foreach (var (sec, levels) in lockOnSections)
         {
-            panel.Children.Add(new TextBlock
-            {
-                Text = $"{sec.Replace("Player_", "")} - Zoom Distances",
-                FontSize = 11, FontWeight = FontWeights.SemiBold,
-                Foreground = _textSecondaryBrush,
-                Margin = new Thickness(0, 10, 0, 4)
-            });
+            var zoomSliders = new List<UIElement>();
             foreach (int zl in levels)
             {
                 var row = BuildSliderRow($"{sec}/ZoomLevel[{zl}]", "ZoomDistance", 1.0, 20.0, 0.5);
                 if (row.Children[0] is TextBlock lbl) lbl.Text = $"ZL{zl} ZoomDistance";
-                panel.Children.Add(row);
+                zoomSliders.Add(row);
             }
+            panel.Children.Add(WrapInCard($"{sec.Replace("Player_", "")} - Zoom Distances", zoomSliders.ToArray()));
         }
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("FoV touch points"));
+        var fovSliders = new List<UIElement>();
         foreach (var (modKey, labelText) in new[]
         {
             ("Player_Weapon_LockOn", "Weapon LockOn FoV"),
@@ -4032,10 +4189,12 @@ public partial class MainWindow : Window
             ("Player_Wanted_TwoTarget", "Wanted FoV")
         })
         {
-            panel.Children.Add(BuildSliderRow(modKey, "Fov", 25.0, 75.0, 1.0));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow(modKey, "Fov", 25.0, 75.0, 1.0);
+            if (row.Children[0] is TextBlock label)
                 label.Text = labelText;
+            fovSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("FoV Touch Points", fovSliders.ToArray()));
 
         AdvCtrlCombatGrid.Children.Add(panel);
     }
@@ -4044,7 +4203,7 @@ public partial class MainWindow : Window
     {
         var panel = new StackPanel();
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("On-foot and combat smoothing"));
+        var smoothSliders = new List<UIElement>();
         var smoothEntries = new[]
         {
             ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendInTime",  0.0, 3.0, 0.1, "Run blend-in"),
@@ -4067,8 +4226,9 @@ public partial class MainWindow : Window
         {
             var row = BuildSliderRow(modKey, attr, min, max, step);
             if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
-            panel.Children.Add(row);
+            smoothSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("On-foot and combat smoothing", smoothSliders.ToArray()));
 
         string[] onFootFollowSections =
         {
@@ -4076,11 +4236,12 @@ public partial class MainWindow : Window
             "Player_Basic_Default_Run", "Player_Basic_Default_Runfast"
         };
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("On-foot follow behavior"));
-        panel.Children.Add(BuildSharedSliderRow("On-foot yaw follow", onFootFollowSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
-        panel.Children.Add(BuildSharedSliderRow("On-foot pitch follow", onFootFollowSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
-        panel.Children.Add(BuildSharedSliderRow("On-foot follow delay", onFootFollowSections, "FollowStartTime", 0.0, 5.0, 0.1));
-        panel.Children.Add(BuildSharedSliderRow("On-foot pivot damping", Array.ConvertAll(onFootFollowSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
+        var onFootFollowSliders = new List<UIElement>();
+        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot yaw follow", onFootFollowSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
+        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot pitch follow", onFootFollowSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
+        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot follow delay", onFootFollowSections, "FollowStartTime", 0.0, 5.0, 0.1));
+        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot pivot damping", Array.ConvertAll(onFootFollowSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
+        panel.Children.Add(WrapInCard("On-foot follow behavior", onFootFollowSliders.ToArray()));
 
         string[] horseSections =
         {
@@ -4089,16 +4250,17 @@ public partial class MainWindow : Window
             "Player_Ride_Horse_Att_Thrust", "Player_Ride_Horse_Att_R", "Player_Ride_Horse_Att_L"
         };
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Horse state synchronization"));
-        panel.Children.Add(BuildSharedSliderRow("Horse yaw follow", horseSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
-        panel.Children.Add(BuildSharedSliderRow("Horse pitch follow", horseSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
-        panel.Children.Add(BuildSharedSliderRow("Horse follow delay", horseSections, "FollowStartTime", 0.0, 5.0, 0.1));
-        panel.Children.Add(BuildSharedSliderRow("Horse default pitch", horseSections, "FollowDefaultPitch", -10.0, 30.0, 0.5));
-        panel.Children.Add(BuildSharedSliderRow("Horse blend-in", Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendInTime", 0.0, 3.0, 0.1));
-        panel.Children.Add(BuildSharedSliderRow("Horse blend-out", Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendOutTime", 0.0, 3.0, 0.1));
-        panel.Children.Add(BuildSharedSliderRow("Horse pivot damping", Array.ConvertAll(horseSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
-        panel.Children.Add(BuildSharedSliderRow("Horse sway", Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "OffsetLength", 0.0, 2.0, 0.1));
-        panel.Children.Add(BuildSharedSliderRow("Horse sway damp", Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "DampSpeed", 0.0, 2.0, 0.1));
+        var horseSyncSliders = new List<UIElement>();
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse yaw follow", horseSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse pitch follow", horseSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse follow delay", horseSections, "FollowStartTime", 0.0, 5.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse default pitch", horseSections, "FollowDefaultPitch", -10.0, 30.0, 0.5));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse blend-in", Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendInTime", 0.0, 3.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse blend-out", Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendOutTime", 0.0, 3.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse pivot damping", Array.ConvertAll(horseSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse sway", Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "OffsetLength", 0.0, 2.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow("Horse sway damp", Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "DampSpeed", 0.0, 2.0, 0.1));
+        panel.Children.Add(WrapInCard("Horse state synchronization", horseSyncSliders.ToArray()));
 
         AdvCtrlSmoothGrid.Children.Add(panel);
     }
@@ -4125,13 +4287,7 @@ public partial class MainWindow : Window
 
         foreach (var (groupName, entries) in aimGroups)
         {
-            panel.Children.Add(new TextBlock
-            {
-                Text = groupName,
-                FontSize = 11, FontWeight = FontWeights.SemiBold,
-                Foreground = _textSecondaryBrush,
-                Margin = new Thickness(0, 10, 0, 4)
-            });
+            var aimGroupSliders = new List<UIElement>();
             foreach (var (sec, zl) in entries)
             {
                 string shortName = $"{sec.Replace("Player_", "").Replace("_Aim_Zoom", "").Replace("_Aim", "")} ZL{zl}";
@@ -4139,21 +4295,22 @@ public partial class MainWindow : Window
                 var distRow = BuildSliderRow($"{sec}/ZoomLevel[{zl}]", "ZoomDistance", 0.5, 20.0, 0.1);
                 if (distRow.Children[0] is TextBlock distLabel)
                     distLabel.Text = $"{shortName} Dist";
-                panel.Children.Add(distRow);
+                aimGroupSliders.Add(distRow);
 
                 var upRow = BuildSliderRow($"{sec}/ZoomLevel[{zl}]", "UpOffset", -2.0, 2.0, 0.1);
                 if (upRow.Children[0] is TextBlock upLabel)
                     upLabel.Text = $"{shortName} Height";
-                panel.Children.Add(upRow);
+                aimGroupSliders.Add(upRow);
 
                 var rightRow = BuildSliderRow($"{sec}/ZoomLevel[{zl}]", "RightOffset", -1.0, 3.0, 0.05);
                 if (rightRow.Children[0] is TextBlock rightLabel)
                     rightLabel.Text = $"{shortName} Shift";
-                panel.Children.Add(rightRow);
+                aimGroupSliders.Add(rightRow);
             }
+            panel.Children.Add(WrapInCard(groupName, aimGroupSliders.ToArray()));
         }
 
-        panel.Children.Add(BuildAdvCtrlSubHeader("Traversal framing"));
+        var traversalFramingSliders = new List<UIElement>();
         foreach (var (modKey, attr, min, max, step, labelText) in new[]
         {
             ("Player_Swim_Default/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, "Swim ZL2 Dist"),
@@ -4166,10 +4323,12 @@ public partial class MainWindow : Window
             ("Player_Basic_FreeFall/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, "Freefall ZL2 Height")
         })
         {
-            panel.Children.Add(BuildSliderRow(modKey, attr, min, max, step));
-            if (panel.Children[^1] is Grid row && row.Children[0] is TextBlock label)
+            var row = BuildSliderRow(modKey, attr, min, max, step);
+            if (row.Children[0] is TextBlock label)
                 label.Text = labelText;
+            traversalFramingSliders.Add(row);
         }
+        panel.Children.Add(WrapInCard("Traversal framing", traversalFramingSliders.ToArray()));
 
         AdvCtrlAimGrid.Children.Add(panel);
     }
@@ -4698,20 +4857,20 @@ public partial class MainWindow : Window
         {
             case "mod_package": ImportModManagerPackage(); break;
             case "xml": ImportRawXml(); break;
-            case "paz": OnImportedPresetImportPaz(sender, e); break;
+            case "paz": ImportFromPaz(); break;
         }
     }
 
     private void ImportModManagerPackage()
     {
-        using var dlg = new System.Windows.Forms.FolderBrowserDialog
+        using var folderDlg = new System.Windows.Forms.FolderBrowserDialog
         {
             Description = "Select the mod folder (containing manifest.json)",
             UseDescriptionForTitle = true
         };
-        if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+        if (folderDlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
-        string folder = dlg.SelectedPath;
+        string folder = folderDlg.SelectedPath;
         try
         {
             string manifestPath = Path.Combine(folder, "manifest.json");
@@ -4721,15 +4880,14 @@ public partial class MainWindow : Window
                 return;
             }
 
-            // Read manifest metadata
             using var manifestDoc = JsonDocument.Parse(File.ReadAllText(manifestPath));
             var manifest = manifestDoc.RootElement;
-            string name = manifest.TryGetProperty("title", out var tv) ? tv.GetString() ?? "" : Path.GetFileName(folder);
+            string title = manifest.TryGetProperty("title", out var tv) ? tv.GetString() ?? "" : Path.GetFileName(folder);
             string author = manifest.TryGetProperty("author", out var av) ? av.GetString() ?? "" : "";
             string rawDesc = manifest.TryGetProperty("description", out var dv) ? dv.GetString() ?? "" : "";
             string version = manifest.TryGetProperty("version", out var vv) ? vv.GetString() ?? "" : "";
+            string nexusUrl = manifest.TryGetProperty("nexus_url", out var nu) ? nu.GetString() ?? "" : "";
 
-            // Find playercamerapreset.xml in the files directory
             string filesDir = manifest.TryGetProperty("files_dir", out var fd) ? fd.GetString() ?? "files" : "files";
             string fullFilesDir = Path.Combine(folder, filesDir);
             string? xmlPath = Directory.GetFiles(fullFilesDir, "playercamerapreset.xml", SearchOption.AllDirectories)
@@ -4742,14 +4900,24 @@ public partial class MainWindow : Window
             }
 
             string xml = File.ReadAllText(xmlPath);
-            string manifestTitle = name.Trim();
-            string safeStem = new string(manifestTitle.Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c).ToArray());
+            string safeStem = new string(title.Trim().Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c).ToArray());
             if (string.IsNullOrWhiteSpace(safeStem))
                 safeStem = "Imported_Mod";
 
-            string chosenName = PromptForImportedPresetName(safeStem);
-            if (string.IsNullOrWhiteSpace(chosenName))
-                return;
+            string shortDesc = rawDesc.Split("\n\n")[0].Replace("\n", " ").Trim();
+            if (shortDesc.Length > 200) shortDesc = shortDesc[..197] + "...";
+
+            var metaDlg = new ImportMetadataDialog(
+                $"Importing mod package: {Path.GetFileName(folder)}",
+                safeStem,
+                string.IsNullOrWhiteSpace(author) ? null : author,
+                string.IsNullOrWhiteSpace(shortDesc) ? null : shortDesc,
+                string.IsNullOrWhiteSpace(nexusUrl) ? null : nexusUrl)
+            { Owner = this };
+            if (metaDlg.ShowDialog() != true) return;
+
+            string chosenName = SanitizeFileStem(metaDlg.PresetName);
+            if (chosenName.Length > 60) chosenName = chosenName[..60];
 
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
@@ -4763,22 +4931,17 @@ public partial class MainWindow : Window
                     return;
             }
 
-            string sourceLabel = string.IsNullOrWhiteSpace(author)
-                ? manifestTitle
-                : $"{manifestTitle} — {author}";
+            string sourceLabel = Path.GetFileName(folder);
             if (!string.IsNullOrEmpty(version))
                 sourceLabel += $" (v{version})";
-            string shortDesc = rawDesc.Split("\n\n")[0].Replace("\n", " ").Trim();
-            if (shortDesc.Length > 200) shortDesc = shortDesc[..197] + "...";
-            if (!string.IsNullOrWhiteSpace(shortDesc))
-                sourceLabel = $"{sourceLabel} — {shortDesc}";
 
-            var imported = BuildImportedPreset(chosenName, "mod", sourceLabel, xmlPath, xml, null);
+            var imported = BuildImportedPreset(chosenName, "mod", sourceLabel, xmlPath, xml, null,
+                metaDlg.PresetAuthor, metaDlg.PresetDescription, metaDlg.PresetUrl);
             SaveImportedPreset(imported);
             RefreshPresetManagerLists(preserveSelection: false);
             SelectImportedPreset(SanitizeFileStem(imported.Name));
             QueueSavedToast($"Imported '{imported.Name}'");
-            SetStatus($"Imported mod package into import_presets as '{imported.Name}' ({author}).", "Success");
+            SetStatus($"Imported mod package as '{imported.Name}'.", "Success");
         }
         catch (Exception ex)
         {
@@ -4803,7 +4966,34 @@ public partial class MainWindow : Window
             if (baseName.Equals("playercamerapreset", StringComparison.OrdinalIgnoreCase))
                 baseName = "Imported Camera";
 
-            SaveImportedPresetFromXml("xml", Path.GetFileName(ofd.FileName), ofd.FileName, xml);
+            var metaDlg = new ImportMetadataDialog(
+                $"Importing XML: {Path.GetFileName(ofd.FileName)}",
+                baseName)
+            { Owner = this };
+            if (metaDlg.ShowDialog() != true) return;
+
+            string chosenName = SanitizeFileStem(metaDlg.PresetName);
+            if (chosenName.Length > 60) chosenName = chosenName[..60];
+
+            string importPath = ImportedPresetPath(chosenName);
+            if (File.Exists(importPath))
+            {
+                var overwrite = MessageBox.Show(
+                    $"Overwrite imported preset '{chosenName}'?",
+                    "Import XML",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                if (overwrite != MessageBoxResult.Yes)
+                    return;
+            }
+
+            var preset = BuildImportedPreset(chosenName, "xml", Path.GetFileName(ofd.FileName), ofd.FileName, xml,
+                null, metaDlg.PresetAuthor, metaDlg.PresetDescription, metaDlg.PresetUrl);
+            SaveImportedPreset(preset);
+            RefreshPresetManagerLists();
+            SelectImportedPreset(preset.Name);
+            QueueSavedToast("Imported preset saved");
+            SetStatus($"Imported '{preset.Name}' with {preset.Values.Count} values.", "Success");
         }
         catch (Exception ex)
         {
@@ -4832,7 +5022,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private async void OnImportedPresetImportPaz(object sender, RoutedEventArgs e)
+    private async void ImportFromPaz()
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
@@ -4860,9 +5050,14 @@ public partial class MainWindow : Window
             string xml = await Task.Run(() => CameraMod.ReadXmlFromPaz(pazPath, pamtPath)).ConfigureAwait(true);
             SetGlobalBusy(false);
 
-            string chosenName = PromptForImportedPresetName(Path.GetFileName(pazPath));
-            if (string.IsNullOrWhiteSpace(chosenName))
-                return;
+            var metaDlg = new ImportMetadataDialog(
+                $"Importing PAZ: {Path.GetFileName(pazPath)}",
+                "Imported Camera")
+            { Owner = this };
+            if (metaDlg.ShowDialog() != true) return;
+
+            string chosenName = SanitizeFileStem(metaDlg.PresetName);
+            if (chosenName.Length > 60) chosenName = chosenName[..60];
 
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
@@ -4876,12 +5071,13 @@ public partial class MainWindow : Window
                     return;
             }
 
-            var imported = BuildImportedPreset(chosenName, "paz", Path.GetFileName(pazPath), pazPath, xml, null);
+            var imported = BuildImportedPreset(chosenName, "paz", Path.GetFileName(pazPath), pazPath, xml, null,
+                metaDlg.PresetAuthor, metaDlg.PresetDescription, metaDlg.PresetUrl);
             SaveImportedPreset(imported);
             RefreshPresetManagerLists(preserveSelection: false);
             SelectImportedPreset(SanitizeFileStem(imported.Name));
             QueueSavedToast($"Imported '{imported.Name}'");
-            SetStatus($"Imported 0.paz into import_presets as '{imported.Name}'.", "Success");
+            SetStatus($"Imported 0.paz as '{imported.Name}'.", "Success");
         }
         catch (Exception ex)
         {

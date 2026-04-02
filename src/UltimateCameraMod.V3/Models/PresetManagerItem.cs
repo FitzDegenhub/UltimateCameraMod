@@ -33,13 +33,18 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
         }
     }
 
+    /// <summary>UCM-shipped presets (style/default) are permanently locked.</summary>
+    public bool IsUcmPreset => KindId is "style" or "default";
+
     /// <summary>Sidebar padlock icon (closed = locked).</summary>
     public string LockGlyph => IsLocked ? "\uD83D\uDD12" : "\uD83D\uDD13";
 
     public string LockToolTip =>
-        IsLocked
-            ? "Locked — click to allow editing this preset"
-            : "Unlocked — click to lock and prevent changes";
+        IsUcmPreset
+            ? "UCM preset — duplicate to create an editable copy"
+            : IsLocked
+                ? "Locked — click to allow editing this preset"
+                : "Unlocked — click to lock and prevent changes";
 
     public string DisplayName => Name;
 

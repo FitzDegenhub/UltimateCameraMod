@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using UltimateCameraMod.Models;
 
 namespace UltimateCameraMod.Services;
@@ -23,7 +24,7 @@ public static class JsonModExporter
 
     /// <summary>
     /// Walks two equal-length byte arrays and groups differing regions into
-    /// patch entries. Consecutive changed regions separated by <= 4 identical
+    /// patch entries. Consecutive changed regions separated by &lt;= 4 identical
     /// bytes are merged into one entry for efficiency.
     /// </summary>
     public static List<PatchChange> GeneratePatches(byte[] vanillaBytes, byte[] modifiedBytes)
@@ -31,6 +32,8 @@ public static class JsonModExporter
         if (vanillaBytes.Length != modifiedBytes.Length)
             throw new ArgumentException(
                 $"Byte arrays must be the same length. Vanilla={vanillaBytes.Length}, Modified={modifiedBytes.Length}");
+
+        var xmlContext = BuildXmlOffsetMap(vanillaBytes);
 
         const int MergeGap = 4;
         var changes = new List<PatchChange>();
@@ -42,7 +45,6 @@ public static class JsonModExporter
         {
             if (vanillaBytes[i] == modifiedBytes[i]) { i++; continue; }
 
-            // Start of a differing region
             int start = i;
             int end = i;
 
@@ -54,7 +56,6 @@ public static class JsonModExporter
                     continue;
                 }
 
-                // Check if the gap to the next diff is small enough to merge
                 int gapEnd = end;
                 while (gapEnd < len && vanillaBytes[gapEnd] == modifiedBytes[gapEnd])
                     gapEnd++;
@@ -70,12 +71,108 @@ public static class JsonModExporter
 
             string original = Convert.ToHexString(vanillaBytes, start, end - start).ToLowerInvariant();
             string patched = Convert.ToHexString(modifiedBytes, start, end - start).ToLowerInvariant();
-            changes.Add(new PatchChange(start, original, patched, "Camera parameter change"));
+            string label = LabelForOffset(xmlContext, start);
+            changes.Add(new PatchChange(start, original, patched, label));
 
             i = end;
         }
 
         return changes;
+    }
+
+    // ── XML-aware labeling ────────────────────────────────────────────
+
+    private static readonly Regex OpenTagRx = new(
+        @"<(\w[\w.:-]*)(?:\s[^>]*)?>",
+        RegexOptions.Compiled | RegexOptions.Singleline);
+
+    private static readonly Regex CloseTagRx = new(
+        @"</(\w[\w.:-]*)>",
+        RegexOptions.Compiled);
+
+    /// <summary>
+    /// Builds a sorted list of (byteOffset, xmlPath) by scanning the UTF-8 text
+    /// portion of the decompressed payload. Falls back gracefully if the buffer
+    /// is not valid XML (e.g. trailing zero-padding region).
+    /// </summary>
+    private static List<(int Offset, string Path)> BuildXmlOffsetMap(byte[] buffer)
+    {
+        var map = new List<(int, string)>();
+        string text;
+        try
+        {
+            int xmlEnd = buffer.Length;
+            while (xmlEnd > 0 && buffer[xmlEnd - 1] == 0) xmlEnd--;
+            if (xmlEnd == 0) return map;
+            text = Encoding.UTF8.GetString(buffer, 0, xmlEnd);
+        }
+        catch
+        {
+            return map;
+        }
+
+        var stack = new Stack<string>();
+        int charPos = 0;
+
+        while (charPos < text.Length)
+        {
+            if (text[charPos] != '<') { charPos++; continue; }
+
+            var closeMatch = CloseTagRx.Match(text, charPos);
+            if (closeMatch.Success && closeMatch.Index == charPos)
+            {
+                if (stack.Count > 0) stack.Pop();
+                charPos += closeMatch.Length;
+                continue;
+            }
+
+            var openMatch = OpenTagRx.Match(text, charPos);
+            if (openMatch.Success && openMatch.Index == charPos)
+            {
+                string tagName = openMatch.Groups[1].Value;
+                bool selfClosing = openMatch.Value.EndsWith("/>");
+
+                if (!selfClosing)
+                    stack.Push(tagName);
+
+                int byteOffset = Encoding.UTF8.GetByteCount(text.AsSpan(0, charPos));
+                var parts = stack.Reverse().ToArray();
+                string path = parts.Length <= 3
+                    ? string.Join(" / ", parts)
+                    : string.Join(" / ", parts.Skip(parts.Length - 3));
+                map.Add((byteOffset, path));
+
+                charPos += openMatch.Length;
+                continue;
+            }
+
+            charPos++;
+        }
+
+        return map;
+    }
+
+    private static string LabelForOffset(List<(int Offset, string Path)> map, int byteOffset)
+    {
+        if (map.Count == 0)
+            return "Camera parameter change";
+
+        int lo = 0, hi = map.Count - 1, best = -1;
+        while (lo <= hi)
+        {
+            int mid = lo + (hi - lo) / 2;
+            if (map[mid].Offset <= byteOffset)
+            {
+                best = mid;
+                lo = mid + 1;
+            }
+            else
+            {
+                hi = mid - 1;
+            }
+        }
+
+        return best >= 0 ? map[best].Path : "Camera parameter change";
     }
 
     /// <summary>
@@ -135,6 +232,13 @@ public static class JsonModExporter
 
         writer.WriteStartObject();
 
+        // Top-level metadata for CDUMM and other managers that read root-level keys
+        writer.WriteString("name", info.Title);
+        writer.WriteString("version", info.Version);
+        writer.WriteString("author", info.Author);
+        writer.WriteString("description", info.Description);
+
+        // Nested modinfo block for CD JSON Mod Manager / UCM compatibility
         writer.WriteStartObject("modinfo");
         writer.WriteString("title", info.Title);
         writer.WriteString("version", info.Version);
@@ -162,6 +266,68 @@ public static class JsonModExporter
 
         writer.WriteEndObject();
         writer.WriteEndArray(); // patches
+
+        writer.WriteEndObject();
+        writer.Flush();
+
+        return Encoding.UTF8.GetString(ms.ToArray());
+    }
+
+    /// <summary>
+    /// Builds a multi-preset JSON where CDUMM shows a radio-button picker at import time.
+    /// Each preset becomes a separate <c>patches[]</c> entry targeting the same <c>game_file</c>,
+    /// with every change label prefixed by <c>[PresetName]</c>.
+    /// Requires at least two presets to trigger CDUMM's <c>_detect_preset_groups</c>.
+    /// </summary>
+    public static string BuildMultiPresetJson(
+        ModInfo info,
+        IReadOnlyList<(string PresetName, List<PatchChange> Changes)> presets,
+        string gameFile,
+        string sourceGroup)
+    {
+        if (presets.Count < 2)
+            throw new ArgumentException("Multi-preset export requires at least two presets.");
+
+        using var ms = new MemoryStream();
+        using var writer = new Utf8JsonWriter(ms, new JsonWriterOptions { Indented = true });
+
+        writer.WriteStartObject();
+
+        writer.WriteString("name", info.Title);
+        writer.WriteString("version", info.Version);
+        writer.WriteString("author", info.Author);
+        writer.WriteString("description", info.Description);
+
+        writer.WriteStartObject("modinfo");
+        writer.WriteString("title", info.Title);
+        writer.WriteString("version", info.Version);
+        writer.WriteString("author", info.Author);
+        writer.WriteString("description", info.Description);
+        writer.WriteString("nexus_url", info.NexusUrl);
+        writer.WriteEndObject();
+
+        writer.WriteStartArray("patches");
+        foreach (var (presetName, changes) in presets)
+        {
+            writer.WriteStartObject();
+            writer.WriteString("game_file", gameFile);
+            writer.WriteString("source_group", sourceGroup);
+
+            writer.WriteStartArray("changes");
+            foreach (var c in changes)
+            {
+                writer.WriteStartObject();
+                writer.WriteNumber("offset", c.Offset);
+                writer.WriteString("original", c.Original);
+                writer.WriteString("patched", c.Patched);
+                writer.WriteString("label", $"[{presetName}] {c.Label}");
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+
+            writer.WriteEndObject();
+        }
+        writer.WriteEndArray();
 
         writer.WriteEndObject();
         writer.Flush();

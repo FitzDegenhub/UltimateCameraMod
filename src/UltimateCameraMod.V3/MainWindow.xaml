@@ -203,6 +203,11 @@
                                            Foreground="{StaticResource TextSecondaryBrush}"
                                            TextWrapping="Wrap" Margin="0,4,0,0"
                                            Text="Your working copy until you save a named preset."/>
+                                <TextBlock x:Name="ActivePresetUrl" FontSize="10"
+                                           Foreground="{StaticResource AccentBrush}"
+                                           Cursor="Hand" TextDecorations="Underline"
+                                           Margin="0,3,0,0" Visibility="Collapsed"
+                                           MouseLeftButtonUp="OnActivePresetUrlClick"/>
                             </StackPanel>
                         </DockPanel>
                     </Grid>
@@ -210,14 +215,14 @@
 
                 <!-- Editor tab bar -->
                 <Border DockPanel.Dock="Top" Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="4" Margin="0,0,0,12">
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="TabQuick" Content="UCM Quick" Width="120" Height="34" FontSize="12"
+                    <DockPanel LastChildFill="False">
+                        <Button x:Name="TabQuick" DockPanel.Dock="Left" Content="UCM Quick" Width="120" Height="34" FontSize="12"
                                 Style="{StaticResource AccentButton}" Click="OnTabQuick"/>
-                        <Button x:Name="TabFineTune" Content="Fine Tune" Width="120" Height="34" FontSize="12"
-                                Style="{StaticResource SubtleButton}" Click="OnTabFineTune" Margin="4,0,0,0" BorderThickness="0"/>
-                        <Button x:Name="TabGodMode" Content="God Mode" Width="120" Height="34" FontSize="12"
-                                Style="{StaticResource SubtleButton}" Click="OnTabGodMode" Margin="4,0,0,0" BorderThickness="0"/>
-                    </StackPanel>
+                        <Button x:Name="TabFineTune" DockPanel.Dock="Left" Content="Fine Tune" Width="120" Height="34" FontSize="12"
+                                Style="{StaticResource SubtleButton}" Click="OnTabFineTune" Margin="4,0,0,0"/>
+                        <Button x:Name="TabGodMode" DockPanel.Dock="Right" Content="God Mode" Width="120" Height="34" FontSize="12"
+                                Style="{StaticResource SubtleButton}" Click="OnTabGodMode"/>
+                    </DockPanel>
                 </Border>
 
                 <!-- Editor views (only one visible at a time) -->
