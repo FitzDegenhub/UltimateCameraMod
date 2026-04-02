@@ -1,0 +1,32 @@
+<Window x:Class="UltimateCameraMod.V3.NewPresetDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Preset" Width="460" Height="340" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{StaticResource BgDarkBrush}">
+    <StackPanel Margin="24">
+        <TextBlock Text="Name" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+        <TextBox x:Name="NameBox" FontSize="13" Height="32" Padding="8,4"
+                 Background="{StaticResource BgInputBrush}" Foreground="{StaticResource TextPrimaryBrush}"
+                 BorderBrush="{StaticResource BorderBrush}"/>
+
+        <TextBlock Text="Author" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,12,0,4"/>
+        <TextBox x:Name="AuthorBox" FontSize="13" Height="32" Padding="8,4"
+                 Background="{StaticResource BgInputBrush}" Foreground="{StaticResource TextPrimaryBrush}"
+                 BorderBrush="{StaticResource BorderBrush}"/>
+
+        <TextBlock Text="Description" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,12,0,4"/>
+        <TextBox x:Name="DescriptionBox" FontSize="12" Height="70" Padding="8,6"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 Background="{StaticResource BgInputBrush}" Foreground="{StaticResource TextPrimaryBrush}"
+                 BorderBrush="{StaticResource BorderBrush}"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Cancel" Style="{StaticResource SubtleButton}"
+                    Width="90" Height="34" Click="OnCancel"/>
+            <Button Content="Create" Style="{StaticResource AccentButton}"
+                    Width="90" Height="34" Click="OnCreate" Margin="8,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

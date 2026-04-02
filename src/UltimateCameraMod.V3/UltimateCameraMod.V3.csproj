@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>false</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>UltimateCameraMod.V3</AssemblyName>
+    <RootNamespace>UltimateCameraMod.V3</RootNamespace>
+    <Version>3.0.0</Version>
+    <Authors>0xFitz</Authors>
+    <Description>Export-first camera workflow for Crimson Desert Mod Manager</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="K4os.Compression.LZ4" Version="1.3.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\UltimateCameraMod\Models\AdvancedRow.cs">
+      <Link>Shared\Models\AdvancedRow.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Models\CameraParamDocs.cs">
+      <Link>Shared\Models\CameraParamDocs.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Models\CameraRules.cs">
+      <Link>Shared\Models\CameraRules.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Models\PresetCodec.cs">
+      <Link>Shared\Models\PresetCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Services\CameraMod.cs">
+      <Link>Shared\Services\CameraMod.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Services\GameDetector.cs">
+      <Link>Shared\Services\GameDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Services\JsonModExporter.cs">
+      <Link>Shared\Services\JsonModExporter.cs</Link>
+    </Compile>
+    <Compile Include="..\UltimateCameraMod\Paz\*.cs">
+      <Link>Shared\Paz\%(Filename)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+</Project>

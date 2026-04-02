@@ -12,6 +12,8 @@ public class AdvancedRow : INotifyPropertyChanged
     public string Attribute { get; set; } = "";
     public string VanillaValue { get; init; } = "";
 
+    public string? AttributeDoc => CameraParamDocs.Get(Attribute);
+
     public string Value
     {
         get => _value;

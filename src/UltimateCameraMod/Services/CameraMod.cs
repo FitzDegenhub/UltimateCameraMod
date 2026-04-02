@@ -382,11 +382,18 @@ public static class CameraMod
             ?? throw new InvalidOperationException("playercamerapreset.xml not found in PAMT");
     }
 
-    // ── Live detection from game files ──────────────────────────────
-
-    public static string ReadLiveXml(string gameDir)
+    public static PazEntry FindCameraEntryFromPamt(string pamtPath, string? pazDir = null)
     {
-        var entry = FindCameraEntry(gameDir);
+        if (!File.Exists(pamtPath))
+            throw new FileNotFoundException($"PAMT not found: {pamtPath}");
+
+        var entries = PamtReader.Parse(pamtPath, pazDir);
+        return entries.FirstOrDefault(e => e.Path.Contains("playercamerapreset.xml"))
+            ?? throw new InvalidOperationException("playercamerapreset.xml not found in PAMT");
+    }
+
+    private static byte[] ReadEntryBytes(PazEntry entry)
+    {
         using var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Read, FileShare.Read);
         fs.Seek(entry.Offset, SeekOrigin.Begin);
         byte[] raw = new byte[entry.CompSize];
@@ -398,9 +405,66 @@ public static class CameraMod
             totalRead += n;
         }
 
-        byte[] dec = AssetCodec.Decode(raw, Path.GetFileName(entry.Path));
+        return raw;
+    }
+
+    private static string DecodeEntryXml(PazEntry entry, byte[] rawBytes)
+    {
+        byte[] dec = AssetCodec.Decode(rawBytes, Path.GetFileName(entry.Path));
         byte[] plain = CompressionUtils.Lz4Decompress(dec, entry.OrigSize);
         return Encoding.UTF8.GetString(plain).TrimEnd('\0');
+    }
+
+    public static string ReadXmlFromPaz(string pazPath, string pamtPath)
+    {
+        string pazDir = Path.GetDirectoryName(pazPath) ?? ".";
+        var indexedEntry = FindCameraEntryFromPamt(pamtPath, pazDir);
+        var entry = new PazEntry
+        {
+            Path = indexedEntry.Path,
+            PazFile = pazPath,
+            Offset = indexedEntry.Offset,
+            CompSize = indexedEntry.CompSize,
+            OrigSize = indexedEntry.OrigSize,
+            Flags = indexedEntry.Flags,
+            PazIndex = indexedEntry.PazIndex
+        };
+
+        byte[] raw = ReadEntryBytes(entry);
+        return DecodeEntryXml(entry, raw);
+    }
+
+    public static (PazEntry Entry, byte[] RawBytes) ReadCameraEntryWithRawBytes(string gameDir)
+    {
+        var entry = FindCameraEntry(gameDir);
+        return (entry, ReadEntryBytes(entry));
+    }
+
+    public static (PazEntry Entry, byte[] RawBytes) ReadCameraEntryWithRawBytes(string pazPath, string pamtPath)
+    {
+        string pazDir = Path.GetDirectoryName(pazPath) ?? ".";
+        var indexedEntry = FindCameraEntryFromPamt(pamtPath, pazDir);
+        var entry = new PazEntry
+        {
+            Path = indexedEntry.Path,
+            PazFile = pazPath,
+            Offset = indexedEntry.Offset,
+            CompSize = indexedEntry.CompSize,
+            OrigSize = indexedEntry.OrigSize,
+            Flags = indexedEntry.Flags,
+            PazIndex = indexedEntry.PazIndex
+        };
+
+        return (entry, ReadEntryBytes(entry));
+    }
+
+    // ── Live detection from game files ──────────────────────────────
+
+    public static string ReadLiveXml(string gameDir)
+    {
+        var entry = FindCameraEntry(gameDir);
+        byte[] raw = ReadEntryBytes(entry);
+        return DecodeEntryXml(entry, raw);
     }
 
     public class LiveModStatus
@@ -501,13 +565,17 @@ public static class CameraMod
         return true;
     }
 
-    private static void EnsureBackup(PazEntry entry, Action<string>? log = null)
+    /// <param name="forceRefreshFromPaz">
+    /// When true, always re-read the camera chunk from <paramref name="entry"/>'s PAZ and rewrite the backup.
+    /// Used for JSON export so <c>original</c> hex matches live game files (CD Mod Manager verifies against those).
+    /// </param>
+    private static void EnsureBackup(PazEntry entry, Action<string>? log = null, bool forceRefreshFromPaz = false)
     {
         string bdir = BackupsDir;
         string backupPath = Path.Combine(bdir, "original_backup.bin");
         string metaPath = Path.Combine(bdir, "backup_meta.txt");
 
-        if (File.Exists(backupPath) && File.Exists(metaPath))
+        if (!forceRefreshFromPaz && File.Exists(backupPath) && File.Exists(metaPath))
         {
             string meta = File.ReadAllText(metaPath);
             var parts = meta.Split();
@@ -526,6 +594,10 @@ public static class CameraMod
 
             if (!versionMatch)
                 log?.Invoke("UCM version changed -- refreshing vanilla backup...");
+        }
+        else if (forceRefreshFromPaz)
+        {
+            log?.Invoke("Syncing vanilla backup from game PAZ (export)...");
         }
 
         Directory.CreateDirectory(bdir);
@@ -595,7 +667,45 @@ public static class CameraMod
         }
     }
 
-    // ── Public helpers for Advanced Editor ─────────────────────────
+    // ── Public helpers ───────────────────────────────────────────────
+
+    public static void ExportLiveXml(string gameDir, string outputPath)
+    {
+        string xml = ReadLiveXml(gameDir);
+        File.WriteAllText(outputPath, xml, new UTF8Encoding(true));
+    }
+
+    public static Dictionary<string, object> InstallRawXml(string gameDir, string xmlText, Action<string>? log = null)
+    {
+        log?.Invoke("Finding camera entry...");
+        var entry = FindCameraEntry(gameDir);
+
+        log?.Invoke("Ensuring backup...");
+        EnsureBackup(entry, log);
+
+        log?.Invoke("Encoding and size-matching...");
+        string cleanXml = StripComments(xmlText);
+        byte[] xmlBytes = new UTF8Encoding(true).GetBytes(cleanXml);
+        byte[] matched = ArchiveWriter.MatchCompressedSize(xmlBytes, entry.CompSize, entry.OrigSize);
+
+        log?.Invoke("Compressing...");
+        byte[] compressed = CompressionUtils.Lz4Compress(matched);
+        if (compressed.Length != entry.CompSize)
+            throw new InvalidOperationException($"Size mismatch after padding: {compressed.Length} != {entry.CompSize}");
+
+        log?.Invoke("Encoding...");
+        byte[] encoded = AssetCodec.Encode(compressed, "playercamerapreset.xml");
+
+        log?.Invoke("Writing game files...");
+        ArchiveWriter.UpdateEntry(entry, encoded);
+
+        log?.Invoke("Done!");
+        return new Dictionary<string, object>
+        {
+            ["status"] = "ok",
+            ["comp_size"] = entry.CompSize
+        };
+    }
 
     public static string ReadVanillaXml(string gameDir)
     {
@@ -603,6 +713,82 @@ public static class CameraMod
         EnsureBackup(entry);
         string xml = GetVanillaXml(entry);
         return StripComments(xml);
+    }
+
+    /// <summary>
+    /// Returns the raw encrypted bytes from the vanilla backup (for JSON patch diffing).
+    /// </summary>
+    public static byte[] ReadVanillaBackupBytes(string gameDir)
+    {
+        var entry = FindCameraEntry(gameDir);
+        EnsureBackup(entry);
+        string backupPath = Path.Combine(BackupsDir, "original_backup.bin");
+        return File.ReadAllBytes(backupPath);
+    }
+
+    /// <summary>
+    /// Returns vanilla backup bytes plus the archive-relative game_file path, source_group
+    /// (PAZ directory name), and <see cref="PazEntry.Offset"/> for JSON Mod Manager exports.
+    /// </summary>
+    /// <remarks>
+    /// CD JSON Mod Manager v1 <c>offset</c> is absolute within the host <c>*.paz</c> file; UCM diffs are
+    /// relative to the entry payload only — add <c>PazPayloadOffset</c> when writing JSON.
+    /// </remarks>
+    public static (byte[] Bytes, string GameFile, string SourceGroup, int PazPayloadOffset) ReadVanillaBackupBytesWithMeta(
+        string gameDir, Action<string>? log = null)
+    {
+        var entry = FindCameraEntry(gameDir);
+        // Always snapshot live 0010/0.paz bytes here — JSON Mod Manager compares patches to current game data.
+        // Without this, an old original_backup.bin can survive game updates when comp_size/version meta still match.
+        EnsureBackup(entry, log, forceRefreshFromPaz: true);
+        string backupPath = Path.Combine(BackupsDir, "original_backup.bin");
+        byte[] bytes = File.ReadAllBytes(backupPath);
+
+        // entry.Path is the full archive-relative path, e.g. "game/character/camera/playercamerapreset.xml"
+        // entry.PazFile lives inside a subdirectory like "<gameDir>/0010/..." — extract the group name
+        string sourceGroup = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(entry.PazFile) ?? "0010");
+        if (string.IsNullOrEmpty(sourceGroup)) sourceGroup = "0010";
+
+        return (bytes, entry.Path, sourceGroup, entry.Offset);
+    }
+
+    /// <summary>
+    /// Runs the full modification pipeline and returns the encoded bytes without writing to the PAZ.
+    /// Used by JsonModExporter to diff against vanilla.
+    /// </summary>
+    public static byte[] BuildModifiedBytes(string gameDir, ModificationSet modSet, Action<string>? log = null)
+    {
+        var entry = FindCameraEntry(gameDir);
+        EnsureBackup(entry, log);
+
+        string vanillaXml = StripComments(GetVanillaXml(entry));
+        string modifiedXml = ApplyModifications(vanillaXml, modSet);
+
+        byte[] xmlBytes = new UTF8Encoding(true).GetBytes(modifiedXml);
+        byte[] matched = ArchiveWriter.MatchCompressedSize(xmlBytes, entry.CompSize, entry.OrigSize);
+        byte[] compressed = CompressionUtils.Lz4Compress(matched);
+        if (compressed.Length != entry.CompSize)
+            throw new InvalidOperationException($"Size mismatch: {compressed.Length} != {entry.CompSize}");
+
+        return AssetCodec.Encode(compressed, "playercamerapreset.xml");
+    }
+
+    /// <summary>
+    /// Runs the raw XML through the pipeline and returns encoded bytes without writing to the PAZ.
+    /// </summary>
+    public static byte[] BuildModifiedBytesFromXml(string gameDir, string xmlText, Action<string>? log = null)
+    {
+        var entry = FindCameraEntry(gameDir);
+        EnsureBackup(entry, log);
+
+        string cleanXml = StripComments(xmlText);
+        byte[] xmlBytes = new UTF8Encoding(true).GetBytes(cleanXml);
+        byte[] matched = ArchiveWriter.MatchCompressedSize(xmlBytes, entry.CompSize, entry.OrigSize);
+        byte[] compressed = CompressionUtils.Lz4Compress(matched);
+        if (compressed.Length != entry.CompSize)
+            throw new InvalidOperationException($"Size mismatch: {compressed.Length} != {entry.CompSize}");
+
+        return AssetCodec.Encode(compressed, "playercamerapreset.xml");
     }
 
     public static Dictionary<string, object> InstallWithModSet(string gameDir, ModificationSet modSet, Action<string>? log = null)
@@ -646,8 +832,7 @@ public static class CameraMod
 
     public static Dictionary<string, object> InstallCameraMod(string gameDir, string style, int fov,
         bool bane, string combat, bool mountHeight = false, double? customUp = null,
-        bool steadycam = true, bool extraZoom = false, bool horseFirstPerson = false,
-        Action<string>? log = null)
+        bool steadycam = true, Action<string>? log = null)
     {
         log?.Invoke("Finding camera entry...");
         var entry = FindCameraEntry(gameDir);
@@ -659,7 +844,7 @@ public static class CameraMod
         log?.Invoke("Extracting vanilla XML...");
         string vanillaXml = GetVanillaXml(entry);
 
-        bool needsInjection = extraZoom || horseFirstPerson || steadycam;
+        bool needsInjection = steadycam;
         if (needsInjection)
         {
             log?.Invoke("Stripping all comments (making room for injected elements)...");
@@ -673,8 +858,7 @@ public static class CameraMod
 
         log?.Invoke("Building modification rules...");
         var modSet = CameraRules.BuildModifications(style, fov, bane, combat,
-            mountHeight: mountHeight, customUp: customUp, steadycam: steadycam,
-            extraZoom: extraZoom, horseFirstPerson: horseFirstPerson);
+            mountHeight: mountHeight, customUp: customUp, steadycam: steadycam);
         int modCount = modSet.ElementMods.Values.Sum(v => v.Count);
         log?.Invoke($"Rules: {modCount} attribute changes" +
             (modSet.FovValue > 0 ? $", FoV=+{modSet.FovValue}" : ""));

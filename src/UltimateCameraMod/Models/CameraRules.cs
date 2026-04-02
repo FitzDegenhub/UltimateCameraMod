@@ -106,9 +106,17 @@ public static class CameraRules
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
         string upStr = $"{upOffset}";
-        foreach (var sec in AllMountSections)
-            for (int level = 2; level <= 4; level++)
+        foreach (var sec in HorseRideSections)
+            for (int level = 2; level <= 3; level++)
                 Set(mods, $"{sec}/ZoomLevel[{level}]", "UpOffset", upStr);
+
+        foreach (var sec in new[] { "Player_Ride_Elephant", "Player_Ride_Canoe", "Player_Ride_Warmachine", "Player_Ride_Broom" })
+            for (int level = 2; level <= 3; level++)
+                Set(mods, $"{sec}/ZoomLevel[{level}]", "UpOffset", upStr);
+
+        for (int level = 2; level <= 4; level++)
+            Set(mods, $"Player_Ride_Wyvern/ZoomLevel[{level}]", "UpOffset", upStr);
+
         return mods;
     }
 
@@ -118,16 +126,11 @@ public static class CameraRules
 
         foreach (var sec in HorseRideSections)
         {
-            Set(mods, $"{sec}/ZoomLevel[1]", "ZoomDistance", $"{1.8 * scale:F1}");
             Set(mods, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{7.5 * scale:F1}");
             Set(mods, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{10.5 * scale:F1}");
-            Set(mods, $"{sec}/ZoomLevel[4]", "ZoomDistance", $"{14.0 * scale:F1}");
         }
-        Set(mods, "Player_Ride_Elephant/ZoomLevel[1]", "ZoomDistance", $"{2.0 * scale:F1}");
         Set(mods, "Player_Ride_Elephant/ZoomLevel[2]", "ZoomDistance", $"{8 * scale:F1}");
         Set(mods, "Player_Ride_Elephant/ZoomLevel[3]", "ZoomDistance", $"{11 * scale:F1}");
-        Set(mods, "Player_Ride_Elephant/ZoomLevel[4]", "ZoomDistance", $"{14.0 * scale:F1}");
-        Set(mods, "Player_Ride_Wyvern/ZoomLevel[1]", "ZoomDistance", $"{4.0 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[2]", "ZoomDistance", $"{12 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", $"{16 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", $"{20 * scale:F1}");
@@ -307,12 +310,6 @@ public static class CameraRules
             Set(m, $"{sec}/CameraDamping", "PivotDampingMaxDistance", "0.5");
             Set(m, $"{sec}/OffsetByVelocity", "OffsetLength", "0.0");
             Set(m, $"{sec}/OffsetByVelocity", "DampSpeed", "0.5");
-            Set(m, $"{sec}/ZoomLevel[0]", "RightOffset", "0.8");
-            Set(m, $"{sec}/ZoomLevel[0]", "UpOffset", "0.2");
-            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", "1.8");
-            Set(m, $"{sec}/ZoomLevel[1]", "RightOffset", "1.1");
-            Set(m, $"{sec}/ZoomLevel[1]", "UpOffset", "0.3");
-            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", "3.5");
             Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", "1.45");
             Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", "1.8");
         }
@@ -370,75 +367,6 @@ public static class CameraRules
             Set(m, $"{sec}/ZoomLevel[2]", "UpOffset", "0.0");
             Set(m, $"{sec}/ZoomLevel[3]", "UpOffset", "0.0");
             Set(m, $"{sec}/ZoomLevel[4]", "UpOffset", "0.0");
-        }
-
-        return m;
-    }
-
-    // ── Extra zoom (ZL5 + ZL6) ────────────────────────────────────────
-
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildExtraZoom()
-    {
-        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-
-        foreach (var sec in AllMain)
-        {
-            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.85");
-            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.25");
-            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24");
-            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "2.45");
-            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.40");
-            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48");
-        }
-
-        foreach (var sec in HorseRideSections)
-        {
-            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.15");
-            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.15");
-            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24.6");
-            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "1.55");
-            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.30");
-            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48.6");
-        }
-
-        foreach (var sec in new[] { "Player_Ride_Elephant", "Player_Ride_Wyvern" })
-        {
-            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.40");
-            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.25");
-            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24");
-            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "1.90");
-            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.40");
-            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48");
-        }
-
-        return m;
-    }
-
-    // ── Horse first-person (ZL0 with eye-bone pivot) ────────────────
-
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildHorseFirstPerson()
-    {
-        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-
-        foreach (var sec in HorseRideSections)
-        {
-            Set(m, sec, "PivotSetType", "FocusActor");
-            Set(m, sec, "DisableHidePivotActor", "True");
-
-            Set(m, $"{sec}/ZoomLevel[0]", "PivotBoneName", "B_Eyeball_L");
-            Set(m, $"{sec}/ZoomLevel[0]", "RightOffset", "0");
-            Set(m, $"{sec}/ZoomLevel[0]", "UpOffset", "0.10");
-            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", "0.0");
-            Set(m, $"{sec}/ZoomLevel[0]", "Fov", "75");
-            Set(m, $"{sec}/ZoomLevel[0]", "OverlapCharacterHide", "False");
-            Set(m, $"{sec}/ZoomLevel[0]", "MeshCutOffset", "-0.16");
-
-            if (sec == "Player_Ride_Horse_Dash" || sec == "Player_Ride_Horse_Dash_Att")
-                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.20");
-            else if (sec == "Player_Ride_Horse_Fast_Run")
-                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.15");
-            else
-                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.05");
         }
 
         return m;
@@ -878,8 +806,6 @@ public static class CameraRules
         var list = new List<(string, int, double)>();
         foreach (var sec in HorseRideSections)
         {
-            list.Add((sec, 0, 0.8));
-            list.Add((sec, 1, 1.1));
             list.Add((sec, 2, 1.45));
             list.Add((sec, 3, 1.8));
         }
@@ -945,14 +871,10 @@ public static class CameraRules
             Set(m, $"{sec}/ZoomLevel[{zl}]", "RightOffset", $"{vanilla * factor:F2}");
 
         // Scale horse zoom distances from the user's distance value
-        double horseZL0Dist = Math.Round(distance * 0.36, 1);
-        double horseZL1Dist = Math.Round(distance * 0.7, 1);
         double horseZL2Dist = Math.Round(distance * 1.5, 1);
         double horseZL3Dist = Math.Round(distance * 2.1, 1);
         foreach (var sec in HorseRideSections)
         {
-            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", $"{horseZL0Dist}");
-            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", $"{horseZL1Dist}");
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{horseZL2Dist}");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{horseZL3Dist}");
         }
@@ -978,8 +900,7 @@ public static class CameraRules
     }
 
     public static ModificationSet BuildModifications(string style, int fov, bool bane, string combat,
-        bool mountHeight = false, double? customUp = null, bool steadycam = true,
-        bool extraZoom = false, bool horseFirstPerson = false)
+        bool mountHeight = false, double? customUp = null, bool steadycam = true)
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
 
@@ -1011,14 +932,6 @@ public static class CameraRules
             double up = customUp ?? (StyleUpOffset.TryGetValue(style, out var u) ? u : 0.0);
             Merge(mods, BuildMountHeightMods(up));
         }
-
-        // Layer 6: extra zoom levels (ZL5 + ZL6)
-        if (extraZoom)
-            Merge(mods, BuildExtraZoom());
-
-        // Layer 7: horse first-person (ZL0 with eye-bone pivot)
-        if (horseFirstPerson)
-            Merge(mods, BuildHorseFirstPerson());
 
         return new ModificationSet { ElementMods = mods, FovValue = fov };
     }
