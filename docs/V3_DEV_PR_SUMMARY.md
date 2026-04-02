@@ -53,6 +53,33 @@ Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/Ultimate
 
 ---
 
+## v3-dev — April 2026 batch (this push)
+
+Use this subsection when updating the PR after newer `v3-dev` commits land.
+
+### Shipped community presets (embedded)
+
+- **`ShippedPresets/*.json`** are **embedded resources** in `UltimateCameraMod.V3.csproj` (not only loose files on disk), so presets like **RDR2** ship inside the assembly.
+- **`GenerateBuiltInPresets()`** ends with **`DeployShippedCommunityPresets()`**: after built-in Vanilla / styles are written (game folder detected), each embedded `UltimateCameraMod.V3.ShippedPresets.*.json` is deserialized (imported-preset shape: `Name`, `Author`, `Description`, `Url`, `RawXml`), converted to a **session JSON** under **`ucm_presets/{Name}.json`**, with Quick sliders derived from **ZL2** via **`TryParseUcmQuickFootBaselineFromXml`** and **`QuickShiftDeltaFromFootZl2RightOffset`**.
+- **Does not overwrite** an existing file of the same name (user deletes/edits are respected).
+
+### Vanilla built-in Quick slider semantics (shared)
+
+- **`CameraRules.QuickShiftDeltaFromFootZl2RightOffset`**: maps literal XML **RightOffset** at on-foot ZL2 to the UCM Quick **horizontal shift delta** (inverse of `BuildCustom` mapping).
+- **Built-in Vanilla.json** now stores **`right_offset`** using that delta so the Quick panel matches true vanilla XML (~0.5 → slider 0).
+- **`CameraMod.TryParseUcmQuickFootBaselineFromXml`** documentation updated to spell out literal vs delta.
+
+### Import / metadata / UI
+
+- **`ImportedPreset`**: optional **`Author`**, **`Description`**, **`Url`** on the model (alongside existing fields).
+- **Import preset** and **import metadata** dialogs and **MainWindow** wiring for richer preset cards, sidebar summary, active-preset banner, and status text where applicable.
+- **Save toast** can show **error styling** (`_pendingSaveToastIsError`) for failed saves.
+- **`ExportJsonDialog`**: minor alignment with current export flow.
+- **`MainWindow.xaml`**: layout / copy tweaks for the above.
+- **`screenshots/banner.png`**: repo asset for README or store pages (add a markdown image link when you want it visible on GitHub).
+
+---
+
 ## Commits (`main`..`v3-dev`) — reference
 
 | Commit   | Topic |
@@ -96,4 +123,4 @@ v2.x publish flow is unchanged; see README **Building from Source (v2.x)**.
 
 ---
 
-*Last refreshed to match `v3-dev` through commit `4a78a84`.*
+*Last refreshed: April 2026 — documents embedded shipped presets (e.g. RDR2), Vanilla Quick delta alignment, and import metadata/UI follow-ups. Match the branch tip on GitHub for the exact commit.*

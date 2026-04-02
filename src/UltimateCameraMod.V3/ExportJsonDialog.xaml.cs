@@ -121,10 +121,10 @@ public partial class ExportJsonDialog : Window
         switch (SelectedFormat)
         {
             case ShareExportFormat.Json:
+                var jsonInfo = BuildJsonModInfo();
                 RunJsonGenerate(() =>
                 {
-                    var info = BuildJsonModInfo();
-                    return JsonModExporter.ExportFromXml(_gameDir, info, xml,
+                    return JsonModExporter.ExportFromXml(_gameDir, jsonInfo, xml,
                         msg => Dispatcher.Invoke(() => SetStatus(msg, false)));
                 });
                 break;

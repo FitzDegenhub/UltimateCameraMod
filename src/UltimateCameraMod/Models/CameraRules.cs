@@ -825,6 +825,14 @@ public static class CameraRules
         return list.ToArray();
     }
 
+    /// <summary>
+    /// Inverse of <see cref="BuildCustom"/> for on-foot ZL2: maps XML <c>RightOffset</c> at
+    /// <c>Player_Basic_Default/ZoomLevel[2]</c> to the UCM Quick horizontal shift (delta).
+    /// Vanilla (~0.5) → 0; file-centered (0) → 0.5.
+    /// </summary>
+    public static double QuickShiftDeltaFromFootZl2RightOffset(double rightOffsetZl2)
+        => VanillaRoZL2 - rightOffsetZl2;
+
     public static Dictionary<string, Dictionary<string, (string, string)>> BuildCustom(
         double distance, double upOffset, double rightOffset)
     {

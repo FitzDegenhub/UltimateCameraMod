@@ -192,9 +192,20 @@
                                        Foreground="{StaticResource BgDarkBrush}"/>
                         </Border>
                         <DockPanel Grid.Column="1">
-                            <TextBlock x:Name="ActivePresetAuthor" DockPanel.Dock="Right" FontSize="10"
-                                       Foreground="{StaticResource TextDimBrush}"
-                                       VerticalAlignment="Top" Margin="12,2,0,0" Text=""/>
+                            <StackPanel DockPanel.Dock="Right" VerticalAlignment="Top" Margin="12,2,0,0"
+                                       HorizontalAlignment="Right">
+                                <TextBlock x:Name="ActivePresetAuthor" FontSize="10"
+                                           Foreground="{StaticResource TextDimBrush}" Text=""
+                                           HorizontalAlignment="Right"/>
+                                <Button x:Name="ActivePresetLinkBtn" Visibility="Collapsed"
+                                        Style="{StaticResource SubtleButton}"
+                                        Click="OnActivePresetLinkClick"
+                                        Height="22" Padding="6,2" Margin="0,4,0,0"
+                                        HorizontalAlignment="Right"
+                                        FontSize="10" Foreground="{StaticResource AccentBrush}"
+                                        BorderBrush="{StaticResource AccentBrush}"
+                                        Content="&#x1F517; Link" ToolTip="Open in browser"/>
+                            </StackPanel>
                             <StackPanel>
                                 <TextBlock x:Name="ActivePresetName" FontSize="16" FontWeight="Bold"
                                            Foreground="{StaticResource AccentBrush}"
@@ -203,11 +214,6 @@
                                            Foreground="{StaticResource TextSecondaryBrush}"
                                            TextWrapping="Wrap" Margin="0,4,0,0"
                                            Text="Your working copy until you save a named preset."/>
-                                <TextBlock x:Name="ActivePresetUrl" FontSize="10"
-                                           Foreground="{StaticResource AccentBrush}"
-                                           Cursor="Hand" TextDecorations="Underline"
-                                           Margin="0,3,0,0" Visibility="Collapsed"
-                                           MouseLeftButtonUp="OnActivePresetUrlClick"/>
                             </StackPanel>
                         </DockPanel>
                     </Grid>
@@ -293,18 +299,10 @@
 
                                 <TextBlock x:Name="HShiftTip" Grid.Row="3" Grid.ColumnSpan="3"
                                            FontSize="9" Foreground="{StaticResource TextDimBrush}"
-                                           Text="How far left/right the camera sits from the character. Centered camera locks this to 0."
-                                           Margin="0,0,0,4"/>
+                                           TextWrapping="Wrap" LineHeight="14"
+                                           Text="Left/right framing as a delta on RightOffset (on foot, mounts, aim, and related rows). 0 matches vanilla side bias. Increase toward ~0.5 to pull toward geometric center in the file; negative values bias further left. Matches the top-down FoV preview. Centered camera below is separate: it locks this slider to 0 and applies stronger centering."
+                                           Margin="0,4,0,0"/>
                             </Grid>
-
-                            <TextBlock FontSize="9" Foreground="{StaticResource TextDimBrush}" Margin="0,6,0,0"
-                                       Text="Limits: Dist 1.5-12.0  |  Height -1.6 to 0.5  |  Shift -3.0 to 3.0"/>
-                            <TextBlock x:Name="CustomDraftHint"
-                                       FontSize="10"
-                                       Foreground="{StaticResource TextSecondaryBrush}"
-                                       TextWrapping="Wrap"
-                                       Margin="0,8,0,0"
-                                       Text="Switching between Presets and Custom keeps both states. If you tweak a loaded custom preset, it becomes a new draft automatically."/>
                         </StackPanel>
                     </Border>
 
@@ -342,8 +340,9 @@
 
                             <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="2"/>
                             <CheckBox x:Name="BaneCheck" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Center character on screen (locks Horizontal Shift to 0)"
-                                      Checked="OnBaneChanged" Unchecked="OnBaneChanged" Margin="0,0,0,8"/>
+                                      Content="Center character on screen"
+                                      Checked="OnBaneChanged" Unchecked="OnBaneChanged" Margin="0,0,0,8"
+                                      ToolTip="Separate from Horizontal shift ~0.5: that value is often vanilla lateral bias in the XML. This option forces shift to 0 and applies stronger centering rules (RightOffset toward 0 where supported)."/>
 
                             <TextBlock Text="Mount camera" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
                             <CheckBox x:Name="MountHeightCheck" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
@@ -698,6 +697,7 @@
             </DataGrid>
         </Grid>
 
+
                 </Grid>
             </DockPanel>
         </Grid>
@@ -740,7 +740,7 @@
                 Padding="12,8"
                 Panel.ZIndex="20">
             <StackPanel Orientation="Horizontal">
-                <Ellipse Width="8" Height="8" Fill="#4CAF50" VerticalAlignment="Center"/>
+                <Ellipse x:Name="SaveToastDot" Width="8" Height="8" Fill="#4CAF50" VerticalAlignment="Center"/>
                 <TextBlock x:Name="SaveToastText"
                            Margin="8,0,0,0"
                            FontSize="11"

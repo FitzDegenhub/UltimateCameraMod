@@ -370,8 +370,9 @@ public static class CameraMod
     }
 
     /// <summary>
-    /// Values that drive UCM Quick distance / height / horizontal shift: <c>Player_Basic_Default</c> idle zoom (Level 2).
-    /// Same keys as V3 <c>TryApplyQuickSlidersFromSessionXml</c>.
+    /// Reads <c>Player_Basic_Default</c> idle zoom (ZL2) distance, height, and <b>literal</b> <c>RightOffset</c> from XML.
+    /// UCM Quick horizontal shift uses delta semantics (<see cref="CameraRules.BuildCustom"/>); convert with
+    /// <see cref="CameraRules.QuickShiftDeltaFromFootZl2RightOffset"/> before applying to the shift slider.
     /// </summary>
     public static bool TryParseUcmQuickFootBaselineFromXml(string xml,
         out double zoomDistanceZl2, out double upOffsetZl2, out double rightOffsetZl2)

@@ -20,6 +20,10 @@
     <Resource Include="Assets\ucm-app-icon.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="ShippedPresets\*.json" />
+  </ItemGroup>
+
   <!-- Loose copy for LoadImage(LR_LOADFROMFILE) fallback when taskbar ignores WPF Window.Icon -->
   <Target Name="CopyUcmIcoToOutput" AfterTargets="Build">
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Assets\ucm.ico"

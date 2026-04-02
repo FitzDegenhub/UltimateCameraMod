@@ -27,6 +27,10 @@ namespace UltimateCameraMod.V3;
 public partial class MainWindow : Window
 {
     private const string Ver = "3.0";
+
+    /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
+    private const string HShiftTipUnlocked =
+        "Left/right framing as a delta on RightOffset (on foot, mounts, aim, and related rows). 0 matches vanilla side bias. Increase toward ~0.5 to pull toward geometric center in the file; negative values bias further left. Matches the top-down FoV preview. Centered camera below is separate: it locks this slider to 0 and applies stronger centering.";
     private const string LegacyPresetsDirName = "presets";
     private const string UcmPresetsDirName = "ucm_presets";
     private const string MyPresetsDirName = "my_presets";
@@ -67,6 +71,7 @@ public partial class MainWindow : Window
     private DispatcherTimer? _previewDebounceTimer;
     private string? _presetCatalogFingerprint;
     private string _pendingSaveToastText = "Saved";
+    private bool _pendingSaveToastIsError;
     private double _customDraftDistance = 5.0;
     private double _customDraftHeight;
     private double _customDraftRightOffset;
@@ -82,6 +87,7 @@ public partial class MainWindow : Window
     private bool _isExpertMode;
     private bool _advCtrlNeedsRefresh;
     private bool _expertNeedsRefresh;
+    private bool _sessionIsFullPreset;
     private string _selectedStyleId = "cinematic";
     private List<AdvancedRow> _advAllRows = new();
 
@@ -573,6 +579,9 @@ public partial class MainWindow : Window
         {
             _saveToastDelayTimer!.Stop();
             SaveToastText.Text = _pendingSaveToastText;
+            var color = _pendingSaveToastIsError ? "#EF4444" : "#4CAF50";
+            SaveToastDot.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            SaveToast.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString($"#3A{color.TrimStart('#')}"));
             SaveToast.Visibility = Visibility.Visible;
             _saveToastHideTimer!.Stop();
             _saveToastHideTimer.Start();
@@ -841,14 +850,21 @@ public partial class MainWindow : Window
                 {
                     // True vanilla: no BuildModifications — raw game XML from backup/live PAZ.
                     xml = vanillaXml;
-                    // Quick sliders must match embedded XML (Player_Basic_Default / ZL2), not StyleParams placeholders.
-                    if (!CameraMod.TryParseUcmQuickFootBaselineFromXml(vanillaXml, out dist, out up, out ro))
+                    // Quick sliders use BuildCustom delta; JSON must store delta, not literal XML RightOffset (~0.5).
+                    double rightOffsetSetting;
+                    if (!CameraMod.TryParseUcmQuickFootBaselineFromXml(vanillaXml, out dist, out up, out double roAbs))
+                    {
                         (dist, up, ro) = StyleParams[id];
+                        rightOffsetSetting = ro;
+                    }
+                    else
+                        rightOffsetSetting = CameraRules.QuickShiftDeltaFromFootZl2RightOffset(roAbs);
+
                     settings = new Dictionary<string, object>
                     {
                         ["distance"] = Math.Round(dist, 2),
                         ["height"] = Math.Round(up, 2),
-                        ["right_offset"] = Math.Round(ro, 2),
+                        ["right_offset"] = Math.Round(rightOffsetSetting, 2),
                         ["fov"] = 0,
                         ["combat"] = "default",
                         ["centered"] = false,
@@ -891,10 +907,90 @@ public partial class MainWindow : Window
 
                 File.WriteAllText(path, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
             }
+            // Deploy shipped community presets from embedded resources
+            DeployShippedCommunityPresets();
         }
         catch (Exception ex)
         {
             SetStatus($"Failed to generate built-in presets: {ex.Message}", "Warn");
+        }
+    }
+
+    private void DeployShippedCommunityPresets()
+    {
+        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        string prefix = "UltimateCameraMod.V3.ShippedPresets.";
+
+        foreach (string resourceName in assembly.GetManifestResourceNames())
+        {
+            if (!resourceName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) continue;
+            if (!resourceName.EndsWith(".json", StringComparison.OrdinalIgnoreCase)) continue;
+
+            try
+            {
+                using var stream = assembly.GetManifestResourceStream(resourceName);
+                if (stream == null) continue;
+                using var reader = new StreamReader(stream, System.Text.Encoding.UTF8);
+                string json = reader.ReadToEnd();
+
+                // Parse the imported preset format
+                using var doc = System.Text.Json.JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                string name = root.TryGetProperty("Name", out var nv) ? nv.GetString() ?? "" : "";
+                if (string.IsNullOrWhiteSpace(name)) continue;
+
+                string destPath = Path.Combine(UcmPresetsDir, name + ".json");
+                if (File.Exists(destPath)) continue; // Don't overwrite if user deleted/modified
+
+                string author = root.TryGetProperty("Author", out var av) ? av.GetString() ?? "" : "";
+                string desc = root.TryGetProperty("Description", out var dv) ? dv.GetString() ?? "" : "";
+                string url = root.TryGetProperty("Url", out var uv) ? uv.GetString() ?? "" : "";
+                string rawXml = root.TryGetProperty("RawXml", out var xv) ? xv.GetString() ?? "" : "";
+
+                if (string.IsNullOrWhiteSpace(rawXml)) continue;
+
+                // Strip BOM and comments for clean session XML
+                string sessionXml = rawXml.TrimStart('\uFEFF');
+                sessionXml = CameraMod.StripComments(sessionXml);
+
+                // Extract ZL2 baseline for Quick slider settings
+                double dist = 5.0, height = 0.0, roff = 0.0;
+                if (CameraMod.TryParseUcmQuickFootBaselineFromXml(sessionXml, out double d, out double u, out double ro))
+                {
+                    dist = d; height = u;
+                    roff = CameraRules.QuickShiftDeltaFromFootZl2RightOffset(ro);
+                }
+
+                var preset = new Dictionary<string, object>
+                {
+                    ["name"] = name,
+                    ["author"] = author,
+                    ["description"] = desc.Replace("\n", " ").Trim().Length > 200
+                        ? desc.Replace("\n", " ").Trim()[..197] + "..."
+                        : desc.Replace("\n", " ").Trim(),
+                    ["kind"] = "style",
+                    ["locked"] = true,
+                    ["session_xml"] = sessionXml,
+                    ["settings"] = new Dictionary<string, object>
+                    {
+                        ["distance"] = Math.Round(dist, 2),
+                        ["height"] = Math.Round(height, 2),
+                        ["right_offset"] = Math.Round(roff, 2),
+                        ["fov"] = 0,
+                        ["combat"] = "default",
+                        ["centered"] = false,
+                        ["mount_height"] = false,
+                        ["steadycam"] = false
+                    }
+                };
+
+                if (!string.IsNullOrWhiteSpace(url))
+                    preset["url"] = url;
+
+                File.WriteAllText(destPath, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
+            }
+            catch { /* Skip malformed shipped presets */ }
         }
     }
 
@@ -1355,7 +1451,8 @@ public partial class MainWindow : Window
             {
                 DistSlider.Value = Math.Clamp(dist, DistSlider.Minimum, DistSlider.Maximum);
                 HeightSlider.Value = Math.Clamp(upv, HeightSlider.Minimum, HeightSlider.Maximum);
-                HShiftSlider.Value = Math.Clamp(rov, HShiftSlider.Minimum, HShiftSlider.Maximum);
+                double shiftDelta = CameraRules.QuickShiftDeltaFromFootZl2RightOffset(rov);
+                HShiftSlider.Value = Math.Clamp(shiftDelta, HShiftSlider.Minimum, HShiftSlider.Maximum);
             }
             finally
             {
@@ -1392,6 +1489,7 @@ public partial class MainWindow : Window
     private void RefreshUIFromSessionXml(string xml, bool skipQuickSliders = false)
     {
         _sessionXml = xml;
+        _sessionIsFullPreset = true;
         // Full session snapshots replace God Mode overlay file so stale overrides cannot fight the grid.
         TryClearAdvOverridesFile();
         // UCM Quick sliders must track _sessionXml even on the default tab (imported presets / Picker loads
@@ -1463,6 +1561,7 @@ public partial class MainWindow : Window
         foreach (var (_, slider) in _advCtrlSliders)
             if (slider != null) slider.IsEnabled = !locked;
         ExpertDataGrid.IsReadOnly = locked;
+
     }
 
     private DateTime _lastLockedToastTime = DateTime.MinValue;
@@ -1474,7 +1573,11 @@ public partial class MainWindow : Window
         if ((DateTime.Now - _lastLockedToastTime).TotalSeconds > 3)
         {
             _lastLockedToastTime = DateTime.Now;
-            QueueSavedToast("\uD83D\uDD12 Preset is locked \u2014 unlock the padlock to edit");
+            bool isUcm = _selectedPresetManagerItem?.IsUcmPreset == true;
+            string msg = isUcm
+                ? "\uD83D\uDD12 UCM preset \u2014 duplicate to create an editable copy"
+                : "\uD83D\uDD12 Preset is locked \u2014 unlock the padlock to edit";
+            QueueSavedToast(msg, isError: true);
         }
     }
 
@@ -1655,22 +1758,14 @@ public partial class MainWindow : Window
                 ? ""
                 : $"by {src}";
         }
-        if (ActivePresetUrl != null)
+        if (ActivePresetLinkBtn != null)
         {
-            if (!string.IsNullOrWhiteSpace(_loadedPresetUrl))
-            {
-                ActivePresetUrl.Text = _loadedPresetUrl;
-                ActivePresetUrl.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                ActivePresetUrl.Text = "";
-                ActivePresetUrl.Visibility = Visibility.Collapsed;
-            }
+            ActivePresetLinkBtn.Visibility = !string.IsNullOrWhiteSpace(_loadedPresetUrl)
+                ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 
-    private void OnActivePresetUrlClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void OnActivePresetLinkClick(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrWhiteSpace(_loadedPresetUrl)) return;
         try
@@ -1784,18 +1879,18 @@ public partial class MainWindow : Window
             else if (root.TryGetProperty("locked", out var lk2))
                 locked = lk2.ValueKind == JsonValueKind.True;
 
-            var summaryParts = new List<string> { displayName };
-            if (!string.IsNullOrWhiteSpace(author))
-                summaryParts.Add($"by {author}");
+            // Build clean summary — just description + URL if available. Author shown separately in banner.
+            string summary;
             if (!string.IsNullOrWhiteSpace(description))
             {
                 string shortDesc = description.Replace("\n", " ").Trim();
-                if (shortDesc.Length > 120) shortDesc = shortDesc[..117] + "...";
-                summaryParts.Add(shortDesc);
+                if (shortDesc.Length > 200) shortDesc = shortDesc[..197] + "...";
+                summary = shortDesc;
             }
-            summaryParts.Add($"source: {sourceDisplayName}");
-            summaryParts.Add($"{valueCount} saved values");
-            summaryParts.Add($"type: {sourceType.ToUpperInvariant()}");
+            else
+            {
+                summary = $"Imported from {sourceType.ToUpperInvariant()} ({sourceDisplayName})";
+            }
 
             string sidebarSource = string.IsNullOrWhiteSpace(author)
                 ? sourceDisplayName
@@ -1808,7 +1903,7 @@ public partial class MainWindow : Window
                 KindLabel = ImportedPresetKindLabel(sourceType),
                 SourceLabel = sidebarSource,
                 StatusText = statusText,
-                SummaryText = string.Join(" | ", summaryParts),
+                SummaryText = summary,
                 FilePath = filePath,
                 CanRebuild = true,
                 IsLocked = locked
@@ -1823,19 +1918,13 @@ public partial class MainWindow : Window
 
     private string BuildImportedPresetSummaryText(ImportedPreset preset)
     {
-        var parts = new List<string> { preset.Name };
-        if (!string.IsNullOrWhiteSpace(preset.Author))
-            parts.Add($"by {preset.Author}");
         if (!string.IsNullOrWhiteSpace(preset.Description))
         {
             string desc = preset.Description.Replace("\n", " ").Trim();
-            if (desc.Length > 120) desc = desc[..117] + "...";
-            parts.Add(desc);
+            if (desc.Length > 200) desc = desc[..197] + "...";
+            return desc;
         }
-        parts.Add($"source: {preset.SourceDisplayName}");
-        parts.Add($"{preset.Values.Count} saved values");
-        parts.Add($"type: {preset.SourceType.ToUpperInvariant()}");
-        return string.Join(" | ", parts);
+        return $"Imported from {preset.SourceType.ToUpperInvariant()} ({preset.SourceDisplayName})";
     }
 
     private static void AppendPresetCatalogDirFingerprints(StringBuilder sb)
@@ -2054,8 +2143,22 @@ public partial class MainWindow : Window
         if (string.IsNullOrWhiteSpace(_gameDir))
             throw new InvalidOperationException("Game folder not set. v3 needs the current game to rebuild this preset safely.");
 
-        string xml = BuildRebuiltXmlFromImportedPreset(preset);
+        // Use the raw XML directly if available, otherwise rebuild from values
+        string xml;
+        if (!string.IsNullOrWhiteSpace(preset.RawXml))
+        {
+            // Strip BOM and comments — ParseXmlToRows needs clean game-format XML
+            xml = preset.RawXml.TrimStart('\uFEFF');
+            xml = CameraMod.StripComments(xml);
+        }
+        else
+        {
+            xml = BuildRebuiltXmlFromImportedPreset(preset);
+            SetStatus($"Imported preset '{preset.Name}' had no embedded XML; rebuilt from saved settings.", "Warn");
+        }
         RefreshUIFromSessionXml(xml);
+        // Force Quick sliders to match the imported XML's ZL2 values
+        TryApplyQuickSlidersFromSessionXml(xml);
         MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
 
         string authorOrSource = !string.IsNullOrWhiteSpace(preset.Author)
@@ -2222,6 +2325,9 @@ public partial class MainWindow : Window
     private void OnPresetSidebarLockClick(object sender, RoutedEventArgs e)
     {
         if (sender is not Button btn || btn.DataContext is not PresetManagerItem item)
+            return;
+
+        if (item.IsUcmPreset)
             return;
 
         item.IsLocked = !item.IsLocked;
@@ -2659,17 +2765,37 @@ public partial class MainWindow : Window
 
     // â”€â”€ Event handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+    private DispatcherTimer? _syncEditorsDebounceTimer;
+
     /// <summary>
-    /// When Quick settings change (FoV, combat, steadycam, etc.), rebuild session XML
-    /// and push to Fine Tune / God Mode if their sliders are built.
+    /// Schedules a debounced rebuild of session XML from Quick settings.
+    /// Pushes to Fine Tune / God Mode after 300ms of inactivity.
     /// </summary>
-    private void SyncQuickSettingsToEditors()
+    private void ScheduleSyncQuickSettingsToEditors()
+    {
+        if (string.IsNullOrEmpty(_gameDir)) return;
+        _syncEditorsDebounceTimer ??= new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(300) };
+        _syncEditorsDebounceTimer.Stop();
+        _syncEditorsDebounceTimer.Tick -= OnSyncEditorsDebounce;
+        _syncEditorsDebounceTimer.Tick += OnSyncEditorsDebounce;
+        _syncEditorsDebounceTimer.Start();
+    }
+
+    private void OnSyncEditorsDebounce(object? sender, EventArgs e)
+    {
+        _syncEditorsDebounceTimer?.Stop();
+        SyncQuickSettingsToEditorsNow();
+    }
+
+    /// <summary>
+    /// Immediately rebuilds session XML from Quick settings and pushes to editors.
+    /// Called by debounce timer and by tab switching.
+    /// </summary>
+    private void SyncQuickSettingsToEditorsNow()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
         try
         {
-            // Build from Quick settings ONLY — don't layer Fine Tune overrides on top,
-            // otherwise the old Fine Tune FoV values overwrite the new Quick FoV.
             string xml = BuildSimpleSessionXml();
             _sessionXml = xml;
             if (_advCtrlSliders.Count > 0)
@@ -2684,9 +2810,10 @@ public partial class MainWindow : Window
     {
         if (!IsLoaded || _suppressEvents) return;
         if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        _sessionIsFullPreset = false;
         ApplyCenteredLock();
         ScheduleCoalescedPreviewSync();
-        SyncQuickSettingsToEditors();
+        ScheduleSyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
@@ -2695,9 +2822,10 @@ public partial class MainWindow : Window
     {
         if (!IsLoaded || _suppressEvents) return;
         if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        _sessionIsFullPreset = false;
         ApplyCenteredLock();
         ScheduleCoalescedPreviewSync();
-        SyncQuickSettingsToEditors();
+        ScheduleSyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
@@ -2706,14 +2834,14 @@ public partial class MainWindow : Window
     {
         if (_suppressEvents || !IsLoaded) return;
         if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        _sessionIsFullPreset = false;
         DistLabel.Text = $"{DistSlider.Value:F1}";
         HeightLabel.Text = $"{HeightSlider.Value:F1}";
         HShiftLabel.Text = $"{HShiftSlider.Value:F1}";
-        // Any direct Quick slider tweak is a custom framing draft, not the original named style.
         _selectedStyleId = "custom";
         CaptureCustomDraft(markDirty: true, updateSelector: true);
         ScheduleDebouncedPreviewSync();
-        SyncQuickSettingsToEditors();
+        ScheduleSyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
@@ -2722,10 +2850,11 @@ public partial class MainWindow : Window
     {
         if (!IsLoaded || _suppressEvents) return;
         if (IsActivePresetEditingLocked()) { ShowLockedToastIfNeeded(); return; }
+        _sessionIsFullPreset = false;
         ApplyCenteredLock();
         CaptureCustomDraft(markDirty: true, updateSelector: true);
         ScheduleCoalescedPreviewSync();
-        SyncQuickSettingsToEditors();
+        ScheduleSyncQuickSettingsToEditors();
         SaveCurrentUiState();
         QueueSavedToast();
     }
@@ -2744,7 +2873,7 @@ public partial class MainWindow : Window
         {
             HShiftSlider.IsEnabled = true;
             HShiftLabel.Foreground = (Brush)FindResource("TextPrimaryBrush");
-            HShiftTip.Text = "0 = vanilla (character slightly left). Center is ~0.5. Negative = further left, positive = further right.";
+            HShiftTip.Text = HShiftTipUnlocked;
         }
     }
 
@@ -2821,6 +2950,8 @@ public partial class MainWindow : Window
 
             var (afterEntry, afterRaw) = CameraMod.ReadCameraEntryWithRawBytes(gameDir);
             bool payloadChanged = !beforeRaw.AsSpan().SequenceEqual(afterRaw);
+            long finalPayloadBytes = afterRaw.Length;
+            long finalCompBytes = afterEntry.CompSize;
             string tracePath = Path.Combine(ExeDir, "install_trace.txt");
             File.WriteAllText(tracePath,
                 $"time_utc={DateTime.UtcNow:O}\n" +
@@ -2836,7 +2967,7 @@ public partial class MainWindow : Window
                 $"after_sha256={HashBytes(afterRaw)}\n" +
                 $"payload_changed={(payloadChanged ? "true" : "false")}\n");
 
-            return (installResult, payloadChanged, tracePath);
+            return (installResult, payloadChanged, tracePath, finalPayloadBytes, finalCompBytes);
         })
             .ContinueWith(t =>
             {
@@ -2851,7 +2982,7 @@ public partial class MainWindow : Window
                     }
 
                     QueueSavedToast("Installed");
-                    var (installResult, payloadChanged, tracePath) = t.Result;
+                    var (installResult, payloadChanged, tracePath, finalPayloadBytes, finalCompBytes) = t.Result;
                     bool ok = installResult.TryGetValue("status", out var statusObj)
                         && string.Equals(statusObj?.ToString(), "ok", StringComparison.OrdinalIgnoreCase);
                     if (!ok)
@@ -2871,8 +3002,8 @@ public partial class MainWindow : Window
 
                     SetStatus(
                         payloadChanged
-                            ? $"Installed current session to game. PAZ bytes changed. Trace: {Path.GetFileName(tracePath)}"
-                            : $"Install completed but target PAZ bytes were unchanged. Trace: {Path.GetFileName(tracePath)}",
+                            ? $"Installed current session to game. Camera payload updated — {finalPayloadBytes:N0} bytes ({finalCompBytes:N0} compressed in PAZ)."
+                            : $"Install completed; camera entry in PAZ was unchanged ({finalPayloadBytes:N0} bytes payload, {finalCompBytes:N0} compressed).",
                         payloadChanged ? "Success" : "Warn");
                 });
             });
@@ -2949,12 +3080,13 @@ public partial class MainWindow : Window
         _ = enabled;
     }
 
-    private void QueueSavedToast(string text = "Saved")
+    private void QueueSavedToast(string text = "Saved", bool isError = false)
     {
         if (!IsLoaded || _suppressEvents || _saveToastDelayTimer == null || _saveToastHideTimer == null)
             return;
 
         _pendingSaveToastText = text;
+        _pendingSaveToastIsError = isError;
         _saveToastHideTimer.Stop();
         _saveToastDelayTimer.Stop();
         _saveToastDelayTimer.Start();
@@ -2976,8 +3108,6 @@ public partial class MainWindow : Window
         {
             _customDraftDirty = string.IsNullOrWhiteSpace(_customDraftPresetName);
         }
-
-        UpdateCustomDraftHint();
     }
 
     private void RestoreCustomDraft()
@@ -2990,22 +3120,6 @@ public partial class MainWindow : Window
         HeightLabel.Text = $"{HeightSlider.Value:F1}";
         HShiftLabel.Text = $"{HShiftSlider.Value:F1}";
         _suppressEvents = false;
-        UpdateCustomDraftHint();
-    }
-
-    private void UpdateCustomDraftHint()
-    {
-        if (_customDraftDirty)
-        {
-            CustomDraftHint.Text = string.IsNullOrWhiteSpace(_customDraftPresetName)
-                ? "Custom draft is separate from Presets. Switching tabs keeps this draft intact."
-                : $"Draft based on '{_customDraftPresetName}'. Switching tabs keeps it, and saving is optional.";
-            return;
-        }
-
-        CustomDraftHint.Text = string.IsNullOrWhiteSpace(_customDraftPresetName)
-            ? "Switching between Presets and Custom keeps both states. If you tweak a loaded custom preset, it becomes a new draft automatically."
-            : $"Loaded preset '{_customDraftPresetName}'. If you tweak a slider, it becomes a new draft automatically.";
     }
 
     /// <summary>Queues a disk write (500ms debounce). Use immediate=true after explicit preset/tab actions.</summary>
@@ -3049,8 +3163,11 @@ public partial class MainWindow : Window
         if (tab != "simple" && tab != "advanced" && tab != "expert")
             return;
 
-        // Always rebuild session XML from current Quick settings when switching tabs.
-        if (captureCurrent && _activeMode != tab)
+        // Rebuild session XML from the current editor when switching tabs — unless a full
+        // preset was loaded externally (import, preset picker) and the user hasn't edited
+        // Quick sliders since.  Quick sliders only cover a subset of values; rebuilding from
+        // them would discard Fine Tune / God Mode values the loaded session carries.
+        if (captureCurrent && _activeMode != tab && !_sessionIsFullPreset)
             CaptureSessionXml();
 
         if (tab != "simple" && string.IsNullOrEmpty(_gameDir))
@@ -3126,6 +3243,7 @@ public partial class MainWindow : Window
         try
         {
             _sessionXml = BuildSessionXmlForMode(_activeMode);
+            _sessionIsFullPreset = false;
         }
         catch
         {
@@ -3204,8 +3322,21 @@ public partial class MainWindow : Window
                     double.TryParse(val, System.Globalization.NumberStyles.Float,
                         System.Globalization.CultureInfo.InvariantCulture, out double d))
                 {
-                    slider.Value = Math.Clamp(d, slider.Minimum, slider.Maximum);
+                    double clamped = Math.Clamp(d, slider.Minimum, slider.Maximum);
+                    slider.Value = clamped;
                     alreadySet.Add(slider);
+
+                    if (_advCtrlValueLabels.TryGetValue(key, out var valueLabel))
+                    {
+                        valueLabel.Text = $"{clamped:F2}";
+                        _advCtrlVanilla.TryGetValue(key, out string? vanStr);
+                        double vanVal = double.TryParse(vanStr,
+                            System.Globalization.NumberStyles.Float,
+                            System.Globalization.CultureInfo.InvariantCulture, out double vv) ? vv : clamped;
+                        valueLabel.Foreground = Math.Abs(clamped - vanVal) > 0.001
+                            ? _accentBrush
+                            : _textDimBrush;
+                    }
                 }
             }
         }
