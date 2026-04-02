@@ -2,7 +2,7 @@
 
 # Ultimate Camera Mod — Crimson Desert
 
-Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, three editing tiers, file-based presets, JSON export for Mod Manager, and ultrawide HUD support.
+Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, three editing tiers, file-based presets, **JSON export for [JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and ultrawide HUD support.
 
 <p align="center">
   <img src="screenshots/banner.png" alt="Ultimate Camera Mod — Crimson Desert banner" width="100%" />
@@ -22,7 +22,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 | Branch | Status | What it is |
 |--------|--------|------------|
 | **`main`** | Stable — ships on GitHub Releases | v2.x direct-install app (single exe, writes straight to game PAZ) |
-| **`v3-dev`** | Active development | v3 export-first app — tune in-app, export JSON for **Crimson Desert Mod Manager** |
+| **`v3-dev`** | Active development | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
@@ -70,15 +70,16 @@ v3 organizes editing into three tabs so you can go as deep as you want:
 
 ### Multi-format export (v3)
 
-The Export dialog lets you share your camera config in three formats:
+The **Export for sharing** dialog outputs your session in four ways:
 
 | Format | Use case |
 |--------|----------|
-| **JSON** (Mod Manager) | Binary diff → JSON patches with `modinfo` metadata. Drop into the Mod Manager `Mods` folder |
+| **JSON** (mod managers) | Byte patches + `modinfo` for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM). Export in UCM → import in the manager you use; recipients do not need UCM. **Prepare** is only offered when the live `playercamerapreset` entry still matches UCM’s vanilla backup (verify game files if you already applied camera mods). |
 | **XML** | Raw `playercamerapreset.xml` for other tools or manual editing |
 | **0.paz** | Patched archive ready to drop into the game's `0010` folder |
+| **.ucmpreset** | Full UCM preset for other UCM users |
 
-Includes title, version, author, Nexus URL, and description fields. Shows patch region count and bytes changed before saving.
+Includes title, version, author, Nexus URL, and description fields for JSON/XML. Shows patch region count and bytes changed before saving `.json`.
 
 ### Quality of life
 
@@ -199,7 +200,7 @@ docs/                               Release notes, Nexus stub, PR summary
 UCM modifies offline data files only. It does not touch game memory, inject code, or interact with running processes. Use at your own discretion in online/multiplayer modes.
 
 **The game updated and my camera is back to vanilla.**
-Normal — game updates overwrite modded files. Re-open UCM and click Install (or re-export JSON for Mod Manager). Your settings are saved automatically.
+Normal — game updates overwrite modded files. Re-open UCM and click Install (or re-export JSON for JSON Mod Manager / CDUMM). Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
 Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a). Full source is available here to review and build yourself.
@@ -214,7 +215,7 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ## Version history
 
-- **v3.0-dev** (`v3-dev`) — Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode), file-based preset system with sidebar manager, multi-format export (JSON / XML / 0.paz), true Vanilla preset from raw game XML, game patch awareness, Windows taskbar identity, preset JSON escaping fixes, new app icon.
+- **v3.0-dev** (`v3-dev`) — Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode), file-based preset system with sidebar manager, multi-format export (JSON for **JSON Mod Manager** + **Crimson Desert Ultimate Mods Manager**, XML, 0.paz, `.ucmpreset`), vanilla-guarded JSON prepare, true Vanilla preset from raw game XML, game patch awareness, Windows taskbar identity, preset JSON escaping fixes, new app icon.
 - **v2.5** — Current stable release on GitHub Releases.
 - **v2.4** — Proportional horizontal shift, shift on all mounts and aim abilities, horse camera overhaul, version-aware backups, FoV preview, resizable window.
 - **v2.3** — Horizontal shift fix for 16:9, delta-based slider, full install config banner.
