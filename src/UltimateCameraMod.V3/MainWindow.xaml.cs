@@ -4347,6 +4347,7 @@ public partial class MainWindow : Window
             Margin = new Thickness(4, 0, 4, 0),
             ToolTip = tooltip ?? CameraParamDocs.Get(attribute)
         };
+        ToolTipService.SetShowOnDisabled(slider, true);
         Grid.SetColumn(slider, 1);
 
         // Value label

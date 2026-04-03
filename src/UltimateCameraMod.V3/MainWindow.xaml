@@ -508,7 +508,7 @@
         </Grid>
 
         <!-- ═══ AdvancedControlsView (hidden) ═══ -->
-        <Grid x:Name="AdvancedControlsView" Visibility="Collapsed">
+        <Grid x:Name="AdvancedControlsView" Visibility="Collapsed" PreviewMouseDown="OnEditorPreviewMouseDown">
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled" Margin="16,12,20,12">
                 <StackPanel x:Name="AdvCtrlPanel" HorizontalAlignment="Stretch">
@@ -670,7 +670,7 @@
         </Grid>
 
         <!-- ═══ ExpertView (hidden) ═══ -->
-        <Grid x:Name="ExpertView" Visibility="Collapsed">
+        <Grid x:Name="ExpertView" Visibility="Collapsed" PreviewMouseDown="OnEditorPreviewMouseDown">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="40"/>
