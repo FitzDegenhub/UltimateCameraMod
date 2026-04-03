@@ -1,6 +1,6 @@
 ﻿> **Nexus Mods page temporarily unavailable** — Hey everyone, apologies for the Nexus page being down. As a new author on the platform, the Nexus Mods team are currently reviewing my source code before allowing the project back on the site - which honestly makes total sense and I fully support it. I've already been in contact with them and they've been really helpful, so we just have to wait it out. In the meantime all downloads are available right here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you so much for your patience - I've been busy working on v3 in the meantime!
 >
-> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. I've deleted v3 from releases as there was more bugs than I thought. /sigh, will update soon. 
+> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0.1 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. You can download v3.0.1 Beta from [GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1).
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -11,10 +11,10 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 </p>
 
 [![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
-[![Download v3.0 Beta](https://img.shields.io/badge/Download-v3.0_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0)
+[![Download v3.0.1 Beta](https://img.shields.io/badge/Download-v3.0.1_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
-[![VirusTotal v3-beta](https://img.shields.io/badge/VirusTotal_v3--beta-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
+[![VirusTotal v3.0.1](https://img.shields.io/badge/VirusTotal_v3.0.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/572b07b9bdf8588613cc18d4b85dfd7e79d1e943f96d255e17a4f4fe1e3bd486)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
