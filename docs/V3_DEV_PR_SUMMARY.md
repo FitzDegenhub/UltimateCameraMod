@@ -1,4 +1,4 @@
-# PR: `v3-dev` → `main` — UCM v3.0-beta
+﻿# PR: `v3-dev` → `main` - UCM v3.0-beta
 
 **Use this as the GitHub PR description.** Updated to reflect the full branch tip as of v3.0-beta.
 
@@ -6,7 +6,7 @@
 
 ## Summary
 
-Introduces **Ultimate Camera Mod v3**: a second WPF front-end (`src/UltimateCameraMod.V3/`) built around an **export-first workflow** — tune the camera in-app, export `.json` for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and treat direct PAZ install as secondary. Core PAZ/XML logic stays in `src/UltimateCameraMod/` and is shared with v3.
+Introduces **Ultimate Camera Mod v3**: a second WPF front-end (`src/UltimateCameraMod.V3/`) built around an **export-first workflow** - tune the camera in-app, export `.json` for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and treat direct PAZ install as secondary. Core PAZ/XML logic stays in `src/UltimateCameraMod/` and is shared with v3.
 
 v3 is now tagged as **v3.0-beta** on GitHub Releases. v2.5 remains on `main` while Nexus source review is in progress.
 
@@ -30,12 +30,12 @@ v3 is now tagged as **v3.0-beta** on GitHub Releases. v2.5 remains on `main` whi
 
 - **Two-panel shell**: sidebar preset manager + tabbed editor (UCM Quick / Fine Tune / God Mode)
 - **Three-tier editor**:
-  - *UCM Quick* — distance, height, shift, FoV, lock-on zoom, centered camera, mount sync, steadycam, live camera + FoV previews with distance ruler
-  - *Fine Tune* — curated deep-tuning in searchable bordered cards. On-foot zoom, horse/mount zoom, global FoV, special mounts, traversal, combat, lock-on, camera smoothing (Steadycam), aiming
-  - *God Mode* — full raw XML DataGrid, vanilla comparison column, modified values highlighted, expand/collapse all, per-state filtering
+  - *UCM Quick* - distance, height, shift, FoV, lock-on zoom, centered camera, mount sync, steadycam, live camera + FoV previews with distance ruler
+  - *Fine Tune* - curated deep-tuning in searchable bordered cards. On-foot zoom, horse/mount zoom, global FoV, special mounts, traversal, combat, lock-on, camera smoothing (Steadycam), aiming
+  - *God Mode* - full raw XML DataGrid, vanilla comparison column, modified values highlighted, expand/collapse all, per-state filtering
 - **Quick → Fine Tune / God Mode sync**: Quick slider changes propagate into deeper tabs so all three tiers stay consistent
 - **Preset groups**: built-ins under `ucm_presets/`, community under `community_presets/`, user presets under `my_presets/`, imported under `import_presets/`; migration from legacy `presets/` layout
-- **Dialogs**: Export for sharing wizard (`ExportJsonDialog` — JSON / XML / 0.paz / `.ucmpreset`), import preset (`ImportPresetDialog`), import metadata (`ImportMetadataDialog` — author / description / URL), new preset (`NewPresetDialog`), community browser (`CommunityBrowserDialog`)
+- **Dialogs**: Export for sharing wizard (`ExportJsonDialog` - JSON / XML / 0.paz / `.ucmpreset`), import preset (`ImportPresetDialog`), import metadata (`ImportMetadataDialog` - author / description / URL), new preset (`NewPresetDialog`), community browser (`CommunityBrowserDialog`)
 - **Locked preset UX**: editing a locked preset surfaces a toast instead of silently failing; UCM presets permanently locked, user presets toggleable via padlock icon
 - **Active preset header**: name, author, description (full brightness, readable size), and a "View on Nexus" button when the preset has a URL
 - **Performance-minded UI**: cached resources, debounced search, async file I/O, partial 4 KB header reads for sidebar metadata (avoids deserialising full 300 KB session XMLs)
@@ -43,14 +43,14 @@ v3 is now tagged as **v3.0-beta** on GitHub Releases. v2.5 remains on `main` whi
 
 ### File-based preset system
 
-- **`.ucmpreset` file format** — dedicated shareable format. Drop into any preset folder and it just works
+- **`.ucmpreset` file format** - dedicated shareable format. Drop into any preset folder and it just works
 - **Sidebar manager** with collapsible grouped sections: UCM Presets, Community Presets, My Presets, Imported
 - **New / Duplicate / Rename / Delete** from the sidebar
-- **Auto-save** — changes to unlocked presets write back to the preset file automatically (debounced)
-- **True Vanilla preset** — decoded directly from game backup; Quick sliders synced to actual game baseline values via `TryParseUcmQuickFootBaselineFromXml` and `QuickShiftDeltaFromFootZl2RightOffset`
+- **Auto-save** - changes to unlocked presets write back to the preset file automatically (debounced)
+- **True Vanilla preset** - decoded directly from game backup; Quick sliders synced to actual game baseline values via `TryParseUcmQuickFootBaselineFromXml` and `QuickShiftDeltaFromFootZl2RightOffset`
 - **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages with optional metadata
 - **Auto-migration** from legacy `.json` presets on first launch
-- **`vanilla_preset_rev`** — forces regeneration of built-in Vanilla JSON when the baseline changes
+- **`vanilla_preset_rev`** - forces regeneration of built-in Vanilla JSON when the baseline changes
 
 ### Community preset catalog
 
@@ -61,15 +61,15 @@ v3 is now tagged as **v3.0-beta** on GitHub Releases. v2.5 remains on `main` whi
 
 ### Multi-format export
 
-- **JSON** — binary diff → byte patches with human-readable region labels (`JsonModExporter`); `modinfo` block; vanilla-guarded Prepare (`IsLiveCameraPayloadMatchingStoredBackup` blocks export when live PAZ no longer matches backup)
-- **XML** — raw `playercamerapreset.xml`
-- **0.paz** — patched archive
-- **.ucmpreset** — full UCM preset
+- **JSON** - binary diff → byte patches with human-readable region labels (`JsonModExporter`); `modinfo` block; vanilla-guarded Prepare (`IsLiveCameraPayloadMatchingStoredBackup` blocks export when live PAZ no longer matches backup)
+- **XML** - raw `playercamerapreset.xml`
+- **0.paz** - patched archive
+- **.ucmpreset** - full UCM preset
 - Export dialog includes title, version, author, Nexus URL, description; shows patch region count and bytes changed
 
 ### Camera improvements
 
-#### Steadycam — expanded to 30+ states
+#### Steadycam - expanded to 30+ states
 
 Previously Steadycam covered on-foot run/sprint, guard, horse/mount states, animal form, and core lock-on sections. v3-beta adds:
 
@@ -94,7 +94,7 @@ Two new Fine Tune cards: **Movement transitions** (12 sliders) and **Extended lo
 - Range: -60% (zoom in) to +60% (pull back)
 - Works independently of Steadycam
 - Affects all lock-on, guard, and rush states
-- `MaxZoomDistance=30` moved to `BuildSharedBase()` — always applied, not just when Steadycam is on
+- `MaxZoomDistance=30` moved to `BuildSharedBase()` - always applied, not just when Steadycam is on
 
 #### Lock-on distance scaling
 
@@ -114,13 +114,13 @@ Lock-on `ZoomDistance` values now derive from the user's actual on-foot ZL2/ZL3/
 
 ### Design philosophy change
 
-v3 removes structural XML injection (extra zoom levels, horse first-person, horse camera overhaul with additional zoom tiers). UCM v3 modifies only existing values — same line count, same element structure, same attributes. Safer to share, more resilient across game patches.
+v3 removes structural XML injection (extra zoom levels, horse first-person, horse camera overhaul with additional zoom tiers). UCM v3 modifies only existing values - same line count, same element structure, same attributes. Safer to share, more resilient across game patches.
 
 ### Docs and repo
 
 - **README**: full v3 feature documentation, branch table, three-tier editor table, multi-format export table, design philosophy note, build instructions, project structure, FAQ, version history
 - **`docs/release-notes/release_notes_v3-beta.md`**: full user-facing release notes
-- **`docs/V3_DEV_PR_SUMMARY.md`**: this file — PR description kept up to date with branch tip
+- **`docs/V3_DEV_PR_SUMMARY.md`**: this file - PR description kept up to date with branch tip
 - **`docs/NEXUS_MOD_PAGE.md`**: Nexus-facing stub
 - Repo cleanup: release notes under `docs/release-notes/`, `.gitignore` hardened, tracked binaries removed
 
@@ -131,7 +131,7 @@ v3 removes structural XML injection (extra zoom levels, horse first-person, hors
 | Commit | Topic |
 |--------|-------|
 | `3013ac0` | fix: community preset link button, description display, v3.0-beta version |
-| `c2e5bc4` | docs: update README for v3-beta — steadycam expansion, lock-on zoom, branch status |
+| `c2e5bc4` | docs: update README for v3-beta - steadycam expansion, lock-on zoom, branch status |
 | `8a0d51f` | feat(steadycam): expand smoothing to 30+ states; lock-on zoom -60%/+60% |
 | `db62f37` | Fix lock-on zoom not applying to guard/rush; cover all LockOnSections |
 | `836d9a2` | Move lock-on MaxZoomDistance to SharedBase so it applies without Steadycam |
@@ -156,7 +156,7 @@ v3 removes structural XML injection (extra zoom levels, horse first-person, hors
 
 ## How to build and run v3 (Windows)
 
-Requires **.NET 6 SDK** (or later). Stop any running `UltimateCameraMod.V3` before building — the exe copy step fails if the file is locked (MSB3027).
+Requires **.NET 6 SDK** (or later). Stop any running `UltimateCameraMod.V3` before building - the exe copy step fails if the file is locked (MSB3027).
 
 ```powershell
 Stop-Process -Name "UltimateCameraMod.V3" -Force -ErrorAction SilentlyContinue
@@ -170,16 +170,16 @@ Single-file self-contained publish (for release zip):
 dotnet publish "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
 ```
 
-v2.x publish flow is unchanged — see README **Building from source (v2.x)**.
+v2.x publish flow is unchanged - see README **Building from source (v2.x)**.
 
 ---
 
 ## Risk and review focus
 
-- **Large shared surface**: `CameraMod`, `JsonModExporter`, PAZ writer — regressions could affect v2 users. Smoke-test v2 publish/run if anything in shared code paths changed
+- **Large shared surface**: `CameraMod`, `JsonModExporter`, PAZ writer - regressions could affect v2 users. Smoke-test v2 publish/run if anything in shared code paths changed
 - **Preset file format**: `.ucmpreset` is a superset of the old `.json` format; migration is one-way. Verify auto-migration on a clean profile
-- **Community preset download**: rebuilt on download to guarantee metadata field order — verify Nexus link shows on activation
-- **Steadycam new sections**: 14 new sections added to `BuildSmoothing()` — verify no game crashes on sections that are engine-sensitive (e.g. `Player_SilenceKill` is intentionally excluded)
+- **Community preset download**: rebuilt on download to guarantee metadata field order - verify Nexus link shows on activation
+- **Steadycam new sections**: 14 new sections added to `BuildSmoothing()` - verify no game crashes on sections that are engine-sensitive (e.g. `Player_SilenceKill` is intentionally excluded)
 
 ---
 
@@ -190,10 +190,10 @@ v2.x publish flow is unchanged — see README **Building from source (v2.x)**.
 - [ ] v3: Vanilla built-in preset matches expected stock XML + Quick sliders
 - [ ] v3: taskbar icon + window title icon on a clean Windows profile
 - [ ] v3: community preset download → activate → Nexus link visible
-- [ ] v3: Steadycam new sections — no crashes on freefall, rope, super jump, warmachine, revive lock-on
-- [ ] v3: lock-on zoom at -60% and +60% — applies to guard and rush without Steadycam
+- [ ] v3: Steadycam new sections - no crashes on freefall, rope, super jump, warmachine, revive lock-on
+- [ ] v3: lock-on zoom at -60% and +60% - applies to guard and rush without Steadycam
 - [ ] README / release messaging correct for v3-beta
 
 ---
 
-*Last refreshed: April 2026 — v3.0-beta. Covers full branch tip including steadycam expansion (30+ states), lock-on zoom slider (-60%/+60%), community preset link fix, and all commits from initial v3 redesign through beta.*
+*Last refreshed: April 2026 - v3.0-beta. Covers full branch tip including steadycam expansion (30+ states), lock-on zoom slider (-60%/+60%), community preset link fix, and all commits from initial v3 redesign through beta.*

@@ -1,6 +1,6 @@
-# UCM v3.0-beta — Release Notes
+﻿# UCM v3.0-beta - Release Notes
 
-> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. Downloads are available here on GitHub Releases in the meantime. Thank you for your patience!
+> **Nexus Mods page temporarily unavailable** - The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. Downloads are available here on GitHub Releases in the meantime. Thank you for your patience!
 
 > **First public beta of Ultimate Camera Mod v3.**
 > Source code: [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
@@ -16,7 +16,7 @@ Remove any previous UCM folders from your game directory and verify game files v
 
 ## What is v3?
 
-v3 is a complete redesign of UCM built around an **export-first workflow**. Instead of writing directly to the game's PAZ archive as the primary action, v3 lets you tune your camera in-app and **export a `.json` patch** for use with mod managers — so your camera settings travel as a shareable file that anyone can import without needing UCM.
+v3 is a complete redesign of UCM built around an **export-first workflow**. Instead of writing directly to the game's PAZ archive as the primary action, v3 lets you tune your camera in-app and **export a `.json` patch** for use with mod managers - so your camera settings travel as a shareable file that anyone can import without needing UCM.
 
 Direct PAZ install is still available as a secondary option for users who prefer it.
 
@@ -34,9 +34,9 @@ v3 organises editing into three tabs so you can go as deep as you want without b
 
 | Tier | Tab | What it does |
 |------|-----|--------------|
-| 1 | **UCM Quick** | Fast layer — distance, height, horizontal shift, FoV, lock-on zoom, centered camera, mount sync, steadycam. Live camera preview and FoV cone preview |
+| 1 | **UCM Quick** | Fast layer - distance, height, horizontal shift, FoV, lock-on zoom, centered camera, mount sync, steadycam. Live camera preview and FoV cone preview |
 | 2 | **Fine Tune** | Curated deep-tuning in searchable bordered cards. On-foot zoom levels, horse/mount zoom, global FoV, special mounts and traversal, combat and lock-on, camera smoothing (Steadycam), aiming and crosshair position. Builds on top of UCM Quick |
-| 3 | **God Mode** | Full raw XML editor — every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column with modified values highlighted. Expand/collapse all, per-state filtering |
+| 3 | **God Mode** | Full raw XML editor - every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column with modified values highlighted. Expand/collapse all, per-state filtering |
 
 Changes in UCM Quick sync into Fine Tune and God Mode so all three tiers stay consistent with the same session.
 
@@ -44,15 +44,15 @@ Changes in UCM Quick sync into Fine Tune and God Mode so all three tiers stay co
 
 ## File-based preset system
 
-- **`.ucmpreset` file format** — dedicated shareable preset files. Drop one into any preset folder and it just works
+- **`.ucmpreset` file format** - dedicated shareable preset files. Drop one into any preset folder and it just works
 - **Sidebar preset manager** with collapsible grouped sections: UCM Presets, Community Presets, My Presets, Imported
 - **New / Duplicate / Rename / Delete** from the sidebar
-- **Lock / unlock** — UCM presets are permanently locked; user presets are toggleable via padlock icon. Editing a locked preset surfaces a toast instead of silently doing nothing
-- **Auto-save** — changes to unlocked presets write back to the preset file automatically (debounced)
-- **True Vanilla preset** — decoded directly from your game backup with no modifications. Quick sliders are synced to actual game baseline values
-- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages — with optional author / description / URL metadata
+- **Lock / unlock** - UCM presets are permanently locked; user presets are toggleable via padlock icon. Editing a locked preset surfaces a toast instead of silently doing nothing
+- **Auto-save** - changes to unlocked presets write back to the preset file automatically (debounced)
+- **True Vanilla preset** - decoded directly from your game backup with no modifications. Quick sliders are synced to actual game baseline values
+- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages - with optional author / description / URL metadata
 - **Auto-migration** from legacy `.json` presets to `.ucmpreset` on first launch
-- **Active preset header** — shows preset name, author, description, and a clickable Nexus link when the preset has one
+- **Active preset header** - shows preset name, author, description, and a clickable Nexus link when the preset has one
 
 ---
 
@@ -63,7 +63,7 @@ Browse and download community camera presets directly inside UCM. No accounts, n
 - Presets hosted on the **[ucm-community-presets](https://github.com/FitzDegenhub/ucm-community-presets)** GitHub repo, catalog auto-generated by GitHub Actions
 - **Browse button** on the "Community Presets" sidebar header opens the catalog browser
 - Each preset shows name, author, full description, tags, and a "View on Nexus" link
-- Downloaded presets appear in the sidebar under "Community Presets" (locked by default — duplicate to edit)
+- Downloaded presets appear in the sidebar under "Community Presets" (locked by default - duplicate to edit)
 - 2 MB file size limit and JSON validation for safety
 - Downloaded presets are rebuilt with metadata fields guaranteed in the header so Nexus links always display correctly
 
@@ -77,7 +77,7 @@ The **Export for sharing** dialog outputs your session in four formats:
 
 | Format | Use case |
 |--------|----------|
-| **JSON** | Byte patches + `modinfo` for JSON Mod Manager / CDUMM. Human-readable patch region labels. Vanilla-guarded — Prepare is only available when your live game file matches UCM's vanilla backup |
+| **JSON** | Byte patches + `modinfo` for JSON Mod Manager / CDUMM. Human-readable patch region labels. Vanilla-guarded - Prepare is only available when your live game file matches UCM's vanilla backup |
 | **XML** | Raw `playercamerapreset.xml` for other tools or manual editing |
 | **0.paz** | Patched archive ready to drop into the game's `0010` folder |
 | **.ucmpreset** | Full UCM preset for other UCM users |
@@ -90,9 +90,9 @@ Includes title, version, author, Nexus URL, and description fields. Shows patch 
 
 ### Design philosophy: value edits only
 
-v3 removes the structural XML injection features from v2 (extra zoom levels, horse first-person mode, horse camera overhaul with additional zoom tiers). Injecting structure has a much higher chance of breaking after game updates. UCM v3 modifies only existing values — same line count, same element structure, same attributes. This makes presets safer to share and more resilient across game patches.
+v3 removes the structural XML injection features from v2 (extra zoom levels, horse first-person mode, horse camera overhaul with additional zoom tiers). Injecting structure has a much higher chance of breaking after game updates. UCM v3 modifies only existing values - same line count, same element structure, same attributes. This makes presets safer to share and more resilient across game patches.
 
-### Steadycam — massively expanded coverage
+### Steadycam - massively expanded coverage
 
 Steadycam now smooths **30+ camera states** that previously had jarring vanilla snap transitions. Every section is individually tunable in Fine Tune > Steadycam.
 
@@ -105,7 +105,7 @@ Steadycam now smooths **30+ camera states** that previously had jarring vanilla 
 - Combat finisher (Player_Weapon_Down)
 - Velocity sway elimination across all on-foot and combat run states
 
-**New in v3-beta — sections that were vanilla snap before:**
+**New in v3-beta - sections that were vanilla snap before:**
 
 | Category | What was fixed | Vanilla blend → UCM |
 |----------|---------------|---------------------|
@@ -122,17 +122,17 @@ Steadycam now smooths **30+ camera states** that previously had jarring vanilla 
 | Lock-on | Aggro + wanted state (snappy exit) | 0.5s out → 1.0s |
 
 Two new Fine Tune cards added to the Steadycam section:
-- **Movement transitions** — freefall, super jump, rope pull/swing, knockback (12 sliders)
-- **Extended lock-on and combat transitions** — all the above lock-on/combat/warmachine sections (20 sliders)
+- **Movement transitions** - freefall, super jump, rope pull/swing, knockback (12 sliders)
+- **Extended lock-on and combat transitions** - all the above lock-on/combat/warmachine sections (20 sliders)
 
 ### Lock-on zoom (replaces Combat Camera dropdown)
 
 The old "Combat Camera" dropdown (Default / Wider / Maximum) has been replaced with a **Lock-on zoom slider**:
 
 - Range: **-60%** (zoom in on target) to **+60%** (pull back wide)
-- **Negative values** zoom in — great for guard/block cinematic feel or close-quarters combat
-- **Positive values** pull back — useful at high camera distances to prevent snap-in when locking on
-- Works **independently of Steadycam** — no need to enable Steadycam to use it
+- **Negative values** zoom in - great for guard/block cinematic feel or close-quarters combat
+- **Positive values** pull back - useful at high camera distances to prevent snap-in when locking on
+- Works **independently of Steadycam** - no need to enable Steadycam to use it
 - Affects all lock-on, guard, and rush states
 - `MaxZoomDistance=30` is now always applied (previously only when Steadycam was on), preventing vanilla camera distance clamping at high zoom levels
 
@@ -141,7 +141,7 @@ The old "Combat Camera" dropdown (Default / Wider / Maximum) has been replaced w
 Lock-on `ZoomDistance` values now scale dynamically with your chosen camera distance and style. Previously, lock-on cameras used hardcoded distances that caused a jarring zoom-in when you had a large camera distance set. Now:
 
 - Lock-on distances are derived from your actual on-foot ZL2/ZL3/ZL4 distances
-- Fine Tune and God Mode overrides are respected — lock-on distances re-sync after any override
+- Fine Tune and God Mode overrides are respected - lock-on distances re-sync after any override
 - `MaxZoomDistance=30` on all lock-on sections prevents vanilla engine clamping
 
 ### Finisher camera smoothing
@@ -152,17 +152,17 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 ## Quality of life
 
-- **Auto game detection** — Steam, Epic Games, Xbox / Game Pass
-- **Automatic backup** — vanilla backup before any modification; one-click restore. Version-aware with auto-cleanup on upgrade
-- **Install config banner** — shows your full active config (FoV, distance, height, shift, all active settings)
-- **Game patch awareness** — tracks install metadata after apply; warns when the game may have updated so you can re-export
-- **Live camera + FoV preview** — distance-aware top-down view with horizontal shift and field of view cone, with distance ruler
-- **Update notifications** — checks GitHub releases on launch
-- **Game folder shortcut** — opens your game directory from the header
-- **Windows taskbar identity** — proper icon grouping and title bar icon via shell property store
-- **Settings persistence** — all selections remembered between sessions
-- **Resizable window** — size persists between sessions
-- **Portable** — single `.exe`, no installer required
+- **Auto game detection** - Steam, Epic Games, Xbox / Game Pass
+- **Automatic backup** - vanilla backup before any modification; one-click restore. Version-aware with auto-cleanup on upgrade
+- **Install config banner** - shows your full active config (FoV, distance, height, shift, all active settings)
+- **Game patch awareness** - tracks install metadata after apply; warns when the game may have updated so you can re-export
+- **Live camera + FoV preview** - distance-aware top-down view with horizontal shift and field of view cone, with distance ruler
+- **Update notifications** - checks GitHub releases on launch
+- **Game folder shortcut** - opens your game directory from the header
+- **Windows taskbar identity** - proper icon grouping and title bar icon via shell property store
+- **Settings persistence** - all selections remembered between sessions
+- **Resizable window** - size persists between sessions
+- **Portable** - single `.exe`, no installer required
 
 ---
 
@@ -171,35 +171,35 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 | Bug | Fix |
 |-----|-----|
 | Community preset "View on Nexus" link not showing | Downloaded presets are now rebuilt with `url` before `session_xml` so it falls within the 4 KB metadata header read window |
-| Slider thumbs staying yellow when a UCM preset is locked | WPF template inheritance issue — fixed in `App.xaml` with explicit `IsEnabled` trigger on `PART_Thumb` |
-| Swim FoV slider staying yellow when locked | Duplicate `Dictionary` key was orphaning the first slider instance — fixed with `_advCtrlAllSliders` list tracking all instances |
-| Lock-on zoom not applying to guard without Steadycam | `MaxZoomDistance=30` was inside `BuildSmoothing()` (Steadycam-only) — moved to `BuildSharedBase()` so it always applies |
-| Lock-on zoom not covering guard/rush sections | `Player_Weapon_Guard` and `Player_Weapon_Rush` were missing from `BuildCombatPullback` — now fully covered across all lock-on sections |
+| Slider thumbs staying yellow when a UCM preset is locked | WPF template inheritance issue - fixed in `App.xaml` with explicit `IsEnabled` trigger on `PART_Thumb` |
+| Swim FoV slider staying yellow when locked | Duplicate `Dictionary` key was orphaning the first slider instance - fixed with `_advCtrlAllSliders` list tracking all instances |
+| Lock-on zoom not applying to guard without Steadycam | `MaxZoomDistance=30` was inside `BuildSmoothing()` (Steadycam-only) - moved to `BuildSharedBase()` so it always applies |
+| Lock-on zoom not covering guard/rush sections | `Player_Weapon_Guard` and `Player_Weapon_Rush` were missing from `BuildCombatPullback` - now fully covered across all lock-on sections |
 | European locale users getting wrong camera values | v2.5 fix: `InvariantCulture` forced for all number formatting so decimal separators are always periods regardless of Windows locale |
 
 ---
 
 ## Known limitations
 
-- **HUD centering (ultrawide) is temporarily disabled** — a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found
-- This is a **beta** — please report issues on [GitHub](https://github.com/FitzDegenhub/UltimateCameraMod/issues) or the Nexus mod page
+- **HUD centering (ultrawide) is temporarily disabled** - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found
+- This is a **beta** - please report issues on [GitHub](https://github.com/FitzDegenhub/UltimateCameraMod/issues) or the Nexus mod page
 
 ---
 
 ## Credits
 
-- **0xFitz** — UCM development, camera tuning, advanced editor, ultrawide HUD support
-- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** — C# PAZ/PAMT parser, ChaCha20, LZ4, archive repacker
-- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** — Pure C# ChaCha20 implementation
-- **@Maszradine** — CDCamera — camera rules, steadycam system, style presets (original Python version)
-- **@manymanecki** — CrimsonCamera — dynamic PAZ modification architecture (original Python version)
-- **@orangeees** — RDR2 community preset
+- **0xFitz** - UCM development, camera tuning, advanced editor, ultrawide HUD support
+- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - C# PAZ/PAMT parser, ChaCha20, LZ4, archive repacker
+- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** - Pure C# ChaCha20 implementation
+- **@Maszradine** - CDCamera - camera rules, steadycam system, style presets (original Python version)
+- **@manymanecki** - CrimsonCamera - dynamic PAZ modification architecture (original Python version)
+- **@orangeees** - RDR2 community preset
 
 ---
 
 **Source:** [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
 **Nexus:** [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)
-**VirusTotal:** [v3-beta — Clean](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
+**VirusTotal:** [v3-beta - Clean](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
 **SHA-256 (zip):** `C4C3451D9DFF70ED36D6D60A4E59DE4718A5CFDD248AC9E7BC4A9EF50D22C947`
 **SHA-256 (exe):** `2FE241B86C339423AEB5350F9D3A1662AE8A8AA97BA00DFE53DEF4E7BD399923`
 **Support:** [Ko-fi](https://ko-fi.com/0xfitz)

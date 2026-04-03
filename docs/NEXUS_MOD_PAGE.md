@@ -1,4 +1,4 @@
-# Nexus Mods page — snippets
+﻿# Nexus Mods page - snippets
 
 Copy/paste sections into the Nexus mod description as needed.
 
