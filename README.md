@@ -261,8 +261,8 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ### Original Python version (v1.5)
 - **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** - crimson-desert-unpacker - PAZ archive tooling, decryption research
-- **@Maszradine** - CDCamera - Camera rules, steadycam system, style presets
-- **@manymanecki** - CrimsonCamera - Dynamic PAZ modification architecture
+- **Maszradine** - CDCamera - Camera rules, steadycam system, style presets
+- **manymanecki** - CrimsonCamera - Dynamic PAZ modification architecture
 
 ## Support
 
