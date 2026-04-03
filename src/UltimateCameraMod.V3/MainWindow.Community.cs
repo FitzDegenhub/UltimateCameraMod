@@ -459,10 +459,9 @@ public partial class MainWindow : Window
                 if (_selectedPresetManagerItem != null)
                     ActivatePickerFromSelection(_selectedPresetManagerItem, skipCapture: true);
 
-                if (isCommunity)
-                    CheckCommunityPresetUpdatesAsync();
-                else
-                    CheckUcmPresetUpdatesAsync();
+                // Re-check both catalogs so update icons on other presets aren't lost
+                CheckUcmPresetUpdatesAsync();
+                CheckCommunityPresetUpdatesAsync();
             });
 
             QueueSavedToast($"Updated '{item.Name}'");
