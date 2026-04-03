@@ -45,8 +45,7 @@ public partial class MainWindow : Window
 
     private static readonly JsonSerializerOptions PresetFileJsonOptions = new()
     {
-        WriteIndented = true,
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        WriteIndented = true
     };
 
     private static readonly string ExeDir =
@@ -994,11 +993,17 @@ public partial class MainWindow : Window
                         combatPullback: combatPullback, mountHeight: mountHeight, steadycam: steadycam);
                     string builtXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
-                    // Rewrite the file with session_xml and updated revision stamp
-                    var updatedNode = JsonNode.Parse(json)!.AsObject();
-                    updatedNode["session_xml"] = builtXml;
-                    updatedNode["ucm_preset_rev"] = UcmStylePresetRevision;
-                    File.WriteAllText(path, updatedNode.ToJsonString(PresetFileJsonOptions));
+                    // Rewrite the file with session_xml and updated revision stamp.
+                    // Avoid JsonNode.ToJsonString — it corrupts large strings. Build a fresh dict instead.
+                    var rebuilt = new Dictionary<string, object>();
+                    foreach (var prop in root.EnumerateObject())
+                    {
+                        if (prop.Name == "session_xml" || prop.Name == "ucm_preset_rev") continue;
+                        rebuilt[prop.Name] = JsonSerializer.Deserialize<object>(prop.Value.GetRawText()) ?? "";
+                    }
+                    rebuilt["session_xml"] = builtXml;
+                    rebuilt["ucm_preset_rev"] = UcmStylePresetRevision;
+                    File.WriteAllText(path, JsonSerializer.Serialize(rebuilt, PresetFileJsonOptions));
                 }
                 catch { /* skip malformed files */ }
             }
