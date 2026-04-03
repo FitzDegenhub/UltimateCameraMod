@@ -1,6 +1,6 @@
 ﻿> **Nexus Mods page temporarily unavailable** — Hey everyone, apologies for the Nexus page being down. As a new author on the platform, the Nexus Mods team are currently reviewing my source code before allowing the project back on the site - which honestly makes total sense and I fully support it. I've already been in contact with them and they've been really helpful, so we just have to wait it out. In the meantime all downloads are available right here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you so much for your patience - I've been busy working on v3 in the meantime!
 >
-> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. You can download v3.0 Beta from [GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0).
+> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0.1 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. You can download v3.0.1 Beta from [GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1).
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -11,7 +11,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 </p>
 
 [![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
-[![Download v3.0 Beta](https://img.shields.io/badge/Download-v3.0_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0)
+[![Download v3.0.1 Beta](https://img.shields.io/badge/Download-v3.0.1_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![VirusTotal v3-beta](https://img.shields.io/badge/VirusTotal_v3--beta-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
@@ -25,7 +25,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 | Branch | Status | What it is |
 |--------|--------|------------|
 | **`main`** | Stable (v2.5) — under Nexus source review | v2.x direct-install app (single exe, writes straight to game PAZ) |
-| **`v3-dev`** | Beta — source for v3.0 Beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
+| **`v3-dev`** | Beta - source for v3.0.1 Beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
@@ -237,7 +237,7 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ## Version history
 
-- **v3-beta** (`v3-dev`) - First public beta of the v3 export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode), `.ucmpreset` file format, file-based preset system with collapsible sidebar manager, **[community preset catalog](https://github.com/FitzDegenhub/ucm-community-presets)** with GitHub-hosted browse & download, multi-format export (JSON for **JSON Mod Manager** + **CDUMM**, XML, 0.paz, `.ucmpreset`), preset lock system (UCM presets permanently locked, user presets toggleable), auto-save to preset files, Quick→Fine Tune→God Mode settings sync, raw XML import for PAZ/XML presets, vanilla-guarded JSON prepare, true Vanilla preset from raw game XML, game patch awareness, Windows taskbar identity, new app icon. **New in beta:** Steadycam expanded to 30+ camera states (freefall, super jump, rope, knockback, all lock-on variants, warmachine, aggro/wanted — every new section individually tunable in Fine Tune). Lock-on zoom slider replaces the old combat camera dropdown (-60% zoom in to +60% pull back, works without Steadycam).
+- **v3.0.1-beta** (`v3-dev`) - Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode). `.ucmpreset` file format. File-based preset system with collapsible sidebar. **[UCM preset catalog](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev/ucm_presets)** - official presets downloaded on demand via Browse button (no longer generated locally). **[Community preset catalog](https://github.com/FitzDegenhub/ucm-community-presets)** - browse and download community presets from GitHub. Preset update detection with revision tracking. Multi-format export (JSON for **JSON Mod Manager** + **CDUMM**, XML, 0.paz, `.ucmpreset`). Preset lock system (UCM presets permanently locked, user presets toggleable with padlock). Auto-save to preset files. Quick to Fine Tune to God Mode settings sync. Raw XML import for PAZ/XML presets. Style IDs renamed to match preset names (heroic, panoramic, close-up, etc.). Steadycam expanded to 30+ camera states with greyed-out indicators on controlled sliders. Lock-on zoom slider replaces combat camera dropdown (-60% to +60%). Value-edits only design - no structural XML injection. UCM Quick side-by-side layout (offsets + global settings top, previews bottom). Live camera preview with preset name. Game patch awareness. Windows taskbar identity. New app icon.
 - **v2.5** - Current stable release on GitHub Releases.
 - **v2.4** - Proportional horizontal shift, shift on all mounts and aim abilities, horse camera overhaul, version-aware backups, FoV preview, resizable window.
 - **v2.3** - Horizontal shift fix for 16:9, delta-based slider, full install config banner.
