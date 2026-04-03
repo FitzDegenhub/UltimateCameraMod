@@ -1,18 +1,18 @@
 {
   "name": "Panoramic",
   "author": "0xFitz",
-  "description": "Head-height wide pullback, filmic",
+  "description": "Wide filmic pullback, head-height, great for exploration",
   "kind": "style",
   "locked": true,
   "style_id": "panoramic",
   "settings": {
-    "distance": 7.5,
-    "height": 0.0,
-    "right_offset": 0.0,
-    "fov": 25,
-    "combat_pullback": 0.0,
+    "distance": 7,
+    "height": 0,
+    "right_offset": 0,
+    "fov": 30,
+    "combat_pullback": 0,
     "centered": false,
-    "mount_height": false,
+    "mount_height": true,
     "steadycam": true
   }
 }

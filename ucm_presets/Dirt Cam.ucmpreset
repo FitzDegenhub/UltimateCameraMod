@@ -1,18 +1,18 @@
 {
   "name": "Dirt Cam",
   "author": "0xFitz",
-  "description": "Ground-level, extreme low",
+  "description": "Ground-level extreme low angle, intense and gritty",
   "kind": "style",
   "locked": true,
   "style_id": "dirt-cam",
   "settings": {
-    "distance": 5.0,
+    "distance": 5,
     "height": -1.5,
-    "right_offset": 0.0,
+    "right_offset": 0,
     "fov": 25,
-    "combat_pullback": 0.0,
+    "combat_pullback": 0,
     "centered": false,
-    "mount_height": false,
+    "mount_height": true,
     "steadycam": true
   }
 }
