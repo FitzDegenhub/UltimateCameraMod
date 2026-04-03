@@ -1,5 +1,7 @@
 # UCM v3.0-beta — Release Notes
 
+> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. Downloads are available here on GitHub Releases in the meantime. Thank you for your patience!
+
 > **First public beta of Ultimate Camera Mod v3.**
 > Source code: [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
 > Nexus: [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)

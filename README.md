@@ -1,4 +1,4 @@
-> **Nexus Mods:** New-author source review is in progress; the listing may be temporarily unavailable. Downloads remain on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**.
+> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. In the meantime, all downloads are available here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you for your patience!
 
 # Ultimate Camera Mod - Crimson Desert
 
