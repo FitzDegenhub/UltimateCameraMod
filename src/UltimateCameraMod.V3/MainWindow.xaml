@@ -333,12 +333,17 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="16,14" Margin="0,0,0,14">
-                        <StackPanel>
-                            <TextBlock Text="UCM QUICK" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
-                            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18">
-                                This is the fast, curated UCM layer: broad camera shaping, previews, and the most common camera choices.
-                            </TextBlock>
-                        </StackPanel>
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Content="Undo" Style="{StaticResource SubtleButton}"
+                                    Click="OnUndo" Height="24" FontSize="10" Padding="10,0"
+                                    VerticalAlignment="Top" ToolTip="Undo last slider change"/>
+                            <StackPanel>
+                                <TextBlock Text="UCM QUICK" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
+                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18">
+                                    This is the fast, curated UCM layer: broad camera shaping, previews, and the most common camera choices.
+                                </TextBlock>
+                            </StackPanel>
+                        </DockPanel>
                     </Border>
 
                     <!-- Top row: Custom Offsets + Global Settings side by side -->
