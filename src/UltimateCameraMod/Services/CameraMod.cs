@@ -617,10 +617,28 @@ public static class CameraMod
 
     private static bool ValidateVanilla(string xmlText)
     {
+        // FoV check: UCM sets Fov="40" on these sections. Vanilla is "45" or "53".
+        // "40" is removed from VanillaFovValues because vanilla never uses 40 on these two sections.
         var m1 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?Fov=""(\d+)""");
-        if (m1.Success && !VanillaFovValues.Contains(m1.Groups[1].Value)) return false;
+        if (m1.Success && m1.Groups[1].Value != "45" && m1.Groups[1].Value != "53") return false;
         var m2 = Regex.Match(xmlText, @"<Player_Basic_Default_Runfast\s+[^>]*?Fov=""(\d+)""");
-        if (m2.Success && !VanillaFovValues.Contains(m2.Groups[1].Value)) return false;
+        if (m2.Success && m2.Groups[1].Value != "45" && m2.Groups[1].Value != "53") return false;
+
+        // ZoomDistance check: UCM always sets Player_Basic_Default ZL2 to "3.4" — not a vanilla value.
+        var m3 = Regex.Match(xmlText, @"<Player_Basic_Default\s+[^>]*?>[\s\S]*?<ZoomLevel[^>]*?ZoomDistance=""3\.4""", RegexOptions.Multiline);
+        if (m3.Success) return false;
+
+        // OffsetByVelocity check: UCM zeros camera sway on run sections. Vanilla has non-zero values.
+        var m4 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?>[\s\S]*?<OffsetByVelocity[^>]*?OffsetLength=""0""", RegexOptions.Multiline);
+        if (m4.Success) return false;
+
+        // MaxZoomDistance check: UCM v3 sets "30" on lock-on sections. Vanilla is much lower.
+        var m5 = Regex.Match(xmlText, @"<Player_Weapon_LockOn\s+[^>]*?>[\s\S]*?<ZoomLevel[^>]*?MaxZoomDistance=""30""", RegexOptions.Multiline);
+        if (m5.Success) return false;
+
+        // Padding comment check: UCM ArchiveWriter injects random XML comments for size matching.
+        if (Regex.IsMatch(xmlText, @"<!--\s*[a-zA-Z0-9]{8,}\s*-->")) return false;
+
         return true;
     }
 
@@ -667,16 +685,52 @@ public static class CameraMod
             var parts = meta.Split();
             bool compMatch = false;
             bool versionMatch = string.IsNullOrEmpty(AppVersion);
+            bool vanillaValidated = false;
             foreach (var part in parts)
             {
                 if (part.StartsWith("comp_size="))
                     compMatch = int.TryParse(part["comp_size=".Length..], out int savedComp) && savedComp == entry.CompSize;
                 if (part.StartsWith("ucm_version="))
                     versionMatch = part["ucm_version=".Length..] == AppVersion;
+                if (part == "vanilla_verified")
+                    vanillaValidated = true;
             }
 
-            if (compMatch && versionMatch)
+            if (compMatch && versionMatch && vanillaValidated)
                 return;
+
+            if (compMatch && versionMatch && !vanillaValidated)
+            {
+                // Existing backup was created before comprehensive vanilla validation was added.
+                // Re-validate the backup content now.
+                log?.Invoke("Validating existing backup...");
+                try
+                {
+                    byte[] raw = File.ReadAllBytes(backupPath);
+                    var dec = AssetCodec.Decode(raw, "playercamerapreset.xml");
+                    var xmlBytes = CompressionUtils.Lz4Decompress(dec, entry.OrigSize);
+                    string xmlText = Encoding.UTF8.GetString(xmlBytes).TrimEnd('\0');
+                    if (ValidateVanilla(xmlText))
+                    {
+                        // Backup is clean — stamp it so we skip re-validation next time.
+                        File.WriteAllText(metaPath, meta + " vanilla_verified");
+                        return;
+                    }
+                    else
+                    {
+                        // Backup is tainted — delete it and force re-capture from live PAZ.
+                        log?.Invoke("Backup contains modified camera data — clearing...");
+                        File.Delete(backupPath);
+                        File.Delete(metaPath);
+                        // Fall through to re-capture from live PAZ below.
+                    }
+                }
+                catch
+                {
+                    File.Delete(backupPath);
+                    if (File.Exists(metaPath)) File.Delete(metaPath);
+                }
+            }
 
             if (!versionMatch)
                 log?.Invoke("UCM version changed -- refreshing vanilla backup...");
@@ -695,11 +749,14 @@ public static class CameraMod
             string xmlText = Encoding.UTF8.GetString(xmlBytes).TrimEnd('\0');
             if (!ValidateVanilla(xmlText))
                 throw new InvalidOperationException(
-                    "Game files appear to be already modified by another camera mod.\n\n" +
+                    "Game camera files are not vanilla — they have been modified by UCM v2.x, " +
+                    "another camera mod, or a mod manager.\n\n" +
                     "TO FIX:\n" +
-                    "1. Close this tool\n" +
-                    "2. Steam > Crimson Desert > Properties > Installed Files > \"Verify integrity of game files\"\n" +
-                    "3. Run this tool again");
+                    "1. Close UCM\n" +
+                    "2. Delete the 'backups' folder next to UltimateCameraMod.exe\n" +
+                    "3. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
+                    "4. Wait for verification to complete before launching UCM again\n\n" +
+                    "UCM needs unmodified game files to create a clean baseline backup.");
         }
         catch (InvalidOperationException) { throw; }
         catch (Exception)
@@ -714,7 +771,7 @@ public static class CameraMod
 
         File.WriteAllBytes(backupPath, data);
         string verTag = string.IsNullOrEmpty(AppVersion) ? "" : $" ucm_version={AppVersion}";
-        File.WriteAllText(metaPath, $"comp_size={entry.CompSize} orig_size={entry.OrigSize}{verTag}");
+        File.WriteAllText(metaPath, $"comp_size={entry.CompSize} orig_size={entry.OrigSize}{verTag} vanilla_verified");
         log?.Invoke($"Backup saved ({entry.CompSize} bytes)");
     }
 
