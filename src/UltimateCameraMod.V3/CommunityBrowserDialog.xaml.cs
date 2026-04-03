@@ -247,15 +247,44 @@ public partial class CommunityBrowserDialog : Window
                 return;
             }
 
-            // Validate
+            // Validate and rewrite with metadata fields guaranteed before session_xml
             using var doc = JsonDocument.Parse(content);
             var root = doc.RootElement;
-            if (!root.TryGetProperty("session_xml", out _) && !root.TryGetProperty("RawXml", out _))
+            if (!root.TryGetProperty("session_xml", out var sessionXmlEl) && !root.TryGetProperty("RawXml", out _))
             {
                 btn.Content = "Invalid";
                 StatusText.Text = $"Preset '{entry.Name}' doesn't contain camera data.";
                 return;
             }
+
+            // Rebuild the preset with url/name/author/description guaranteed before session_xml
+            // so the 4KB header read in AppendSessionJsonPresetsFromDir always finds them.
+            string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
+            string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? entry.Name : entry.Name;
+            string presetAuthor = root.TryGetProperty("author", out var aEl) ? aEl.GetString() ?? entry.Author : entry.Author;
+            string presetDesc = root.TryGetProperty("description", out var dEl) ? dEl.GetString() ?? entry.Description : entry.Description;
+            string presetKind = root.TryGetProperty("kind", out var kEl) ? kEl.GetString() ?? "community" : "community";
+            bool presetLocked = root.TryGetProperty("locked", out var lEl) && lEl.ValueKind == JsonValueKind.True;
+
+            // Carry over settings if present
+            object? settingsObj = null;
+            if (root.TryGetProperty("settings", out var settingsEl))
+                settingsObj = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(settingsEl.GetRawText());
+
+            var rebuilt = new Dictionary<string, object?>
+            {
+                ["name"] = presetName,
+                ["author"] = presetAuthor,
+                ["url"] = entry.Url,
+                ["description"] = presetDesc,
+                ["kind"] = presetKind,
+                ["locked"] = presetLocked,
+                ["settings"] = settingsObj,
+                ["session_xml"] = sessionXml,
+            };
+
+            var jsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+            content = System.Text.Json.JsonSerializer.Serialize(rebuilt, jsonOptions);
 
             // Save
             Directory.CreateDirectory(_communityPresetsDir);

@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.0";
+    private const string Ver = "3.0-beta";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
@@ -996,16 +996,16 @@ public partial class MainWindow : Window
                     roff = CameraRules.QuickShiftDeltaFromFootZl2RightOffset(ro);
                 }
 
+                // url, name, author, description must all appear before session_xml so they
+                // fall within the 4 KB header window read by AppendSessionJsonPresetsFromDir.
                 var preset = new Dictionary<string, object>
                 {
                     ["name"] = name,
                     ["author"] = author,
-                    ["description"] = desc.Replace("\n", " ").Trim().Length > 200
-                        ? desc.Replace("\n", " ").Trim()[..197] + "..."
-                        : desc.Replace("\n", " ").Trim(),
+                    ["url"] = url,
+                    ["description"] = desc.Replace("\n", " ").Trim(),
                     ["kind"] = "style",
                     ["locked"] = true,
-                    ["session_xml"] = sessionXml,
                     ["settings"] = new Dictionary<string, object>
                     {
                         ["distance"] = Math.Round(dist, 2),
@@ -1016,11 +1016,9 @@ public partial class MainWindow : Window
                         ["centered"] = false,
                         ["mount_height"] = false,
                         ["steadycam"] = false
-                    }
+                    },
+                    ["session_xml"] = sessionXml,
                 };
-
-                if (!string.IsNullOrWhiteSpace(url))
-                    preset["url"] = url;
 
                 File.WriteAllText(destPath, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
             }

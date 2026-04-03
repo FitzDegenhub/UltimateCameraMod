@@ -25,7 +25,7 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
                     <TextBlock Text="ULTIMATE CAMERA MOD" FontSize="15" FontWeight="Bold"
                                Foreground="{StaticResource AccentBrush}"/>
-                    <TextBlock Text="  v3.0  |  by 0xFitz" FontSize="10"
+                    <TextBlock Text="  v3.0-beta  |  by 0xFitz" FontSize="10"
                                Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
                     <Ellipse x:Name="VersionDot" Width="7" Height="7" Fill="#555" Margin="12,0,0,0" VerticalAlignment="Center"/>
                     <TextBlock x:Name="VersionStatus" Text="checking..." FontSize="9"
@@ -272,19 +272,19 @@
                                 <Button x:Name="ActivePresetLinkBtn" Visibility="Collapsed"
                                         Style="{StaticResource SubtleButton}"
                                         Click="OnActivePresetLinkClick"
-                                        Height="22" Padding="6,2" Margin="0,4,0,0"
+                                        Height="24" Padding="8,3" Margin="0,6,0,0"
                                         HorizontalAlignment="Right"
-                                        FontSize="10" Foreground="{StaticResource AccentBrush}"
+                                        FontSize="11" Foreground="{StaticResource AccentBrush}"
                                         BorderBrush="{StaticResource AccentBrush}"
-                                        Content="&#x1F517; Link" ToolTip="Open in browser"/>
+                                        Content="&#x1F517; View on Nexus" ToolTip="Open creator page in browser"/>
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock x:Name="ActivePresetName" FontSize="16" FontWeight="Bold"
                                            Foreground="{StaticResource AccentBrush}"
                                            Text="Draft"/>
-                                <TextBlock x:Name="ActivePresetDetail" FontSize="11"
-                                           Foreground="{StaticResource TextSecondaryBrush}"
-                                           TextWrapping="Wrap" Margin="0,4,0,0"
+                                <TextBlock x:Name="ActivePresetDetail" FontSize="12"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           TextWrapping="Wrap" Margin="0,5,0,0"
                                            Text="Your working copy until you save a named preset."/>
                             </StackPanel>
                         </DockPanel>
