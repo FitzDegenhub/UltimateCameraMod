@@ -8,7 +8,7 @@
       "author": "0xFitz",
       "description": "Shoulder-level OTS, great framing",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "93a1ff75a0b427bea859bd12ca27101134078f2f79cea6e9a4d0f00f981c5eab"
     },
     {
       "id": "panoramic",
@@ -17,7 +17,7 @@
       "author": "0xFitz",
       "description": "Head-height wide pullback, filmic",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "916e35447a7cc1642591737f68900555eef1a07ae6f1ffb0856f66686dff67e0"
     },
     {
       "id": "close-up",
@@ -26,7 +26,7 @@
       "author": "0xFitz",
       "description": "Shoulder OTS, tighter (16:9 feel)",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "a79768098582d2f71fd947fad0c43a45fcf8b685644052d7f342522a4a5efaf7"
     },
     {
       "id": "low-rider",
@@ -35,7 +35,7 @@
       "author": "0xFitz",
       "description": "Hip-level, full body + horizon",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "f928fce4aea0eb3cafd016c8eae90487087a7690a8a7847df5ebc8f954f8ec4e"
     },
     {
       "id": "knee-cam",
@@ -44,7 +44,7 @@
       "author": "0xFitz",
       "description": "Knee-height dramatic low angle",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "90f41a080f5576b6c6e6a85e73136f2db7541efb7f943799f66eebaf72b2a842"
     },
     {
       "id": "dirt-cam",
@@ -53,7 +53,7 @@
       "author": "0xFitz",
       "description": "Ground-level, extreme low",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "115c9a271c75b31d14c44315ef865506b2e271c5ca2a88677a73cefe4599d38f"
     },
     {
       "id": "survival",
@@ -62,7 +62,16 @@
       "author": "0xFitz",
       "description": "Tight horror-game OTS (16:9 feel)",
       "tags": ["style", "official"],
-      "ucm_preset_rev": 2
+      "sha256": "ed339b4f823fef57dbaf203619b01b63a39d78a153f34ee0b2fc3e2415090f57"
+    },
+    {
+      "id": "new-ucm",
+      "file": "NEW UCM.ucmpreset",
+      "name": "NEW UCM",
+      "author": "0xFitz",
+      "description": "Yes.",
+      "tags": ["style", "official"],
+      "sha256": "6e1ec307de23a7191e28b85901cf63a3439687d5c1acd376795ad733855b768e"
     }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "name": "NEW UCM",
+  "author": "0xFitz",
+  "description": "Yes.",
+  "kind": "style",
+  "settings": {
+    "distance": 5,
+    "height": 0,
+    "right_offset": 0,
+    "fov": 0,
+    "combat": "default",
+    "centered": false,
+    "mount_height": false,
+    "steadycam": true
+  },
+  "url": "https://www.nexusmods.com/crimsondesert/mods/438"
+}
