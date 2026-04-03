@@ -17,7 +17,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
-[![VirusTotal v3.0.1](https://img.shields.io/badge/VirusTotal_v3.0.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/1773dbf1d835cc9b29ed0b2e06347779fb8d0138e371a59d2bac09395766f49b)
+[![VirusTotal v3.0.1](https://img.shields.io/badge/VirusTotal_v3.0.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/5123741f7c78f8b234f082025c4097dc6411440744749f018b3ba02e3f64afd8)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
