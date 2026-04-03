@@ -1,4 +1,6 @@
-﻿> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. In the meantime, all downloads are available here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you for your patience!
+﻿> **Nexus Mods page temporarily unavailable** — Hey everyone, apologies for the Nexus page being down. As a new author on the platform, the Nexus Mods team are currently reviewing my source code before allowing the project back on the site - which honestly makes total sense and I fully support it. I've already been in contact with them and they've been really helpful, so we just have to wait it out. In the meantime all downloads are available right here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you so much for your patience - I've been busy working on v3 in the meantime!
+>
+> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. You can download v3.0 Beta from [GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0).
 
 # Ultimate Camera Mod - Crimson Desert
 
