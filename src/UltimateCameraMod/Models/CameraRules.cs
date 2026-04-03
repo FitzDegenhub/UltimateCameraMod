@@ -88,8 +88,9 @@ namespace UltimateCameraMod.Models;
 //  Player_Interaction_TwoTarget  → handled by BuildLockOnDistances (ZL2/3/4)
 //
 //  Player_Interaction_LockOn, Interaction_LookAt  → NPC dialogue camera (LB+X).
-//  Vanilla hardcodes a wide ZoomDistance causing a jarring snap on interaction.
-//  Added to LockOnSections so distance scales with the user's chosen zoom level.
+//  Intentionally NOT in LockOnSections: scaling ZoomDistance / MaxZoomDistance / injecting
+//  ZL2–4 here has correlated with game crashes on load (same class of risk as SilenceKill).
+//  Leave dialogue camera vanilla; combat lock-on scaling remains on LockOnSections below.
 //
 //  Player_SilenceKill, Player_SilenceKill_Back  → stealth finishers, only ZL2,
 //  vanilla ZoomDistance=1.2 (extreme close-up).
@@ -176,10 +177,6 @@ public static class CameraRules
         "Player_Weapon_LockOn_Non_Rotate",
         "Player_Weapon_LockOn_WrestleOnly",
         "Player_Interaction_TwoTarget",
-        // NPC dialogue camera (LB+X) -- vanilla hardcodes a wide ZoomDistance here,
-        // causing a jarring zoom-out snap when talking to NPCs at close range.
-        "Player_Interaction_LockOn",
-        "Interaction_LookAt",
     };
 
     private static readonly string[] BaneSections =
@@ -553,11 +550,6 @@ public static class CameraRules
         Set(m, "Player_FollowLearn_LockOn_Boss/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendInTime", "1.0");
         Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
-        // NPC dialogue (LB+X) -- vanilla has no blend, snaps instantly into the wide shot
-        Set(m, "Player_Interaction_LockOn/CameraBlendParameter", "BlendInTime", "0.8");
-        Set(m, "Player_Interaction_LockOn/CameraBlendParameter", "BlendOutTime", "0.8");
-        Set(m, "Interaction_LookAt/CameraBlendParameter", "BlendInTime", "0.8");
-        Set(m, "Interaction_LookAt/CameraBlendParameter", "BlendOutTime", "0.8");
 
         // Extended lock-on coverage -- sections not previously smoothed
         Set(m, "Player_Revive_LockOn_System/CameraBlendParameter", "BlendInTime", "0.8");

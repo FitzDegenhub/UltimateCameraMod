@@ -70,7 +70,7 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
     /// <summary>Group label for sidebar display (ucm_presets, community_presets, my_presets, import_presets).</summary>
     public string GroupLabel => KindId switch
     {
-        "default" => "UCM presets",
+        "default" => "Game Default",
         "style" => "UCM presets",
         "community" => "Community presets",
         "user" => "My presets",

@@ -445,11 +445,42 @@ public partial class MainWindow : Window
                 downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(fileName);
 
             byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
-            File.WriteAllBytes(item.FilePath, rawBytes);
 
-            // For UCM presets, update the sidecar with the new download hash
-            if (!isCommunity)
+            if (isCommunity)
             {
+                // Community presets: rebuild with metadata so url, author, description are preserved
+                string content = Encoding.UTF8.GetString(rawBytes);
+                using var dlDoc = JsonDocument.Parse(content);
+                var root = dlDoc.RootElement;
+                string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
+                string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? item.Name : item.Name;
+                string presetAuthor = root.TryGetProperty("author", out var aEl) ? aEl.GetString() ?? "" : "";
+                string presetDesc = root.TryGetProperty("description", out var dEl) ? dEl.GetString() ?? "" : "";
+                string presetUrl = root.TryGetProperty("url", out var uEl) ? uEl.GetString() ?? "" : "";
+                // Preserve existing url if the downloaded file doesn't have one
+                if (string.IsNullOrEmpty(presetUrl)) presetUrl = item.Url;
+
+                object? settingsObj = null;
+                if (root.TryGetProperty("settings", out var settingsEl))
+                    settingsObj = JsonSerializer.Deserialize<JsonElement>(settingsEl.GetRawText());
+
+                var rebuilt = new Dictionary<string, object?>
+                {
+                    ["name"] = presetName,
+                    ["author"] = presetAuthor,
+                    ["url"] = presetUrl,
+                    ["description"] = presetDesc,
+                    ["kind"] = "community",
+                    ["locked"] = true,
+                    ["settings"] = settingsObj,
+                    ["session_xml"] = sessionXml,
+                };
+                File.WriteAllText(item.FilePath, JsonSerializer.Serialize(rebuilt, PresetFileJsonOptions));
+            }
+            else
+            {
+                // UCM presets: write raw definition, baking will add session_xml
+                File.WriteAllBytes(item.FilePath, rawBytes);
                 string rawSha = Convert.ToHexString(
                     System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
                 UpdateCatalogStateEntry(fileName, rawSha);

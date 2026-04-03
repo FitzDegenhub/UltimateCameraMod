@@ -142,7 +142,7 @@ public partial class CommunityBrowserDialog : Window
         var nameBlock = new TextBlock
         {
             Text = entry.Name,
-            FontSize = 13, FontWeight = FontWeights.SemiBold,
+            FontSize = 14, FontWeight = FontWeights.SemiBold,
             Foreground = (Brush)FindResource("TextPrimaryBrush")
         };
 
@@ -156,7 +156,7 @@ public partial class CommunityBrowserDialog : Window
 
         var descBlock = new TextBlock
         {
-            Text = entry.Description.Length > 150 ? entry.Description[..147] + "..." : entry.Description,
+            Text = entry.Description.Length > 200 ? entry.Description[..197] + "..." : entry.Description,
             FontSize = 11, TextWrapping = TextWrapping.Wrap,
             Foreground = (Brush)FindResource("TextSecondaryBrush"),
             Margin = new Thickness(0, 6, 0, 0)
@@ -181,12 +181,19 @@ public partial class CommunityBrowserDialog : Window
             tagsPanel.Children.Add(tagBorder);
         }
 
-        // Action button
+        // Left side: name, author, description, tags
+        var leftStack = new StackPanel();
+        leftStack.Children.Add(nameBlock);
+        if (!string.IsNullOrWhiteSpace(entry.Author)) leftStack.Children.Add(authorBlock);
+        leftStack.Children.Add(descBlock);
+        if (entry.Tags.Length > 0) leftStack.Children.Add(tagsPanel);
+
+        // Right side: action buttons stacked vertically
         var actionBtn = new Button
         {
-            Height = 28, FontSize = 11, Padding = new Thickness(14, 0, 14, 0),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            Margin = new Thickness(0, 8, 0, 0),
+            Height = 30, FontSize = 11, Padding = new Thickness(16, 0, 16, 0),
+            MinWidth = 110,
+            HorizontalAlignment = HorizontalAlignment.Right,
             Tag = entry
         };
 
@@ -203,10 +210,14 @@ public partial class CommunityBrowserDialog : Window
             actionBtn.Click += OnDownloadClick;
         }
 
-        // Action row: download button + link
-        var actionRow = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 8, 0, 0) };
-        actionRow.Children.Add(actionBtn);
-        actionBtn.Margin = new Thickness(0);
+        var rightStack = new StackPanel
+        {
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Right,
+            Margin = new Thickness(16, 0, 0, 0),
+            MinWidth = 110
+        };
+        rightStack.Children.Add(actionBtn);
 
         if (!string.IsNullOrWhiteSpace(entry.Url))
         {
@@ -214,10 +225,12 @@ public partial class CommunityBrowserDialog : Window
             {
                 Content = "\uD83D\uDD17 Nexus",
                 Height = 28, FontSize = 10, Padding = new Thickness(10, 0, 10, 0),
+                MinWidth = 110,
+                HorizontalAlignment = HorizontalAlignment.Right,
                 Style = (Style)FindResource("SubtleButton"),
                 Foreground = (Brush)FindResource("AccentBrush"),
                 BorderBrush = (Brush)FindResource("AccentBrush"),
-                Margin = new Thickness(8, 0, 0, 0),
+                Margin = new Thickness(0, 6, 0, 0),
                 Tag = entry.Url
             };
             linkBtn.Click += (_, _) =>
@@ -225,15 +238,17 @@ public partial class CommunityBrowserDialog : Window
                 try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(entry.Url) { UseShellExecute = true }); }
                 catch { }
             };
-            actionRow.Children.Add(linkBtn);
+            rightStack.Children.Add(linkBtn);
         }
 
-        var stack = new StackPanel();
-        stack.Children.Add(nameBlock);
-        if (!string.IsNullOrWhiteSpace(entry.Author)) stack.Children.Add(authorBlock);
-        stack.Children.Add(descBlock);
-        if (entry.Tags.Length > 0) stack.Children.Add(tagsPanel);
-        stack.Children.Add(actionRow);
+        // Layout: left content takes available space, right buttons fixed
+        var grid = new Grid();
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+        Grid.SetColumn(leftStack, 0);
+        Grid.SetColumn(rightStack, 1);
+        grid.Children.Add(leftStack);
+        grid.Children.Add(rightStack);
 
         return new Border
         {
@@ -243,7 +258,7 @@ public partial class CommunityBrowserDialog : Window
             CornerRadius = new CornerRadius(8),
             Padding = new Thickness(16, 14, 16, 14),
             Margin = new Thickness(0, 0, 0, 10),
-            Child = stack
+            Child = grid
         };
     }
 
@@ -261,16 +276,17 @@ public partial class CommunityBrowserDialog : Window
             http.Timeout = TimeSpan.FromSeconds(15);
 
             string downloadUrl = _rawBaseUrl + entry.File;
-            string content = await http.GetStringAsync(downloadUrl);
+            byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
 
-            if (content.Length > MaxPresetSize)
+            if (rawBytes.Length > MaxPresetSize)
             {
                 btn.Content = "Too large";
                 StatusText.Text = $"Preset '{entry.Name}' exceeds 2MB limit.";
                 return;
             }
 
-            // Validate and rewrite with metadata fields guaranteed before session_xml
+            // Validate
+            string content = System.Text.Encoding.UTF8.GetString(rawBytes);
             using var doc = JsonDocument.Parse(content);
             var root = doc.RootElement;
             bool hasSessionXml = root.TryGetProperty("session_xml", out _) || root.TryGetProperty("RawXml", out _);
@@ -282,39 +298,8 @@ public partial class CommunityBrowserDialog : Window
                 return;
             }
 
-            // UCM presets (needsSessionXmlBake): save raw definition as-is.
-            // GenerateBuiltInPresets will bake session_xml on next launch.
-            // Community presets: rebuild with metadata at the top for fast header reads.
-            if (!_needsSessionXmlBake)
-            {
-                string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
-                string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? entry.Name : entry.Name;
-                string presetAuthor = root.TryGetProperty("author", out var aEl) ? aEl.GetString() ?? entry.Author : entry.Author;
-                string presetDesc = root.TryGetProperty("description", out var dEl) ? dEl.GetString() ?? entry.Description : entry.Description;
-                string presetKind = root.TryGetProperty("kind", out var kEl) ? kEl.GetString() ?? "community" : "community";
-                bool presetLocked = root.TryGetProperty("locked", out var lEl) && lEl.ValueKind == JsonValueKind.True;
-
-                object? settingsObj = null;
-                if (root.TryGetProperty("settings", out var settingsEl))
-                    settingsObj = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(settingsEl.GetRawText());
-
-                var rebuilt = new Dictionary<string, object?>
-                {
-                    ["name"] = presetName,
-                    ["author"] = presetAuthor,
-                    ["url"] = entry.Url,
-                    ["description"] = presetDesc,
-                    ["kind"] = presetKind,
-                    ["locked"] = presetLocked,
-                    ["settings"] = settingsObj,
-                    ["session_xml"] = sessionXml,
-                };
-
-                var jsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
-                content = System.Text.Json.JsonSerializer.Serialize(rebuilt, jsonOptions);
-            }
-
-            // Save — UCM presets use the catalog filename; community presets use the entry id
+            // Save raw bytes as-is to preserve SHA hash for update detection.
+            // Preset files in the repo should already have metadata (name, author, url, description).
             Directory.CreateDirectory(_presetsDir);
             string destFileName = _needsSessionXmlBake && !string.IsNullOrEmpty(entry.File)
                 ? entry.File
@@ -322,7 +307,7 @@ public partial class CommunityBrowserDialog : Window
                     ? Path.GetFileName(entry.File)
                     : $"{entry.Id}.ucmpreset";
             string destPath = Path.Combine(_presetsDir, destFileName);
-            await System.IO.File.WriteAllTextAsync(destPath, content);
+            await System.IO.File.WriteAllBytesAsync(destPath, rawBytes);
 
             // Update UCM sidecar with the catalog SHA so update detection works
             if (!string.IsNullOrEmpty(entry.Sha256) && _presetsDir.Contains("ucm_presets"))

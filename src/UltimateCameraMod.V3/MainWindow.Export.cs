@@ -50,7 +50,12 @@ public partial class MainWindow : Window
         string xml;
         try
         {
-            xml = BuildSessionXmlForMode(_activeMode);
+            // Full preset / imported snapshot: install the loaded session XML, not a rebuild from Quick only
+            // (rebuild can diverge from the saved file and can change compressed size vs. the slot).
+            if (_sessionIsFullPreset && !string.IsNullOrWhiteSpace(_sessionXml))
+                xml = _sessionXml;
+            else
+                xml = BuildSessionXmlForMode(_activeMode);
             _sessionXml = xml;
         }
         catch (Exception ex)

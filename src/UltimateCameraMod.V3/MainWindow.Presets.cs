@@ -87,13 +87,27 @@ public partial class MainWindow : Window
         AppendSessionJsonPresetsFromDir(UcmPresetsDir, defaultLocked: true, kindOverride: null);
 
         // Ensure "UCM presets" group header always shows so the Browse button is visible
-        if (!items.Any(i => i.KindId is "default" or "style"))
+        if (!items.Any(i => i.KindId == "style"))
         {
             items.Add(new PresetManagerItem
             {
                 Name = "\0",
                 KindId = "style",
                 KindLabel = "UCM style",
+                FilePath = "",
+                IsLocked = true,
+                IsPlaceholder = true
+            });
+        }
+
+        // Ensure "Game Default" group header always shows
+        if (!items.Any(i => i.KindId == "default"))
+        {
+            items.Add(new PresetManagerItem
+            {
+                Name = "\0",
+                KindId = "default",
+                KindLabel = "Game default",
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -308,7 +322,7 @@ public partial class MainWindow : Window
                             if (settings.TryGetProperty("distance", out var dv2) && dv2.ValueKind == JsonValueKind.Number)
                                 DistSlider.Value = Math.Clamp(dv2.GetDouble(), 1.5, 12.0);
                             if (settings.TryGetProperty("height", out var hv2) && hv2.ValueKind == JsonValueKind.Number)
-                                HeightSlider.Value = Math.Clamp(hv2.GetDouble(), -1.6, 0.5);
+                                HeightSlider.Value = Math.Clamp(hv2.GetDouble(), -1.6, 1.5);
                             if (settings.TryGetProperty("right_offset", out var rv2) && rv2.ValueKind == JsonValueKind.Number)
                                 HShiftSlider.Value = Math.Clamp(rv2.GetDouble(), -3.0, 3.0);
 

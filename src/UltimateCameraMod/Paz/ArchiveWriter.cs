@@ -722,50 +722,13 @@ public static class ArchiveWriter
                 $"File compresses too well.");
         }
 
-        var spaceSet = new HashSet<int>();
-        for (int j = 0; j < padded.Length; j++)
-            if (padded[j] == 0x20) spaceSet.Add(j);
-
-        var adjacent = new List<int>();
-        var nonAdjacent = new List<int>();
-        for (int j = 0; j < padded.Length; j++)
-        {
-            if (padded[j] == 0x20) continue;
-            bool isAdj = (j > 0 && padded[j - 1] == 0x20) ||
-                         (j + 1 < padded.Length && padded[j + 1] == 0x20);
-            if (isAdj) adjacent.Add(j);
-            else nonAdjacent.Add(j);
-        }
-        var candidates = new List<int>(adjacent);
-        candidates.AddRange(nonAdjacent);
-
-        if (candidates.Count == 0)
-            throw new InvalidOperationException(
-                $"Cannot match target comp_size {targetCompSize} (got {comp.Length}, delta {delta}): no replaceable bytes");
-
-        byte[] trial = (byte[])padded.Clone();
-        for (int n = 0; n < candidates.Count; n++)
-        {
-            trial[candidates[n]] = 0x20;
-            int c = CompressionUtils.Lz4Compress(trial).Length;
-            if (c == targetCompSize) return (byte[])trial.Clone();
-            if (c < targetCompSize)
-            {
-                for (int revertCount = 1; revertCount < Math.Min(n + 2, 200); revertCount++)
-                {
-                    byte[] trial2 = (byte[])padded.Clone();
-                    int applyCount = n + 1 - revertCount;
-                    for (int k = 0; k < applyCount; k++)
-                        trial2[candidates[k]] = 0x20;
-                    if (CompressionUtils.Lz4Compress(trial2).Length == targetCompSize)
-                        return trial2;
-                }
-                break;
-            }
-        }
-
+        // Compressed payload is larger than the game's camera slot allows. Do not mutate XML bytes
+        // (replacing characters with spaces) — that produces invalid XML and crashes the game at load.
         throw new InvalidOperationException(
-            $"Cannot match target comp_size {targetCompSize} (got {comp.Length}, delta {delta})");
+            $"This camera XML compresses to {comp.Length} bytes but the game only allows {targetCompSize} bytes " +
+            $"in 0.paz (uncompressed buffer is {targetOrigSize} bytes). The preset cannot be installed safely.\n\n" +
+            "Try: fewer Fine Tune / God Mode edits, a lighter style preset, or verify the game install matches " +
+            "the build this tool expects. If the game was just updated, reinstall after a Steam verify.");
     }
 
     // ── Core write ──────────────────────────────────────────────────

@@ -397,7 +397,7 @@
 
                                 <TextBlock Text="Height" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                                 <Slider x:Name="HeightSlider" Grid.Row="1" Grid.Column="1"
-                                        Minimum="-1.6" Maximum="0.5" Value="0" TickFrequency="0.1"
+                                        Minimum="-1.6" Maximum="1.5" Value="0" TickFrequency="0.1"
                                         IsSnapToTickEnabled="True" ValueChanged="OnSliderChanged"/>
                                 <TextBlock x:Name="HeightLabel" Grid.Row="1" Grid.Column="2"
                                            FontFamily="Consolas" FontSize="11"

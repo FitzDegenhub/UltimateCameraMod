@@ -468,28 +468,7 @@ public partial class MainWindow : Window
                     StartTutorial();
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
-            else if (!hasStylePresets && !string.IsNullOrEmpty(_gameDir))
-            {
-                // Fallback: if tutorial was already completed but no presets yet, open catalog
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            if (!string.IsNullOrEmpty(_gameDir))
-                                GenerateBuiltInPresets();
-                            RefreshPresetManagerLists(preserveSelection: true);
-                        });
-                    },
-                    catalogUrl: UcmPresetsCatalogUrl,
-                    rawBaseUrl: UcmPresetsRawBaseUrl,
-                    title: "Welcome! Download UCM Presets",
-                    needsSessionXmlBake: true)
-                    { Owner = this };
-                    dlg.ShowDialog();
-                }), System.Windows.Threading.DispatcherPriority.Loaded);
-            }
+            // Users can click Browse to download UCM presets when ready
         }
         catch (Exception ex)
         {
@@ -532,26 +511,7 @@ public partial class MainWindow : Window
             // Mark tutorial as done
             try { System.IO.File.WriteAllText(System.IO.Path.Combine(ExeDir, "tutorial_done.flag"), "done"); } catch { }
 
-            // After tutorial, open the preset catalog if no style presets exist yet
-            bool hasStyles = _presetManagerItems.Any(i => i.KindId == "style" && !i.IsPlaceholder);
-            if (!hasStyles && !string.IsNullOrEmpty(_gameDir))
-            {
-                var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (!string.IsNullOrEmpty(_gameDir))
-                            GenerateBuiltInPresets();
-                        RefreshPresetManagerLists(preserveSelection: true);
-                    });
-                },
-                catalogUrl: UcmPresetsCatalogUrl,
-                rawBaseUrl: UcmPresetsRawBaseUrl,
-                title: "Welcome! Download UCM Presets",
-                needsSessionXmlBake: true)
-                { Owner = this };
-                dlg.ShowDialog();
-            }
+            // Users can click Browse to download UCM presets when ready
         }, this);
 
         TutorialCanvas.Children.Clear();
