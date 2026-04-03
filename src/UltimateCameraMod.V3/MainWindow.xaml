@@ -42,7 +42,7 @@
                             BorderThickness="0" FontSize="10" Padding="8,4"/>
                     <Button Content="GitHub" Style="{StaticResource SubtleButton}"
                             Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4" Margin="0,0,4,0"/>
-                    <Button Content="☕ Buy me a coffee" Style="{StaticResource SubtleButton}"
+                    <Button x:Name="KofiBtn" Content="☕ Buy me a coffee" Style="{StaticResource SubtleButton}"
                             Click="OnKofiClick" BorderThickness="0" FontSize="10" Padding="8,4"
                             ToolTip="Opens Ko-fi — tips help keep UCM going"
                             Foreground="#FF5E5B"/>
@@ -100,21 +100,23 @@
                                     Click="OnPresetManagerDelete" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
                                     Foreground="#aa6666"/>
                         </StackPanel>
-                        <Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,2,0,8"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                            <Button Content="Import" Style="{StaticResource SubtleButton}"
-                                    Click="OnImportPreset" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
-                                    ToolTip="Import a camera XML or PAZ archive as a preset"/>
-                            <Button Content="Export" Style="{StaticResource SubtleButton}"
-                                    Click="OnExportJson" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
-                                    ToolTip="Share as JSON (Mod Manager), session XML, or patched 0.paz — uses your current UCM session."/>
-                            <Button Content="Restore" Style="{StaticResource SubtleButton}"
-                                    Click="OnRestore" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
-                                    ToolTip="Restore the original camera chunk from UCM's backup."/>
+                        <StackPanel x:Name="SidebarActionButtons">
+                            <Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,2,0,8"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                <Button Content="Import" Style="{StaticResource SubtleButton}"
+                                        Click="OnImportPreset" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
+                                        ToolTip="Import a camera XML or PAZ archive as a preset"/>
+                                <Button Content="Export" Style="{StaticResource SubtleButton}"
+                                        Click="OnExportJson" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
+                                        ToolTip="Share as JSON (Mod Manager), session XML, or patched 0.paz — uses your current UCM session."/>
+                                <Button Content="Restore" Style="{StaticResource SubtleButton}"
+                                        Click="OnRestore" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
+                                        ToolTip="Restore the original camera chunk from UCM's backup."/>
+                            </StackPanel>
+                            <Button Content="Install to Game" Style="{StaticResource AccentButton}"
+                                    Click="OnInstall" Height="34" FontSize="11" Margin="0,6,0,0"
+                                    ToolTip="Apply the current UCM session directly to the game files."/>
                         </StackPanel>
-                        <Button Content="Install to Game" Style="{StaticResource AccentButton}"
-                                Click="OnInstall" Height="34" FontSize="11" Margin="0,6,0,0"
-                                ToolTip="Apply the current UCM session directly to the game files."/>
                     </StackPanel>
 
                     <!-- Preset list: ucm_presets, my_presets, import_presets (Imported group) -->
@@ -245,7 +247,8 @@
                                             Padding="2" Margin="0,0,2,0"
                                             VerticalAlignment="Center"
                                             ToolTip="Update available — click to download latest version"
-                                            Click="OnPresetUpdateClick">
+                                            Click="OnPresetUpdateClick"
+                                            Cursor="Hand">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -256,6 +259,17 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Button.Style>
+                                        <Button.Triggers>
+                                            <EventTrigger RoutedEvent="Button.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard RepeatBehavior="Forever">
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         From="1.0" To="0.3" Duration="0:0:0.8"
+                                                                         AutoReverse="True"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Button.Triggers>
                                     </Button>
                                     <Button Grid.Column="2"
                                             Style="{StaticResource PresetSidebarLockButton}"
@@ -314,14 +328,14 @@
                 </Border>
 
                 <!-- Editor tab bar -->
-                <Border DockPanel.Dock="Top" Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="4" Margin="0,0,0,12">
+                <Border x:Name="EditorTabBar" DockPanel.Dock="Top" Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="4" Margin="0,0,0,12">
                     <DockPanel LastChildFill="False">
                         <Button x:Name="TabQuick" DockPanel.Dock="Left" Content="UCM Quick" Width="120" Height="34" FontSize="12"
-                                Style="{StaticResource AccentButton}" Click="OnTabQuick"/>
+                                Style="{StaticResource AccentButton}" Click="OnTabQuick" FontWeight="SemiBold"/>
                         <Button x:Name="TabFineTune" DockPanel.Dock="Left" Content="Fine Tune" Width="120" Height="34" FontSize="12"
-                                Style="{StaticResource SubtleButton}" Click="OnTabFineTune" Margin="4,0,0,0"/>
+                                Style="{StaticResource SubtleButton}" Click="OnTabFineTune" Margin="4,0,0,0" FontWeight="SemiBold"/>
                         <Button x:Name="TabGodMode" DockPanel.Dock="Right" Content="God Mode" Width="120" Height="34" FontSize="12"
-                                Style="{StaticResource SubtleButton}" Click="OnTabGodMode"/>
+                                Style="{StaticResource SubtleButton}" Click="OnTabGodMode" FontWeight="SemiBold"/>
                     </DockPanel>
                 </Border>
 
@@ -347,7 +361,7 @@
                     </Border>
 
                     <!-- Top row: Custom Offsets + Global Settings side by side -->
-                    <Grid Margin="0,0,0,14">
+                    <Grid x:Name="SettingsPanel" Margin="0,0,0,14">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="14"/>
@@ -481,7 +495,7 @@
 
 
                     <!-- Bottom row: Camera Preview + FoV Preview side by side -->
-                    <Grid Margin="0,0,0,0">
+                    <Grid x:Name="PreviewsPanel" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="14"/>
@@ -893,5 +907,8 @@
                            Foreground="{StaticResource TextPrimaryBrush}"/>
             </StackPanel>
         </Border>
+
+        <!-- First-launch tutorial overlay -->
+        <Canvas x:Name="TutorialCanvas" Grid.RowSpan="6" Panel.ZIndex="100" Visibility="Collapsed"/>
     </Grid>
 </Window>

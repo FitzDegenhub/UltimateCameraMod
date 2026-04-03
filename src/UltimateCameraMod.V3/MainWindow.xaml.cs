@@ -427,10 +427,19 @@ public partial class MainWindow : Window
 
             ScheduleTaskbarIconDelayedRetries();
 
-            // First-launch hint: if no UCM style presets downloaded yet, auto-open the UCM catalog
+            // First-launch tutorial overlay
+            string tutorialDonePath = System.IO.Path.Combine(ExeDir, "tutorial_done.flag");
             bool hasStylePresets = _presetManagerItems.Any(i => i.KindId == "style" && !i.IsPlaceholder);
-            if (!hasStylePresets && !string.IsNullOrEmpty(_gameDir))
+            if (!System.IO.File.Exists(tutorialDonePath) && !string.IsNullOrEmpty(_gameDir))
             {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    StartTutorial();
+                }), System.Windows.Threading.DispatcherPriority.Loaded);
+            }
+            else if (!hasStylePresets && !string.IsNullOrEmpty(_gameDir))
+            {
+                // Fallback: if tutorial was already completed but no presets yet, open catalog
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
@@ -456,6 +465,80 @@ public partial class MainWindow : Window
             MessageBox.Show($"Startup error:\n{ex}", "Ultimate Camera Mod", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+    private void StartTutorial()
+    {
+        var steps = new List<TutorialOverlay.TutorialStep>
+        {
+            new("Your Presets",
+                "This is your preset sidebar. Click Browse to download official UCM presets and community presets. Your own presets and imports also appear here. Click any preset to load it.",
+                () => PresetRailList),
+
+            new("Three Editing Tiers",
+                "UCM Quick for fast changes, Fine Tune for deep control over every camera state, and God Mode for raw XML editing. Changes sync across all three tiers automatically.",
+                () => EditorTabBar),
+
+            new("Camera Settings",
+                "Adjust camera distance, height, horizontal shift, field of view, lock-on zoom, and camera behaviour. The live preview updates as you tweak.",
+                () => SettingsPanel),
+
+            new("Live Preview",
+                "The camera preview shows character framing and distance. The field of view diagram shows the FoV cone from above. Both update in real time as you adjust settings.",
+                () => PreviewsPanel),
+
+            new("Export & Install",
+                "Export your settings as JSON for mod managers, XML, 0.paz, or .ucmpreset to share with others. Or click Install to Game to apply directly to your game files.",
+                () => SidebarActionButtons),
+
+            new("One More Thing...",
+                "I've dedicated way too much time to this project. If UCM saved you hours of camera frustration, consider buying me a coffee. Or don't. I'll keep making it anyway. But coffee helps.",
+                () => KofiBtn)
+        };
+
+        var overlay = new TutorialOverlay(steps, () =>
+        {
+            TutorialCanvas.Children.Clear();
+            TutorialCanvas.Visibility = Visibility.Collapsed;
+            // Mark tutorial as done
+            try { System.IO.File.WriteAllText(System.IO.Path.Combine(ExeDir, "tutorial_done.flag"), "done"); } catch { }
+
+            // After tutorial, open the preset catalog if no style presets exist yet
+            bool hasStyles = _presetManagerItems.Any(i => i.KindId == "style" && !i.IsPlaceholder);
+            if (!hasStyles && !string.IsNullOrEmpty(_gameDir))
+            {
+                var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (!string.IsNullOrEmpty(_gameDir))
+                            GenerateBuiltInPresets();
+                        RefreshPresetManagerLists(preserveSelection: true);
+                    });
+                },
+                catalogUrl: UcmPresetsCatalogUrl,
+                rawBaseUrl: UcmPresetsRawBaseUrl,
+                title: "Welcome! Download UCM Presets",
+                needsSessionXmlBake: true)
+                { Owner = this };
+                dlg.ShowDialog();
+            }
+        }, this);
+
+        TutorialCanvas.Children.Clear();
+        TutorialCanvas.Children.Add(overlay);
+        TutorialCanvas.Visibility = Visibility.Visible;
+
+        // Set canvas size to match window
+        overlay.Width = ActualWidth;
+        overlay.Height = ActualHeight;
+        SizeChanged += (_, args) =>
+        {
+            overlay.Width = args.NewSize.Width;
+            overlay.Height = args.NewSize.Height;
+        };
+
+        overlay.Start();
+    }
+
     private string BrowseForGameDir()
     {
         try

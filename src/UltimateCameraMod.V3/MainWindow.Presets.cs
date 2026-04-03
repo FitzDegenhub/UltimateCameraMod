@@ -344,7 +344,9 @@ public partial class MainWindow : Window
                         }
                         finally
                         {
-                            _suppressEvents = false;
+                            // Keep _suppressEvents = true through RefreshUIFromSessionXml
+                            // to prevent Quick event handlers from scheduling SyncQuickSettingsToEditors
+                            // which would overwrite _sessionXml with Quick-only values.
                         }
                     }
 
@@ -366,6 +368,10 @@ public partial class MainWindow : Window
                     {
                         SyncPreview();
                     }
+
+                    // Release _suppressEvents AFTER session XML is set, so Quick event handlers
+                    // don't schedule SyncQuickSettingsToEditors which would overwrite _sessionXml
+                    _suppressEvents = false;
 
                     SetLoadedPresetContext(item.Name, item.KindLabel, item.SourceLabel,
                         item.StatusText, item.SummaryText, item.Url);
@@ -417,6 +423,8 @@ public partial class MainWindow : Window
     {
         _sessionXml = xml;
         _sessionIsFullPreset = true;
+        // Cancel any pending Quick→editors sync that would overwrite _sessionXml with Quick-only values
+        _syncEditorsDebounceTimer?.Stop();
         // Full session snapshots replace God Mode overlay file so stale overrides cannot fight the grid.
         TryClearAdvOverridesFile();
         // UCM Quick sliders must track _sessionXml even on the default tab (imported presets / Picker loads

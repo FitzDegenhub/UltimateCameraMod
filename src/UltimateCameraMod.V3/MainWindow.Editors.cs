@@ -130,10 +130,15 @@ public partial class MainWindow : Window
         AdvancedControlsView.Visibility = Visibility.Collapsed;
         ExpertView.Visibility = Visibility.Collapsed;
 
-        // Update tab button styles
+        // Update tab button styles + foreground (dark text on gold when active, bright white when inactive)
+        var darkFg = new SolidColorBrush(Color.FromRgb(0x1a, 0x1a, 0x1a));
+        var brightFg = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
         TabQuick.Style = tab == "simple" ? _accentButtonStyle : _subtleButtonStyle;
+        TabQuick.Foreground = tab == "simple" ? darkFg : brightFg;
         TabFineTune.Style = tab == "advanced" ? _accentButtonStyle : _subtleButtonStyle;
+        TabFineTune.Foreground = tab == "advanced" ? darkFg : brightFg;
         TabGodMode.Style = tab == "expert" ? _accentButtonStyle : _subtleButtonStyle;
+        TabGodMode.Foreground = tab == "expert" ? darkFg : brightFg;
 
         _activeMode = tab;
         _isExpertMode = tab == "expert";
@@ -365,6 +370,8 @@ public partial class MainWindow : Window
     private void SyncQuickSettingsToEditorsNow()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
+        // Don't overwrite _sessionXml when a full preset (with Fine Tune/God Mode changes) is loaded
+        if (_sessionIsFullPreset) return;
         try
         {
             string xml = BuildSimpleSessionXml();

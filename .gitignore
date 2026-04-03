@@ -33,6 +33,7 @@ advanced_overrides.json
 window_state.json
 u3_draft_slot.json
 crash.log
+tutorial_done.flag
 debug/
 *.marker
 
