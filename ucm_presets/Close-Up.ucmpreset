@@ -10,7 +10,7 @@
     "height": -0.2,
     "right_offset": 0.25,
     "fov": 30,
-    "combat_pullback": 0.6,
+    "combat_pullback": 0.0,
     "centered": false,
     "mount_height": true,
     "steadycam": true
