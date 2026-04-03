@@ -88,10 +88,9 @@ public partial class MainWindow : Window
             string numericLatest = latest.Split('-')[0];
             string numericVer   = Ver.Split('-')[0];
             bool isOutdated = !string.IsNullOrEmpty(latest)
-                && !string.Equals(latest.Trim(), Ver.Trim(), StringComparison.OrdinalIgnoreCase)
                 && Version.TryParse(pad(numericLatest), out var remote)
                 && Version.TryParse(pad(numericVer), out var local)
-                && remote >= local;
+                && remote > local;
 
             Dispatcher.Invoke(() =>
             {
