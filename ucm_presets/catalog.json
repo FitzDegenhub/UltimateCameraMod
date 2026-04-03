@@ -11,7 +11,7 @@
         "style",
         "official"
       ],
-      "sha256": "f24b0b54b189d5ae9c387c41691c6015ce493fdf1d3bb9d4d83c17ffb54cb2ad"
+      "sha256": "5fffc7521c882aa22f3338074f12b72fa49dcf1ba3e134d553efec3dd94cedeb"
     },
     {
       "id": "dirt-cam",
@@ -23,7 +23,7 @@
         "style",
         "official"
       ],
-      "sha256": "ed18f56ec8177fe1fa00fa0537ca66dd49dcbb68ff042294b5870ecae574c9ec"
+      "sha256": "857753cd232df5b76f42a2c9a93ea5145c4fca9a7e004fe9ff64bf6620194ca4"
     },
     {
       "id": "heroic",
@@ -35,7 +35,7 @@
         "style",
         "official"
       ],
-      "sha256": "062c64ee2d4ead1b8ecab053dc71dfe53fc827ab38d2444a092285c8a5c3a0ec"
+      "sha256": "fbf8472c4647afb2e38d40c79ad9e2ce8f50a81a7b07fd739da1a2bf79fa7fe1"
     },
     {
       "id": "knee-cam",
@@ -47,7 +47,7 @@
         "style",
         "official"
       ],
-      "sha256": "23b24f35d2d7bb94a6df06bdcf497faef0ec3abede46d95e2aff2fc674644c0f"
+      "sha256": "ae718fef72d148ea274364b429439226e51ef2d124178d3f5de88606c0fcce69"
     },
     {
       "id": "low-rider",
@@ -59,7 +59,7 @@
         "style",
         "official"
       ],
-      "sha256": "020e64310688343e8d491fa64bc90baacc8bb5e8d7c2b270013467c3916f4a1d"
+      "sha256": "f4bf40a01893e2af85676a9757cb379773cfcb5ac2f9ae21a5d59ac55d5ff498"
     },
     {
       "id": "new-ucm",
@@ -83,7 +83,7 @@
         "style",
         "official"
       ],
-      "sha256": "e37d909ff9c251d4e959cd6a2d9015a35b7b10d052936dea27805a3f178d4386"
+      "sha256": "3a8f1d060152626df70b2b704afa99e38e73142338b19ca789a771dbff7cc31f"
     },
     {
       "id": "survival",
@@ -95,7 +95,7 @@
         "style",
         "official"
       ],
-      "sha256": "5801df6aae8cbc503282f3281bca972fe5a63d16138079cd4e067d0d0378d07a"
+      "sha256": "b70d90a91a4d904d0328c532c59d9a639884a00ca63763e5b7895e0a406cb6dd"
     }
   ]
 }
