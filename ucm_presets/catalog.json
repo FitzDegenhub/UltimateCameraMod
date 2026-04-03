@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "presets": [
+    {
+      "id": "western",
+      "file": "Heroic.ucmpreset",
+      "name": "Heroic",
+      "author": "0xFitz",
+      "description": "Shoulder-level OTS, great framing",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    },
+    {
+      "id": "cinematic",
+      "file": "Panoramic.ucmpreset",
+      "name": "Panoramic",
+      "author": "0xFitz",
+      "description": "Head-height wide pullback, filmic",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    },
+    {
+      "id": "immersive",
+      "file": "Close-Up.ucmpreset",
+      "name": "Close-Up",
+      "author": "0xFitz",
+      "description": "Shoulder OTS, tighter (16:9 feel)",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    },
+    {
+      "id": "lowcam",
+      "file": "Low Rider.ucmpreset",
+      "name": "Low Rider",
+      "author": "0xFitz",
+      "description": "Hip-level, full body + horizon",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    },
+    {
+      "id": "vlowcam",
+      "file": "Knee Cam.ucmpreset",
+      "name": "Knee Cam",
+      "author": "0xFitz",
+      "description": "Knee-height dramatic low angle",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    },
+    {
+      "id": "ulowcam",
+      "file": "Dirt Cam.ucmpreset",
+      "name": "Dirt Cam",
+      "author": "0xFitz",
+      "description": "Ground-level, extreme low",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    },
+    {
+      "id": "re2",
+      "file": "Survival.ucmpreset",
+      "name": "Survival",
+      "author": "0xFitz",
+      "description": "Tight horror-game OTS (16:9 feel)",
+      "tags": ["style", "official"],
+      "ucm_preset_rev": 2
+    }
+  ]
+}

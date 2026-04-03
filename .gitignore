@@ -21,6 +21,8 @@ backups/
 custom_presets/
 advanced_presets/
 ucm_presets/
+# Re-include the repo-level ucm_presets/ folder (official preset definitions for GitHub download)
+!/ucm_presets/
 my_presets/
 community_presets/
 import_presets/

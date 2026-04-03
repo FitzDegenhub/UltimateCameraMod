@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.0-beta";
+    private const string Ver = "3.0";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
@@ -35,6 +35,8 @@ public partial class MainWindow : Window
     private const string UcmPresetsDirName = "ucm_presets";
     private const string MyPresetsDirName = "my_presets";
     private const string CommunityPresetsDirName = "community_presets";
+    private const string UcmPresetsCatalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/ucm_presets/catalog.json";
+    private const string UcmPresetsRawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/ucm_presets/";
     private const string ImportPresetsDirName = "import_presets";
     private const string LegacyImportedPresetsDirName = "imported_presets";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
@@ -644,6 +646,9 @@ public partial class MainWindow : Window
             }
 
             _savedState = LoadInstallState();
+            // Deploy shipped community presets before the first list refresh so their
+            // files exist on disk when ActivatePickerFromSelection runs on startup.
+            DeployShippedCommunityPresets();
             PopulateControls();
             RefreshPresetManagerLists(preserveSelection: false);
             string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "";
@@ -667,6 +672,13 @@ public partial class MainWindow : Window
                 MigrateJsonToUcmPreset(CommunityPresetsDir);
                 // Don't migrate import_presets — different schema
                 GenerateBuiltInPresets();
+                // If the selected preset was skipped on startup (file didn't exist yet),
+                // retry activating it now that GenerateBuiltInPresets has written the files.
+                if (_sessionXml == null && _selectedPresetManagerItem != null)
+                {
+                    _activePickerKey = null;
+                    ActivatePickerFromSelection(_selectedPresetManagerItem, skipCapture: true);
+                }
                 TryRestoreLastInstallSessionAfterGameDirResolved();
             }
 
@@ -809,6 +821,35 @@ public partial class MainWindow : Window
     /// <summary>Bump when built-in Vanilla.json must be rewritten (true game baseline, not UCM-tuned).</summary>
     private const int VanillaBuiltinPresetRevision = 3;
 
+    /// <summary>
+    /// Bump this whenever CameraRules changes in a way that affects UCM style preset output
+    /// (e.g. new BuildSmoothing entries, FoV normalization, new sections). Causes all existing
+    /// style presets to be regenerated on next launch so they stay in sync with the live rules.
+    /// </summary>
+    private const int UcmStylePresetRevision = 2;
+
+    private static bool UcmStylePresetNeedsRefresh(string filePath)
+    {
+        if (!File.Exists(filePath)) return true;
+        try
+        {
+            // Read enough to find both the revision stamp and session_xml presence.
+            // Downloaded definition files have ucm_preset_rev but no session_xml until
+            // GenerateBuiltInPresets() bakes it in after the game dir is resolved.
+            using var reader = new StreamReader(filePath);
+            var buf = new char[4096];
+            int read = reader.Read(buf, 0, buf.Length);
+            string head = new string(buf, 0, read);
+            string needle = $"\"ucm_preset_rev\":{UcmStylePresetRevision}";
+            string needleSpaced = $"\"ucm_preset_rev\": {UcmStylePresetRevision}";
+            bool hasCurrentRev = head.Contains(needle, StringComparison.Ordinal)
+                              || head.Contains(needleSpaced, StringComparison.Ordinal);
+            bool hasSessionXml = head.Contains("\"session_xml\"", StringComparison.Ordinal);
+            return !hasCurrentRev || !hasSessionXml;
+        }
+        catch { return true; }
+    }
+
     private static bool VanillaBuiltInPresetNeedsRefresh(string filePath)
     {
         // Check both .ucmpreset and .json variants
@@ -854,45 +895,43 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Called when the game directory becomes available. Generates the Vanilla preset (which needs
+    /// the actual game XML) and injects session_xml into any downloaded UCM style presets that are
+    /// missing it or have a stale revision. Style presets themselves are fetched from GitHub by
+    /// FetchUcmPresetsAsync(); this method only handles the XML bake step.
+    /// </summary>
     private void GenerateBuiltInPresets()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
         try
         {
             string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
-            foreach (var (id, label) in Styles)
+
+            // --- Vanilla (default) preset: always game-specific, generated locally ---
+            string vanillaLabel = Styles.FirstOrDefault(s => s.Id == "default").Label ?? "Vanilla  -  Unmodified game camera (use Steadycam for UCM smoothing)";
+            string vanillaName = vanillaLabel.Split("  -  ")[0].Trim();
+            string vanillaPath = Path.Combine(UcmPresetsDir, vanillaName + ".ucmpreset");
+            if (VanillaBuiltInPresetNeedsRefresh(vanillaPath))
             {
-                string styleName = label.Split("  -  ")[0].Trim();
-                string fileName = styleName + ".ucmpreset";
-                string path = Path.Combine(UcmPresetsDir, fileName);
-                if (id == "default")
-                {
-                    if (!VanillaBuiltInPresetNeedsRefresh(path)) continue;
-                }
-                else if (File.Exists(path))
-                {
-                    continue;
-                }
+                var (dist, up, ro) = StyleParams["default"];
+                double rightOffsetSetting;
+                if (!CameraMod.TryParseUcmQuickFootBaselineFromXml(vanillaXml, out dist, out up, out double roAbs))
+                    rightOffsetSetting = ro;
+                else
+                    rightOffsetSetting = CameraRules.QuickShiftDeltaFromFootZl2RightOffset(roAbs);
 
-                var (dist, up, ro) = StyleParams[id];
-                string xml;
-                Dictionary<string, object> settings;
-
-                if (string.Equals(id, "default", StringComparison.OrdinalIgnoreCase))
+                var vanillaPreset = new Dictionary<string, object>
                 {
-                    // True vanilla: no BuildModifications — raw game XML from backup/live PAZ.
-                    xml = vanillaXml;
-                    // Quick sliders use BuildCustom delta; JSON must store delta, not literal XML RightOffset (~0.5).
-                    double rightOffsetSetting;
-                    if (!CameraMod.TryParseUcmQuickFootBaselineFromXml(vanillaXml, out dist, out up, out double roAbs))
-                    {
-                        (dist, up, ro) = StyleParams[id];
-                        rightOffsetSetting = ro;
-                    }
-                    else
-                        rightOffsetSetting = CameraRules.QuickShiftDeltaFromFootZl2RightOffset(roAbs);
-
-                    settings = new Dictionary<string, object>
+                    ["name"] = vanillaName,
+                    ["author"] = "0xFitz",
+                    ["description"] = vanillaLabel.Contains("  -  ") ? vanillaLabel.Split("  -  ")[1].Trim() : "",
+                    ["kind"] = "default",
+                    ["locked"] = true,
+                    ["style_id"] = "default",
+                    ["vanilla_preset_rev"] = VanillaBuiltinPresetRevision,
+                    ["session_xml"] = vanillaXml,
+                    ["settings"] = new Dictionary<string, object>
                     {
                         ["distance"] = Math.Round(dist, 2),
                         ["height"] = Math.Round(up, 2),
@@ -902,43 +941,68 @@ public partial class MainWindow : Window
                         ["centered"] = false,
                         ["mount_height"] = false,
                         ["steadycam"] = false
-                    };
-                }
-                else
-                {
-                    var modSet = CameraRules.BuildModifications(id, 25, false,
-                        combatPullback: 0.0, mountHeight: false, steadycam: true);
-                    xml = CameraMod.ApplyModifications(vanillaXml, modSet);
-                    settings = new Dictionary<string, object>
-                    {
-                        ["distance"] = Math.Round(dist, 2),
-                        ["height"] = Math.Round(up, 2),
-                        ["right_offset"] = Math.Round(ro, 2),
-                        ["fov"] = 25,
-                        ["combat_pullback"] = 0.0,
-                        ["centered"] = false,
-                        ["mount_height"] = false,
-                        ["steadycam"] = true
-                    };
-                }
-
-                string desc = label.Contains("  -  ") ? label.Split("  -  ")[1].Trim() : "";
-                var preset = new Dictionary<string, object>
-                {
-                    ["name"] = styleName,
-                    ["author"] = "0xFitz",
-                    ["description"] = desc,
-                    ["kind"] = id == "default" ? "default" : "style",
-                    ["locked"] = true,
-                    ["style_id"] = id,
-                    ["session_xml"] = xml,
-                    ["settings"] = settings
+                    }
                 };
-                if (string.Equals(id, "default", StringComparison.OrdinalIgnoreCase))
-                    preset["vanilla_preset_rev"] = VanillaBuiltinPresetRevision;
-
-                File.WriteAllText(path, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
+                File.WriteAllText(vanillaPath, JsonSerializer.Serialize(vanillaPreset, PresetFileJsonOptions));
             }
+
+            // --- UCM style presets: bake session_xml into any downloaded definition files ---
+            // FetchUcmPresetsAsync() downloads the definition (no session_xml) from GitHub.
+            // Once the game dir is known we inject the session_xml so ActivatePickerFromSelection
+            // can load the preset without needing to rebuild it on every activation.
+            foreach (string path in Directory.GetFiles(UcmPresetsDir, "*.ucmpreset"))
+            {
+                try
+                {
+                    string head;
+                    using (var reader = new StreamReader(path))
+                    {
+                        var buf = new char[512];
+                        int read = reader.Read(buf, 0, buf.Length);
+                        head = new string(buf, 0, read);
+                    }
+                    string? kind = ExtractJsonStringField(head, "kind");
+                    if (kind != "style") continue;
+
+                    // Skip if session_xml is already baked in and revision is current
+                    if (!UcmStylePresetNeedsRefresh(path)) continue;
+
+                    // Read full file to get style_id and settings
+                    string json = File.ReadAllText(path);
+                    using var doc = JsonDocument.Parse(json);
+                    var root = doc.RootElement;
+                    string styleId = root.TryGetProperty("style_id", out var sidEl) ? sidEl.GetString() ?? "" : "";
+                    if (string.IsNullOrEmpty(styleId) || !StyleParams.ContainsKey(styleId)) continue;
+
+                    int fov = 25;
+                    double combatPullback = 0.0;
+                    bool mountHeight = false;
+                    bool steadycam = true;
+                    if (root.TryGetProperty("settings", out var settingsEl))
+                    {
+                        if (settingsEl.TryGetProperty("fov", out var fovEl) && fovEl.ValueKind == JsonValueKind.Number)
+                            fov = fovEl.GetInt32();
+                        if (settingsEl.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
+                            combatPullback = cpEl.GetDouble();
+                        if (settingsEl.TryGetProperty("mount_height", out var mhEl))
+                            mountHeight = mhEl.ValueKind == JsonValueKind.True;
+                        if (settingsEl.TryGetProperty("steadycam", out var scEl))
+                            steadycam = scEl.ValueKind == JsonValueKind.True;
+                    }
+
+                    var modSet = CameraRules.BuildModifications(styleId, fov, false,
+                        combatPullback: combatPullback, mountHeight: mountHeight, steadycam: steadycam);
+                    string builtXml = CameraMod.ApplyModifications(vanillaXml, modSet);
+
+                    // Rewrite the file with session_xml and updated revision stamp
+                    var updatedNode = JsonNode.Parse(json)!.AsObject();
+                    updatedNode["session_xml"] = builtXml;
+                    updatedNode["ucm_preset_rev"] = UcmStylePresetRevision;
+                    File.WriteAllText(path, updatedNode.ToJsonString(PresetFileJsonOptions));
+                }
+                catch { /* skip malformed files */ }
+            }
+
             // Deploy shipped community presets from embedded resources
             DeployShippedCommunityPresets();
         }
@@ -1079,6 +1143,7 @@ public partial class MainWindow : Window
 
         CheckForUpdate();
         CheckGitHubVersion();
+        FetchUcmPresetsAsync();
         RefreshGameUpdateNotice();
 
         if (string.IsNullOrWhiteSpace(_gameDir))
@@ -1733,7 +1798,12 @@ public partial class MainWindow : Window
                 {
                     if (string.IsNullOrEmpty(item.FilePath) || !File.Exists(item.FilePath))
                     {
-                        SetStatus($"Preset file not found: {item.FilePath}", "Error");
+                        // UCM style presets are generated by GenerateBuiltInPresets() which needs
+                        // the game dir. On a fresh install the file won't exist yet at this point —
+                        // silently skip rather than showing a spurious error to the user.
+                        bool isUcmStylePreset = item.KindId == "style" || item.KindId == "default";
+                        if (!isUcmStylePreset)
+                            SetStatus($"Preset file not found: {item.FilePath}", "Error");
                         _activePickerKey = previousPickerKey;
                         break;
                     }
@@ -2934,6 +3004,82 @@ public partial class MainWindow : Window
         => Process.Start(new ProcessStartInfo(NexusUrl) { UseShellExecute = true });
     private void OnUpdateGitHubClick(object s, RoutedEventArgs e)
         => Process.Start(new ProcessStartInfo(GitHubUrl + "/releases/latest") { UseShellExecute = true });
+
+    // -- UCM preset fetch (background, every launch) -------------------------
+
+    /// <summary>
+    /// Fetches the UCM preset catalog from GitHub and downloads any new or stale preset
+    /// definition files into ucm_presets/. The session_xml is not stored in the repo —
+    /// GenerateBuiltInPresets() bakes it in once the game directory is known.
+    /// </summary>
+    private async void FetchUcmPresetsAsync()
+    {
+        try
+        {
+            using var http = new HttpClient();
+            http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/" + Ver);
+            http.Timeout = TimeSpan.FromSeconds(10);
+
+            string catalogJson = await http.GetStringAsync(UcmPresetsCatalogUrl);
+            using var doc = JsonDocument.Parse(catalogJson);
+            if (!doc.RootElement.TryGetProperty("presets", out var presetsArr)
+                || presetsArr.ValueKind != JsonValueKind.Array)
+                return;
+
+            bool anyNew = false;
+            foreach (var el in presetsArr.EnumerateArray())
+            {
+                string file = el.TryGetProperty("file", out var fEl) ? fEl.GetString() ?? "" : "";
+                int catalogRev = el.TryGetProperty("ucm_preset_rev", out var rEl) && rEl.ValueKind == JsonValueKind.Number
+                    ? rEl.GetInt32() : 0;
+                if (string.IsNullOrEmpty(file)) continue;
+
+                string localPath = Path.Combine(UcmPresetsDir, file);
+
+                // Check if the local file is up-to-date
+                bool needsDownload = !File.Exists(localPath) || UcmStylePresetNeedsRefresh(localPath);
+                if (!needsDownload && catalogRev > UcmStylePresetRevision) needsDownload = true;
+                if (!needsDownload) continue;
+
+                try
+                {
+                    string downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(file);
+                    string content = await http.GetStringAsync(downloadUrl);
+
+                    // Validate it's a proper UCM preset definition
+                    using var presetDoc = JsonDocument.Parse(content);
+                    var presetRoot = presetDoc.RootElement;
+                    string? kind = presetRoot.TryGetProperty("kind", out var kEl) ? kEl.GetString() : null;
+                    if (kind != "style") continue;
+
+                    // Write the definition file (no session_xml — GenerateBuiltInPresets bakes it in)
+                    File.WriteAllText(localPath, content);
+                    anyNew = true;
+                }
+                catch { /* skip individual download failures */ }
+            }
+
+            if (anyNew)
+            {
+                // Refresh the preset list so newly downloaded presets appear
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    RefreshPresetManagerLists(preserveSelection: true);
+                    // If game dir is available, bake session_xml into the new presets immediately
+                    if (!string.IsNullOrEmpty(_gameDir))
+                    {
+                        GenerateBuiltInPresets();
+                        if (_sessionXml == null && _selectedPresetManagerItem != null)
+                        {
+                            _activePickerKey = null;
+                            ActivatePickerFromSelection(_selectedPresetManagerItem, skipCapture: true);
+                        }
+                    }
+                });
+            }
+        }
+        catch { /* network unavailable — silently skip */ }
+    }
 
     // â”€â”€ Tab switching â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -5260,7 +5406,13 @@ public partial class MainWindow : Window
             var duplicated = _presetManagerItems.FirstOrDefault(i =>
                 string.Equals(i.FilePath, newPath, StringComparison.OrdinalIgnoreCase));
             if (duplicated != null)
+            {
                 SetSelectedPresetManagerItem(duplicated, updateDetails: true);
+                // Fully activate the duplicate so _sessionXml, Quick sliders, and Fine Tune
+                // all reflect the new preset rather than the source preset's stale state.
+                _activePickerKey = null;
+                ActivatePickerFromSelection(duplicated, skipCapture: true);
+            }
 
             QueueSavedToast("Preset duplicated");
             SetStatus($"Preset '{item.Name}' duplicated as '{newName}'.", "Success");
