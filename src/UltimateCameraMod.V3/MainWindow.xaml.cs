@@ -1338,7 +1338,7 @@ public partial class MainWindow : Window
             if (_savedState?.TryGetValue("combat_pullback", out var cpObj) == true && cpObj != null)
                 double.TryParse(cpObj.ToString(), System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out savedPullback);
-            CombatPullbackSlider.Value = Math.Clamp(savedPullback, -0.4, 0.6);
+            CombatPullbackSlider.Value = Math.Clamp(savedPullback, -0.6, 0.6);
             CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
 
             BaneCheck.IsChecked = GetBool(_savedState, "bane");
@@ -1776,7 +1776,7 @@ public partial class MainWindow : Window
                             }
                             if (settings.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
                             {
-                                CombatPullbackSlider.Value = Math.Clamp(cpEl.GetDouble(), -0.4, 0.6);
+                                CombatPullbackSlider.Value = Math.Clamp(cpEl.GetDouble(), -0.6, 0.6);
                                 CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
                             }
                             else if (settings.TryGetProperty("combat", out var combEl) && combEl.ValueKind == JsonValueKind.String)
@@ -4602,6 +4602,8 @@ public partial class MainWindow : Window
             ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendOutTime", 0.0, 3.0, 0.1, "Run blend-out"),
             ("Player_Weapon_Guard/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Guard blend-in"),
             ("Player_Weapon_Guard/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Guard blend-out"),
+            ("Player_Weapon_Rush/CameraBlendParameter",        "BlendInTime",  0.0, 3.0, 0.1, "Rush blend-in"),
+            ("Player_Weapon_Rush/CameraBlendParameter",        "BlendOutTime", 0.0, 3.0, 0.1, "Rush blend-out"),
             ("Player_Basic_Default_Run/OffsetByVelocity",      "OffsetLength", 0.0, 2.0, 0.1, "Run sway"),
             ("Player_Weapon_Default_Run/OffsetByVelocity",     "OffsetLength", 0.0, 2.0, 0.1, "Combat run sway"),
             ("Player_Weapon_Default_RunFast/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, "Combat sprint sway"),
@@ -4627,6 +4629,66 @@ public partial class MainWindow : Window
             smoothSliders.Add(row);
         }
         panel.Children.Add(WrapInCard("On-foot and combat smoothing", smoothSliders.ToArray()));
+
+        // Movement transitions card -- freefall, rope, super jump, hit
+        var movementTransitionSliders = new List<UIElement>();
+        var movementTransitionEntries = new[]
+        {
+            ("Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, "Freefall entry blend-in"),
+            ("Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendOutTime", 0.0, 3.0, 0.1, "Freefall entry blend-out"),
+            ("Player_Basic_FreeFall/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Freefall blend-in"),
+            ("Player_Basic_FreeFall/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Freefall blend-out"),
+            ("Player_Basic_SuperJump/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, "Super jump blend-in"),
+            ("Player_Basic_SuperJump/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, "Super jump blend-out"),
+            ("Player_Basic_RopePull/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Rope pull blend-in"),
+            ("Player_Basic_RopePull/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Rope pull blend-out"),
+            ("Player_Basic_RopeSwing/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, "Rope swing blend-in"),
+            ("Player_Basic_RopeSwing/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, "Rope swing blend-out"),
+            ("Player_Hit_Throw/CameraBlendParameter",            "BlendInTime",  0.0, 3.0, 0.1, "Hit/thrown blend-in"),
+            ("Player_Hit_Throw/CameraBlendParameter",            "BlendOutTime", 0.0, 3.0, 0.1, "Hit/thrown blend-out"),
+        };
+
+        foreach (var (modKey, attr, min, max, step, friendlyName) in movementTransitionEntries)
+        {
+            var row = BuildSliderRow(modKey, attr, min, max, step);
+            if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
+            movementTransitionSliders.Add(row);
+        }
+        panel.Children.Add(WrapInCard("Movement transitions", movementTransitionSliders.ToArray()));
+
+        // Extended lock-on smoothing card -- mount lock-on, revive, force, titan, non-rotate, wrestle, aggro, wanted
+        var extLockOnSliders = new List<UIElement>();
+        var extLockOnEntries = new[]
+        {
+            ("Player_Ride_Aim_LockOn/CameraBlendParameter",          "BlendInTime",  0.0, 3.0, 0.1, "Mount LockOn blend-in"),
+            ("Player_Ride_Aim_LockOn/CameraBlendParameter",          "BlendOutTime", 0.0, 3.0, 0.1, "Mount LockOn blend-out"),
+            ("Player_Revive_LockOn_System/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Revive LockOn blend-in"),
+            ("Player_Revive_LockOn_System/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Revive LockOn blend-out"),
+            ("Player_Force_LockOn/CameraBlendParameter",             "BlendInTime",  0.0, 3.0, 0.1, "Force LockOn blend-in"),
+            ("Player_Force_LockOn/CameraBlendParameter",             "BlendOutTime", 0.0, 3.0, 0.1, "Force LockOn blend-out"),
+            ("Player_LockOn_Titan/CameraBlendParameter",             "BlendInTime",  0.0, 3.0, 0.1, "Titan LockOn blend-in"),
+            ("Player_LockOn_Titan/CameraBlendParameter",             "BlendOutTime", 0.0, 3.0, 0.1, "Titan LockOn blend-out"),
+            ("Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, "Non-rotate LockOn blend-in"),
+            ("Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendOutTime", 0.0, 3.0, 0.1, "Non-rotate LockOn blend-out"),
+            ("Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter","BlendInTime",  0.0, 3.0, 0.1, "Wrestle LockOn blend-in"),
+            ("Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter","BlendOutTime", 0.0, 3.0, 0.1, "Wrestle LockOn blend-out"),
+            ("Player_StartAggro_TwoTarget/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Aggro blend-in"),
+            ("Player_StartAggro_TwoTarget/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Aggro blend-out"),
+            ("Player_Wanted_TwoTarget/CameraBlendParameter",         "BlendInTime",  0.0, 3.0, 0.1, "Wanted blend-in"),
+            ("Player_Wanted_TwoTarget/CameraBlendParameter",         "BlendOutTime", 0.0, 3.0, 0.1, "Wanted blend-out"),
+            ("Player_Ride_Warmachine_Aim/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, "Warmachine aim blend-in"),
+            ("Player_Ride_Warmachine_Aim/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, "Warmachine aim blend-out"),
+            ("Player_Ride_Warmachine_Dash/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Warmachine dash blend-in"),
+            ("Player_Ride_Warmachine_Dash/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Warmachine dash blend-out"),
+        };
+
+        foreach (var (modKey, attr, min, max, step, friendlyName) in extLockOnEntries)
+        {
+            var row = BuildSliderRow(modKey, attr, min, max, step);
+            if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
+            extLockOnSliders.Add(row);
+        }
+        panel.Children.Add(WrapInCard("Extended lock-on and combat transitions", extLockOnSliders.ToArray()));
 
         string[] onFootFollowSections =
         {

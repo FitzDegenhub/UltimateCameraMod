@@ -476,6 +476,40 @@ public static class CameraRules
         Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendInTime", "1.2");
         Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendOutTime", "1.5");
 
+        // Rush / charge -- vanilla 0.25 is extremely jarring when entering a charge attack
+        Set(m, "Player_Weapon_Rush/CameraBlendParameter", "BlendInTime", "0.6");
+        Set(m, "Player_Weapon_Rush/CameraBlendParameter", "BlendOutTime", "0.6");
+
+        // Freefall -- vanilla 0.65 snaps on jump-off; ease in smoothly
+        Set(m, "Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Basic_FreeFall/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Basic_FreeFall/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Super jump -- vanilla 0.5 snaps on launch
+        Set(m, "Player_Basic_SuperJump/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Basic_SuperJump/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Rope pull / swing -- vanilla 0.5 snaps on grab
+        Set(m, "Player_Basic_RopePull/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Basic_RopePull/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Basic_RopeSwing/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Basic_RopeSwing/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Hit / thrown -- vanilla 0.5 snaps when knocked back
+        Set(m, "Player_Hit_Throw/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Hit_Throw/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Warmachine aim / dash -- vanilla 0.5 snaps on weapon draw / dash
+        Set(m, "Player_Ride_Warmachine_Aim/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Ride_Warmachine_Aim/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Ride_Warmachine_Dash/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Ride_Warmachine_Dash/CameraBlendParameter", "BlendOutTime", "1.0");
+
+        // Mount lock-on -- vanilla 0.5 snaps when locking on from horseback
+        Set(m, "Player_Ride_Aim_LockOn/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Aim_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
+
         // Lock-on blend smoothing -- soften transitions into and out of lock-on cameras
         Set(m, "Player_Weapon_LockOn/CameraBlendParameter", "BlendInTime", "1.25");
         Set(m, "Player_Weapon_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
@@ -487,6 +521,22 @@ public static class CameraRules
         Set(m, "Player_FollowLearn_LockOn_Boss/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendInTime", "1.0");
         Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
+
+        // Extended lock-on coverage -- sections not previously smoothed
+        Set(m, "Player_Revive_LockOn_System/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Revive_LockOn_System/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Force_LockOn/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Force_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_LockOn_Titan/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_LockOn_Titan/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_StartAggro_TwoTarget/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_StartAggro_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Wanted_TwoTarget/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Wanted_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
 
         return m;
     }

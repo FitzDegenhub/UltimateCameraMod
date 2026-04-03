@@ -413,9 +413,9 @@
                                       Height="32" SelectionChanged="OnSettingChanged" Margin="0,0,0,8"
                                       ToolTip="Adds this many degrees to each Fov and InDoorFov in the camera file. Indoor and outdoor rows start from different vanilla numbers, so God Mode will show many different final values—not one angle everywhere."/>
 
-                            <TextBlock Text="Lock-on offset" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                            <TextBlock Text="Lock-on zoom" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                             <Slider x:Name="CombatPullbackSlider" Grid.Row="1" Grid.Column="1"
-                                    Minimum="-0.4" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
+                                    Minimum="-0.6" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
                                     TickFrequency="0.05" IsSnapToTickEnabled="True"
                                     ValueChanged="OnCombatPullbackChanged"
                                     VerticalAlignment="Center" Margin="0,0,0,8"/>
