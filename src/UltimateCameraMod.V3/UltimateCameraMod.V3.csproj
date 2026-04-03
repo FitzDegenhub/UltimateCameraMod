@@ -9,7 +9,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>UltimateCameraMod.V3</AssemblyName>
     <RootNamespace>UltimateCameraMod.V3</RootNamespace>
-    <Version>3.0.0-beta</Version>
+    <Version>3.0.1-beta</Version>
     <Authors>0xFitz</Authors>
     <Description>Export-first camera workflow for Crimson Desert Mod Manager</Description>
     <ApplicationIcon>Assets\ucm.ico</ApplicationIcon>

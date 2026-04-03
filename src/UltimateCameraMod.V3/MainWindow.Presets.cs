@@ -366,7 +366,17 @@ public partial class MainWindow : Window
                     }
                     else
                     {
+                        // Definition-only preset (no session_xml): build session from Quick + Fine Tune so install/export work.
+                        _sessionIsFullPreset = false;
                         SyncPreview();
+                        if (!string.IsNullOrEmpty(_gameDir))
+                        {
+                            try
+                            {
+                                _sessionXml = BuildCuratedSessionXml();
+                            }
+                            catch { /* game dir / vanilla read may still be settling */ }
+                        }
                     }
 
                     // Release _suppressEvents AFTER session XML is set, so Quick event handlers
@@ -501,6 +511,7 @@ public partial class MainWindow : Window
         {
             TryClearAdvOverridesFile();
             _sessionXml = xml;
+            _sessionIsFullPreset = true;
             _advCtrlNeedsRefresh = true;
             _expertNeedsRefresh = true;
             // Don't override Quick sliders — preset loader sets them from settings block.
@@ -1198,69 +1209,6 @@ public partial class MainWindow : Window
                 File.WriteAllText(vanillaPath, JsonSerializer.Serialize(vanillaPreset, PresetFileJsonOptions));
             }
 
-            // --- UCM style presets: bake session_xml into any downloaded definition files ---
-            // FetchUcmPresetsAsync() downloads the definition (no session_xml) from GitHub.
-            // Once the game dir is known we inject the session_xml so ActivatePickerFromSelection
-            // can load the preset without needing to rebuild it on every activation.
-            foreach (string path in Directory.GetFiles(UcmPresetsDir, "*.ucmpreset"))
-            {
-                try
-                {
-                    string head;
-                    using (var reader = new StreamReader(path))
-                    {
-                        var buf = new char[512];
-                        int read = reader.Read(buf, 0, buf.Length);
-                        head = new string(buf, 0, read);
-                    }
-                    string? kind = ExtractJsonStringField(head, "kind");
-                    if (kind != "style") continue;
-
-                    // Skip if session_xml is already baked in and revision is current
-                    if (!UcmStylePresetNeedsRefresh(path)) continue;
-
-                    // Read full file to get style_id and settings
-                    string json = File.ReadAllText(path);
-                    using var doc = JsonDocument.Parse(json);
-                    var root = doc.RootElement;
-                    string styleId = root.TryGetProperty("style_id", out var sidEl) ? sidEl.GetString() ?? "" : "";
-                    if (string.IsNullOrEmpty(styleId) || !StyleParams.ContainsKey(styleId)) continue;
-
-                    int fov = 25;
-                    double combatPullback = 0.0;
-                    bool mountHeight = false;
-                    bool steadycam = true;
-                    if (root.TryGetProperty("settings", out var settingsEl))
-                    {
-                        if (settingsEl.TryGetProperty("fov", out var fovEl) && fovEl.ValueKind == JsonValueKind.Number)
-                            fov = fovEl.GetInt32();
-                        if (settingsEl.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
-                            combatPullback = cpEl.GetDouble();
-                        if (settingsEl.TryGetProperty("mount_height", out var mhEl))
-                            mountHeight = mhEl.ValueKind == JsonValueKind.True;
-                        if (settingsEl.TryGetProperty("steadycam", out var scEl))
-                            steadycam = scEl.ValueKind == JsonValueKind.True;
-                    }
-
-                    var modSet = CameraRules.BuildModifications(styleId, fov, false,
-                        combatPullback: combatPullback, mountHeight: mountHeight, steadycam: steadycam);
-                    string builtXml = CameraMod.ApplyModifications(vanillaXml, modSet);
-
-                    // Rewrite the file with session_xml and updated revision stamp.
-                    // Avoid JsonNode.ToJsonString — it corrupts large strings. Build a fresh dict instead.
-                    var rebuilt = new Dictionary<string, object>();
-                    foreach (var prop in root.EnumerateObject())
-                    {
-                        if (prop.Name == "session_xml" || prop.Name == "ucm_preset_rev") continue;
-                        rebuilt[prop.Name] = JsonSerializer.Deserialize<object>(prop.Value.GetRawText()) ?? "";
-                    }
-                    rebuilt["session_xml"] = builtXml;
-                    rebuilt["ucm_preset_rev"] = UcmStylePresetRevision;
-                    File.WriteAllText(path, JsonSerializer.Serialize(rebuilt, PresetFileJsonOptions));
-                }
-                catch { /* skip malformed files */ }
-            }
-
             // Deploy shipped community presets from embedded resources
             DeployShippedCommunityPresets();
         }
@@ -1364,34 +1312,6 @@ public partial class MainWindow : Window
 
     private const int VanillaBuiltinPresetRevision = 3;
 
-    /// <summary>
-    /// Bump this whenever CameraRules changes in a way that affects UCM style preset output
-    /// (e.g. new BuildSmoothing entries, FoV normalization, new sections). Causes all existing
-    /// style presets to be regenerated on next launch so they stay in sync with the live rules.
-    /// </summary>
-    private const int UcmStylePresetRevision = 2;
-
-    private static bool UcmStylePresetNeedsRefresh(string filePath)
-    {
-        if (!File.Exists(filePath)) return true;
-        try
-        {
-            // Read enough to find both the revision stamp and session_xml presence.
-            // Downloaded definition files have ucm_preset_rev but no session_xml until
-            // GenerateBuiltInPresets() bakes it in after the game dir is resolved.
-            using var reader = new StreamReader(filePath);
-            var buf = new char[4096];
-            int read = reader.Read(buf, 0, buf.Length);
-            string head = new string(buf, 0, read);
-            string needle = $"\"ucm_preset_rev\":{UcmStylePresetRevision}";
-            string needleSpaced = $"\"ucm_preset_rev\": {UcmStylePresetRevision}";
-            bool hasCurrentRev = head.Contains(needle, StringComparison.Ordinal)
-                              || head.Contains(needleSpaced, StringComparison.Ordinal);
-            bool hasSessionXml = head.Contains("\"session_xml\"", StringComparison.Ordinal);
-            return !hasCurrentRev || !hasSessionXml;
-        }
-        catch { return true; }
-    }
 
     private static bool VanillaBuiltInPresetNeedsRefresh(string filePath)
     {
@@ -1531,6 +1451,7 @@ public partial class MainWindow : Window
         if (!Directory.Exists(dir)) return Enumerable.Empty<string>();
         return Directory.GetFiles(dir, "*.ucmpreset")
             .Concat(Directory.GetFiles(dir, "*.json"))
+            .Where(f => !Path.GetFileName(f).StartsWith('.'))
             .OrderBy(f => f, StringComparer.OrdinalIgnoreCase);
     }
 

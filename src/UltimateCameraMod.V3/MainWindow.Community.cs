@@ -37,17 +37,11 @@ public partial class MainWindow : Window
         {
             var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
             {
-                Dispatcher.Invoke(() =>
-                {
-                    if (!string.IsNullOrEmpty(_gameDir))
-                        GenerateBuiltInPresets(); // Bake session_xml into downloaded presets
-                    RefreshPresetManagerLists(preserveSelection: true);
-                });
+                Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
             },
             catalogUrl: UcmPresetsCatalogUrl,
             rawBaseUrl: UcmPresetsRawBaseUrl,
-            title: "UCM Presets",
-            needsSessionXmlBake: true)
+            title: "UCM Presets")
             {
                 Owner = this
             };
@@ -133,6 +127,10 @@ public partial class MainWindow : Window
     /// definition files into ucm_presets/. The session_xml is not stored in the repo —
     /// GenerateBuiltInPresets() bakes it in once the game directory is known.
     /// </summary>
+    /// <summary>
+    /// Downloads any UCM presets from the catalog that don't exist locally.
+    /// Presets are complete files (with session_xml) — no baking needed.
+    /// </summary>
     private async void FetchUcmPresetsAsync()
     {
         try
@@ -151,30 +149,26 @@ public partial class MainWindow : Window
             foreach (var el in presetsArr.EnumerateArray())
             {
                 string file = el.TryGetProperty("file", out var fEl) ? fEl.GetString() ?? "" : "";
-                int catalogRev = el.TryGetProperty("ucm_preset_rev", out var rEl) && rEl.ValueKind == JsonValueKind.Number
-                    ? rEl.GetInt32() : 0;
                 if (string.IsNullOrEmpty(file)) continue;
 
                 string localPath = Path.Combine(UcmPresetsDir, file);
 
-                // Check if the local file is up-to-date
-                bool needsDownload = !File.Exists(localPath) || UcmStylePresetNeedsRefresh(localPath);
-                if (!needsDownload && catalogRev > UcmStylePresetRevision) needsDownload = true;
-                if (!needsDownload) continue;
+                // Only download presets that don't exist locally.
+                // SHA mismatches on existing files are handled by CheckUcmPresetUpdatesAsync (⟳ icon).
+                if (File.Exists(localPath)) continue;
 
                 try
                 {
                     string downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(file);
-                    string content = await http.GetStringAsync(downloadUrl);
+                    byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
 
-                    // Validate it's a proper UCM preset definition
-                    using var presetDoc = JsonDocument.Parse(content);
-                    var presetRoot = presetDoc.RootElement;
-                    string? kind = presetRoot.TryGetProperty("kind", out var kEl) ? kEl.GetString() : null;
-                    if (kind != "style") continue;
+                    // Write the complete preset file as-is
+                    File.WriteAllBytes(localPath, rawBytes);
 
-                    // Write the definition file (no session_xml — GenerateBuiltInPresets bakes it in)
-                    File.WriteAllText(localPath, content);
+                    // Track the download hash in sidecar for update detection
+                    string rawSha = Convert.ToHexString(
+                        System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
+                    UpdateCatalogStateEntry(file, rawSha);
                     anyNew = true;
                 }
                 catch { /* skip individual download failures */ }
@@ -182,20 +176,9 @@ public partial class MainWindow : Window
 
             if (anyNew)
             {
-                // Refresh the preset list so newly downloaded presets appear
                 await Dispatcher.InvokeAsync(() =>
                 {
                     RefreshPresetManagerLists(preserveSelection: true);
-                    // If game dir is available, bake session_xml into the new presets immediately
-                    if (!string.IsNullOrEmpty(_gameDir))
-                    {
-                        GenerateBuiltInPresets();
-                        if (_sessionXml == null && _selectedPresetManagerItem != null)
-                        {
-                            _activePickerKey = null;
-                            ActivatePickerFromSelection(_selectedPresetManagerItem, skipCapture: true);
-                        }
-                    }
                 });
             }
         }
@@ -300,15 +283,18 @@ public partial class MainWindow : Window
                 || presetsArr.ValueKind != JsonValueKind.Array)
                 return;
 
-            var catalogRevisions = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            // Build catalog: filename → sha256
+            var catalogHashes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (var el in presetsArr.EnumerateArray())
             {
                 string file = el.TryGetProperty("file", out var fEl) ? fEl.GetString() ?? "" : "";
-                int rev = el.TryGetProperty("ucm_preset_rev", out var rEl) && rEl.ValueKind == JsonValueKind.Number
-                    ? rEl.GetInt32() : 0;
-                if (!string.IsNullOrEmpty(file))
-                    catalogRevisions[Path.GetFileNameWithoutExtension(file)] = rev;
+                string sha = el.TryGetProperty("sha256", out var shaEl) ? shaEl.GetString() ?? "" : "";
+                if (!string.IsNullOrEmpty(file) && !string.IsNullOrEmpty(sha))
+                    catalogHashes[file] = sha;
             }
+
+            // Read sidecar: last known remote SHA per file (written by FetchUcmPresetsAsync / OnPresetUpdateClick).
+            var localState = ReadCatalogState();
 
             await Dispatcher.InvokeAsync(() =>
             {
@@ -319,21 +305,15 @@ public partial class MainWindow : Window
                     string localPath = item.FilePath;
                     if (string.IsNullOrEmpty(localPath) || !File.Exists(localPath)) continue;
 
-                    // Read local revision from the file header
-                    int localRev = 0;
-                    try
-                    {
-                        using var reader = new StreamReader(localPath);
-                        var buf = new char[512];
-                        int read = reader.Read(buf, 0, buf.Length);
-                        string head = new string(buf, 0, read);
-                        string? revStr = ExtractJsonStringField(head, "ucm_preset_rev");
-                        if (revStr != null) int.TryParse(revStr, out localRev);
-                    }
-                    catch { }
+                    string fileName = Path.GetFileName(localPath);
 
-                    string presetFileName = Path.GetFileNameWithoutExtension(localPath);
-                    if (catalogRevisions.TryGetValue(presetFileName, out int catalogRev) && catalogRev > localRev)
+                    // Only flag updates for presets that have a sidecar entry (i.e., were downloaded through the app).
+                    // Presets without a sidecar entry are manually placed or pre-installed — don't flash them.
+                    if (!localState.TryGetValue(fileName, out string? storedSha) || string.IsNullOrEmpty(storedSha))
+                        continue;
+
+                    if (catalogHashes.TryGetValue(fileName, out string? catalogSha)
+                        && !string.Equals(storedSha, catalogSha, StringComparison.OrdinalIgnoreCase))
                     {
                         item.HasUpdate = true;
                     }
@@ -341,6 +321,67 @@ public partial class MainWindow : Window
             });
         }
         catch { /* network unavailable — silently skip update check */ }
+    }
+
+    private async void CheckCommunityPresetUpdatesAsync()
+    {
+        try
+        {
+            using var http = new HttpClient();
+            http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/" + Ver);
+            http.Timeout = TimeSpan.FromSeconds(8);
+
+            string json = await http.GetStringAsync(
+                "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/catalog.json");
+            using var doc = JsonDocument.Parse(json);
+            if (!doc.RootElement.TryGetProperty("presets", out var presetsArr)
+                || presetsArr.ValueKind != JsonValueKind.Array)
+                return;
+
+            // Build catalog: id → sha256
+            var catalogHashes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var el in presetsArr.EnumerateArray())
+            {
+                string id = el.TryGetProperty("id", out var idEl) ? idEl.GetString() ?? "" : "";
+                string sha = el.TryGetProperty("sha256", out var shaEl) ? shaEl.GetString() ?? "" : "";
+                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(sha))
+                    catalogHashes[id] = sha;
+            }
+
+            await Dispatcher.InvokeAsync(() =>
+            {
+                foreach (var item in _presetManagerItems)
+                {
+                    if (item.KindId != "community" || item.IsPlaceholder) continue;
+                    item.HasUpdate = false;
+                }
+
+                foreach (var item in _presetManagerItems)
+                {
+                    if (item.KindId != "community" || item.IsPlaceholder) continue;
+                    string localPath = item.FilePath;
+                    if (string.IsNullOrEmpty(localPath) || !File.Exists(localPath)) continue;
+
+                    // Compute local file SHA256
+                    string localSha;
+                    try
+                    {
+                        byte[] bytes = File.ReadAllBytes(localPath);
+                        localSha = Convert.ToHexString(
+                            System.Security.Cryptography.SHA256.HashData(bytes)).ToLowerInvariant();
+                    }
+                    catch { continue; }
+
+                    string presetId = Path.GetFileNameWithoutExtension(localPath);
+                    if (catalogHashes.TryGetValue(presetId, out string? catalogSha)
+                        && !string.Equals(localSha, catalogSha, StringComparison.OrdinalIgnoreCase))
+                    {
+                        item.HasUpdate = true;
+                    }
+                }
+            });
+        }
+        catch { /* network unavailable — silently skip */ }
     }
 
     private async void OnPresetUpdateClick(object sender, RoutedEventArgs e)
@@ -389,24 +430,40 @@ public partial class MainWindow : Window
             http.Timeout = TimeSpan.FromSeconds(10);
 
             string fileName = Path.GetFileName(item.FilePath);
-            string downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(fileName);
-            string content = await http.GetStringAsync(downloadUrl);
+            bool isCommunity = item.KindId == "community";
+            string downloadUrl;
+            if (isCommunity)
+                downloadUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/presets/"
+                    + Uri.EscapeDataString(fileName);
+            else
+                downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(fileName);
 
-            File.WriteAllText(item.FilePath, content);
+            byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
+            File.WriteAllBytes(item.FilePath, rawBytes);
 
-            // Bake in session_xml if game dir is available
-            if (!string.IsNullOrEmpty(_gameDir))
-                GenerateBuiltInPresets();
-
-            item.HasUpdate = false;
-            RefreshPresetManagerLists(preserveSelection: true);
-
-            // Reload if this was the active preset
-            if (ReferenceEquals(_selectedPresetManagerItem, item))
+            // For UCM presets, update the sidecar with the new download hash
+            if (!isCommunity)
             {
-                _activePickerKey = null;
-                ActivatePickerFromSelection(item, skipCapture: true);
+                string rawSha = Convert.ToHexString(
+                    System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
+                UpdateCatalogStateEntry(fileName, rawSha);
             }
+
+            await Dispatcher.InvokeAsync(() =>
+            {
+                // Clear the active key so the preset reloads from disk after list refresh
+                _activePickerKey = null;
+                RefreshPresetManagerLists(preserveSelection: true);
+
+                // Re-activate the selected preset to refresh UI with updated values
+                if (_selectedPresetManagerItem != null)
+                    ActivatePickerFromSelection(_selectedPresetManagerItem, skipCapture: true);
+
+                if (isCommunity)
+                    CheckCommunityPresetUpdatesAsync();
+                else
+                    CheckUcmPresetUpdatesAsync();
+            });
 
             QueueSavedToast($"Updated '{item.Name}'");
             SetStatus($"Preset '{item.Name}' updated.", "Success");

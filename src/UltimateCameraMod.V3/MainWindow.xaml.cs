@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.0";
+    private const string Ver = "3.0.1-beta";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
@@ -146,6 +146,35 @@ public partial class MainWindow : Window
     private static string CommunityPresetsDir
     {
         get { string d = Path.Combine(ExeDir, CommunityPresetsDirName); Directory.CreateDirectory(d); return d; }
+    }
+
+    private static string UcmCatalogStatePath => Path.Combine(UcmPresetsDir, ".catalog_state.json");
+
+    private static Dictionary<string, string> ReadCatalogState()
+    {
+        try
+        {
+            if (File.Exists(UcmCatalogStatePath))
+            {
+                string json = File.ReadAllText(UcmCatalogStatePath);
+                return JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new();
+            }
+        }
+        catch { }
+        return new();
+    }
+
+    private static void UpdateCatalogStateEntry(string filename, string sha256)
+    {
+        var state = ReadCatalogState();
+        state[filename] = sha256;
+        WriteCatalogState(state);
+    }
+
+    private static void WriteCatalogState(Dictionary<string, string> state)
+    {
+        Directory.CreateDirectory(UcmPresetsDir);
+        File.WriteAllText(UcmCatalogStatePath, JsonSerializer.Serialize(state, new JsonSerializerOptions { WriteIndented = true }));
     }
 
     private static bool _legacyPresetFoldersMigrated;
@@ -417,7 +446,9 @@ public partial class MainWindow : Window
                     _activePickerKey = null;
                     ActivatePickerFromSelection(_selectedPresetManagerItem, skipCapture: true);
                 }
-                TryRestoreLastInstallSessionAfterGameDirResolved();
+                // Do not overwrite XML already loaded from the selected preset (last_install runs after list refresh).
+                if (string.IsNullOrWhiteSpace(_sessionXml))
+                    TryRestoreLastInstallSessionAfterGameDirResolved();
             }
 
             SwitchEditorTab("simple");
@@ -444,17 +475,11 @@ public partial class MainWindow : Window
                 {
                     var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
                     {
-                        Dispatcher.Invoke(() =>
-                        {
-                            if (!string.IsNullOrEmpty(_gameDir))
-                                GenerateBuiltInPresets();
-                            RefreshPresetManagerLists(preserveSelection: true);
-                        });
+                        Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
                     },
                     catalogUrl: UcmPresetsCatalogUrl,
                     rawBaseUrl: UcmPresetsRawBaseUrl,
-                    title: "Welcome! Download UCM Presets",
-                    needsSessionXmlBake: true)
+                    title: "Welcome! Download UCM Presets")
                     { Owner = this };
                     dlg.ShowDialog();
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
@@ -507,17 +532,11 @@ public partial class MainWindow : Window
             {
                 var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (!string.IsNullOrEmpty(_gameDir))
-                            GenerateBuiltInPresets();
-                        RefreshPresetManagerLists(preserveSelection: true);
-                    });
+                    Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
                 },
                 catalogUrl: UcmPresetsCatalogUrl,
                 rawBaseUrl: UcmPresetsRawBaseUrl,
-                title: "Welcome! Download UCM Presets",
-                needsSessionXmlBake: true)
+                title: "Welcome! Download UCM Presets")
                 { Owner = this };
                 dlg.ShowDialog();
             }
@@ -616,8 +635,6 @@ public partial class MainWindow : Window
 
         CheckForUpdate();
         CheckGitHubVersion();
-        // UCM style presets are downloaded via Browse button, not auto-fetched on startup
-        CheckUcmPresetUpdatesAsync();
         RefreshGameUpdateNotice();
 
         if (string.IsNullOrWhiteSpace(_gameDir))
@@ -626,6 +643,9 @@ public partial class MainWindow : Window
             _activePickerKey = null;
             RefreshPresetManagerLists();
             UpdateLoadedPresetContextUi();
+            // Check for preset updates AFTER the list is populated
+            CheckUcmPresetUpdatesAsync();
+            CheckCommunityPresetUpdatesAsync();
         }
         else
         {
@@ -664,6 +684,9 @@ public partial class MainWindow : Window
                 _activePickerKey = null;
                 UpdateLoadedPresetContextUi();
                 RefreshGameUpdateNotice();
+                // Check for preset updates AFTER the list is populated
+                CheckUcmPresetUpdatesAsync();
+                CheckCommunityPresetUpdatesAsync();
             });
         }
         catch (Exception ex)

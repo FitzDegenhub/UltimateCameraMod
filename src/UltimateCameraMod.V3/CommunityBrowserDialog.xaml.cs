@@ -14,7 +14,6 @@ public partial class CommunityBrowserDialog : Window
     private readonly string _rawBaseUrl;
     private readonly string _presetsDir;
     private readonly Action _onPresetsChanged;
-    private readonly bool _needsSessionXmlBake;
     private List<CatalogEntry>? _catalog;
 
     private sealed class CatalogEntry
@@ -34,18 +33,16 @@ public partial class CommunityBrowserDialog : Window
     public CommunityBrowserDialog(string presetsDir, Action onPresetsChanged,
         string catalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/catalog.json",
         string rawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/",
-        string title = "Community Presets",
-        bool needsSessionXmlBake = false)
+        string title = "Community Presets")
     {
         _presetsDir = presetsDir;
         _onPresetsChanged = onPresetsChanged;
         _catalogUrl = catalogUrl;
         _rawBaseUrl = rawBaseUrl;
-        _needsSessionXmlBake = needsSessionXmlBake;
         InitializeComponent();
         Title = title;
         HeaderTitle.Text = title.ToUpperInvariant();
-        if (needsSessionXmlBake)
+        if (title == "UCM Presets")
             HeaderSubtitle.Text = "Browse and download official UCM camera presets. Downloaded presets appear in your sidebar.";
         Loaded += async (_, _) => await FetchCatalogAsync();
     }
@@ -122,11 +119,11 @@ public partial class CommunityBrowserDialog : Window
 
     private bool IsPresetDownloaded(CatalogEntry entry)
     {
-        // Check by catalog filename first (UCM presets), then by id (community presets)
-        if (_needsSessionXmlBake && !string.IsNullOrEmpty(entry.File))
+        // Check by catalog filename first, then by id
+        if (!string.IsNullOrEmpty(entry.File))
         {
-            string path = Path.Combine(_presetsDir, entry.File);
-            return System.IO.File.Exists(path);
+            string path = Path.Combine(_presetsDir, Path.GetFileName(entry.File));
+            if (System.IO.File.Exists(path)) return true;
         }
         string idPath = Path.Combine(_presetsDir, $"{entry.Id}.ucmpreset");
         return System.IO.File.Exists(idPath);
@@ -270,17 +267,14 @@ public partial class CommunityBrowserDialog : Window
             var root = doc.RootElement;
             bool hasSessionXml = root.TryGetProperty("session_xml", out _) || root.TryGetProperty("RawXml", out _);
             bool hasStyleId = root.TryGetProperty("style_id", out _);
-            if (!hasSessionXml && !hasStyleId && !_needsSessionXmlBake)
+            if (!hasSessionXml && !hasStyleId)
             {
                 btn.Content = "Invalid";
                 StatusText.Text = $"Preset '{entry.Name}' doesn't contain camera data.";
                 return;
             }
 
-            // For UCM presets (needsSessionXmlBake), save the raw definition as-is.
-            // GenerateBuiltInPresets will bake in session_xml later.
-            // For community presets, rebuild with metadata fields at the top for fast header reads.
-            if (!_needsSessionXmlBake)
+            // Rebuild with metadata fields at the top for fast header reads
             {
                 string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
                 string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? entry.Name : entry.Name;
@@ -311,11 +305,30 @@ public partial class CommunityBrowserDialog : Window
 
             // Save — UCM presets use the catalog filename; community presets use the entry id
             Directory.CreateDirectory(_presetsDir);
-            string destFileName = _needsSessionXmlBake && !string.IsNullOrEmpty(entry.File)
-                ? entry.File
+            string destFileName = !string.IsNullOrEmpty(entry.File)
+                ? Path.GetFileName(entry.File)
                 : $"{entry.Id}.ucmpreset";
             string destPath = Path.Combine(_presetsDir, destFileName);
             await System.IO.File.WriteAllTextAsync(destPath, content);
+
+            // Update UCM sidecar with the catalog SHA so update detection works
+            if (!string.IsNullOrEmpty(entry.Sha256) && _presetsDir.Contains("ucm_presets"))
+            {
+                try
+                {
+                    string statePath = Path.Combine(_presetsDir, ".catalog_state.json");
+                    var state = new Dictionary<string, string>();
+                    if (System.IO.File.Exists(statePath))
+                    {
+                        string stateJson = System.IO.File.ReadAllText(statePath);
+                        state = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(stateJson) ?? new();
+                    }
+                    state[destFileName] = entry.Sha256;
+                    System.IO.File.WriteAllText(statePath,
+                        System.Text.Json.JsonSerializer.Serialize(state, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }));
+                }
+                catch { }
+            }
 
             btn.Content = "Downloaded \u2714";
             btn.Style = (Style)FindResource("SubtleButton");
