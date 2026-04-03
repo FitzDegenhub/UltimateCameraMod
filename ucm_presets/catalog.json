@@ -6,84 +6,84 @@
       "file": "Close-Up.ucmpreset",
       "name": "Close-Up",
       "author": "0xFitz",
-      "description": "Shoulder OTS, tighter (16:9 feel)",
+      "description": "Tight shoulder OTS with lock-on pull-back, cinematic framing",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "ece33b51fd91c9e323054cce0085e02c6005566e8784fa521aebdd35c08e8efb"
+      "sha256": "a17a74792af6786371e7d2fa74dd996626c40bf8ffa7069b2bf51d6c7f593698"
     },
     {
       "id": "dirt-cam",
       "file": "Dirt Cam.ucmpreset",
       "name": "Dirt Cam",
       "author": "0xFitz",
-      "description": "Ground-level, extreme low",
+      "description": "Ground-level extreme low angle, intense and gritty",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "6e138ca2525bd793c36ddd344c90b8fe9573597456172d12186854cf44c67bb7"
+      "sha256": "c0e3e8136bc1e595221417e8c710aac6800fb502d52d19c2f56cf19b2280784f"
     },
     {
       "id": "heroic",
       "file": "Heroic.ucmpreset",
       "name": "Heroic",
       "author": "0xFitz",
-      "description": "Shoulder-level OTS, great framing",
+      "description": "Shoulder-level OTS with smoothed transitions",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "c7721ec4f03c95b0dfb7ca1ddd25ea97c94f4d0a5ac718bfa6baeee5d6a00737"
+      "sha256": "0ee3a6b3d9af0dc9b860f71d133968bc1d5c65da82b9e28ecc91d1f9a4d29261"
     },
     {
       "id": "knee-cam",
       "file": "Knee Cam.ucmpreset",
       "name": "Knee Cam",
       "author": "0xFitz",
-      "description": "Knee-height dramatic low angle",
+      "description": "Knee-height dramatic low angle, action movie feel",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "09b28057a809ed7d149cdc0639d373d3abda49e3ddfcc264b9a8d64628d9d0c1"
+      "sha256": "dc640b5441b83365670fa018426bb02e9d2e04fab54e275302af9d5db4a1c939"
     },
     {
       "id": "low-rider",
       "file": "Low Rider.ucmpreset",
       "name": "Low Rider",
       "author": "0xFitz",
-      "description": "Hip-level, full body + horizon",
+      "description": "Hip-level full body view with wide horizon",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "d23bf73738c65b069327dacfa9f24e48e9e2fc493bf616bf8d8b7a74d0c06368"
+      "sha256": "798b8839631eb532ebb19b1a5df2a661a00e69016d3716ec276240a153329c49"
     },
     {
       "id": "panoramic",
       "file": "Panoramic.ucmpreset",
       "name": "Panoramic",
       "author": "0xFitz",
-      "description": "Head-height wide pullback, filmic",
+      "description": "Wide filmic pullback, head-height, great for exploration",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "8976cacd0735daee1e5380021cb2d3c1c51229101390d5ccc4c997af691d737c"
+      "sha256": "0828d9ac986f77528dced5144b1c01b1129edc4a724b253c9984c405ce07dc1d"
     },
     {
       "id": "survival",
       "file": "Survival.ucmpreset",
       "name": "Survival",
       "author": "0xFitz",
-      "description": "Tight horror-game OTS (16:9 feel)",
+      "description": "Tight OTS with offset, tense horror-game feel",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "da4d296511db73f2cf26be8b26976aeaa8e2c77a44e62f682f26fb7d3b57c21a"
+      "sha256": "3e9d824e8a620e001125e9a2d6887adbd5e26ef1edd165fe559f4132fc91b309"
     }
   ]
 }
