@@ -1,0 +1,80 @@
+name: Update UCM preset catalog
+
+on:
+  push:
+    paths:
+      - 'ucm_presets/*.ucmpreset'
+
+jobs:
+  update-catalog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate catalog from preset files
+        run: |
+          python3 << 'SCRIPT'
+          import json, hashlib, os, glob
+
+          presets = []
+          for path in sorted(glob.glob("ucm_presets/*.ucmpreset")):
+              try:
+                  with open(path, "rb") as f:
+                      raw_bytes = f.read()
+
+                  data = json.loads(raw_bytes.decode("utf-8"))
+
+                  # Only include style presets
+                  if data.get("kind") != "style":
+                      continue
+
+                  file_name = os.path.basename(path)
+                  file_id = os.path.splitext(file_name)[0].lower().replace(" ", "-")
+
+                  # SHA256 of raw file bytes (matches app's Encoding.UTF8.GetBytes hash)
+                  sha = hashlib.sha256(raw_bytes).hexdigest()
+
+                  name = data.get("name", file_name)
+                  author = data.get("author", "")
+                  desc = data.get("description", "")
+                  if len(desc) > 300:
+                      desc = desc[:297] + "..."
+                  tags = data.get("tags", ["style", "official"])
+
+                  presets.append({
+                      "id": file_id,
+                      "file": file_name,
+                      "name": name,
+                      "author": author,
+                      "description": desc,
+                      "tags": tags,
+                      "sha256": sha,
+                  })
+              except Exception as e:
+                  print(f"Skipping {path}: {e}")
+
+          catalog = {
+              "version": 1,
+              "presets": presets,
+          }
+
+          with open("ucm_presets/catalog.json", "w", encoding="utf-8") as f:
+              json.dump(catalog, f, indent=2, ensure_ascii=False)
+              f.write("\n")
+
+          print(f"Catalog updated: {len(presets)} presets")
+          SCRIPT
+
+      - name: Commit updated catalog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ucm_presets/catalog.json
+          if git diff --cached --quiet; then
+            echo "No changes to catalog"
+          else
+            git commit -m "Auto-update UCM preset catalog [skip ci]"
+            git push
+          fi
