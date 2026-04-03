@@ -14,6 +14,7 @@ public partial class CommunityBrowserDialog : Window
     private readonly string _rawBaseUrl;
     private readonly string _presetsDir;
     private readonly Action _onPresetsChanged;
+    private readonly bool _needsSessionXmlBake;
     private List<CatalogEntry>? _catalog;
 
     private sealed class CatalogEntry
@@ -33,16 +34,18 @@ public partial class CommunityBrowserDialog : Window
     public CommunityBrowserDialog(string presetsDir, Action onPresetsChanged,
         string catalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/catalog.json",
         string rawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/",
-        string title = "Community Presets")
+        string title = "Community Presets",
+        bool needsSessionXmlBake = false)
     {
         _presetsDir = presetsDir;
         _onPresetsChanged = onPresetsChanged;
         _catalogUrl = catalogUrl;
         _rawBaseUrl = rawBaseUrl;
+        _needsSessionXmlBake = needsSessionXmlBake;
         InitializeComponent();
         Title = title;
         HeaderTitle.Text = title.ToUpperInvariant();
-        if (title == "UCM Presets")
+        if (needsSessionXmlBake)
             HeaderSubtitle.Text = "Browse and download official UCM camera presets. Downloaded presets appear in your sidebar.";
         Loaded += async (_, _) => await FetchCatalogAsync();
     }
@@ -119,7 +122,12 @@ public partial class CommunityBrowserDialog : Window
 
     private bool IsPresetDownloaded(CatalogEntry entry)
     {
-        // Check by catalog filename first, then by id
+        // UCM presets use the catalog filename; community presets use the entry id
+        if (_needsSessionXmlBake && !string.IsNullOrEmpty(entry.File))
+        {
+            string path = Path.Combine(_presetsDir, entry.File);
+            return System.IO.File.Exists(path);
+        }
         if (!string.IsNullOrEmpty(entry.File))
         {
             string path = Path.Combine(_presetsDir, Path.GetFileName(entry.File));
@@ -267,14 +275,17 @@ public partial class CommunityBrowserDialog : Window
             var root = doc.RootElement;
             bool hasSessionXml = root.TryGetProperty("session_xml", out _) || root.TryGetProperty("RawXml", out _);
             bool hasStyleId = root.TryGetProperty("style_id", out _);
-            if (!hasSessionXml && !hasStyleId)
+            if (!hasSessionXml && !hasStyleId && !_needsSessionXmlBake)
             {
                 btn.Content = "Invalid";
                 StatusText.Text = $"Preset '{entry.Name}' doesn't contain camera data.";
                 return;
             }
 
-            // Rebuild with metadata fields at the top for fast header reads
+            // UCM presets (needsSessionXmlBake): save raw definition as-is.
+            // GenerateBuiltInPresets will bake session_xml on next launch.
+            // Community presets: rebuild with metadata at the top for fast header reads.
+            if (!_needsSessionXmlBake)
             {
                 string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
                 string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? entry.Name : entry.Name;
@@ -305,9 +316,11 @@ public partial class CommunityBrowserDialog : Window
 
             // Save — UCM presets use the catalog filename; community presets use the entry id
             Directory.CreateDirectory(_presetsDir);
-            string destFileName = !string.IsNullOrEmpty(entry.File)
-                ? Path.GetFileName(entry.File)
-                : $"{entry.Id}.ucmpreset";
+            string destFileName = _needsSessionXmlBake && !string.IsNullOrEmpty(entry.File)
+                ? entry.File
+                : !string.IsNullOrEmpty(entry.File)
+                    ? Path.GetFileName(entry.File)
+                    : $"{entry.Id}.ucmpreset";
             string destPath = Path.Combine(_presetsDir, destFileName);
             await System.IO.File.WriteAllTextAsync(destPath, content);
 

@@ -37,11 +37,17 @@ public partial class MainWindow : Window
         {
             var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
             {
-                Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
+                Dispatcher.Invoke(() =>
+                {
+                    if (!string.IsNullOrEmpty(_gameDir))
+                        GenerateBuiltInPresets();
+                    RefreshPresetManagerLists(preserveSelection: true);
+                });
             },
             catalogUrl: UcmPresetsCatalogUrl,
             rawBaseUrl: UcmPresetsRawBaseUrl,
-            title: "UCM Presets")
+            title: "UCM Presets",
+            needsSessionXmlBake: true)
             {
                 Owner = this
             };

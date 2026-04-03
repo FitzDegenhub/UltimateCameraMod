@@ -475,11 +475,17 @@ public partial class MainWindow : Window
                 {
                     var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
                     {
-                        Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
+                        Dispatcher.Invoke(() =>
+                        {
+                            if (!string.IsNullOrEmpty(_gameDir))
+                                GenerateBuiltInPresets();
+                            RefreshPresetManagerLists(preserveSelection: true);
+                        });
                     },
                     catalogUrl: UcmPresetsCatalogUrl,
                     rawBaseUrl: UcmPresetsRawBaseUrl,
-                    title: "Welcome! Download UCM Presets")
+                    title: "Welcome! Download UCM Presets",
+                    needsSessionXmlBake: true)
                     { Owner = this };
                     dlg.ShowDialog();
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
@@ -532,11 +538,17 @@ public partial class MainWindow : Window
             {
                 var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
                 {
-                    Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (!string.IsNullOrEmpty(_gameDir))
+                            GenerateBuiltInPresets();
+                        RefreshPresetManagerLists(preserveSelection: true);
+                    });
                 },
                 catalogUrl: UcmPresetsCatalogUrl,
                 rawBaseUrl: UcmPresetsRawBaseUrl,
-                title: "Welcome! Download UCM Presets")
+                title: "Welcome! Download UCM Presets",
+                needsSessionXmlBake: true)
                 { Owner = this };
                 dlg.ShowDialog();
             }

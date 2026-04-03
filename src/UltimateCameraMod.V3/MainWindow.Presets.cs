@@ -383,6 +383,10 @@ public partial class MainWindow : Window
                     // don't schedule SyncQuickSettingsToEditors which would overwrite _sessionXml
                     _suppressEvents = false;
 
+                    // SyncPreview was skipped inside RefreshUIFromSessionXml because _suppressEvents
+                    // was still true. Now that events are re-enabled, sync the preview and FoV.
+                    SyncPreview();
+
                     SetLoadedPresetContext(item.Name, item.KindLabel, item.SourceLabel,
                         item.StatusText, item.SummaryText, item.Url);
                     break;
@@ -1209,6 +1213,65 @@ public partial class MainWindow : Window
                 File.WriteAllText(vanillaPath, JsonSerializer.Serialize(vanillaPreset, PresetFileJsonOptions));
             }
 
+            // --- UCM style presets: bake session_xml from definitions ---
+            // UCM presets in the repo are definition-only (style_id + settings, no session_xml).
+            // We generate session_xml here from vanilla XML + current CameraRules so presets
+            // always reflect the latest rules (lock-on scaling, steadycam, etc.).
+            foreach (string path in Directory.GetFiles(UcmPresetsDir, "*.ucmpreset"))
+            {
+                try
+                {
+                    string head;
+                    using (var reader = new StreamReader(path))
+                    {
+                        var buf = new char[512];
+                        int read = reader.Read(buf, 0, buf.Length);
+                        head = new string(buf, 0, read);
+                    }
+                    string? kind = ExtractJsonStringField(head, "kind");
+                    if (kind != "style") continue;
+
+                    if (!UcmStylePresetNeedsRefresh(path)) continue;
+
+                    string json = File.ReadAllText(path);
+                    using var doc = JsonDocument.Parse(json);
+                    var root = doc.RootElement;
+                    string styleId = root.TryGetProperty("style_id", out var sidEl) ? sidEl.GetString() ?? "" : "";
+                    if (string.IsNullOrEmpty(styleId) || !StyleParams.ContainsKey(styleId)) continue;
+
+                    int fov = 25;
+                    double combatPullback = 0.0;
+                    bool mountHeight = false;
+                    bool steadycam = true;
+                    if (root.TryGetProperty("settings", out var settingsEl))
+                    {
+                        if (settingsEl.TryGetProperty("fov", out var fovEl) && fovEl.ValueKind == JsonValueKind.Number)
+                            fov = fovEl.GetInt32();
+                        if (settingsEl.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
+                            combatPullback = cpEl.GetDouble();
+                        if (settingsEl.TryGetProperty("mount_height", out var mhEl))
+                            mountHeight = mhEl.ValueKind == JsonValueKind.True;
+                        if (settingsEl.TryGetProperty("steadycam", out var scEl))
+                            steadycam = scEl.ValueKind == JsonValueKind.True;
+                    }
+
+                    var modSet = CameraRules.BuildModifications(styleId, fov, false,
+                        combatPullback: combatPullback, mountHeight: mountHeight, steadycam: steadycam);
+                    string builtXml = CameraMod.ApplyModifications(vanillaXml, modSet);
+
+                    var rebuilt = new Dictionary<string, object>();
+                    foreach (var prop in root.EnumerateObject())
+                    {
+                        if (prop.Name is "session_xml" or "ucm_preset_rev") continue;
+                        rebuilt[prop.Name] = JsonSerializer.Deserialize<object>(prop.Value.GetRawText()) ?? "";
+                    }
+                    rebuilt["session_xml"] = builtXml;
+                    rebuilt["ucm_preset_rev"] = UcmStylePresetRevision;
+                    File.WriteAllText(path, JsonSerializer.Serialize(rebuilt, PresetFileJsonOptions));
+                }
+                catch { /* skip malformed files */ }
+            }
+
             // Deploy shipped community presets from embedded resources
             DeployShippedCommunityPresets();
         }
@@ -1216,6 +1279,32 @@ public partial class MainWindow : Window
         {
             SetStatus($"Failed to generate built-in presets: {ex.Message}", "Warn");
         }
+    }
+
+    /// <summary>
+    /// Bump this whenever CameraRules changes in a way that affects UCM style preset output
+    /// (e.g. lock-on scaling, steadycam smoothing, section exclusions). Forces all existing
+    /// style presets to be regenerated on next launch so they stay in sync with the live rules.
+    /// </summary>
+    private const int UcmStylePresetRevision = 3;
+
+    private static bool UcmStylePresetNeedsRefresh(string filePath)
+    {
+        if (!File.Exists(filePath)) return true;
+        try
+        {
+            using var reader = new StreamReader(filePath);
+            var buf = new char[4096];
+            int read = reader.Read(buf, 0, buf.Length);
+            string head = new string(buf, 0, read);
+            string needle = $"\"ucm_preset_rev\":{UcmStylePresetRevision}";
+            string needleSpaced = $"\"ucm_preset_rev\": {UcmStylePresetRevision}";
+            bool hasCurrentRev = head.Contains(needle, StringComparison.Ordinal)
+                              || head.Contains(needleSpaced, StringComparison.Ordinal);
+            bool hasSessionXml = head.Contains("\"session_xml\"", StringComparison.Ordinal);
+            return !hasCurrentRev || !hasSessionXml;
+        }
+        catch { return true; }
     }
 
     private void DeployShippedCommunityPresets()
