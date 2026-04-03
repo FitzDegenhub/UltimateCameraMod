@@ -232,5 +232,5 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 **Source:** [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
 **Nexus:** [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)
-**VirusTotal:** TBD (will be updated after release build)
+**VirusTotal:** [v3.0.1 - Clean (0/72)](https://www.virustotal.com/gui/file/7d5292e9557c9122b89b72680b021aeb975746dc46b08f21c987745034c0dc51)
 **Support:** [Ko-fi](https://ko-fi.com/0xfitz)
