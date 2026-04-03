@@ -1,4 +1,4 @@
-﻿# UCM v3.0-beta - Release Notes
+﻿# UCM v3.0 Beta - Release Notes
 
 > **Nexus Mods page temporarily unavailable** - The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. Downloads are available here on GitHub Releases in the meantime. Thank you for your patience!
 
@@ -10,7 +10,7 @@
 
 ## Clean install required
 
-Remove any previous UCM folders from your game directory and verify game files via Steam before running v3-beta for the first time. v3 will auto-migrate any legacy `.json` presets on first launch.
+Remove any previous UCM folders from your game directory and verify game files via Steam before running v3.0 for the first time. v3 will auto-migrate any legacy `.json` presets on first launch.
 
 ---
 
@@ -86,7 +86,7 @@ Includes title, version, author, Nexus URL, and description fields. Shows patch 
 
 ---
 
-## Camera improvements in v3-beta
+## Camera improvements in v3.0
 
 ### Design philosophy: value edits only
 
@@ -105,7 +105,7 @@ Steadycam now smooths **30+ camera states** that previously had jarring vanilla 
 - Combat finisher (Player_Weapon_Down)
 - Velocity sway elimination across all on-foot and combat run states
 
-**New in v3-beta - sections that were vanilla snap before:**
+**New in v3.0 - sections that were vanilla snap before:**
 
 | Category | What was fixed | Vanilla blend → UCM |
 |----------|---------------|---------------------|
@@ -199,7 +199,7 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 **Source:** [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
 **Nexus:** [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)
-**VirusTotal:** [v3-beta - Clean](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
+**VirusTotal:** [v3.0 - Clean](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
 **SHA-256 (zip):** `C4C3451D9DFF70ED36D6D60A4E59DE4718A5CFDD248AC9E7BC4A9EF50D22C947`
 **SHA-256 (exe):** `2FE241B86C339423AEB5350F9D3A1662AE8A8AA97BA00DFE53DEF4E7BD399923`
 **Support:** [Ko-fi](https://ko-fi.com/0xfitz)

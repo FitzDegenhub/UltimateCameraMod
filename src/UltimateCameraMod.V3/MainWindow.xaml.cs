@@ -2893,10 +2893,14 @@ public partial class MainWindow : Window
             string latest = tag.TrimStart('v', 'V');
 
             string pad(string v) => v.Contains('.') && v.Split('.').Length == 2 ? v + ".0" : v;
+            // Strip pre-release suffix before numeric compare ("3-beta" -> "3", "3.0-beta" -> "3.0")
+            string numericLatest = latest.Split('-')[0];
+            string numericVer   = Ver.Split('-')[0];
             bool isOutdated = !string.IsNullOrEmpty(latest)
-                && Version.TryParse(pad(latest), out var remote)
-                && Version.TryParse(pad(Ver), out var local)
-                && remote > local;
+                && !string.Equals(latest.Trim(), Ver.Trim(), StringComparison.OrdinalIgnoreCase)
+                && Version.TryParse(pad(numericLatest), out var remote)
+                && Version.TryParse(pad(numericVer), out var local)
+                && remote >= local;
 
             Dispatcher.Invoke(() =>
             {

@@ -1,4 +1,4 @@
-> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. In the meantime, all downloads are available here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you for your patience!
+﻿> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. In the meantime, all downloads are available here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you for your patience!
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -9,7 +9,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 </p>
 
 [![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
-[![Download v3-beta](https://img.shields.io/badge/Download-v3--beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3-beta)
+[![Download v3.0 Beta](https://img.shields.io/badge/Download-v3.0_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![VirusTotal v3-beta](https://img.shields.io/badge/VirusTotal_v3--beta-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
@@ -23,7 +23,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 | Branch | Status | What it is |
 |--------|--------|------------|
 | **`main`** | Stable (v2.5) — under Nexus source review | v2.x direct-install app (single exe, writes straight to game PAZ) |
-| **`v3-dev`** | Beta — source for v3-beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
+| **`v3-dev`** | Beta — source for v3.0 Beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
