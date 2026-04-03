@@ -347,15 +347,21 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Slider">
-                            <Grid>
+                            <Grid x:Name="Root">
                                 <Border Height="4" CornerRadius="2" VerticalAlignment="Center"
                                         Background="{StaticResource BorderBrush}"/>
                                 <Track x:Name="PART_Track">
                                     <Track.Thumb>
-                                        <Thumb Style="{StaticResource SliderThumb}"/>
+                                        <Thumb x:Name="PART_Thumb" Style="{StaticResource SliderThumb}"/>
                                     </Track.Thumb>
                                 </Track>
                             </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="PART_Thumb" Property="IsEnabled" Value="False"/>
+                                    <Setter TargetName="Root" Property="Opacity" Value="0.45"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
