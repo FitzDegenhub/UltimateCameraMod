@@ -1,0 +1,3 @@
+# Force LF line endings for preset files so SHA256 hashes match across platforms
+ucm_presets/*.ucmpreset text eol=lf
+ucm_presets/catalog.json text eol=lf
