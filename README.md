@@ -25,6 +25,29 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 
 ---
 
+<details>
+<summary><strong>Screenshots (v3.x)</strong> — click to expand</summary>
+<br>
+
+**UCM Quick** — distance, height, shift, FoV, lock-on zoom, steadycam, live previews
+![UCM Quick](screenshots/v3.x/ucm_quick.png)
+
+**Fine Tune** — curated deep-tuning with searchable bordered cards
+![Fine Tune](screenshots/v3.x/finetune.png)
+
+**God Mode** — full raw XML editor with vanilla comparison
+![God Mode](screenshots/v3.x/godmode.png)
+
+**JSON Export** — export for JSON Mod Manager / CDUMM
+![Export JSON](screenshots/v3.x/exportjson_menu.png)
+
+**Import** — import from .ucmpreset, XML, PAZ, or Mod Manager packages
+![Import](screenshots/v3.x/import_screen.png)
+
+</details>
+
+---
+
 ## Branch overview
 
 | Branch | Status | What it is |
