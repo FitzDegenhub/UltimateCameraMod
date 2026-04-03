@@ -11,7 +11,7 @@
         "style",
         "official"
       ],
-      "sha256": "5fffc7521c882aa22f3338074f12b72fa49dcf1ba3e134d553efec3dd94cedeb"
+      "sha256": "ece33b51fd91c9e323054cce0085e02c6005566e8784fa521aebdd35c08e8efb"
     },
     {
       "id": "dirt-cam",
@@ -23,7 +23,7 @@
         "style",
         "official"
       ],
-      "sha256": "857753cd232df5b76f42a2c9a93ea5145c4fca9a7e004fe9ff64bf6620194ca4"
+      "sha256": "6e138ca2525bd793c36ddd344c90b8fe9573597456172d12186854cf44c67bb7"
     },
     {
       "id": "heroic",
@@ -35,7 +35,7 @@
         "style",
         "official"
       ],
-      "sha256": "fbf8472c4647afb2e38d40c79ad9e2ce8f50a81a7b07fd739da1a2bf79fa7fe1"
+      "sha256": "c7721ec4f03c95b0dfb7ca1ddd25ea97c94f4d0a5ac718bfa6baeee5d6a00737"
     },
     {
       "id": "knee-cam",
@@ -47,7 +47,7 @@
         "style",
         "official"
       ],
-      "sha256": "ae718fef72d148ea274364b429439226e51ef2d124178d3f5de88606c0fcce69"
+      "sha256": "09b28057a809ed7d149cdc0639d373d3abda49e3ddfcc264b9a8d64628d9d0c1"
     },
     {
       "id": "low-rider",
@@ -59,19 +59,7 @@
         "style",
         "official"
       ],
-      "sha256": "f4bf40a01893e2af85676a9757cb379773cfcb5ac2f9ae21a5d59ac55d5ff498"
-    },
-    {
-      "id": "new-ucm",
-      "file": "NEW UCM.ucmpreset",
-      "name": "NEW UCM",
-      "author": "FITZ",
-      "description": "NEW UCM preset v5",
-      "tags": [
-        "style",
-        "official"
-      ],
-      "sha256": "24ceb5505fc2e89e03cc8b43b88d1eb7d7eee751779e2a4bd09c32404574bb3e"
+      "sha256": "d23bf73738c65b069327dacfa9f24e48e9e2fc493bf616bf8d8b7a74d0c06368"
     },
     {
       "id": "panoramic",
@@ -83,7 +71,7 @@
         "style",
         "official"
       ],
-      "sha256": "3a8f1d060152626df70b2b704afa99e38e73142338b19ca789a771dbff7cc31f"
+      "sha256": "8976cacd0735daee1e5380021cb2d3c1c51229101390d5ccc4c997af691d737c"
     },
     {
       "id": "survival",
@@ -95,7 +83,7 @@
         "style",
         "official"
       ],
-      "sha256": "b70d90a91a4d904d0328c532c59d9a639884a00ca63763e5b7895e0a406cb6dd"
+      "sha256": "da4d296511db73f2cf26be8b26976aeaa8e2c77a44e62f682f26fb7d3b57c21a"
     }
   ]
 }
