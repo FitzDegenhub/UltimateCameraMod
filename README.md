@@ -8,7 +8,8 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
   <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
 </p>
 
-[![Download](https://img.shields.io/badge/Download-v2.5-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
+[![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
+[![Download v3-beta](https://img.shields.io/badge/Download-v3--beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3-beta)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
@@ -20,8 +21,8 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 
 | Branch | Status | What it is |
 |--------|--------|------------|
-| **`main`** | Stable - ships on GitHub Releases | v2.x direct-install app (single exe, writes straight to game PAZ) |
-| **`v3-dev`** | Active development | v3 export-first app - tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
+| **`main`** | Stable (v2.5) — under Nexus source review | v2.x direct-install app (single exe, writes straight to game PAZ) |
+| **`v3-dev`** | Beta — source for v3-beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
@@ -37,11 +38,11 @@ v3 includes every camera feature from v2 plus a redesigned UI, file-based preset
 | **Custom camera** | Sliders for distance (1.5–12), height (-1.6–0.5), and horizontal shift (-3–3). Proportional scaling keeps the character at the same screen position across all zoom levels |
 | **Field of view** | Vanilla 40° up to 80°. Universal FoV consistency across guard, aim, mount, glide, and cinematic states |
 | **Centered camera** | Dead-center character across 150+ camera states, eliminating the left-offset shoulder cam |
-| **Combat camera** | Three lock-on zoom levels: Default, Wider, Maximum |
+| **Lock-on zoom** | Slider from -60% (zoom in on target) to +60% (pull back wide). Affects all lock-on, guard, and rush states. Works independently of Steadycam |
 | **Mount camera sync** | Mount cameras match your chosen player camera height |
 | **Horizontal shift on all mounts** | Horse, elephant, wyvern, canoe, warmachine, and broom all respect your shift setting with proportional scaling |
 | **Skill aiming consistency** | Lantern, Blinding Flash, Bow, and all aim/zoom/interaction skills respect horizontal shift. No camera snap when activating abilities |
-| **Steadycam smoothing** | Normalized blend timing and FoV across idle, walk, run, sprint, combat, guard, and mount states. Community-tunable via the editor |
+| **Steadycam smoothing** | Normalized blend timing and velocity sway across 30+ camera states: idle, walk, run, sprint, combat, guard, rush/charge, freefall, super jump, rope pull/swing, knockback, all lock-on variants, mount lock-on, revive lock-on, aggro/wanted, warmachine, and all mount states. Every value is community-tunable via the Fine Tune editor |
 | **HUD centering** | Width slider (1200–3840 px) for ultrawide. *Currently disabled - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found.* |
 
 > **v3 design philosophy: value edits only, no structural injection.**
@@ -54,7 +55,7 @@ v3 organizes editing into three tabs so you can go as deep as you want:
 
 | Tier | Tab | What it does |
 |------|-----|--------------|
-| 1 | **UCM Quick** | The fast layer - distance/height/shift sliders, FoV, centered camera, combat zoom, mount sync, steadycam, live camera + FoV previews |
+| 1 | **UCM Quick** | The fast layer - distance/height/shift sliders, FoV, centered camera, lock-on zoom (-60% to +60%), mount sync, steadycam, live camera + FoV previews |
 | 2 | **Fine Tune** | Curated deep-tuning. Searchable sections for on-foot zoom levels, horse/mount zoom, global FoV, special mounts & traversal, combat & lock-on, camera smoothing, and aiming & crosshair position. Builds on top of UCM Quick |
 | 3 | **God Mode** | Full raw XML editor - every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column with modified values highlighted. Expand/collapse all, search, and per-state filtering |
 
@@ -233,7 +234,7 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ## Version history
 
-- **v3.0-dev** (`v3-dev`) - Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode), `.ucmpreset` file format, file-based preset system with collapsible sidebar manager, **[community preset catalog](https://github.com/FitzDegenhub/ucm-community-presets)** with GitHub-hosted browse & download, multi-format export (JSON for **JSON Mod Manager** + **CDUMM**, XML, 0.paz, `.ucmpreset`), preset lock system (UCM presets permanently locked, user presets toggleable), auto-save to preset files, Quick→Fine Tune→God Mode settings sync, raw XML import for PAZ/XML presets, vanilla-guarded JSON prepare, true Vanilla preset from raw game XML, game patch awareness, Windows taskbar identity, new app icon.
+- **v3-beta** (`v3-dev`) - First public beta of the v3 export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode), `.ucmpreset` file format, file-based preset system with collapsible sidebar manager, **[community preset catalog](https://github.com/FitzDegenhub/ucm-community-presets)** with GitHub-hosted browse & download, multi-format export (JSON for **JSON Mod Manager** + **CDUMM**, XML, 0.paz, `.ucmpreset`), preset lock system (UCM presets permanently locked, user presets toggleable), auto-save to preset files, Quick→Fine Tune→God Mode settings sync, raw XML import for PAZ/XML presets, vanilla-guarded JSON prepare, true Vanilla preset from raw game XML, game patch awareness, Windows taskbar identity, new app icon. **New in beta:** Steadycam expanded to 30+ camera states (freefall, super jump, rope, knockback, all lock-on variants, warmachine, aggro/wanted — every new section individually tunable in Fine Tune). Lock-on zoom slider replaces the old combat camera dropdown (-60% zoom in to +60% pull back, works without Steadycam).
 - **v2.5** - Current stable release on GitHub Releases.
 - **v2.4** - Proportional horizontal shift, shift on all mounts and aim abilities, horse camera overhaul, version-aware backups, FoV preview, resizable window.
 - **v2.3** - Horizontal shift fix for 16:9, delta-based slider, full install config banner.
