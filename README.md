@@ -1,64 +1,140 @@
-Hi guys, apologies for my page going down on Nexus - the nexus team are currently reviewing all my files. As I'm a new author on the platform they wish todo some checks on source code before allowing the project to be able to download on Nexs, which honestly makes total sense. 
+﻿> **Nexus Mods page temporarily unavailable** — The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. In the meantime, all downloads are available here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you for your patience!
 
-I've already been in contact with them and they've been helpful, so just have to wait it out for us to be back on Nexus. 
+# Ultimate Camera Mod - Crimson Desert
 
-v3 is already being worked on. 
+Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, three editing tiers, file-based presets, **JSON export for [JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and ultrawide HUD support.
 
-Cheers. 
+<p align="center">
+  <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
+</p>
 
-
-# Ultimate Camera Mod — Crimson Desert
-
-Standalone camera toolkit for Crimson Desert with a full GUI, live camera preview, advanced XML editor, and HUD centering for ultrawide displays.
-
-[![Download](https://img.shields.io/badge/Download-v2.5-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)
+[![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
+[![Download v3.0 Beta](https://img.shields.io/badge/Download-v3.0_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
-[![Reddit](https://img.shields.io/badge/Reddit-Discussion-ff4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1s8vllh/ultimate_camera_mod_ucm_v25_full_camera_toolkit/)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
+[![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
+[![VirusTotal v3-beta](https://img.shields.io/badge/VirusTotal_v3--beta-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
+
+---
+
+## Branch overview
+
+| Branch | Status | What it is |
+|--------|--------|------------|
+| **`main`** | Stable (v2.5) — under Nexus source review | v2.x direct-install app (single exe, writes straight to game PAZ) |
+| **`v3-dev`** | Beta — source for v3.0 Beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
+
+v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
+
+---
 
 ## Features
 
-### Simple Mode
-- **8 Camera Presets** with live preview — Panoramic, Heroic, Vanilla, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival
-- **Custom Camera** — Slider control over distance, height, and horizontal shift (-3 to +3). Horizontal shift uses proportional scaling so the character holds screen position across all zoom levels. 0 = vanilla (character slightly left), 0.5 = centered. Save unlimited named presets, share via import/export codes (`UCM:` strings)
-- **Field of View** — Adjustable from vanilla 40° up to 80°, with universal FoV consistency across all camera states (guard, aim, mount, glide, cinematic) to eliminate jarring transitions
-- **Centered Camera** — Character dead center, eliminating the left-offset shoulder cam across 150+ camera states
-- **Combat Camera** — Three lock-on zoom levels: Default, Wider, Maximum
-- **Mount Camera Sync** — Mount cameras match your chosen player camera height
-- **Extra Zoom Levels** — Two additional zoom-out levels (ZL5 + ZL6) on foot and mounted. Scroll further out than vanilla allows
-- **Horse First Person (Experimental)** — First-person camera while mounted. Scroll all the way in to see through your character's eyes. Works well at walk/trot; may clip during dashes
-- **Horse Camera Overhaul** — All 8 horse states fully normalized with identical FoV, blend times, follow rates, and damping. 4 proper zoom levels (ZL0-ZL3) that scale with your Custom distance slider. No more jolts during speed transitions
-- **Horizontal Shift on All Mounts** — Horse, elephant, wyvern, canoe, warmachine, and broom all respect your horizontal shift setting with proportional scaling across zoom levels
-- **Skill Aiming Side-Consistency** — Lantern, Blinding Flash, Bow, and all aim/zoom/interaction skills respect your horizontal shift using proportional scaling. Camera no longer snaps when activating abilities
-- **Steadycam Smoothing** — Completely revamped camera smoothing system. Normalizes blend timing and FOV across all movement states (idle, walk, run, sprint, combat, guard, mount) to eliminate jarring transitions. This is an ongoing community effort — the Advanced Editor lets anyone fine-tune it further
-- **HUD Centering** — Adjustable width slider (1200–3840px) to constrain HUD elements for ultrawide. *Currently disabled — a recent game update added integrity checks that trigger a Coherent Gameface watermark. Controls will be re-enabled once a workaround is found.*
-- **Update Notifications** — Automatically checks GitHub releases on launch and shows a banner when a new version is available
+### Camera controls
 
-### Advanced Editor
-- **Full XML Editor** — Every player camera parameter exposed in a searchable, filterable DataGrid
-- **Vanilla Comparison** — Side-by-side vanilla vs. modified values; modified fields highlighted in gold
-- **Grouped by Camera State** — Collapsible sections (Player_Basic_Default, Player_Weapon_Guard, etc.)
-- **Save/Load/Delete** named advanced presets
-- **Import/Export** advanced configurations as shareable strings (`UCM_ADV:` prefix, distinct from simple presets)
-- **Import XML** — Load a `playercamerapreset.xml` file from other mods and merge the values into the editor
-- **Expand/Collapse All** — One-click toggle to expand or collapse all section groups
-- **Reset to Defaults** — One click to revert all advanced changes
+| Feature | Details |
+|---------|---------|
+| **8 built-in presets** | Panoramic, Heroic, Vanilla, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival - with live preview |
+| **Custom camera** | Sliders for distance (1.5–12), height (-1.6–0.5), and horizontal shift (-3–3). Proportional scaling keeps the character at the same screen position across all zoom levels |
+| **Field of view** | Vanilla 40° up to 80°. Universal FoV consistency across guard, aim, mount, glide, and cinematic states |
+| **Centered camera** | Dead-center character across 150+ camera states, eliminating the left-offset shoulder cam |
+| **Lock-on zoom** | Slider from -60% (zoom in on target) to +60% (pull back wide). Affects all lock-on, guard, and rush states. Works independently of Steadycam |
+| **Mount camera sync** | Mount cameras match your chosen player camera height |
+| **Horizontal shift on all mounts** | Horse, elephant, wyvern, canoe, warmachine, and broom all respect your shift setting with proportional scaling |
+| **Skill aiming consistency** | Lantern, Blinding Flash, Bow, and all aim/zoom/interaction skills respect horizontal shift. No camera snap when activating abilities |
+| **Steadycam smoothing** | Normalized blend timing and velocity sway across 30+ camera states: idle, walk, run, sprint, combat, guard, rush/charge, freefall, super jump, rope pull/swing, knockback, all lock-on variants, mount lock-on, revive lock-on, aggro/wanted, warmachine, and all mount states. Every value is community-tunable via the Fine Tune editor |
+| **HUD centering** | Width slider (1200–3840 px) for ultrawide. *Currently disabled - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found.* |
 
-### Quality of Life
-- **Auto Game Detection** — Finds Crimson Desert across Steam, Epic Games, and Xbox/Game Pass
-- **Automatic Backup** — Creates a vanilla backup before any modification; one-click restore. Version-aware — automatically cleans stale data when upgrading UCM versions
-- **Install Config Banner** — Shows your full install config (FoV, distance, height, shift, settings) so you always know what's active
-- **Live FoV Preview** — Distance-aware top-down view showing camera position, horizontal shift, and field of view cone in real time
-- **Game Folder Shortcut** — Folder icon in the header opens your game directory in Explorer
-- **Settings Persistence** — All selections remembered between sessions
-- **Resizable Window** — Drag edges to resize; size persists between sessions
-- **Portable** — Single `.exe`, no installer required
+> **v3 design philosophy: value edits only, no structural injection.**
+>
+> Earlier versions injected new XML lines into the camera file (extra zoom levels, horse first-person mode, horse camera overhaul with additional zoom tiers). v3 removes these features intentionally. Injecting structure has a much higher chance of breaking after game updates, and personal preferences for niche camera modes are better served by dedicated mods distributed through mod managers. UCM now modifies only existing values - the same line count, the same element structure, the same attributes. This makes presets safer to share and more resilient across game patches.
 
-## How It Works
+### Three-tier editor (v3)
+
+v3 organizes editing into three tabs so you can go as deep as you want:
+
+| Tier | Tab | What it does |
+|------|-----|--------------|
+| 1 | **UCM Quick** | The fast layer - distance/height/shift sliders, FoV, centered camera, lock-on zoom (-60% to +60%), mount sync, steadycam, live camera + FoV previews |
+| 2 | **Fine Tune** | Curated deep-tuning. Searchable sections for on-foot zoom levels, horse/mount zoom, global FoV, special mounts & traversal, combat & lock-on, camera smoothing, and aiming & crosshair position. Builds on top of UCM Quick |
+| 3 | **God Mode** | Full raw XML editor - every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column with modified values highlighted. Expand/collapse all, search, and per-state filtering |
+
+### File-based preset system (v3)
+
+- **`.ucmpreset` file format** - dedicated shareable format for UCM camera presets. Drop into any preset folder and it just works
+- **Sidebar manager** with collapsible grouped sections: UCM Presets, Community Presets, My Presets, Imported
+- **New / Duplicate / Rename / Delete** from the sidebar
+- **Lock** presets to prevent accidental edits - UCM presets are permanently locked; user presets toggleable via padlock icon
+- **True Vanilla preset** - raw decoded `playercamerapreset` from your game backup with no modifications applied. Quick sliders are synced to the actual game baseline values
+- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages
+- **Auto-save** - changes to unlocked presets write back to the preset file automatically (debounced)
+- Auto-migration from legacy `.json` presets to `.ucmpreset` on first launch
+
+### Community preset catalog (v3) - NEW
+
+Browse and download community camera presets directly from UCM. One-click download, no accounts needed.
+
+- **[Community presets repo](https://github.com/FitzDegenhub/ucm-community-presets)** - presets hosted on GitHub, catalog auto-generated by GitHub Actions
+- **Browse button** on the "Community presets" sidebar header opens the catalog browser
+- Each preset shows name, author, description, tags, and a link to the creator's Nexus page
+- Downloaded presets appear in the sidebar under "Community presets" (locked by default - duplicate to edit)
+- **2MB file size limit** and JSON validation for safety
+
+**Want to share your preset with the community?** Export as `.ucmpreset` from UCM, then either:
+- Submit a [Pull Request](https://github.com/FitzDegenhub/ucm-community-presets/pulls) to the community presets repo
+- Or send your `.ucmpreset` file to 0xFitz on Discord/Nexus and we'll add it for you
+
+### Multi-format export (v3)
+
+The **Export for sharing** dialog outputs your session in four ways:
+
+| Format | Use case |
+|--------|----------|
+| **JSON** (mod managers) | Byte patches + `modinfo` for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM). Export in UCM → import in the manager you use; recipients do not need UCM. **Prepare** is only offered when the live `playercamerapreset` entry still matches UCM’s vanilla backup (verify game files if you already applied camera mods). |
+| **XML** | Raw `playercamerapreset.xml` for other tools or manual editing |
+| **0.paz** | Patched archive ready to drop into the game's `0010` folder |
+| **.ucmpreset** | Full UCM preset for other UCM users |
+
+Includes title, version, author, Nexus URL, and description fields for JSON/XML. Shows patch region count and bytes changed before saving `.json`.
+
+### Quality of life
+
+- **Auto game detection** - Steam, Epic Games, Xbox / Game Pass
+- **Automatic backup** - vanilla backup before any modification; one-click restore. Version-aware with auto-cleanup on upgrade
+- **Install config banner** - shows your full active config (FoV, distance, height, shift, settings)
+- **Game patch awareness** - tracks install metadata after apply; warns when the game may have updated so you can re-export
+- **Live camera + FoV preview** - distance-aware top-down view with horizontal shift and field of view cone
+- **Update notifications** - checks GitHub releases on launch
+- **Game folder shortcut** - opens your game directory from the header
+- **Windows taskbar identity** - proper icon grouping and title bar icon via shell property store
+- **Settings persistence** - all selections remembered between sessions
+- **Resizable window** - size persists between sessions
+- **Portable** - single `.exe`, no installer required
+
+### Preset sharing (v2 + v3)
+
+> **Nobody has perfected Crimson Desert's camera yet - and that's the point.**
+>
+> The vanilla game has over 150 camera states, each with dozens of parameters. No single developer can tune all of that for every playstyle and display. UCM was built with sharing at its core.
+>
+> Every setting you tweak can be exported and shared. The guard-camera zoom snap that plagued the vanilla game was solved by a single user adjusting one FoV value. That kind of community-driven fine-tuning is exactly what this tool is for.
+
+**v2 string formats** (still supported):
+
+| Format | Contains |
+|--------|----------|
+| `UCM:...` | Distance, height, horizontal shift |
+| `UCM_ADV:...` | Full XML parameter overrides |
+
+**v3** adds file-based JSON presets and multi-format export on top of these.
+
+---
+
+## How it works
 
 1. Locates the game's PAZ archive containing `playercamerapreset.xml`
-2. Creates a backup of the original file (only once — never overwrites a clean backup)
+2. Creates a backup of the original file (only once - never overwrites a clean backup)
 3. Decrypts the archive entry (ChaCha20 + Jenkins hash key derivation)
 4. Decompresses via LZ4
 5. Parses and modifies the XML camera parameters based on your selections
@@ -66,69 +142,77 @@ Standalone camera toolkit for Crimson Desert with a full GUI, live camera previe
 
 HUD modifications follow the same pipeline for `ui/minimaphudview2.html`, `ui/statusgaugeview2.html`, and `ui/gamecommon.css` in archive `0012`.
 
-No DLL injection, no memory hacking, no internet connection required — pure data file modification.
+No DLL injection, no memory hacking, no internet connection required - pure data file modification.
 
-## Building from Source
+---
 
-Requires [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (or later).
+## Building from source
+
+Requires [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (or later). Windows x64.
+
+### v3 (recommended)
+
+Close any running instance before building - the exe copy step fails if the file is locked.
+
+```powershell
+Stop-Process -Name "UltimateCameraMod.V3" -Force -ErrorAction SilentlyContinue
+dotnet build "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release
+Start-Process "src/UltimateCameraMod.V3/bin/Release/net6.0-windows/UltimateCameraMod.V3.exe"
+```
+
+### v2.x (single-file publish)
 
 ```bash
 cd src/UltimateCameraMod
 dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
 ```
 
-The compiled exe will be in `bin/Release/net6.0-windows/win-x64/publish/`.
+Output: `bin/Release/net6.0-windows/win-x64/publish/`
 
-Or run directly without compiling:
+### Dependencies (NuGet - restored automatically)
 
-```bash
-cd src/UltimateCameraMod
-dotnet run
-```
+- [K4os.Compression.LZ4](https://www.nuget.org/packages/K4os.Compression.LZ4/) - LZ4 block compression/decompression
 
-### Dependencies (NuGet, restored automatically)
+---
 
-- [K4os.Compression.LZ4](https://www.nuget.org/packages/K4os.Compression.LZ4/) — LZ4 block compression/decompression
-
-## Project Structure
+## Project structure
 
 ```
-src/UltimateCameraMod/
-├── Controls/           # WPF custom controls (camera preview, FOV preview)
-├── Models/             # Data models (AdvancedRow, CameraRules, PresetCodec)
-├── Paz/                # PAZ archive handling (ChaCha20, LZ4, Jenkins hash, PAMT parsing)
-├── Services/           # Core logic (CameraMod, GameDetector, HudMod)
-├── MainWindow.xaml     # Main application UI (Simple + Advanced modes)
-├── App.xaml            # Application resources and dark theme
+src/UltimateCameraMod/              Shared library + v2.x WPF app
+├── Controls/                       CameraPreview, FovPreview
+├── Models/                         PresetCodec, data models
+├── Paz/                            ArchiveWriter, CompressionUtils, PAZ I/O
+├── Services/                       CameraMod, GameDetector, JsonModExporter, GameInstallBaselineTracker
+├── MainWindow.xaml                 v2.x UI
 └── UltimateCameraMod.csproj
+
+src/UltimateCameraMod.V3/           v3 export-first WPF app (references shared code above)
+├── Controls/                       CameraPreview, FovPreview (v3 variants)
+├── Models/                         PresetManagerItem, ImportedPreset
+├── Assets/                         ucm.ico, ucm-app-icon.png
+├── ShippedPresets/                  Embedded community presets deployed on first launch
+├── MainWindow.xaml                 Two-panel shell: sidebar + tabbed editor
+├── ExportJsonDialog.xaml           Multi-format export wizard (JSON, XML, 0.paz, .ucmpreset)
+├── ImportPresetDialog.xaml         Import from .ucmpreset / XML / PAZ
+├── ImportMetadataDialog.xaml       Preset metadata entry (name, author, description, URL)
+├── CommunityBrowserDialog.xaml     Browse & download community presets from GitHub
+├── NewPresetDialog.xaml            Create / name new presets
+├── ShellTaskbarPropertyStore.cs    Windows taskbar icon via shell property store
+├── ApplicationIdentity.cs          Shared App User Model ID
+└── UltimateCameraMod.V3.csproj
+
+docs/                               Release notes, Nexus stub, PR summary
 ```
 
-## Community & Sharing
-
-> **Nobody has perfected Crimson Desert's camera yet — and that's the point.**
->
-> The vanilla game has over 150 camera states, each with dozens of parameters controlling distance, FOV, blend timing, damping, offsets, and more. No single developer can tune all of that for every playstyle and display setup. That's why UCM was built with sharing at its core.
->
-> Every setting you tweak — whether it's a simple preset or a deep Advanced Editor override — can be exported as a string and shared with other players. If someone in the community figures out the perfect guard-camera transition, or nails the combat FOV for ultrawide, they can share it in seconds and everyone benefits.
->
-> **This already works.** The guard-camera zoom snap that plagued the vanilla game was solved by a single user adjusting one FOV value in the Advanced Editor. That kind of community-driven fine-tuning is exactly what this tool is for.
-
-### Preset Formats
-
-UCM uses two string formats so they can't be mixed up:
-
-| Format | Used in | Contains |
-|--------|---------|----------|
-| `UCM:...` | Custom tab → Export/Import | Distance, height, horizontal shift |
-| `UCM_ADV:...` | Advanced editor → Export/Import | Full XML parameter overrides |
-
-Export your config, post it on Nexus/Discord/Reddit, and others can import it in one click. The more people tweak, the better it gets for everyone.
+---
 
 ## Compatibility
 
 - **Platforms:** Steam, Epic Games, Xbox / Game Pass
 - **OS:** Windows 10/11 (x64)
-- **Display:** Any aspect ratio — 16:9, 21:9, 32:9
+- **Display:** Any aspect ratio - 16:9, 21:9, 32:9
+
+---
 
 ## FAQ
 
@@ -136,39 +220,51 @@ Export your config, post it on Nexus/Discord/Reddit, and others can import it in
 UCM modifies offline data files only. It does not touch game memory, inject code, or interact with running processes. Use at your own discretion in online/multiplayer modes.
 
 **The game updated and my camera is back to vanilla.**
-Normal — game updates overwrite modded files. Re-open UCM and click Install. Your settings are saved automatically.
+Normal - game updates overwrite modded files. Re-open UCM and click Install (or re-export JSON for JSON Mod Manager / CDUMM). Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
-Known false positive with self-contained .NET apps. [VirusTotal scan is clean](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a). Full source is available here to review and build yourself.
+Known false positive with self-contained .NET apps. VirusTotal scans are clean: [v2.5](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a) / [v3-beta](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection). Full source is available here to review and build yourself.
 
 **What does horizontal shift 0 mean?**
-0 = vanilla camera position (character slightly to the left). 0.5 = character centered on screen. Negative values move further left, positive values move further right. Uses proportional scaling so the character holds position across all zoom levels.
+0 = vanilla camera position (character slightly to the left). 0.5 = character centered on screen. Negative values move further left, positive values move further right.
 
 **Upgrading from a previous version?**
-v2.4 automatically cleans stale data from previous versions on first launch. If you experience any issues, verify game files in Steam and reinstall.
+v2.4+ automatically cleans stale data from previous versions on first launch. v3 migrates legacy presets on first run.
 
-## Version History
+---
 
-- **v2.4** — Proportional horizontal shift (fixes drift across zoom levels), horizontal shift on all mounts and all aim/interaction abilities, horse camera overhaul (all 8 states normalized, 4 zoom levels, distance scales with Custom slider), fixed phantom zoom level injection, version-aware backups with auto-cleanup, lantern aim baselines matched per zoom level, FoV preview distance-aware, game path in header with folder shortcut, resizable window with size persistence, improved tooltips.
-- **v2.3** — Critical fix for horizontal shift not working on 16:9 displays. Delta-based slider (0 = vanilla). Range expanded to -3..3. Fixed false "Centered" detection, banner shows full install config from saved state.
-- **v2.2** — Major feature release. Steadycam toggle, Extra Zoom Levels, Horse First Person, Horizontal Shift slider, universal FoV consistency, skill aiming side-consistency, Import XML in Advanced Editor, preset sharing, update notifications, Expand/Collapse All. HUD centering temporarily disabled.
-- **v2.1** — Fixed custom preset sliders not writing InDoorUpOffset and RightOffset to all zoom levels.
-- **v2.0** — Complete rewrite from Python to C# / .NET 6 / WPF. Advanced XML editor, preset management, import/export, auto game detection for Steam/Epic/Xbox, settings persistence, mod-active detection.
-- **v1.5** — Python version with customtkinter GUI, camera presets, custom sliders, FOV control, HUD centering.
+## Version history
 
-## Credits & Acknowledgements
+- **v3-beta** (`v3-dev`) - First public beta of the v3 export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode), `.ucmpreset` file format, file-based preset system with collapsible sidebar manager, **[community preset catalog](https://github.com/FitzDegenhub/ucm-community-presets)** with GitHub-hosted browse & download, multi-format export (JSON for **JSON Mod Manager** + **CDUMM**, XML, 0.paz, `.ucmpreset`), preset lock system (UCM presets permanently locked, user presets toggleable), auto-save to preset files, Quick→Fine Tune→God Mode settings sync, raw XML import for PAZ/XML presets, vanilla-guarded JSON prepare, true Vanilla preset from raw game XML, game patch awareness, Windows taskbar identity, new app icon. **New in beta:** Steadycam expanded to 30+ camera states (freefall, super jump, rope, knockback, all lock-on variants, warmachine, aggro/wanted — every new section individually tunable in Fine Tune). Lock-on zoom slider replaces the old combat camera dropdown (-60% zoom in to +60% pull back, works without Steadycam).
+- **v2.5** - Current stable release on GitHub Releases.
+- **v2.4** - Proportional horizontal shift, shift on all mounts and aim abilities, horse camera overhaul, version-aware backups, FoV preview, resizable window.
+- **v2.3** - Horizontal shift fix for 16:9, delta-based slider, full install config banner.
+- **v2.2** - Steadycam, extra zoom levels, horse first person, horizontal shift, universal FoV, skill aiming consistency, Import XML, preset sharing, update notifications.
+- **v2.1** - Fixed custom preset sliders not writing to all zoom levels.
+- **v2.0** - Complete rewrite from Python to C# / .NET 6 / WPF. Advanced XML editor, preset management, auto game detection.
+- **v1.5** - Python version with customtkinter GUI.
 
-- **0xFitz** — UCM development, camera tuning, advanced editor, ultrawide HUD support
+---
 
-### C# Rewrite (v2.0)
-- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** — CrimsonDesertTools — C# PAZ/PAMT parser, ChaCha20 encryption, LZ4 compression, PaChecksum, archive repacker (.NET 8, MIT)
-- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** — Pure C# ChaCha20 stream cipher implementation used inside CrimsonDesertTools (BSD)
-- **[MrIkso on Reshax](https://reshax.com/topic/18908-need-help-extracting-paz-pamt-files-from-crimson-desert-blackspace-engine/page/2/?&_rid=3118#findComment-103796)** — PAZ repacking guide: 16-byte alignment, PAMT checksum (skip first 12 bytes), PAPGT root index patching
+## Credits & acknowledgements
 
-### Original Python Version (v1.5)
-- **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** — crimson-desert-unpacker — PAZ archive tooling, decryption research
-- **@Maszradine** — CDCamera — Camera rules, steadycam system, style presets
-- **@manymanecki** — CrimsonCamera — Dynamic PAZ modification architecture
+- **0xFitz** - UCM development, camera tuning, advanced editor, ultrawide HUD support
+
+### C# rewrite (v2.0)
+- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - CrimsonDesertTools - C# PAZ/PAMT parser, ChaCha20 encryption, LZ4 compression, PaChecksum, archive repacker (.NET 8, MIT)
+- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** - Pure C# ChaCha20 stream cipher implementation (BSD)
+- **[MrIkso on Reshax](https://reshax.com/topic/18908-need-help-extracting-paz-pamt-files-from-crimson-desert-blackspace-engine/page/2/?&_rid=3118#findComment-103796)** - PAZ repacking guide: 16-byte alignment, PAMT checksum, PAPGT root index patching
+
+### Original Python version (v1.5)
+- **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** - crimson-desert-unpacker - PAZ archive tooling, decryption research
+- **@Maszradine** - CDCamera - Camera rules, steadycam system, style presets
+- **@manymanecki** - CrimsonCamera - Dynamic PAZ modification architecture
+
+## Support
+
+If you find this useful, consider supporting development:
+
+[![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
 ## License
 
