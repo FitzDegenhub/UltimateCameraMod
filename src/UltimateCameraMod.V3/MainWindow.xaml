@@ -413,9 +413,9 @@
                                       Height="32" SelectionChanged="OnSettingChanged" Margin="0,0,0,8"
                                       ToolTip="Adds this many degrees to each Fov and InDoorFov in the camera file. Indoor and outdoor rows start from different vanilla numbers, so God Mode will show many different final values—not one angle everywhere."/>
 
-                            <TextBlock Text="Lock-on pull-back" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                            <TextBlock Text="Lock-on offset" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                             <Slider x:Name="CombatPullbackSlider" Grid.Row="1" Grid.Column="1"
-                                    Minimum="0" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
+                                    Minimum="-0.4" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
                                     TickFrequency="0.05" IsSnapToTickEnabled="True"
                                     ValueChanged="OnCombatPullbackChanged"
                                     VerticalAlignment="Center" Margin="0,0,0,8"/>
@@ -423,12 +423,12 @@
                                        FontFamily="Consolas" FontSize="11"
                                        Foreground="{StaticResource TextPrimaryBrush}"
                                        VerticalAlignment="Center" Margin="0,0,0,8"
-                                       Text="0%"/>
+                                       Text=" 0%"/>
 
                             <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
                                        FontSize="9" Foreground="{StaticResource TextDimBrush}"
                                        TextWrapping="Wrap" LineHeight="14" Margin="0,0,0,8"
-                                       Text="Pulls the camera further out when locking onto or guarding against a target. Scales proportionally with your Distance setting — best used at lower distances where lock-on would otherwise feel too close. At 0% the lock-on distance matches your on-foot camera exactly."/>
+                                       Text="Adjusts camera distance when locking onto or guarding a target, relative to your on-foot distance. 0% is seamless with Steadycam. Negative values zoom in for a cinematic focus effect; positive values pull back for more battlefield awareness."/>
 
                             <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
                             <CheckBox x:Name="BaneCheck" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"

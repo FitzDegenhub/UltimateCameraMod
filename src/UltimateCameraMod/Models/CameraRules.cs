@@ -57,9 +57,9 @@ namespace UltimateCameraMod.Models;
 //  5. BuildBaneMods()  [optional]
 //     Centres the camera (RightOffset=0) for the Bane centred-camera option.
 //
-//  6. BuildCombatPullback(zl2, zl3, zl4, pullback)  [optional]
-//     Proportional pull-back on top of the base lock-on distances.
-//     A pullback of 0.25 means 25% further out than whatever the style set.
+//  6. BuildCombatPullback(zl2, zl3, zl4, offset)  [optional]
+//     Proportional offset on top of the base lock-on distances.
+//     +0.25 = 25% further out; -0.25 = 25% closer (zoom-in on guard/lock-on).
 //
 //  7. BuildMountHeightMods()  [optional]
 //     Matches horse camera height to the player's UpOffset setting.
@@ -886,18 +886,18 @@ public static class CameraRules
     // ── Combat lock-on pull-back ─────────────────────────────────────
 
     /// <summary>
-    /// Applies a proportional pull-back multiplier to the main lock-on sections
-    /// on top of whatever BuildLockOnDistances already set. A multiplier of 0
-    /// means no change (lock-on matches on-foot exactly). A multiplier of 0.25
-    /// pulls the camera 25% further out than the base lock-on distance.
+    /// Applies a proportional offset to lock-on camera distances relative to the
+    /// on-foot base set by BuildLockOnDistances. 0 = seamless with Steadycam.
+    /// Positive values pull the camera further out (battlefield awareness).
+    /// Negative values zoom in (cinematic focus / guard close-up).
     /// </summary>
     public static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatPullback(
-        double zl2, double zl3, double zl4, double pullback)
+        double zl2, double zl3, double zl4, double offset)
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-        if (pullback <= 0) return m;
+        if (offset == 0) return m;
 
-        double f = 1.0 + pullback;
+        double f = 1.0 + offset;
         string zl2s = $"{Math.Round(zl2 * f, 1)}";
         string zl3s = $"{Math.Round(zl3 * f, 1)}";
         string zl4s = $"{Math.Round(zl4 * f, 1)}";
@@ -1139,10 +1139,11 @@ public static class CameraRules
         if (bane)
             Merge(mods, BuildBaneMods());
 
-        // Layer 4: combat lock-on pull-back -- proportional multiplier on top of base lock-on
-        // distances. Read the actual ZL2/ZL3/ZL4 that ended up in mods after the style layer
-        // so the pull-back always scales relative to the user's chosen distance.
-        if (combatPullback > 0)
+        // Layer 4: lock-on offset -- proportional delta on top of base lock-on distances.
+        // Read the actual ZL2/ZL3/ZL4 that ended up in mods after the style layer so the
+        // offset always scales relative to the user's chosen distance.
+        // Positive = pull back (more awareness), negative = zoom in (cinematic focus).
+        if (combatPullback != 0)
         {
             double zl2 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[2]", out var zl2d)
                 && zl2d.TryGetValue("ZoomDistance", out var zl2v)

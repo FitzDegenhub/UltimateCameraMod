@@ -436,7 +436,7 @@ public partial class MainWindow : Window
 
         var globals = new List<string>();
         double combatPb = CombatIdToPullback(combat);
-        if (combatPb > 0) globals.Add($"Lock-on +{(int)Math.Round(combatPb * 100)}%");
+        if (combatPb != 0) globals.Add($"Lock-on {(int)Math.Round(combatPb * 100):+0;-0}%");
         if (mountH) globals.Add("Mount cam");
         if (steadycam) globals.Add("Steadycam");
         if (globals.Count > 0)

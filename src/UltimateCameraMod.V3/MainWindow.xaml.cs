@@ -1338,7 +1338,7 @@ public partial class MainWindow : Window
             if (_savedState?.TryGetValue("combat_pullback", out var cpObj) == true && cpObj != null)
                 double.TryParse(cpObj.ToString(), System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out savedPullback);
-            CombatPullbackSlider.Value = Math.Clamp(savedPullback, 0.0, 0.6);
+            CombatPullbackSlider.Value = Math.Clamp(savedPullback, -0.4, 0.6);
             CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
 
             BaneCheck.IsChecked = GetBool(_savedState, "bane");
@@ -1776,7 +1776,7 @@ public partial class MainWindow : Window
                             }
                             if (settings.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
                             {
-                                CombatPullbackSlider.Value = Math.Clamp(cpEl.GetDouble(), 0.0, 0.6);
+                                CombatPullbackSlider.Value = Math.Clamp(cpEl.GetDouble(), -0.4, 0.6);
                                 CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
                             }
                             else if (settings.TryGetProperty("combat", out var combEl) && combEl.ValueKind == JsonValueKind.String)
@@ -2861,7 +2861,7 @@ public partial class MainWindow : Window
         if (bane) parts.Add("Centered");
 
         var globals = new List<string>();
-        if (combatPb > 0) globals.Add($"Lock-on +{(int)Math.Round(combatPb * 100)}%");
+        if (combatPb != 0) globals.Add($"Lock-on {(int)Math.Round(combatPb * 100):+0;-0}%");
         if (mountH) globals.Add("Mount cam");
         if (steadycam) globals.Add("Steadycam");
         if (globals.Count > 0)
@@ -3080,8 +3080,11 @@ public partial class MainWindow : Window
 
     private double GetCombatPullback() => CombatPullbackSlider.Value;
 
-    private static string FormatPullback(double v) =>
-        $"{(int)Math.Round(v * 100),3}%";
+    private static string FormatPullback(double v)
+    {
+        int pct = (int)Math.Round(v * 100);
+        return pct == 0 ? "  0%" : $"{pct:+0;-0}%";
+    }
 
     private void OnCombatPullbackChanged(object s, RoutedPropertyChangedEventArgs<double> e)
     {
