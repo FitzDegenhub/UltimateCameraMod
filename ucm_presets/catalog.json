@@ -66,12 +66,12 @@
       "file": "NEW UCM.ucmpreset",
       "name": "NEW UCM",
       "author": "FITZ",
-      "description": "NEW UCM preset v4 - sidecar test",
+      "description": "NEW UCM preset v5",
       "tags": [
         "style",
         "official"
       ],
-      "sha256": "472154b7ae12e381a03c65d1c4670438d903c4e558f2ad0fe767a4e7f3c0f761"
+      "sha256": "24ceb5505fc2e89e03cc8b43b88d1eb7d7eee751779e2a4bd09c32404574bb3e"
     },
     {
       "id": "panoramic",
