@@ -382,6 +382,21 @@ public static class CameraRules
         Set(m, "Player_Ride_Elephant", "Fov", "40");
         Set(m, "Player_Ride_Wyvern", "Fov", "50");
 
+        // Lock-on MaxZoomDistance -- vanilla values (often 5) clamp the camera hard,
+        // overriding any ZoomDistance we set. Raise the ceiling unconditionally so the
+        // lock-on offset and style distances can actually take effect regardless of
+        // whether Steadycam is enabled.
+        foreach (var sec in LockOnSections)
+        {
+            Set(m, $"{sec}/ZoomLevel[1]", "MaxZoomDistance", "30");
+            Set(m, $"{sec}/ZoomLevel[2]", "MaxZoomDistance", "30");
+            Set(m, $"{sec}/ZoomLevel[3]", "MaxZoomDistance", "30");
+            Set(m, $"{sec}/ZoomLevel[4]", "MaxZoomDistance", "30");
+        }
+        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[1]", "MaxZoomDistance", "30");
+        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[2]", "MaxZoomDistance", "30");
+        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[3]", "MaxZoomDistance", "30");
+
         return m;
     }
 
@@ -456,24 +471,6 @@ public static class CameraRules
         Set(m, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", "16.0");
         Set(m, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", "20.0");
 
-        // Lock-on ZoomLevel injection -- ensure every lock-on section has ZL2+ZL3+ZL4.
-        // Levels that don't exist in vanilla are auto-injected by ApplyModifications when
-        // it closes the ZoomLevelInfo block. ZoomDistance values are NOT set here --
-        // they are set by each style builder via BuildLockOnDistances() so they always
-        // match the user's chosen distance. MaxZoomDistance is set here since it's a
-        // hard ceiling independent of style (vanilla values like 5 clamped the camera in).
-        foreach (var sec in LockOnSections)
-        {
-            Set(m, $"{sec}/ZoomLevel[1]", "MaxZoomDistance", "30");
-            Set(m, $"{sec}/ZoomLevel[2]", "MaxZoomDistance", "30");
-            Set(m, $"{sec}/ZoomLevel[3]", "MaxZoomDistance", "30");
-            Set(m, $"{sec}/ZoomLevel[4]", "MaxZoomDistance", "30");
-        }
-
-        // Horse lock-on -- same MaxZoomDistance fix as on-foot lock-on sections
-        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[1]", "MaxZoomDistance", "30");
-        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[2]", "MaxZoomDistance", "30");
-        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[3]", "MaxZoomDistance", "30");
 
         // Combat finisher (Player_Weapon_Down) -- vanilla BlendInTime=0.5 snaps hard on kill
         Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendInTime", "1.2");
