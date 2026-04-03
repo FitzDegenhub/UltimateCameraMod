@@ -1618,7 +1618,7 @@ public partial class MainWindow : Window
 
         // Fine Tune sliders: grey out for UCM presets and hard-locked presets
         double deepOpacity = deepLocked ? 0.38 : 1.0;
-        foreach (var (_, slider) in _advCtrlSliders)
+        foreach (var slider in _advCtrlAllSliders)
             if (slider != null) { slider.IsEnabled = !deepLocked; slider.Opacity = 1.0; }
         ExpertDataGrid.IsReadOnly = deepLocked;
         ExpertDataGrid.Opacity = deepOpacity;
@@ -4034,6 +4034,8 @@ public partial class MainWindow : Window
     private readonly Dictionary<string, Slider> _advCtrlSliders = new();
     private readonly Dictionary<string, TextBlock> _advCtrlValueLabels = new();
     private readonly Dictionary<string, string> _advCtrlVanilla = new();
+    // Every slider instance ever created — used for lock/unlock so duplicate-key sliders aren't missed
+    private readonly List<Slider> _advCtrlAllSliders = new();
     // Keys controlled by Steadycam -- sliders for these are locked when Steadycam is on
     private HashSet<string>? _steadycamKeys;
 
@@ -4211,6 +4213,7 @@ public partial class MainWindow : Window
         row.Children.Add(resetBtn);
 
         _advCtrlSliders[fullKey] = slider;
+        _advCtrlAllSliders.Add(slider);
         _advCtrlValueLabels[fullKey] = valueLabel;
 
         return row;
