@@ -898,19 +898,33 @@ public static class CameraRules
         string zl2s = $"{Math.Round(zl2 * f, 1)}";
         string zl3s = $"{Math.Round(zl3 * f, 1)}";
         string zl4s = $"{Math.Round(zl4 * f, 1)}";
-        double forceDist = Math.Round(zl3 * f * 2.0, 1);
 
-        foreach (var sec in new[] {
-            "Player_Weapon_LockOn",
-            "Player_Weapon_TwoTarget",
-            "Player_FollowLearn_LockOn_Boss" })
+        // All lock-on sections
+        foreach (var sec in LockOnSections)
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", zl2s);
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
         }
+
+        // Guard and rush -- game switches to these when guarding/charging,
+        // not to a LockOn section, so they need the offset applied separately
+        foreach (var sec in new[] { "Player_Weapon_Guard", "Player_Weapon_Rush" })
+        {
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", zl2s);
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
+            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
+        }
+
+        // Force/Titan lock-on -- these use a wider base distance in vanilla
+        double forceDist = Math.Round(zl3 * f * 2.0, 1);
         Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_Force_LockOn/ZoomLevel[3]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_Force_LockOn/ZoomLevel[4]", "ZoomDistance", $"{forceDist}");
         Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[2]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[3]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[4]", "ZoomDistance", $"{forceDist}");
         return m;
     }
 
