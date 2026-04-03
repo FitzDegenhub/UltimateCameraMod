@@ -1,4 +1,4 @@
-﻿# UCM v3.0 Beta - Release Notes
+﻿# UCM v3.0.1 Beta - Release Notes
 
 > **Nexus Mods page temporarily unavailable** - The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. Downloads are available here on GitHub Releases in the meantime. Thank you for your patience!
 
@@ -179,6 +179,39 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 ---
 
+## New in v3.0.1
+
+### UCM preset catalog browser
+- UCM style presets are no longer generated locally on startup - they're **downloaded on demand** via the Browse button on the "UCM presets" sidebar header
+- Official presets hosted on the [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev/ucm_presets) with a `catalog.json` manifest
+- **Preset update detection** - background catalog check compares revision numbers. Outdated presets show an update icon in the sidebar
+- Update prompt offers to **duplicate the old version** to My Presets before downloading the update
+
+### Style IDs renamed
+- Old cryptic IDs (`western`, `cinematic`, `immersive`, `lowcam`, `vlowcam`, `ulowcam`, `re2`) replaced with self-documenting names (`heroic`, `panoramic`, `close-up`, `low-rider`, `knee-cam`, `dirt-cam`, `survival`)
+- Method names in CameraRules updated to match (`BuildHeroic`, `BuildPanoramic`, etc.)
+- All preset files, catalog entries, and code references updated (71 references across 6 files)
+
+### Session XML corruption fix
+- Removed `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` from preset serialization which was corrupting XML strings (unescaped angle brackets/quotes broke JSON structure)
+- Replaced `JsonNode.ToJsonString` with fresh Dictionary serialization for the session_xml bake step
+
+### UI improvements
+- **UCM Quick layout** - Custom Offsets and Global Settings now side-by-side at top, camera previews side-by-side below
+- **God Mode SECTION column** - auto-stretches to fit window width (was fixed 220px, truncating long names)
+- **Locked preset toast on all tabs** - Fine Tune and God Mode now show the red toast when clicking disabled controls
+- **Steadycam tooltip on disabled sliders** - `ToolTipService.ShowOnDisabled` so hover shows "Controlled by Steadycam" even when greyed out
+- **Live camera preview** - shows selected preset name instead of "Custom"
+- **FoV preview** - enlarged to match camera preview height with distance ruler
+
+### Bug fixes in v3.0.1
+- Session XML bake producing corrupted/whitespace data for UCM style presets
+- Fine Tune sliders showing vanilla values instead of preset values (caused by XML corruption)
+- Locked preset toast not appearing on Fine Tune or God Mode tabs
+- Steadycam tooltip not showing on disabled sliders (WPF disabled control tooltip behaviour)
+
+---
+
 ## Known limitations
 
 - **HUD centering (ultrawide) is temporarily disabled** - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found
@@ -199,7 +232,5 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 **Source:** [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
 **Nexus:** [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)
-**VirusTotal:** [v3.0 - Clean](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection)
-**SHA-256 (zip):** `C4C3451D9DFF70ED36D6D60A4E59DE4718A5CFDD248AC9E7BC4A9EF50D22C947`
-**SHA-256 (exe):** `2FE241B86C339423AEB5350F9D3A1662AE8A8AA97BA00DFE53DEF4E7BD399923`
+**VirusTotal:** TBD (will be updated after release build)
 **Support:** [Ko-fi](https://ko-fi.com/0xfitz)
