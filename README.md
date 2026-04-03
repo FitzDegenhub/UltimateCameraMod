@@ -152,15 +152,6 @@ Includes title, version, author, Nexus URL, and description fields for JSON/XML.
 >
 > Every setting you tweak can be exported and shared. The guard-camera zoom snap that plagued the vanilla game was solved by a single user adjusting one FoV value. That kind of community-driven fine-tuning is exactly what this tool is for.
 
-**v2 string formats** (still supported):
-
-| Format | Contains |
-|--------|----------|
-| `UCM:...` | Distance, height, horizontal shift |
-| `UCM_ADV:...` | Full XML parameter overrides |
-
-**v3** adds file-based JSON presets and multi-format export on top of these.
-
 ---
 
 ## How it works
