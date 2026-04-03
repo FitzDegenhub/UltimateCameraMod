@@ -1066,7 +1066,7 @@ public static class CameraMod
     // ── Main operations ──────────────────────────────────────────────
 
     public static Dictionary<string, object> InstallCameraMod(string gameDir, string style, int fov,
-        bool bane, string combat, bool mountHeight = false, double? customUp = null,
+        bool bane, double combatPullback = 0.0, bool mountHeight = false, double? customUp = null,
         bool steadycam = true, Action<string>? log = null)
     {
         log?.Invoke("Finding camera entry...");
@@ -1092,7 +1092,7 @@ public static class CameraMod
         }
 
         log?.Invoke("Building modification rules...");
-        var modSet = CameraRules.BuildModifications(style, fov, bane, combat,
+        var modSet = CameraRules.BuildModifications(style, fov, bane, combatPullback: combatPullback,
             mountHeight: mountHeight, customUp: customUp, steadycam: steadycam);
         int modCount = modSet.ElementMods.Values.Sum(v => v.Count);
         log?.Invoke($"Rules: {modCount} attribute changes" +

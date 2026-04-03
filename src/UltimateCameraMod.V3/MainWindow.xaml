@@ -412,9 +412,17 @@
                                       Height="32" SelectionChanged="OnSettingChanged" Margin="0,0,0,8"
                                       ToolTip="Adds this many degrees to each Fov and InDoorFov in the camera file. Indoor and outdoor rows start from different vanilla numbers, so God Mode will show many different final values—not one angle everywhere."/>
 
-                            <TextBlock Text="Combat camera" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
-                            <ComboBox x:Name="CombatCombo" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Height="32" SelectionChanged="OnSettingChanged" Margin="0,0,0,8"/>
+                            <TextBlock Text="Lock-on pull-back" Style="{StaticResource FieldLabel}" Grid.Row="1"
+                                       ToolTip="Pulls the camera further out during lock-on combat, proportional to your current distance setting. 0% = same as on-foot. 60% = 60% further out."/>
+                            <Slider x:Name="CombatPullbackSlider" Grid.Row="1" Grid.Column="1"
+                                    Minimum="0" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
+                                    TickFrequency="0.05" IsSnapToTickEnabled="True"
+                                    ValueChanged="OnCombatPullbackChanged"
+                                    VerticalAlignment="Center" Margin="0,0,4,8"
+                                    ToolTip="Pulls the camera further out during lock-on combat, proportional to your current distance setting. 0% = same as on-foot. 60% = 60% further out."/>
+                            <TextBlock x:Name="CombatPullbackLabel" Grid.Row="1" Grid.Column="2"
+                                       VerticalAlignment="Center" Margin="0,0,0,8" Width="36"
+                                       Text="0%" TextAlignment="Right"/>
 
                             <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="2"/>
                             <CheckBox x:Name="BaneCheck" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"

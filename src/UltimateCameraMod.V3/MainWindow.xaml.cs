@@ -277,12 +277,6 @@ public partial class MainWindow : Window
         (40, "+40\u00b0 (80\u00b0)  -  Extreme, slight fisheye"),
     };
 
-    private static readonly (string Id, string Label)[] CombatOptions =
-    {
-        ("default", "Default  -  Standard combat camera"),
-        ("wide",    "Wider  -  More room to see the battlefield"),
-        ("max",     "Maximum  -  Widest possible combat view"),
-    };
 
     private static readonly Dictionary<string, (double Dist, double Up, double Ro)> StyleParams = new()
     {
@@ -400,7 +394,7 @@ public partial class MainWindow : Window
             ["style"] = GetSelectedStyleId(),
             ["fov"] = GetSelectedFov(),
             ["bane"] = BaneCheck.IsChecked == true,
-            ["combat"] = GetSelectedCombat(),
+            ["combat_pullback"] = GetCombatPullback(),
             ["mount_height"] = MountHeightCheck.IsChecked == true,
             ["steadycam"] = SteadycamCheck.IsChecked == true,
             ["custom"] = new Dictionary<string, double>
@@ -452,7 +446,7 @@ public partial class MainWindow : Window
             ["height"] = Math.Round(HeightSlider.Value, 2),
             ["right_offset"] = Math.Round(HShiftSlider.Value, 2),
             ["fov"] = GetSelectedFov(),
-            ["combat"] = GetSelectedCombat(),
+            ["combat_pullback"] = GetCombatPullback(),
             ["centered"] = BaneCheck.IsChecked == true,
             ["mount_height"] = MountHeightCheck.IsChecked == true,
             ["steadycam"] = SteadycamCheck.IsChecked == true
@@ -904,7 +898,7 @@ public partial class MainWindow : Window
                         ["height"] = Math.Round(up, 2),
                         ["right_offset"] = Math.Round(rightOffsetSetting, 2),
                         ["fov"] = 0,
-                        ["combat"] = "default",
+                        ["combat_pullback"] = 0.0,
                         ["centered"] = false,
                         ["mount_height"] = false,
                         ["steadycam"] = false
@@ -912,8 +906,8 @@ public partial class MainWindow : Window
                 }
                 else
                 {
-                    var modSet = CameraRules.BuildModifications(id, 25, false, "default",
-                        mountHeight: false, steadycam: true);
+                    var modSet = CameraRules.BuildModifications(id, 25, false,
+                        combatPullback: 0.0, mountHeight: false, steadycam: true);
                     xml = CameraMod.ApplyModifications(vanillaXml, modSet);
                     settings = new Dictionary<string, object>
                     {
@@ -921,7 +915,7 @@ public partial class MainWindow : Window
                         ["height"] = Math.Round(up, 2),
                         ["right_offset"] = Math.Round(ro, 2),
                         ["fov"] = 25,
-                        ["combat"] = "default",
+                        ["combat_pullback"] = 0.0,
                         ["centered"] = false,
                         ["mount_height"] = false,
                         ["steadycam"] = true
@@ -1018,7 +1012,7 @@ public partial class MainWindow : Window
                         ["height"] = Math.Round(height, 2),
                         ["right_offset"] = Math.Round(roff, 2),
                         ["fov"] = 0,
-                        ["combat"] = "default",
+                        ["combat_pullback"] = 0.0,
                         ["centered"] = false,
                         ["mount_height"] = false,
                         ["steadycam"] = false
@@ -1340,13 +1334,12 @@ public partial class MainWindow : Window
             int fovIdx = Array.FindIndex(FovOptions, f => f.Value == savedFov);
             FovCombo.SelectedIndex = fovIdx >= 0 ? fovIdx : 4;
 
-            CombatCombo.Items.Clear();
-            foreach (var (_, label) in CombatOptions)
-                CombatCombo.Items.Add(label);
-
-            string savedCombat = _savedState?.GetValueOrDefault("combat")?.ToString() ?? "default";
-            int combatIdx = Array.FindIndex(CombatOptions, c => c.Id == savedCombat);
-            CombatCombo.SelectedIndex = combatIdx >= 0 ? combatIdx : 0;
+            double savedPullback = 0.0;
+            if (_savedState?.TryGetValue("combat_pullback", out var cpObj) == true && cpObj != null)
+                double.TryParse(cpObj.ToString(), System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out savedPullback);
+            CombatPullbackSlider.Value = Math.Clamp(savedPullback, 0.0, 0.6);
+            CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
 
             BaneCheck.IsChecked = GetBool(_savedState, "bane");
             MountHeightCheck.IsChecked = GetBool(_savedState, "mount_height");
@@ -1781,11 +1774,17 @@ public partial class MainWindow : Window
                                 int fovIdx = Array.FindIndex(FovOptions, f => f.Value == fov);
                                 if (fovIdx >= 0) FovCombo.SelectedIndex = fovIdx;
                             }
-                            if (settings.TryGetProperty("combat", out var combEl) && combEl.ValueKind == JsonValueKind.String)
+                            if (settings.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
                             {
+                                CombatPullbackSlider.Value = Math.Clamp(cpEl.GetDouble(), 0.0, 0.6);
+                                CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
+                            }
+                            else if (settings.TryGetProperty("combat", out var combEl) && combEl.ValueKind == JsonValueKind.String)
+                            {
+                                // Legacy preset migration: map old string values to approximate pull-back
                                 string comb = combEl.GetString() ?? "";
-                                int combIdx = Array.FindIndex(CombatOptions, c => c.Id == comb);
-                                if (combIdx >= 0) CombatCombo.SelectedIndex = combIdx;
+                                CombatPullbackSlider.Value = comb switch { "wide" => 0.25, "max" => 0.5, _ => 0.0 };
+                                CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
                             }
                             if (settings.TryGetProperty("centered", out var baneEl))
                                 BaneCheck.IsChecked = baneEl.ValueKind == JsonValueKind.True;
@@ -2825,7 +2824,10 @@ public partial class MainWindow : Window
         int fov = GetInt(state, "fov", 0);
         string style = state.GetValueOrDefault("style")?.ToString() ?? "default";
         bool bane = GetBool(state, "bane");
-        string combat = state.GetValueOrDefault("combat")?.ToString() ?? "default";
+        double combatPb = 0.0;
+        if (state.TryGetValue("combat_pullback", out var cpbObj) && cpbObj != null)
+            double.TryParse(cpbObj.ToString(), System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out combatPb);
         bool mountH = GetBool(state, "mount_height");
         bool steadycam = GetBool(state, "steadycam", true);
         double dist = 5.0, height = 0.0, hshift = 0.0;
@@ -2859,7 +2861,7 @@ public partial class MainWindow : Window
         if (bane) parts.Add("Centered");
 
         var globals = new List<string>();
-        if (combat != "default") globals.Add("Combat");
+        if (combatPb > 0) globals.Add($"Lock-on +{(int)Math.Round(combatPb * 100)}%");
         if (mountH) globals.Add("Mount cam");
         if (steadycam) globals.Add("Steadycam");
         if (globals.Count > 0)
@@ -3076,10 +3078,13 @@ public partial class MainWindow : Window
         return idx >= 0 && idx < FovOptions.Length ? FovOptions[idx].Value : 25;
     }
 
-    private string GetSelectedCombat()
+    private double GetCombatPullback() => CombatPullbackSlider.Value;
+
+    private void OnCombatPullbackChanged(object s, RoutedPropertyChangedEventArgs<double> e)
     {
-        int idx = CombatCombo.SelectedIndex;
-        return idx >= 0 && idx < CombatOptions.Length ? CombatOptions[idx].Id : "default";
+        if (CombatPullbackLabel != null)
+            CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
+        OnSettingChanged(s, e);
     }
 
     // â”€â”€ Presets â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -3784,7 +3789,7 @@ public partial class MainWindow : Window
             string styleId = GetSelectedStyleId();
             int fov = GetSelectedFov();
             bool bane = BaneCheck.IsChecked == true;
-            string combat = GetSelectedCombat();
+            double pullback = GetCombatPullback();
             bool mount = MountHeightCheck.IsChecked == true;
             double? customUp = null;
             if (styleId == "custom")
@@ -3793,7 +3798,7 @@ public partial class MainWindow : Window
                 customUp = HeightSlider.Value;
             }
             bool sc = SteadycamCheck.IsChecked == true;
-            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combat, mountHeight: mount, customUp: customUp, steadycam: sc);
+            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combatPullback: pullback, mountHeight: mount, customUp: customUp, steadycam: sc);
             vanillaXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
             var defaultRows = CameraMod.ParseXmlToRows(vanillaXml);
@@ -4984,7 +4989,7 @@ public partial class MainWindow : Window
                     ["height"] = Math.Round(HeightSlider.Value, 2),
                     ["right_offset"] = Math.Round(HShiftSlider.Value, 2),
                     ["fov"] = GetSelectedFov(),
-                    ["combat"] = GetSelectedCombat(),
+                    ["combat_pullback"] = GetCombatPullback(),
                     ["centered"] = BaneCheck.IsChecked == true,
                     ["mount_height"] = MountHeightCheck.IsChecked == true,
                     ["steadycam"] = SteadycamCheck.IsChecked == true
@@ -5620,7 +5625,7 @@ public partial class MainWindow : Window
         string styleId = GetSelectedStyleId();
         int fov = GetSelectedFov();
         bool bane = BaneCheck.IsChecked == true;
-        string combat = GetSelectedCombat();
+        double pullback = GetCombatPullback();
         bool mount = MountHeightCheck.IsChecked == true;
         bool sc = SteadycamCheck.IsChecked == true;
 
@@ -5632,7 +5637,7 @@ public partial class MainWindow : Window
             customUp = HeightSlider.Value;
         }
 
-        return CameraRules.BuildModifications(styleId, fov, bane, combat,
+        return CameraRules.BuildModifications(styleId, fov, bane, combatPullback: pullback,
             mountHeight: mount, customUp: customUp, steadycam: sc);
     }
 

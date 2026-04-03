@@ -10,7 +10,7 @@ public sealed class CameraSessionState
 
     public string StyleId { get; set; } = "cinematic";
     public int FovDelta { get; set; } = 25;
-    public string CombatId { get; set; } = "default";
+    public double CombatPullback { get; set; } = 0.0;
     public bool CenterCharacter { get; set; }
     public bool MatchMountHeight { get; set; }
     public bool Steadycam { get; set; } = true;
@@ -37,7 +37,7 @@ public sealed class CameraSessionState
             StyleId,
             FovDelta,
             CenterCharacter,
-            CombatId,
+            combatPullback: CombatPullback,
             mountHeight: MatchMountHeight,
             customUp: StyleId.Equals("custom", StringComparison.OrdinalIgnoreCase) ? CustomHeight : null,
             steadycam: Steadycam);

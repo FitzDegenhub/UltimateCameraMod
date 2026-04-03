@@ -435,7 +435,8 @@ public partial class MainWindow : Window
         if (bane) parts.Add("Centered");
 
         var globals = new List<string>();
-        if (combat != "default") globals.Add("Combat");
+        double combatPb = CombatIdToPullback(combat);
+        if (combatPb > 0) globals.Add($"Lock-on +{(int)Math.Round(combatPb * 100)}%");
         if (mountH) globals.Add("Mount cam");
         if (steadycam) globals.Add("Steadycam");
         if (globals.Count > 0)
@@ -614,6 +615,13 @@ public partial class MainWindow : Window
         return idx >= 0 && idx < CombatOptions.Length ? CombatOptions[idx].Id : "default";
     }
 
+    private static double CombatIdToPullback(string id) => id switch
+    {
+        "wide" => 0.25,
+        "max"  => 0.5,
+        _      => 0.0,
+    };
+
     // ── Presets ──────────────────────────────────────────────────────
 
     private string PresetsDir
@@ -788,7 +796,7 @@ public partial class MainWindow : Window
         {
             try
             {
-                var result = CameraMod.InstallCameraMod(_gameDir, styleId, fov, bane, combat,
+                var result = CameraMod.InstallCameraMod(_gameDir, styleId, fov, bane, CombatIdToPullback(combat),
                     mountHeight: mountHeight, customUp: customUp, steadycam: steadycam,
                     log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
                 bool ok = result.GetValueOrDefault("status")?.ToString() == "ok";
@@ -1116,7 +1124,7 @@ public partial class MainWindow : Window
                 customUp = HeightSlider.Value;
             }
             bool sc = SteadycamCheck.IsChecked == true;
-            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combat, mountHeight: mount, customUp: customUp, steadycam: sc);
+            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combatPullback: CombatIdToPullback(combat), mountHeight: mount, customUp: customUp, steadycam: sc);
             vanillaXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
             var defaultRows = CameraMod.ParseXmlToRows(vanillaXml);
@@ -2137,7 +2145,7 @@ public partial class MainWindow : Window
             customUp = HeightSlider.Value;
         }
         bool sc = SteadycamCheck.IsChecked == true;
-        return CameraRules.BuildModifications(styleId, fov, bane, combat,
+        return CameraRules.BuildModifications(styleId, fov, bane, combatPullback: CombatIdToPullback(combat),
             mountHeight: mount, customUp: customUp, steadycam: sc);
     }
 

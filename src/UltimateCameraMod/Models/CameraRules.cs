@@ -57,9 +57,9 @@ namespace UltimateCameraMod.Models;
 //  5. BuildBaneMods()  [optional]
 //     Centres the camera (RightOffset=0) for the Bane centred-camera option.
 //
-//  6. CombatLockOn (wide / max)  [optional]
-//     Pushes specific boss/wide lock-on sections further out than the base.
-//     These override BuildLockOnDistances for only the sections that benefit.
+//  6. BuildCombatPullback(zl2, zl3, zl4, pullback)  [optional]
+//     Proportional pull-back on top of the base lock-on distances.
+//     A pullback of 0.25 means 25% further out than whatever the style set.
 //
 //  7. BuildMountHeightMods()  [optional]
 //     Matches horse camera height to the player's UpOffset setting.
@@ -883,49 +883,37 @@ public static class CameraRules
         return m;
     }
 
-    // ── Combat lock-on ───────────────────────────────────────────────
+    // ── Combat lock-on pull-back ─────────────────────────────────────
 
-    private static readonly Dictionary<string, Dictionary<string, Dictionary<string, (string, string)>>> CombatLockOn = new()
-    {
-        ["wide"] = BuildCombatWide(),
-        ["max"] = BuildCombatMax(),
-    };
-
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatWide()
-    {
-        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-        // Wide pushes further out from the style's base lock-on distances.
-        // These override BuildLockOnDistances for the specific sections that benefit
-        // from extra distance during boss/wide encounters.
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[2]", "ZoomDistance", "4.5");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[3]", "ZoomDistance", "7.5");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[4]", "ZoomDistance", "10.0");
-        Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", "15");
-        Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", "15");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[2]", "ZoomDistance", "4.5");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[3]", "ZoomDistance", "7.5");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[4]", "ZoomDistance", "10.0");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[2]", "ZoomDistance", "4.5");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[3]", "ZoomDistance", "7.5");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[4]", "ZoomDistance", "10.0");
-        return m;
-    }
-
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatMax()
+    /// <summary>
+    /// Applies a proportional pull-back multiplier to the main lock-on sections
+    /// on top of whatever BuildLockOnDistances already set. A multiplier of 0
+    /// means no change (lock-on matches on-foot exactly). A multiplier of 0.25
+    /// pulls the camera 25% further out than the base lock-on distance.
+    /// </summary>
+    public static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatPullback(
+        double zl2, double zl3, double zl4, double pullback)
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-        // Max pushes even further out from the style's base lock-on distances.
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[2]", "ZoomDistance", "5.5");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[3]", "ZoomDistance", "9.5");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[4]", "ZoomDistance", "12.5");
-        Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", "20");
-        Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", "20");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[2]", "ZoomDistance", "5.5");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[3]", "ZoomDistance", "9.5");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[4]", "ZoomDistance", "12.5");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[2]", "ZoomDistance", "5.5");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[3]", "ZoomDistance", "9.5");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[4]", "ZoomDistance", "12.5");
+        if (pullback <= 0) return m;
+
+        double f = 1.0 + pullback;
+        string zl2s = $"{Math.Round(zl2 * f, 1)}";
+        string zl3s = $"{Math.Round(zl3 * f, 1)}";
+        string zl4s = $"{Math.Round(zl4 * f, 1)}";
+        double forceDist = Math.Round(zl3 * f * 2.0, 1);
+
+        foreach (var sec in new[] {
+            "Player_Weapon_LockOn",
+            "Player_Weapon_TwoTarget",
+            "Player_FollowLearn_LockOn_Boss" })
+        {
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", zl2s);
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
+            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
+        }
+        Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", $"{forceDist}");
         return m;
     }
 
@@ -1123,7 +1111,8 @@ public static class CameraRules
         StyleUpOffset["custom"] = height;
     }
 
-    public static ModificationSet BuildModifications(string style, int fov, bool bane, string combat,
+    public static ModificationSet BuildModifications(string style, int fov, bool bane,
+        double combatPullback = 0.0,
         bool mountHeight = false, double? customUp = null, bool steadycam = true)
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
@@ -1150,9 +1139,25 @@ public static class CameraRules
         if (bane)
             Merge(mods, BuildBaneMods());
 
-        // Layer 4: combat lock-on distance
-        if (CombatLockOn.TryGetValue(combat, out var combatMods))
-            Merge(mods, combatMods);
+        // Layer 4: combat lock-on pull-back -- proportional multiplier on top of base lock-on
+        // distances. Read the actual ZL2/ZL3/ZL4 that ended up in mods after the style layer
+        // so the pull-back always scales relative to the user's chosen distance.
+        if (combatPullback > 0)
+        {
+            double zl2 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[2]", out var zl2d)
+                && zl2d.TryGetValue("ZoomDistance", out var zl2v)
+                && double.TryParse(zl2v.Item2, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double zl2p) ? zl2p : 3.4;
+            double zl3 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[3]", out var zl3d)
+                && zl3d.TryGetValue("ZoomDistance", out var zl3v)
+                && double.TryParse(zl3v.Item2, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double zl3p) ? zl3p : 6.0;
+            double zl4 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[4]", out var zl4d)
+                && zl4d.TryGetValue("ZoomDistance", out var zl4v)
+                && double.TryParse(zl4v.Item2, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double zl4p) ? zl4p : 8.0;
+            Merge(mods, BuildCombatPullback(zl2, zl3, zl4, combatPullback));
+        }
 
         // Layer 5: match mount height to player
         if (mountHeight)
