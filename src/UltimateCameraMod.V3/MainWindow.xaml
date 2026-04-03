@@ -396,6 +396,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
@@ -412,31 +413,36 @@
                                       Height="32" SelectionChanged="OnSettingChanged" Margin="0,0,0,8"
                                       ToolTip="Adds this many degrees to each Fov and InDoorFov in the camera file. Indoor and outdoor rows start from different vanilla numbers, so God Mode will show many different final values—not one angle everywhere."/>
 
-                            <TextBlock Text="Lock-on pull-back" Style="{StaticResource FieldLabel}" Grid.Row="1"
-                                       ToolTip="Pulls the camera further out during lock-on combat, proportional to your current distance setting. 0% = same as on-foot. 60% = 60% further out."/>
+                            <TextBlock Text="Lock-on pull-back" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                             <Slider x:Name="CombatPullbackSlider" Grid.Row="1" Grid.Column="1"
                                     Minimum="0" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
                                     TickFrequency="0.05" IsSnapToTickEnabled="True"
                                     ValueChanged="OnCombatPullbackChanged"
-                                    VerticalAlignment="Center" Margin="0,0,4,8"
-                                    ToolTip="Pulls the camera further out during lock-on combat, proportional to your current distance setting. 0% = same as on-foot. 60% = 60% further out."/>
+                                    VerticalAlignment="Center" Margin="0,0,0,8"/>
                             <TextBlock x:Name="CombatPullbackLabel" Grid.Row="1" Grid.Column="2"
-                                       VerticalAlignment="Center" Margin="0,0,0,8" Width="36"
-                                       Text="0%" TextAlignment="Right"/>
+                                       FontFamily="Consolas" FontSize="11"
+                                       Foreground="{StaticResource TextPrimaryBrush}"
+                                       VerticalAlignment="Center" Margin="0,0,0,8"
+                                       Text="0%"/>
 
-                            <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="2"/>
-                            <CheckBox x:Name="BaneCheck" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                            <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
+                                       FontSize="9" Foreground="{StaticResource TextDimBrush}"
+                                       TextWrapping="Wrap" LineHeight="14" Margin="0,0,0,8"
+                                       Text="Pulls the camera further out when locking onto or guarding against a target. Scales proportionally with your Distance setting — best used at lower distances where lock-on would otherwise feel too close. At 0% the lock-on distance matches your on-foot camera exactly."/>
+
+                            <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
+                            <CheckBox x:Name="BaneCheck" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                                       Content="Center character on screen"
                                       Checked="OnBaneChanged" Unchecked="OnBaneChanged" Margin="0,0,0,8"
                                       ToolTip="Separate from Horizontal shift ~0.5: that value is often vanilla lateral bias in the XML. This option forces shift to 0 and applies stronger centering rules (RightOffset toward 0 where supported)."/>
 
-                            <TextBlock Text="Mount camera" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
-                            <CheckBox x:Name="MountHeightCheck" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                            <TextBlock Text="Mount camera" Style="{StaticResource FieldLabel}" Grid.Row="4"/>
+                            <CheckBox x:Name="MountHeightCheck" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                                       Content="Match mount/horse height to player camera height"
                                       Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,8"/>
 
-                            <TextBlock Text="Steadycam" Style="{StaticResource FieldLabel}" Grid.Row="4"/>
-                            <CheckBox x:Name="SteadycamCheck" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                            <TextBlock Text="Steadycam" Style="{StaticResource FieldLabel}" Grid.Row="5"/>
+                            <CheckBox x:Name="SteadycamCheck" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
                                       Content="Smooth camera transitions (eliminates zoom jitter between states)"
                                       IsChecked="True" Margin="0,0,0,8"
                                       ToolTip="Smooths blending, damping and velocity offsets between movement states. Disable to restore vanilla camera transitions."/>

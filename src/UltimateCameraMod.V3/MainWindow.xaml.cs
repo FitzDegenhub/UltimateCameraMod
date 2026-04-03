@@ -1339,7 +1339,7 @@ public partial class MainWindow : Window
                 double.TryParse(cpObj.ToString(), System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out savedPullback);
             CombatPullbackSlider.Value = Math.Clamp(savedPullback, 0.0, 0.6);
-            CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
+            CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
 
             BaneCheck.IsChecked = GetBool(_savedState, "bane");
             MountHeightCheck.IsChecked = GetBool(_savedState, "mount_height");
@@ -1777,14 +1777,14 @@ public partial class MainWindow : Window
                             if (settings.TryGetProperty("combat_pullback", out var cpEl) && cpEl.ValueKind == JsonValueKind.Number)
                             {
                                 CombatPullbackSlider.Value = Math.Clamp(cpEl.GetDouble(), 0.0, 0.6);
-                                CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
+                                CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
                             }
                             else if (settings.TryGetProperty("combat", out var combEl) && combEl.ValueKind == JsonValueKind.String)
                             {
                                 // Legacy preset migration: map old string values to approximate pull-back
                                 string comb = combEl.GetString() ?? "";
                                 CombatPullbackSlider.Value = comb switch { "wide" => 0.25, "max" => 0.5, _ => 0.0 };
-                                CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
+                                CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
                             }
                             if (settings.TryGetProperty("centered", out var baneEl))
                                 BaneCheck.IsChecked = baneEl.ValueKind == JsonValueKind.True;
@@ -3080,10 +3080,13 @@ public partial class MainWindow : Window
 
     private double GetCombatPullback() => CombatPullbackSlider.Value;
 
+    private static string FormatPullback(double v) =>
+        $"{(int)Math.Round(v * 100),3}%";
+
     private void OnCombatPullbackChanged(object s, RoutedPropertyChangedEventArgs<double> e)
     {
         if (CombatPullbackLabel != null)
-            CombatPullbackLabel.Text = $"{(int)Math.Round(CombatPullbackSlider.Value * 100)}%";
+            CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
         OnSettingChanged(s, e);
     }
 
