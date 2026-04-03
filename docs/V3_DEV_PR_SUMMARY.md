@@ -1,127 +1,162 @@
-# PR: `v3-dev` → `main` — UCM v3 (export-first / Mod Manager)
+# PR: `v3-dev` → `main` — UCM v3.0-beta
 
-**Use this file as the GitHub PR description** (copy from below the line). Refresh when `v3-dev` gains more commits.
+**Use this as the GitHub PR description.** Updated to reflect the full branch tip as of v3.0-beta.
 
 ---
 
 ## Summary
 
-Introduces **Ultimate Camera Mod v3**: a **second WPF front-end** (`src/UltimateCameraMod.V3/`) aimed at an **export-first** workflow—tune the camera in-app, **export `.json`** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and treat direct PAZ install as secondary compared to **v2.x** on `main`. Core PAZ/XML logic stays in **`src/UltimateCameraMod/`** and is **shared** with v3.
+Introduces **Ultimate Camera Mod v3**: a second WPF front-end (`src/UltimateCameraMod.V3/`) built around an **export-first workflow** — tune the camera in-app, export `.json` for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), and treat direct PAZ install as secondary. Core PAZ/XML logic stays in `src/UltimateCameraMod/` and is shared with v3.
 
-**v2.x** remains the shipping line on **GitHub Releases** until v3 is explicitly released; this PR is the integration vehicle for that future cut.
+v3 is now tagged as **v3.0-beta** on GitHub Releases. v2.5 remains on `main` while Nexus source review is in progress.
 
 ---
 
 ## Goals
 
-- Preset workflow centered on **real JSON files** (shareable, versionable) instead of only in-app state.
-- **One session XML** driving **UCM Quick**, **Fine Tune**, and **God Mode** where possible.
-- **JSON patch export** aligned with **JSON Mod Manager** and **Crimson Desert Ultimate Mods Manager** (byte patches, `modinfo`, decompressed offsets).
-- **True “Vanilla” built-in preset** that matches stock game camera data and Quick-slider baselines.
-- **Windows polish**: correct **taskbar grouping and icon** for the v3 exe.
-- **Game-update awareness**: optional warnings when install metadata drifts after patches.
+- Preset workflow centred on **real JSON files** (shareable, versionable) instead of only in-app state
+- **One session XML** driving UCM Quick, Fine Tune, and God Mode
+- **JSON patch export** aligned with JSON Mod Manager and CDUMM (byte patches, `modinfo`, decompressed offsets, human-readable region labels)
+- **True "Vanilla" built-in preset** matching stock game camera data with Quick-slider baselines
+- **Windows polish**: correct taskbar grouping and icon for the v3 exe
+- **Game-update awareness**: warnings when install metadata drifts after patches
+- **Seamless camera transitions**: Steadycam expanded to 30+ states, lock-on distances scaled dynamically
 
 ---
 
-## What shipped on this branch (high level)
+## What shipped on this branch
 
-### New app & UX (`UltimateCameraMod.V3`)
+### New app and UX (`UltimateCameraMod.V3`)
 
-- **Two-panel shell**: sidebar **preset manager** + tabbed editor (**UCM Quick** / **Fine Tune** / **God Mode**).
-- **Preset groups**: built-ins under `ucm_presets/`, user presets under `my_presets/`, **import** flows; migration from legacy `presets/` layout.
-- **Dialogs**: **Export for sharing** wizard (`ExportJsonDialog` — JSON / XML / 0.paz / `.ucmpreset`), **import preset** (`ImportPresetDialog`), **new preset** (`NewPresetDialog`).
-- **Performance-minded UI**: cached resources, debounced search, async file I/O where appropriate, lighter sidebar refresh for large `session_xml` (partial header reads).
-- **Branding / shell**: `ucm.ico` + PNG asset; **App User Model ID** + **`RelaunchIconResource`** via `SHGetPropertyStoreForWindow` (`ShellTaskbarPropertyStore`, `ApplicationIdentity`) in addition to existing icon/class tricks.
+- **Two-panel shell**: sidebar preset manager + tabbed editor (UCM Quick / Fine Tune / God Mode)
+- **Three-tier editor**:
+  - *UCM Quick* — distance, height, shift, FoV, lock-on zoom, centered camera, mount sync, steadycam, live camera + FoV previews with distance ruler
+  - *Fine Tune* — curated deep-tuning in searchable bordered cards. On-foot zoom, horse/mount zoom, global FoV, special mounts, traversal, combat, lock-on, camera smoothing (Steadycam), aiming
+  - *God Mode* — full raw XML DataGrid, vanilla comparison column, modified values highlighted, expand/collapse all, per-state filtering
+- **Quick → Fine Tune / God Mode sync**: Quick slider changes propagate into deeper tabs so all three tiers stay consistent
+- **Preset groups**: built-ins under `ucm_presets/`, community under `community_presets/`, user presets under `my_presets/`, imported under `import_presets/`; migration from legacy `presets/` layout
+- **Dialogs**: Export for sharing wizard (`ExportJsonDialog` — JSON / XML / 0.paz / `.ucmpreset`), import preset (`ImportPresetDialog`), import metadata (`ImportMetadataDialog` — author / description / URL), new preset (`NewPresetDialog`), community browser (`CommunityBrowserDialog`)
+- **Locked preset UX**: editing a locked preset surfaces a toast instead of silently failing; UCM presets permanently locked, user presets toggleable via padlock icon
+- **Active preset header**: name, author, description (full brightness, readable size), and a "View on Nexus" button when the preset has a URL
+- **Performance-minded UI**: cached resources, debounced search, async file I/O, partial 4 KB header reads for sidebar metadata (avoids deserialising full 300 KB session XMLs)
+- **Branding / shell**: `ucm.ico` + PNG asset; App User Model ID + `RelaunchIconResource` via `SHGetPropertyStoreForWindow` (`ShellTaskbarPropertyStore`, `ApplicationIdentity`)
 
-### Shared library & services (`UltimateCameraMod`)
+### File-based preset system
 
-- **`JsonModExporter`**: binary diff → JSON patches; **`JavaScriptEncoder.UnsafeRelaxedJsonEscaping`** for preset files; **`ExtractJsonStringField`** so sidebar metadata decodes JSON escapes correctly (e.g. `+` / `\u002B` in descriptions).
-- **`CameraMod`**: vanilla XML read path for built-in Vanilla preset; **`TryParseUcmQuickFootBaselineFromXml`** so Quick distance / height / right offset match **`Player_Basic_Default` / `ZoomLevel[2]`**; **`vanilla_preset_rev`** for forced regeneration of built-in Vanilla JSON.
-- **`GameInstallBaselineTracker`**: persists **`game_install_baseline.json`** after a successful apply; tracks universal signals and **Steam `appmanifest`** fields where applicable; **MainWindow** wiring for snooze + informational banner (iterative).
-- **`ArchiveWriter`** and related PAZ path tweaks as needed for the above flows.
-- **v2 `MainWindow`**: minimal touch where shared behavior or docs alignment was required.
+- **`.ucmpreset` file format** — dedicated shareable format. Drop into any preset folder and it just works
+- **Sidebar manager** with collapsible grouped sections: UCM Presets, Community Presets, My Presets, Imported
+- **New / Duplicate / Rename / Delete** from the sidebar
+- **Auto-save** — changes to unlocked presets write back to the preset file automatically (debounced)
+- **True Vanilla preset** — decoded directly from game backup; Quick sliders synced to actual game baseline values via `TryParseUcmQuickFootBaselineFromXml` and `QuickShiftDeltaFromFootZl2RightOffset`
+- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages with optional metadata
+- **Auto-migration** from legacy `.json` presets on first launch
+- **`vanilla_preset_rev`** — forces regeneration of built-in Vanilla JSON when the baseline changes
 
-### Docs & repo
+### Community preset catalog
 
-- **README**: dedicated **v3 development** section (feature table, **build & run v3** PowerShell snippet, project layout including V3).
-- **`docs/NEXUS_MOD_PAGE.md`**: short Nexus-facing stub.
-- **Repo cleanup** (on the path to v3): release notes relocated under `docs/release-notes/`, `.gitignore` hardened, tracked binaries removed from tree.
+- **`CommunityBrowserDialog`**: fetches `catalog.json` from `ucm-community-presets` GitHub repo, renders preset cards with name, author, description, tags, and Nexus link
+- One-click download; downloaded presets are **rebuilt** with metadata fields (`url`, `name`, `author`, `description`) guaranteed before `session_xml` so the 4 KB header read always finds them
+- 2 MB size limit and JSON validation
+- Shipped preset (`RDR2` by orangeees) embedded as assembly resource (`ShippedPresets/*.json`), deployed to `ucm_presets/` on first launch via `DeployShippedCommunityPresets()`
 
-### Explicitly not in the tree anymore
+### Multi-format export
 
-- **`tools/ReadVanillaQuickBaseline`** was removed after the initial push; vanilla baseline debugging stays in-app / logs as needed.
+- **JSON** — binary diff → byte patches with human-readable region labels (`JsonModExporter`); `modinfo` block; vanilla-guarded Prepare (`IsLiveCameraPayloadMatchingStoredBackup` blocks export when live PAZ no longer matches backup)
+- **XML** — raw `playercamerapreset.xml`
+- **0.paz** — patched archive
+- **.ucmpreset** — full UCM preset
+- Export dialog includes title, version, author, Nexus URL, description; shows patch region count and bytes changed
+
+### Camera improvements
+
+#### Steadycam — expanded to 30+ states
+
+Previously Steadycam covered on-foot run/sprint, guard, horse/mount states, animal form, and core lock-on sections. v3-beta adds:
+
+| New section | Vanilla blend | UCM |
+|-------------|--------------|-----|
+| `Player_Weapon_Rush` (charge attack) | 0.25s | 0.6s |
+| `Player_Basic_FreeFall_Start` / `FreeFall` | 0.65s | 1.0s |
+| `Player_Basic_SuperJump` | 0.5s | 0.8s |
+| `Player_Basic_RopePull` / `RopeSwing` | 0.5s | 0.8s |
+| `Player_Hit_Throw` (knockback) | 0.5s | 0.8s |
+| `Player_Ride_Warmachine_Aim` / `Dash` | 0.5s | 0.8s |
+| `Player_Ride_Aim_LockOn` (mount lock-on) | 0.5s | 1.0s |
+| `Player_Revive_LockOn_System` | 0s (instant) | 0.8s |
+| `Player_Force_LockOn` / `Player_LockOn_Titan` | unsmoothed | 0.8–1.0s |
+| `Player_Weapon_LockOn_Non_Rotate` / `WrestleOnly` | unsmoothed | 0.8–1.0s |
+| `Player_StartAggro_TwoTarget` / `Wanted_TwoTarget` | 0.5s out | 1.0s |
+
+Two new Fine Tune cards: **Movement transitions** (12 sliders) and **Extended lock-on and combat transitions** (20 sliders).
+
+#### Lock-on zoom slider (replaces Combat Camera dropdown)
+
+- Range: -60% (zoom in) to +60% (pull back)
+- Works independently of Steadycam
+- Affects all lock-on, guard, and rush states
+- `MaxZoomDistance=30` moved to `BuildSharedBase()` — always applied, not just when Steadycam is on
+
+#### Lock-on distance scaling
+
+Lock-on `ZoomDistance` values now derive from the user's actual on-foot ZL2/ZL3/ZL4 distances (from whichever style/Fine Tune/God Mode values are active). Eliminates the jarring zoom-in that occurred when using large camera distances.
+
+#### Finisher camera smoothing
+
+`Player_Weapon_Down` (combat finisher): vanilla 0.5s → UCM 1.2s in / 1.5s out.
+
+### Shared library and services (`UltimateCameraMod`)
+
+- **`JsonModExporter`**: binary diff → JSON patches; `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` for preset files; `ExtractJsonStringField` decodes JSON escapes in sidebar metadata; human-readable XML offset map labels each diff region
+- **`CameraMod`**: vanilla XML read path for Vanilla preset; `TryParseUcmQuickFootBaselineFromXml`; `vanilla_preset_rev`; `IsLiveCameraPayloadMatchingStoredBackup` for vanilla guard; `StripComments` for clean session XML
+- **`CameraRules`**: `BuildSmoothing()` expanded to 30+ sections; `BuildSharedBase()` always applies `MaxZoomDistance=30`; `BuildCombatPullback()` replaces `BuildCombatWide/Max`; `BuildLockOnDistances()` scales lock-on ZoomDistance dynamically; `GetSteadycamKeys()` for Fine Tune lock-out; architecture comment block documents all 6 modification layers
+- **`GameInstallBaselineTracker`**: persists `game_install_baseline.json` after successful apply; tracks Steam `appmanifest` fields; MainWindow wiring for snooze + informational banner
+- **`ArchiveWriter`** and PAZ path tweaks as needed
+
+### Design philosophy change
+
+v3 removes structural XML injection (extra zoom levels, horse first-person, horse camera overhaul with additional zoom tiers). UCM v3 modifies only existing values — same line count, same element structure, same attributes. Safer to share, more resilient across game patches.
+
+### Docs and repo
+
+- **README**: full v3 feature documentation, branch table, three-tier editor table, multi-format export table, design philosophy note, build instructions, project structure, FAQ, version history
+- **`docs/release-notes/release_notes_v3-beta.md`**: full user-facing release notes
+- **`docs/V3_DEV_PR_SUMMARY.md`**: this file — PR description kept up to date with branch tip
+- **`docs/NEXUS_MOD_PAGE.md`**: Nexus-facing stub
+- Repo cleanup: release notes under `docs/release-notes/`, `.gitignore` hardened, tracked binaries removed
 
 ---
 
-## v3-dev — recent feature notes (after the original PR summary)
+## Commit reference (`main`..`v3-dev`)
 
-Use this subsection when updating the PR after newer `v3-dev` commits land.
-
-### Import metadata, editors, and shell (`4460b42` and follow-ups)
-
-- **`ImportMetadataDialog`**: optional **author / description / URL** when importing; fields persist on **`ImportedPreset`** and flow through save/build paths.
-- **Active preset header**: **clickable preset URL** when metadata includes a link.
-- **Locked presets**: edits surface a **toast** (instead of hard-disabling controls) so the rule is visible without dead UI.
-- **UCM Quick → editors**: Quick slider changes **sync into Fine Tune and God Mode** so deeper tabs stay consistent with the session.
-- **Fine Tune**: section groups in **bordered cards**; **wider label column** for readability.
-- **Tab bar**: **DockPanel** layout so **God Mode** stays visually anchored on the right.
-- **`PresetManagerItem`**: link/metadata plumbing for sidebar and selection summaries.
-- **README**: Reddit badge removed; **Ko-fi / support** callouts added in separate doc commits (`4b27964`, `bd3f3b5`, `e57b591`).
-- **`issue_body.md`**: tracked write-up of the **Coherent Gameface / HUD watermark** situation (archive `0012`), for GitHub issues or cross-linking.
-
-### Shared `JsonModExporter` — patch region labels (`4460b42`)
-
-- Builds an **XML offset map** over vanilla bytes and labels each diff region with a **human-readable hint** (e.g. which camera/XML area) instead of a generic “Camera parameter change” string everywhere. Improves Mod Manager JSON reviewability.
-
-### Shipped community presets (embedded)
-
-- **`ShippedPresets/*.json`** are **embedded resources** in `UltimateCameraMod.V3.csproj` (not only loose files on disk), so presets like **RDR2** ship inside the assembly.
-- **`GenerateBuiltInPresets()`** ends with **`DeployShippedCommunityPresets()`**: after built-in Vanilla / styles are written (game folder detected), each embedded `UltimateCameraMod.V3.ShippedPresets.*.json` is deserialized (imported-preset shape: `Name`, `Author`, `Description`, `Url`, `RawXml`), converted to a **session JSON** under **`ucm_presets/{Name}.json`**, with Quick sliders derived from **ZL2** via **`TryParseUcmQuickFootBaselineFromXml`** and **`QuickShiftDeltaFromFootZl2RightOffset`**.
-- **Does not overwrite** an existing file of the same name (user deletes/edits are respected).
-
-### Vanilla built-in Quick slider semantics (shared)
-
-- **`CameraRules.QuickShiftDeltaFromFootZl2RightOffset`**: maps literal XML **RightOffset** at on-foot ZL2 to the UCM Quick **horizontal shift delta** (inverse of `BuildCustom` mapping).
-- **Built-in Vanilla.json** now stores **`right_offset`** using that delta so the Quick panel matches true vanilla XML (~0.5 → slider 0).
-- **`CameraMod.TryParseUcmQuickFootBaselineFromXml`** documentation updated to spell out literal vs delta.
-
-### JSON mod managers — verified compatibility, UI, and vanilla guard
-
-- **Tested with** **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (Nexus mod 113) and **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM, Nexus mod 207): same `.json` shape (`patches`, `game_file`, `changes` with `offset` / `original` / `patched` / `label`).
-- **`ExportJsonDialog`**: format chip **JSON · mod managers**; header + format help + post-prepare hint use **clickable Nexus links** and explicit product names; copy explains that recipients do not need UCM.
-- **`CameraMod.IsLiveCameraPayloadMatchingStoredBackup`**: **blocks JSON Prepare** when the live `playercamerapreset` PAZ payload no longer matches `original_backup.bin`, so patch `original` bytes stay valid for mod managers that expect vanilla (verify game / revert camera first).
-- **README**: branch table, multi-format table, tagline, FAQ, and version history call out both managers and the vanilla requirement.
-
-### Import / metadata / UI (`c1b83b1` + `430a8db`)
-
-- **Save toast** can show **error styling** (`_pendingSaveToastIsError`) for failed saves.
-- **`ExportJsonDialog`**: minor alignment with current export flow.
-- **`MainWindow.xaml`**: layout / copy / tooltip text (e.g. horizontal shift help aligned with **UCM Quick**).
-- **Startup**: **first** preset-manager refresh runs **before** game detection so **my_presets** / imports are visible without the game. When a game folder is present, **`OnGameDirResolved`** kicks off an **async** camera scan that **refreshes the sidebar again** (alongside built-in + shipped JSON written in `OnLoaded`).
-- **`screenshots/banner.png`**: hero image in the root **README** (centered, responsive width; `430a8db`).
-
----
-
-## Commits (`main`..`v3-dev`) — reference
-
-| Commit   | Topic |
-|----------|--------|
-| `430a8db` | README: wire `screenshots/banner.png` hero image |
-| `c1b83b1` | Embedded shipped presets (RDR2), Vanilla Quick delta, import/export UI touches |
-| `4460b42` | Import metadata dialog, locked-preset toasts, Quick→Fine/God sync, Fine Tune cards, JSON patch labels |
-| `4b27964` / `bd3f3b5` / `e57b591` | README: Ko-fi / support presentation tweaks |
-| `44260b9` | Add this PR summary doc for GitHub |
-| `4a78a84` | Remove `ReadVanillaQuickBaseline`; neutral `.gitignore` comment for local worktree path |
-| `8d1f328` | Taskbar/icon, vanilla baseline sync, JSON + baseline tracker, README/docs |
-| `a8f4ce7` | v3.0-dev: UI redesign + file-based preset system |
-| `ae8ba3c` | README (Nexus / releases note) |
+| Commit | Topic |
+|--------|-------|
+| `3013ac0` | fix: community preset link button, description display, v3.0-beta version |
+| `c2e5bc4` | docs: update README for v3-beta — steadycam expansion, lock-on zoom, branch status |
+| `8a0d51f` | feat(steadycam): expand smoothing to 30+ states; lock-on zoom -60%/+60% |
+| `db62f37` | Fix lock-on zoom not applying to guard/rush; cover all LockOnSections |
+| `836d9a2` | Move lock-on MaxZoomDistance to SharedBase so it applies without Steadycam |
+| `54e13ea` | Extend lock-on zoom slider to negative range (-40% to +60%) |
+| `ed636d0` | Fix Swim FoV slider staying yellow when locked (duplicate key overwrite) |
+| `e64575c` | Polish lock-on zoom slider: label style, description text |
+| `e113fff` | Fix slider thumb staying yellow when disabled (UCM preset lock) |
+| `fbd6106` | Replace Combat Camera dropdown with Lock-on zoom slider (0–60%) |
+| `c780a7f` | feat(steadycam): finisher camera smoothing and architecture docs |
+| `3d5420e` | feat(ui): grey out locked sliders, FoV preview distance ruler, preset URL field |
+| `c96afc8` | fix(steadycam): re-sync lock-on distances after God Mode overrides |
+| `b7432ba` | feat(steadycam): re-sync lock-on distances after Fine Tune overrides |
+| `d1ecd28` | feat(steadycam): scale lock-on ZoomDistance with user's chosen style distance |
+| `18a3ed3` | v3: `.ucmpreset` format, community preset catalog, collapsible sidebar |
+| `c1b83b1` | v3-dev: shipped RDR2 preset embed, Quick delta fix, import UX |
+| `4460b42` | v3: import metadata, locked-preset UX, Quick→editor sync, Fine Tune cards, JSON patch labels |
+| `8d1f328` | v3-dev: taskbar icon, vanilla preset baseline, JSON export polish, baseline tracker, docs |
+| `a8f4ce7` | v3.0-dev: complete UI redesign with file-based preset system |
 | `c9f3657` | Repo cleanup: release notes, `.gitignore`, remove tracked binaries |
 
 ---
 
-## How to build & run v3 (Windows)
+## How to build and run v3 (Windows)
 
-Requires **.NET 6 SDK**. **Stop** any running **`UltimateCameraMod.V3`** before `dotnet build` (locked exe → MSB3027).
+Requires **.NET 6 SDK** (or later). Stop any running `UltimateCameraMod.V3` before building — the exe copy step fails if the file is locked (MSB3027).
 
 ```powershell
 Stop-Process -Name "UltimateCameraMod.V3" -Force -ErrorAction SilentlyContinue
@@ -129,25 +164,36 @@ dotnet build "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release
 Start-Process "src/UltimateCameraMod.V3/bin/Release/net6.0-windows/UltimateCameraMod.V3.exe"
 ```
 
-v2.x publish flow is unchanged; see README **Building from Source (v2.x)**.
+Single-file self-contained publish (for release zip):
+
+```powershell
+dotnet publish "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+```
+
+v2.x publish flow is unchanged — see README **Building from source (v2.x)**.
 
 ---
 
-## Risk / review focus
+## Risk and review focus
 
-- **Large shared surface**: `CameraMod`, `JsonModExporter`, PAZ writer—regressions could affect **v2** users; smoke-test v2 publish/run if anything in shared code paths changed.
-- **v3** is **not** yet wired as the primary Release artifact; merge strategy and versioning (v3.0 vs continued v2.5.x) should be explicit before tagging.
+- **Large shared surface**: `CameraMod`, `JsonModExporter`, PAZ writer — regressions could affect v2 users. Smoke-test v2 publish/run if anything in shared code paths changed
+- **Preset file format**: `.ucmpreset` is a superset of the old `.json` format; migration is one-way. Verify auto-migration on a clean profile
+- **Community preset download**: rebuilt on download to guarantee metadata field order — verify Nexus link shows on activation
+- **Steadycam new sections**: 14 new sections added to `BuildSmoothing()` — verify no game crashes on sections that are engine-sensitive (e.g. `Player_SilenceKill` is intentionally excluded)
 
 ---
 
 ## Checklist (for maintainers)
 
-- [ ] v2.x: backup / install / restore still sane on `main`-equivalent + this branch’s shared changes  
-- [ ] v3: preset create / duplicate / import / export **JSON** round-trip (spot-check import in **JSON Mod Manager** and/or **CDUMM** after Steam verify)  
-- [ ] v3: Vanilla built-in preset matches expected stock XML + Quick sliders  
-- [ ] v3: taskbar icon + window title icon on a clean Windows profile  
-- [ ] README / release messaging updated when v3 actually ships on Releases  
+- [ ] v2.x: backup / install / restore still sane on `main`-equivalent + shared changes
+- [ ] v3: preset create / duplicate / import / export JSON round-trip (spot-check import in JSON Mod Manager and/or CDUMM after Steam verify)
+- [ ] v3: Vanilla built-in preset matches expected stock XML + Quick sliders
+- [ ] v3: taskbar icon + window title icon on a clean Windows profile
+- [ ] v3: community preset download → activate → Nexus link visible
+- [ ] v3: Steadycam new sections — no crashes on freefall, rope, super jump, warmachine, revive lock-on
+- [ ] v3: lock-on zoom at -60% and +60% — applies to guard and rush without Steadycam
+- [ ] README / release messaging correct for v3-beta
 
 ---
 
-*Last refreshed: April 2026 — documents JSON export for JSON Mod Manager + CDUMM (Nexus links), Export dialog UX, vanilla guard for JSON Prepare, embedded shipped presets (e.g. RDR2), Vanilla Quick delta alignment, and import metadata/UI follow-ups. Match the branch tip on GitHub for the exact commit.*
+*Last refreshed: April 2026 — v3.0-beta. Covers full branch tip including steadycam expansion (30+ states), lock-on zoom slider (-60%/+60%), community preset link fix, and all commits from initial v3 redesign through beta.*
