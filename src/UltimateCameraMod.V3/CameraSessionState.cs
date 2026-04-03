@@ -8,7 +8,7 @@ public sealed class CameraSessionState
 {
     public const string DefaultNexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
 
-    public string StyleId { get; set; } = "cinematic";
+    public string StyleId { get; set; } = "panoramic";
     public int FovDelta { get; set; } = 25;
     public double CombatPullback { get; set; } = 0.0;
     public bool CenterCharacter { get; set; }
@@ -116,14 +116,14 @@ public sealed class CameraSessionState
     {
         string style = StyleId switch
         {
-            "western" => "Heroic",
-            "cinematic" => "Panoramic",
+            "heroic" => "Heroic",
+            "panoramic" => "Panoramic",
             "default" => "Vanilla",
-            "immersive" => "Close-Up",
-            "lowcam" => "Low Rider",
-            "vlowcam" => "Knee Cam",
-            "ulowcam" => "Dirt Cam",
-            "re2" => "Survival",
+            "close-up" => "Close-Up",
+            "low-rider" => "Low Rider",
+            "knee-cam" => "Knee Cam",
+            "dirt-cam" => "Dirt Cam",
+            "survival" => "Survival",
             "custom" => "Custom",
             _ => StyleId,
         };

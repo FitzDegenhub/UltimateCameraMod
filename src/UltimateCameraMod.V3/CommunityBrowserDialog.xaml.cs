@@ -8,12 +8,13 @@ namespace UltimateCameraMod.V3;
 
 public partial class CommunityBrowserDialog : Window
 {
-    private const string CatalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/catalog.json";
-    private const string RawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/";
     private const long MaxPresetSize = 2 * 1024 * 1024; // 2MB
 
-    private readonly string _communityPresetsDir;
+    private readonly string _catalogUrl;
+    private readonly string _rawBaseUrl;
+    private readonly string _presetsDir;
     private readonly Action _onPresetsChanged;
+    private readonly bool _needsSessionXmlBake;
     private List<CatalogEntry>? _catalog;
 
     private sealed class CatalogEntry
@@ -30,11 +31,22 @@ public partial class CommunityBrowserDialog : Window
         public string[] Tags { get; set; } = Array.Empty<string>();
     }
 
-    public CommunityBrowserDialog(string communityPresetsDir, Action onPresetsChanged)
+    public CommunityBrowserDialog(string presetsDir, Action onPresetsChanged,
+        string catalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/catalog.json",
+        string rawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/ucm-community-presets/main/",
+        string title = "Community Presets",
+        bool needsSessionXmlBake = false)
     {
-        _communityPresetsDir = communityPresetsDir;
+        _presetsDir = presetsDir;
         _onPresetsChanged = onPresetsChanged;
+        _catalogUrl = catalogUrl;
+        _rawBaseUrl = rawBaseUrl;
+        _needsSessionXmlBake = needsSessionXmlBake;
         InitializeComponent();
+        Title = title;
+        HeaderTitle.Text = title.ToUpperInvariant();
+        if (needsSessionXmlBake)
+            HeaderSubtitle.Text = "Browse and download official UCM camera presets. Downloaded presets appear in your sidebar.";
         Loaded += async (_, _) => await FetchCatalogAsync();
     }
 
@@ -47,7 +59,7 @@ public partial class CommunityBrowserDialog : Window
             http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/3.0");
             http.Timeout = TimeSpan.FromSeconds(10);
 
-            string json = await http.GetStringAsync(CatalogUrl);
+            string json = await http.GetStringAsync(_catalogUrl);
             using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
 
@@ -92,12 +104,12 @@ public partial class CommunityBrowserDialog : Window
         }
 
         PresetListPanel.Children.Clear();
-        Directory.CreateDirectory(_communityPresetsDir);
+        Directory.CreateDirectory(_presetsDir);
 
         int downloadedCount = 0;
         foreach (var entry in _catalog)
         {
-            bool isDownloaded = IsPresetDownloaded(entry.Id);
+            bool isDownloaded = IsPresetDownloaded(entry);
             if (isDownloaded) downloadedCount++;
 
             var card = BuildPresetCard(entry, isDownloaded);
@@ -108,10 +120,16 @@ public partial class CommunityBrowserDialog : Window
         StatusText.Text = $"{_catalog.Count} presets available, {downloadedCount} downloaded";
     }
 
-    private bool IsPresetDownloaded(string id)
+    private bool IsPresetDownloaded(CatalogEntry entry)
     {
-        string path = Path.Combine(_communityPresetsDir, $"{id}.ucmpreset");
-        return System.IO.File.Exists(path);
+        // Check by catalog filename first (UCM presets), then by id (community presets)
+        if (_needsSessionXmlBake && !string.IsNullOrEmpty(entry.File))
+        {
+            string path = Path.Combine(_presetsDir, entry.File);
+            return System.IO.File.Exists(path);
+        }
+        string idPath = Path.Combine(_presetsDir, $"{entry.Id}.ucmpreset");
+        return System.IO.File.Exists(idPath);
     }
 
     private Border BuildPresetCard(CatalogEntry entry, bool isDownloaded)
@@ -237,7 +255,7 @@ public partial class CommunityBrowserDialog : Window
             http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/3.0");
             http.Timeout = TimeSpan.FromSeconds(15);
 
-            string downloadUrl = RawBaseUrl + entry.File;
+            string downloadUrl = _rawBaseUrl + entry.File;
             string content = await http.GetStringAsync(downloadUrl);
 
             if (content.Length > MaxPresetSize)
@@ -250,45 +268,53 @@ public partial class CommunityBrowserDialog : Window
             // Validate and rewrite with metadata fields guaranteed before session_xml
             using var doc = JsonDocument.Parse(content);
             var root = doc.RootElement;
-            if (!root.TryGetProperty("session_xml", out var sessionXmlEl) && !root.TryGetProperty("RawXml", out _))
+            bool hasSessionXml = root.TryGetProperty("session_xml", out _) || root.TryGetProperty("RawXml", out _);
+            bool hasStyleId = root.TryGetProperty("style_id", out _);
+            if (!hasSessionXml && !hasStyleId && !_needsSessionXmlBake)
             {
                 btn.Content = "Invalid";
                 StatusText.Text = $"Preset '{entry.Name}' doesn't contain camera data.";
                 return;
             }
 
-            // Rebuild the preset with url/name/author/description guaranteed before session_xml
-            // so the 4KB header read in AppendSessionJsonPresetsFromDir always finds them.
-            string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
-            string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? entry.Name : entry.Name;
-            string presetAuthor = root.TryGetProperty("author", out var aEl) ? aEl.GetString() ?? entry.Author : entry.Author;
-            string presetDesc = root.TryGetProperty("description", out var dEl) ? dEl.GetString() ?? entry.Description : entry.Description;
-            string presetKind = root.TryGetProperty("kind", out var kEl) ? kEl.GetString() ?? "community" : "community";
-            bool presetLocked = root.TryGetProperty("locked", out var lEl) && lEl.ValueKind == JsonValueKind.True;
-
-            // Carry over settings if present
-            object? settingsObj = null;
-            if (root.TryGetProperty("settings", out var settingsEl))
-                settingsObj = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(settingsEl.GetRawText());
-
-            var rebuilt = new Dictionary<string, object?>
+            // For UCM presets (needsSessionXmlBake), save the raw definition as-is.
+            // GenerateBuiltInPresets will bake in session_xml later.
+            // For community presets, rebuild with metadata fields at the top for fast header reads.
+            if (!_needsSessionXmlBake)
             {
-                ["name"] = presetName,
-                ["author"] = presetAuthor,
-                ["url"] = entry.Url,
-                ["description"] = presetDesc,
-                ["kind"] = presetKind,
-                ["locked"] = presetLocked,
-                ["settings"] = settingsObj,
-                ["session_xml"] = sessionXml,
-            };
+                string sessionXml = root.TryGetProperty("session_xml", out var sxEl) ? sxEl.GetString() ?? "" : "";
+                string presetName = root.TryGetProperty("name", out var nEl) ? nEl.GetString() ?? entry.Name : entry.Name;
+                string presetAuthor = root.TryGetProperty("author", out var aEl) ? aEl.GetString() ?? entry.Author : entry.Author;
+                string presetDesc = root.TryGetProperty("description", out var dEl) ? dEl.GetString() ?? entry.Description : entry.Description;
+                string presetKind = root.TryGetProperty("kind", out var kEl) ? kEl.GetString() ?? "community" : "community";
+                bool presetLocked = root.TryGetProperty("locked", out var lEl) && lEl.ValueKind == JsonValueKind.True;
 
-            var jsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
-            content = System.Text.Json.JsonSerializer.Serialize(rebuilt, jsonOptions);
+                object? settingsObj = null;
+                if (root.TryGetProperty("settings", out var settingsEl))
+                    settingsObj = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(settingsEl.GetRawText());
 
-            // Save
-            Directory.CreateDirectory(_communityPresetsDir);
-            string destPath = Path.Combine(_communityPresetsDir, $"{entry.Id}.ucmpreset");
+                var rebuilt = new Dictionary<string, object?>
+                {
+                    ["name"] = presetName,
+                    ["author"] = presetAuthor,
+                    ["url"] = entry.Url,
+                    ["description"] = presetDesc,
+                    ["kind"] = presetKind,
+                    ["locked"] = presetLocked,
+                    ["settings"] = settingsObj,
+                    ["session_xml"] = sessionXml,
+                };
+
+                var jsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+                content = System.Text.Json.JsonSerializer.Serialize(rebuilt, jsonOptions);
+            }
+
+            // Save — UCM presets use the catalog filename; community presets use the entry id
+            Directory.CreateDirectory(_presetsDir);
+            string destFileName = _needsSessionXmlBake && !string.IsNullOrEmpty(entry.File)
+                ? entry.File
+                : $"{entry.Id}.ucmpreset";
+            string destPath = Path.Combine(_presetsDir, destFileName);
             await System.IO.File.WriteAllTextAsync(destPath, content);
 
             btn.Content = "Downloaded \u2714";

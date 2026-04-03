@@ -50,14 +50,14 @@ public partial class MainWindow : Window
 
     private static readonly (string Id, string Label)[] Styles =
     {
-        ("western",   "Heroic  -  Shoulder-level OTS, great framing"),
-        ("cinematic", "Panoramic  -  Head-height wide pullback, filmic"),
+        ("heroic",    "Heroic  -  Shoulder-level OTS, great framing"),
+        ("panoramic", "Panoramic  -  Head-height wide pullback, filmic"),
         ("default",   "Vanilla  -  Default framing + steadycam smoothing"),
-        ("immersive", "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
-        ("lowcam",    "Low Rider  -  Hip-level, full body + horizon"),
-        ("vlowcam",   "Knee Cam  -  Knee-height dramatic low angle"),
-        ("ulowcam",   "Dirt Cam  -  Ground-level, extreme low"),
-        ("re2",       "Survival  -  Tight horror-game OTS (16:9 feel)"),
+        ("close-up",  "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
+        ("low-rider", "Low Rider  -  Hip-level, full body + horizon"),
+        ("knee-cam",  "Knee Cam  -  Knee-height dramatic low angle"),
+        ("dirt-cam",  "Dirt Cam  -  Ground-level, extreme low"),
+        ("survival",  "Survival  -  Tight horror-game OTS (16:9 feel)"),
     };
 
     private static readonly (int Value, string Label)[] FovOptions =
@@ -80,14 +80,14 @@ public partial class MainWindow : Window
 
     private static readonly Dictionary<string, (double Dist, double Up, double Ro)> StyleParams = new()
     {
-        ["western"] = (5.0, -0.2, 0.0),
-        ["cinematic"] = (7.5, 0.0, 0.0),
+        ["heroic"] = (5.0, -0.2, 0.0),
+        ["panoramic"] = (7.5, 0.0, 0.0),
         ["default"] = (3.4, 0.0, 0.0),
-        ["immersive"] = (4.0, -0.2, 0.0),
-        ["lowcam"] = (5.0, -0.8, 0.0),
-        ["vlowcam"] = (5.0, -1.2, 0.0),
-        ["ulowcam"] = (5.0, -1.5, 0.0),
-        ["re2"] = (3.0, 0.0, 0.7),
+        ["close-up"] = (4.0, -0.2, 0.0),
+        ["low-rider"] = (5.0, -0.8, 0.0),
+        ["knee-cam"] = (5.0, -1.2, 0.0),
+        ["dirt-cam"] = (5.0, -1.5, 0.0),
+        ["survival"] = (3.0, 0.0, 0.7),
     };
 
     // ── Constructor ──────────────────────────────────────────────────
@@ -247,7 +247,7 @@ public partial class MainWindow : Window
         foreach (var (_, label) in Styles)
             StyleCombo.Items.Add(label);
 
-        string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "cinematic";
+        string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "panoramic";
         int styleIdx = Array.FindIndex(Styles, s => s.Id == savedStyle);
         StyleCombo.SelectedIndex = styleIdx >= 0 ? styleIdx : 1;
 
@@ -604,7 +604,7 @@ public partial class MainWindow : Window
     private string GetSelectedStyleId()
     {
         int idx = StyleCombo.SelectedIndex;
-        return idx >= 0 && idx < Styles.Length ? Styles[idx].Id : "cinematic";
+        return idx >= 0 && idx < Styles.Length ? Styles[idx].Id : "panoramic";
     }
 
     private int GetSelectedFov()

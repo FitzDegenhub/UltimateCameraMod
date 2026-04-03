@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Threading;
@@ -11,6 +12,12 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        // Force InvariantCulture so all double→string formatting uses '.' as decimal separator.
+        // Without this, European locales (e.g. German, French) produce "7,5" in XML values
+        // which the game cannot parse, breaking all camera modifications.
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
         // Stable taskbar / jump list identity (must run before any HWND is created).
         try { SetCurrentProcessExplicitAppUserModelID(ApplicationIdentity.AppUserModelId); } catch { }
 

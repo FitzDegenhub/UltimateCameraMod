@@ -93,7 +93,7 @@ public partial class MainWindow : Window
     private bool _advCtrlNeedsRefresh;
     private bool _expertNeedsRefresh;
     private bool _sessionIsFullPreset;
-    private string _selectedStyleId = "cinematic";
+    private string _selectedStyleId = "panoramic";
     private List<AdvancedRow> _advAllRows = new();
 
     // â”€â”€ JSON Mod Manager state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -258,14 +258,14 @@ public partial class MainWindow : Window
 
     private static readonly (string Id, string Label)[] Styles =
     {
-        ("western",   "Heroic  -  Shoulder-level OTS, great framing"),
-        ("cinematic", "Panoramic  -  Head-height wide pullback, filmic"),
+        ("heroic",    "Heroic  -  Shoulder-level OTS, great framing"),
+        ("panoramic", "Panoramic  -  Head-height wide pullback, filmic"),
         ("default",   "Vanilla  -  Unmodified game camera (use Steadycam for UCM smoothing)"),
-        ("immersive", "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
-        ("lowcam",    "Low Rider  -  Hip-level, full body + horizon"),
-        ("vlowcam",   "Knee Cam  -  Knee-height dramatic low angle"),
-        ("ulowcam",   "Dirt Cam  -  Ground-level, extreme low"),
-        ("re2",       "Survival  -  Tight horror-game OTS (16:9 feel)"),
+        ("close-up",  "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
+        ("low-rider", "Low Rider  -  Hip-level, full body + horizon"),
+        ("knee-cam",  "Knee Cam  -  Knee-height dramatic low angle"),
+        ("dirt-cam",  "Dirt Cam  -  Ground-level, extreme low"),
+        ("survival",  "Survival  -  Tight horror-game OTS (16:9 feel)"),
     };
 
     private static readonly (int Value, string Label)[] FovOptions =
@@ -282,14 +282,14 @@ public partial class MainWindow : Window
 
     private static readonly Dictionary<string, (double Dist, double Up, double Ro)> StyleParams = new()
     {
-        ["western"] = (5.0, -0.2, 0.0),
-        ["cinematic"] = (7.5, 0.0, 0.0),
+        ["heroic"] = (5.0, -0.2, 0.0),
+        ["panoramic"] = (7.5, 0.0, 0.0),
         ["default"] = (3.4, 0.0, 0.0),
-        ["immersive"] = (4.0, -0.2, 0.0),
-        ["lowcam"] = (5.0, -0.8, 0.0),
-        ["vlowcam"] = (5.0, -1.2, 0.0),
-        ["ulowcam"] = (5.0, -1.5, 0.0),
-        ["re2"] = (3.0, 0.0, 0.7),
+        ["close-up"] = (4.0, -0.2, 0.0),
+        ["low-rider"] = (5.0, -0.8, 0.0),
+        ["knee-cam"] = (5.0, -1.2, 0.0),
+        ["dirt-cam"] = (5.0, -1.5, 0.0),
+        ["survival"] = (3.0, 0.0, 0.7),
     };
 
     // â”€â”€ Constructor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -1143,7 +1143,8 @@ public partial class MainWindow : Window
 
         CheckForUpdate();
         CheckGitHubVersion();
-        FetchUcmPresetsAsync();
+        // UCM style presets are downloaded via Browse button, not auto-fetched on startup
+        CheckUcmPresetUpdatesAsync();
         RefreshGameUpdateNotice();
 
         if (string.IsNullOrWhiteSpace(_gameDir))
@@ -1384,10 +1385,10 @@ public partial class MainWindow : Window
         _suppressEvents = true;
         try
         {
-            string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "cinematic";
+            string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "panoramic";
             bool isKnownStyle = string.Equals(savedStyle, "custom", StringComparison.OrdinalIgnoreCase)
                 || Array.Exists(Styles, s => s.Id == savedStyle);
-            _selectedStyleId = isKnownStyle ? savedStyle : "cinematic";
+            _selectedStyleId = isKnownStyle ? savedStyle : "panoramic";
 
             FovCombo.Items.Clear();
             foreach (var (_, label) in FovOptions)
@@ -1822,7 +1823,7 @@ public partial class MainWindow : Window
                         try
                         {
                             if (root.TryGetProperty("style_id", out var sidEl) && sidEl.ValueKind == JsonValueKind.String)
-                                _selectedStyleId = sidEl.GetString() ?? "cinematic";
+                                _selectedStyleId = sidEl.GetString() ?? "panoramic";
 
                             if (settings.TryGetProperty("distance", out var dv2) && dv2.ValueKind == JsonValueKind.Number)
                                 DistSlider.Value = Math.Clamp(dv2.GetDouble(), 1.5, 12.0);
@@ -2216,6 +2217,21 @@ public partial class MainWindow : Window
         }
 
         AppendSessionJsonPresetsFromDir(UcmPresetsDir, defaultLocked: true, kindOverride: null);
+
+        // Ensure "UCM presets" group header always shows so the Browse button is visible
+        if (!items.Any(i => i.KindId is "default" or "style"))
+        {
+            items.Add(new PresetManagerItem
+            {
+                Name = "\0",
+                KindId = "style",
+                KindLabel = "UCM style",
+                FilePath = "",
+                IsLocked = true,
+                IsPlaceholder = true
+            });
+        }
+
         AppendSessionJsonPresetsFromDir(CommunityPresetsDir, defaultLocked: true, kindOverride: "community");
 
         // Ensure "Community presets" group header always shows so the download icon is visible.
@@ -3359,17 +3375,49 @@ public partial class MainWindow : Window
 
     // â”€â”€ Restore â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-    private void OnBrowseCommunity(object sender, RoutedEventArgs e)
+    private void OnBrowsePresetCatalog(object sender, RoutedEventArgs e)
     {
-        var dlg = new CommunityBrowserDialog(CommunityPresetsDir, () =>
+        // Determine which catalog to browse based on the group header that was clicked
+        string groupName = "";
+        if (sender is System.Windows.Controls.Button btn && btn.DataContext is CollectionViewGroup group)
+            groupName = group.Name?.ToString() ?? "";
+
+        if (groupName == "UCM presets")
         {
-            Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
-        })
+            var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    if (!string.IsNullOrEmpty(_gameDir))
+                        GenerateBuiltInPresets(); // Bake session_xml into downloaded presets
+                    RefreshPresetManagerLists(preserveSelection: true);
+                });
+            },
+            catalogUrl: UcmPresetsCatalogUrl,
+            rawBaseUrl: UcmPresetsRawBaseUrl,
+            title: "UCM Presets",
+            needsSessionXmlBake: true)
+            {
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
+        else
         {
-            Owner = this
-        };
-        dlg.ShowDialog();
+            var dlg = new CommunityBrowserDialog(CommunityPresetsDir, () =>
+            {
+                Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
+            },
+            title: "Community Presets")
+            {
+                Owner = this
+            };
+            dlg.ShowDialog();
+        }
     }
+
+    // Keep for any direct calls
+    private void OnBrowseCommunity(object sender, RoutedEventArgs e) => OnBrowsePresetCatalog(sender, e);
 
     private void OnRestore(object s, RoutedEventArgs e)
     {
@@ -5887,6 +5935,139 @@ public partial class MainWindow : Window
         if (dict == null || !dict.TryGetValue(key, out var val)) return defaultVal;
         if (val is JsonElement je) return je.ValueKind == JsonValueKind.True;
         return bool.TryParse(val.ToString(), out bool b) && b;
+    }
+
+    // ── Preset update detection ──────────────────────────────────────
+
+    private async void CheckUcmPresetUpdatesAsync()
+    {
+        try
+        {
+            using var http = new HttpClient();
+            http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/" + Ver);
+            http.Timeout = TimeSpan.FromSeconds(8);
+
+            string json = await http.GetStringAsync(UcmPresetsCatalogUrl);
+            using var doc = JsonDocument.Parse(json);
+            if (!doc.RootElement.TryGetProperty("presets", out var presetsArr)
+                || presetsArr.ValueKind != JsonValueKind.Array)
+                return;
+
+            var catalogRevisions = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            foreach (var el in presetsArr.EnumerateArray())
+            {
+                string file = el.TryGetProperty("file", out var fEl) ? fEl.GetString() ?? "" : "";
+                int rev = el.TryGetProperty("ucm_preset_rev", out var rEl) && rEl.ValueKind == JsonValueKind.Number
+                    ? rEl.GetInt32() : 0;
+                if (!string.IsNullOrEmpty(file))
+                    catalogRevisions[Path.GetFileNameWithoutExtension(file)] = rev;
+            }
+
+            await Dispatcher.InvokeAsync(() =>
+            {
+                foreach (var item in _presetManagerItems)
+                {
+                    if (item.KindId is not ("style" or "default") || item.IsPlaceholder) continue;
+
+                    string localPath = item.FilePath;
+                    if (string.IsNullOrEmpty(localPath) || !File.Exists(localPath)) continue;
+
+                    // Read local revision from the file header
+                    int localRev = 0;
+                    try
+                    {
+                        using var reader = new StreamReader(localPath);
+                        var buf = new char[512];
+                        int read = reader.Read(buf, 0, buf.Length);
+                        string head = new string(buf, 0, read);
+                        string? revStr = ExtractJsonStringField(head, "ucm_preset_rev");
+                        if (revStr != null) int.TryParse(revStr, out localRev);
+                    }
+                    catch { }
+
+                    string presetFileName = Path.GetFileNameWithoutExtension(localPath);
+                    if (catalogRevisions.TryGetValue(presetFileName, out int catalogRev) && catalogRev > localRev)
+                    {
+                        item.HasUpdate = true;
+                    }
+                }
+            });
+        }
+        catch { /* network unavailable — silently skip update check */ }
+    }
+
+    private async void OnPresetUpdateClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button btn || btn.DataContext is not PresetManagerItem item) return;
+        if (!item.HasUpdate) return;
+
+        // Ask if they want to duplicate first
+        var result = MessageBox.Show(
+            $"An update is available for '{item.Name}'.\n\nWould you like to save a copy of the current version to My Presets before updating?",
+            "Preset Update",
+            MessageBoxButton.YesNoCancel,
+            MessageBoxImage.Question);
+
+        if (result == MessageBoxResult.Cancel) return;
+
+        if (result == MessageBoxResult.Yes)
+        {
+            // Duplicate to My Presets
+            try
+            {
+                string dupName = $"{item.Name}_old";
+                string dupPath = Path.Combine(MyPresetsDir, $"{SanitizeFileStem(dupName)}.ucmpreset");
+                if (File.Exists(item.FilePath))
+                {
+                    string fileJson = File.ReadAllText(item.FilePath);
+                    var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(fileJson) ?? new();
+                    dict["name"] = dupName;
+                    dict["kind"] = "user";
+                    dict["locked"] = false;
+                    File.WriteAllText(dupPath, JsonSerializer.Serialize(dict, PresetFileJsonOptions));
+                }
+            }
+            catch (Exception ex)
+            {
+                SetStatus($"Failed to duplicate: {ex.Message}", "Error");
+                return;
+            }
+        }
+
+        // Download the update
+        try
+        {
+            using var http = new HttpClient();
+            http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/" + Ver);
+            http.Timeout = TimeSpan.FromSeconds(10);
+
+            string fileName = Path.GetFileName(item.FilePath);
+            string downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(fileName);
+            string content = await http.GetStringAsync(downloadUrl);
+
+            File.WriteAllText(item.FilePath, content);
+
+            // Bake in session_xml if game dir is available
+            if (!string.IsNullOrEmpty(_gameDir))
+                GenerateBuiltInPresets();
+
+            item.HasUpdate = false;
+            RefreshPresetManagerLists(preserveSelection: true);
+
+            // Reload if this was the active preset
+            if (ReferenceEquals(_selectedPresetManagerItem, item))
+            {
+                _activePickerKey = null;
+                ActivatePickerFromSelection(item, skipCapture: true);
+            }
+
+            QueueSavedToast($"Updated '{item.Name}'");
+            SetStatus($"Preset '{item.Name}' updated.", "Success");
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Update failed: {ex.Message}", "Error");
+        }
     }
 }
 

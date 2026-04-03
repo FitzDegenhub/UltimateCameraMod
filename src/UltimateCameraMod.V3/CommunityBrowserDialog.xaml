@@ -16,9 +16,9 @@
         <!-- Header -->
         <Border Grid.Row="0" Background="{StaticResource BgPanelBrush}" Padding="22,14,22,12">
             <StackPanel>
-                <TextBlock Text="COMMUNITY PRESETS" FontSize="14" FontWeight="Bold"
+                <TextBlock x:Name="HeaderTitle" Text="COMMUNITY PRESETS" FontSize="14" FontWeight="Bold"
                            Foreground="{StaticResource AccentBrush}"/>
-                <TextBlock Text="Browse camera presets shared by the UCM community. Downloaded presets appear in your sidebar."
+                <TextBlock x:Name="HeaderSubtitle" Text="Browse camera presets shared by the UCM community. Downloaded presets appear in your sidebar."
                            FontSize="11" Foreground="{StaticResource TextDimBrush}" Margin="0,4,0,0" TextWrapping="Wrap"/>
             </StackPanel>
         </Border>

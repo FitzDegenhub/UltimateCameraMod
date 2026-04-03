@@ -48,8 +48,8 @@ namespace UltimateCameraMod.Models;
 //       the resulting XML and call BuildLockOnDistancesPublic() again so manual
 //       ZoomDistance edits are also reflected in lock-on.
 //
-//  4. Style builder (BuildWestern / BuildCinematic / BuildImmersive /
-//                    BuildLowcamVariant / BuildRe2 / BuildCustom)
+//  4. Style builder (BuildHeroic / BuildPanoramic / BuildCloseUp /
+//                    BuildLowVariant / BuildSurvival / BuildCustom)
 //     Sets ZoomDistance, UpOffset, RightOffset for AllMain sections.
 //     Each builder ends with Merge(m, BuildLockOnDistances(zl2, zl3, zl4))
 //     using its own distances so lock-on is always in sync.
@@ -86,6 +86,10 @@ namespace UltimateCameraMod.Models;
 //  Player_Revive_LockOn_System, Player_FollowLearn_LockOn_Boss,
 //  Player_Weapon_LockOn_Non_Rotate, Player_Weapon_LockOn_WrestleOnly,
 //  Player_Interaction_TwoTarget  → handled by BuildLockOnDistances (ZL2/3/4)
+//
+//  Player_Interaction_LockOn, Interaction_LookAt  → NPC dialogue camera (LB+X).
+//  Vanilla hardcodes a wide ZoomDistance causing a jarring snap on interaction.
+//  Added to LockOnSections so distance scales with the user's chosen zoom level.
 //
 //  Player_SilenceKill, Player_SilenceKill_Back  → stealth finishers, only ZL2,
 //  vanilla ZoomDistance=1.2 (extreme close-up).
@@ -172,6 +176,10 @@ public static class CameraRules
         "Player_Weapon_LockOn_Non_Rotate",
         "Player_Weapon_LockOn_WrestleOnly",
         "Player_Interaction_TwoTarget",
+        // NPC dialogue camera (LB+X) -- vanilla hardcodes a wide ZoomDistance here,
+        // causing a jarring zoom-out snap when talking to NPCs at close range.
+        "Player_Interaction_LockOn",
+        "Interaction_LookAt",
     };
 
     private static readonly string[] BaneSections =
@@ -338,11 +346,17 @@ public static class CameraRules
         Set(m, "Player_Wanted_TwoTarget", "ScreenClampRate", "0.6");
 
         // On-foot ZoomDistance normalization (includes idle to prevent idle→walk zoom jumps)
+        // Also normalize ZoomLevel Fov to 40 so the FoV slider delta applies consistently
+        // at every zoom level. Vanilla ZL3/ZL4 often carry Fov="53" which would otherwise
+        // produce a different effective FoV when the user zooms out.
         foreach (var sec in new[] { "Player_Basic_Default", "Player_Basic_Default_Walk", "Player_Basic_Default_Run", "Player_Basic_Default_Runfast" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
+            Set(m, $"{sec}/ZoomLevel[2]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
+            Set(m, $"{sec}/ZoomLevel[3]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
+            Set(m, $"{sec}/ZoomLevel[4]", "Fov", "40");
         }
 
         // Combat ZoomDistance normalization (includes idle so guard→idle→walk has no zoom gap)
@@ -351,16 +365,22 @@ public static class CameraRules
                  "Player_Weapon_Default_RunFast", "Player_Weapon_Default_RunFast_Follow" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
+            Set(m, $"{sec}/ZoomLevel[2]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
+            Set(m, $"{sec}/ZoomLevel[3]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
+            Set(m, $"{sec}/ZoomLevel[4]", "Fov", "40");
         }
 
         Set(m, "Player_Weapon_Guard", "Fov", "40");
         foreach (var sec in new[] { "Player_Weapon_Guard", "Player_Weapon_Rush" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
+            Set(m, $"{sec}/ZoomLevel[2]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
+            Set(m, $"{sec}/ZoomLevel[3]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
+            Set(m, $"{sec}/ZoomLevel[4]", "Fov", "40");
         }
 
         // RightOffset normalization (prevents horizontal drift during walk/run/guard)
@@ -405,6 +425,18 @@ public static class CameraRules
     private static Dictionary<string, Dictionary<string, (string, string)>> BuildSmoothing()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
+
+        // On-foot idle/walk/run blend -- smooths the run→stop zoom-out snap.
+        // Vanilla Player_Basic_Default (idle) has no BlendInTime so when the player
+        // stops running the camera snaps back to the idle position immediately.
+        Set(m, "Player_Basic_Default/CameraBlendParameter", "BlendInTime", "0.6");
+        Set(m, "Player_Basic_Default/CameraBlendParameter", "BlendOutTime", "0.4");
+        Set(m, "Player_Basic_Default_Walk/CameraBlendParameter", "BlendInTime", "0.4");
+        Set(m, "Player_Basic_Default_Walk/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Basic_Default_Run/CameraBlendParameter", "BlendInTime", "0.4");
+        Set(m, "Player_Basic_Default_Run/CameraBlendParameter", "BlendOutTime", "0.4");
+        Set(m, "Player_Basic_Default_Runfast/CameraBlendParameter", "BlendInTime", "0.4");
+        Set(m, "Player_Basic_Default_Runfast/CameraBlendParameter", "BlendOutTime", "0.4");
 
         // Guard blend: smooth enter/exit to prevent zoom snap on release
         Set(m, "Player_Weapon_Guard/CameraBlendParameter", "BlendInTime", "1.0");
@@ -521,6 +553,11 @@ public static class CameraRules
         Set(m, "Player_FollowLearn_LockOn_Boss/CameraBlendParameter", "BlendOutTime", "1.0");
         Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendInTime", "1.0");
         Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
+        // NPC dialogue (LB+X) -- vanilla has no blend, snaps instantly into the wide shot
+        Set(m, "Player_Interaction_LockOn/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Interaction_LockOn/CameraBlendParameter", "BlendOutTime", "0.8");
+        Set(m, "Interaction_LookAt/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Interaction_LookAt/CameraBlendParameter", "BlendOutTime", "0.8");
 
         // Extended lock-on coverage -- sections not previously smoothed
         Set(m, "Player_Revive_LockOn_System/CameraBlendParameter", "BlendInTime", "0.8");
@@ -620,7 +657,7 @@ public static class CameraRules
 
     // ── Style layers ─────────────────────────────────────────────────
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildWestern()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildHeroic()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -648,7 +685,7 @@ public static class CameraRules
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCinematic()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildPanoramic()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -675,7 +712,7 @@ public static class CameraRules
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildImmersive()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCloseUp()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -701,7 +738,7 @@ public static class CameraRules
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildLowcamVariant(string baseUp, string? indoorUp = null)
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildLowVariant(string baseUp, string? indoorUp = null)
     {
         indoorUp ??= baseUp;
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
@@ -781,7 +818,7 @@ public static class CameraRules
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildRe2()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildSurvival()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -983,24 +1020,24 @@ public static class CameraRules
     private static readonly Dictionary<string, double> StyleUpOffset = new()
     {
         ["default"] = 0.0,
-        ["western"] = -0.2,
-        ["cinematic"] = 0.0,
-        ["immersive"] = -0.2,
-        ["lowcam"] = -0.8,
-        ["vlowcam"] = -1.2,
-        ["ulowcam"] = -1.5,
-        ["re2"] = 0.0,
+        ["heroic"] = -0.2,
+        ["panoramic"] = 0.0,
+        ["close-up"] = -0.2,
+        ["low-rider"] = -0.8,
+        ["knee-cam"] = -1.2,
+        ["dirt-cam"] = -1.5,
+        ["survival"] = 0.0,
     };
 
     private static readonly Dictionary<string, Func<Dictionary<string, Dictionary<string, (string, string)>>>> StyleBuilders = new()
     {
-        ["western"] = BuildWestern,
-        ["cinematic"] = BuildCinematic,
-        ["immersive"] = BuildImmersive,
-        ["lowcam"] = () => BuildLowcamVariant("-0.8"),
-        ["vlowcam"] = () => BuildLowcamVariant("-1.2"),
-        ["ulowcam"] = () => BuildLowcamVariant("-1.5"),
-        ["re2"] = BuildRe2,
+        ["heroic"] = BuildHeroic,
+        ["panoramic"] = BuildPanoramic,
+        ["close-up"] = BuildCloseUp,
+        ["low-rider"] = () => BuildLowVariant("-0.8"),
+        ["knee-cam"] = () => BuildLowVariant("-1.2"),
+        ["dirt-cam"] = () => BuildLowVariant("-1.5"),
+        ["survival"] = BuildSurvival,
     };
 
     // ── Custom style builder ─────────────────────────────────────────

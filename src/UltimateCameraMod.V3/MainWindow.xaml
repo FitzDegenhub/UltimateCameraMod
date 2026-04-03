@@ -171,8 +171,8 @@
                                                             <DockPanel Width="{Binding RelativeSource={RelativeSource AncestorType=Expander}, Path=ActualWidth}">
                                                                 <Button DockPanel.Dock="Right" Content="&#x2B07; Browse"
                                                                         FontSize="9" Height="20" Padding="6,0"
-                                                                        ToolTip="Browse and download community camera presets"
-                                                                        Click="OnBrowseCommunity"
+                                                                        ToolTip="Browse and download presets"
+                                                                        Click="OnBrowsePresetCatalog"
                                                                         VerticalAlignment="Center"
                                                                         Foreground="#1a1a1a" FontWeight="SemiBold"
                                                                         Margin="0,0,20,0">
@@ -181,6 +181,9 @@
                                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                                             <Style.Triggers>
                                                                                 <DataTrigger Binding="{Binding Name}" Value="Community presets">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Name}" Value="UCM presets">
                                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                                 </DataTrigger>
                                                                             </Style.Triggers>
@@ -229,13 +232,32 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Text="{Binding DisplayName}" FontSize="11"
                                                Foreground="{StaticResource TextPrimaryBrush}"
                                                TextTrimming="CharacterEllipsis"
                                                VerticalAlignment="Center"
                                                Margin="0,0,4,0"/>
-                                    <Button Grid.Column="1"
+                                    <Button Grid.Column="1" Content="&#x27F3;" FontSize="12"
+                                            Foreground="{StaticResource AccentBrush}"
+                                            Background="Transparent" BorderThickness="0"
+                                            Padding="2" Margin="0,0,2,0"
+                                            VerticalAlignment="Center"
+                                            ToolTip="Update available — click to download latest version"
+                                            Click="OnPresetUpdateClick">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasUpdate}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <Button Grid.Column="2"
                                             Style="{StaticResource PresetSidebarLockButton}"
                                             Content="{Binding LockGlyph}"
                                             ToolTip="{Binding LockToolTip}"

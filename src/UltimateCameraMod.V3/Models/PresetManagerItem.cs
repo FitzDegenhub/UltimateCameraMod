@@ -6,6 +6,7 @@ namespace UltimateCameraMod.V3.Models;
 public sealed class PresetManagerItem : INotifyPropertyChanged
 {
     private bool _isLocked;
+    private bool _hasUpdate;
 
     public string Name { get; set; } = "";
     public string KindId { get; set; } = "";
@@ -34,6 +35,18 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
             OnPropertyChanged();
             OnPropertyChanged(nameof(LockGlyph));
             OnPropertyChanged(nameof(LockToolTip));
+        }
+    }
+
+    /// <summary>True when the online catalog has a newer revision than the local file.</summary>
+    public bool HasUpdate
+    {
+        get => _hasUpdate;
+        set
+        {
+            if (_hasUpdate == value) return;
+            _hasUpdate = value;
+            OnPropertyChanged();
         }
     }
 
