@@ -240,7 +240,10 @@ public partial class MainWindow : Window
     {
         string xml = BuildSimpleSessionXml();
         if (_advCtrlSliders.Count == 0)
-            return xml;
+        {
+            // Still apply God Mode overrides even if Fine Tune hasn't been opened
+            return ReapplyGodModeOverrides(xml);
+        }
 
         xml = CameraMod.ApplyModifications(xml, BuildAdvancedControlsModSet());
 
@@ -254,6 +257,9 @@ public partial class MainWindow : Window
             var lockOnSync = new ModificationSet { ElementMods = CameraRules.BuildLockOnDistancesPublic(zl2, zl3, zl4), FovValue = 0 };
             xml = CameraMod.ApplyModifications(xml, lockOnSync);
         }
+
+        // Re-apply saved God Mode overrides so they persist across tab switches
+        xml = ReapplyGodModeOverrides(xml);
 
         return xml;
     }
@@ -304,6 +310,44 @@ public partial class MainWindow : Window
 
         return CameraRules.BuildModifications(styleId, fov, bane, combatPullback: pullback,
             mountHeight: mount, customUp: customUp, steadycam: sc);
+    }
+
+    /// <summary>
+    /// Reads saved God Mode overrides from advanced_overrides.json and re-applies them
+    /// on top of the given XML. This ensures God Mode edits persist when Quick or Fine Tune
+    /// rebuilds the session XML.
+    /// </summary>
+    private string ReapplyGodModeOverrides(string xml)
+    {
+        try
+        {
+            if (!File.Exists(AdvOverridesPath)) return xml;
+            string json = File.ReadAllText(AdvOverridesPath);
+            var overrides = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+            if (overrides == null || overrides.Count == 0) return xml;
+
+            var elementMods = new Dictionary<string, Dictionary<string, (string Action, string Value)>>();
+            foreach (var (fullKey, value) in overrides)
+            {
+                // Parse "Section/SubElement.Attribute" format
+                int lastDot = fullKey.LastIndexOf('.');
+                if (lastDot < 0) continue;
+                string modKey = fullKey[..lastDot];
+                string attr = fullKey[(lastDot + 1)..];
+
+                if (!elementMods.TryGetValue(modKey, out var attrs))
+                {
+                    attrs = new Dictionary<string, (string, string)>();
+                    elementMods[modKey] = attrs;
+                }
+                attrs[attr] = ("SET", value);
+            }
+
+            if (elementMods.Count == 0) return xml;
+            var modSet = new ModificationSet { ElementMods = elementMods, FovValue = 0 };
+            return CameraMod.ApplyModifications(xml, modSet);
+        }
+        catch { return xml; }
     }
 
     private ModificationSet BuildExpertModSet()
@@ -400,6 +444,10 @@ public partial class MainWindow : Window
         try
         {
             string xml = BuildSimpleSessionXml();
+
+            // Re-apply saved God Mode overrides so they persist across tab switches
+            xml = ReapplyGodModeOverrides(xml);
+
             _sessionXml = xml;
             if (_advCtrlSliders.Count > 0)
             {
