@@ -959,14 +959,18 @@ public partial class MainWindow : Window
 
             if (savedVer == Ver) return;
 
-            // Version mismatch -- wipe stale backups and saved state
-            if (Directory.Exists(backupsDir))
-                Directory.Delete(backupsDir, true);
-            if (File.Exists(StatePath))
-                File.Delete(StatePath);
-            GameInstallBaselineTracker.Delete(ExeDir);
-
-            SetStatus($"Cleaned old v{(string.IsNullOrEmpty(savedVer) ? "?" : savedVer)} data. v3 now exports JSON only.", "Warn");
+            // Only wipe backups on major version change (e.g. v2 → v3), not patch versions (3.0.1 → 3.0.2)
+            string savedMajor = savedVer.Split('.')[0];
+            string currentMajor = Ver.Split('.')[0];
+            if (savedMajor != currentMajor)
+            {
+                if (Directory.Exists(backupsDir))
+                    Directory.Delete(backupsDir, true);
+                if (File.Exists(StatePath))
+                    File.Delete(StatePath);
+                GameInstallBaselineTracker.Delete(ExeDir);
+                SetStatus($"Upgraded from v{savedVer}. Old backup cleared.", "Warn");
+            }
         }
         catch { }
     }
