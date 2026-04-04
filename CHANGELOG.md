@@ -19,26 +19,40 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **Wiki** - 21 pages (11 user guide + 10 developer) published to GitHub Wiki tab with sidebar navigation.
 - **God Mode attribute tooltips** - 54 attributes documented with descriptions (up from 29). Covers interaction, blend, zoom level, damping, and targeting parameters.
 - **God Mode overrides persist across tab switches** - Edits made in God Mode are saved to `advanced_overrides.json` and re-applied when Quick or Fine Tune rebuilds the session XML. No more losing God Mode tweaks when switching tabs.
+- **Duplicate God Mode conversion** - When duplicating a God Mode preset, choose "Keep God Mode" (exact copy) or "Convert to UCM Managed" (enables Quick/Fine Tune with warning about value changes).
+- **Community presets in main repo** - Community presets moved from separate `ucm-community-presets` repo to `community_presets/` folder in main repo. Single unified GitHub Actions workflow generates both UCM and community catalogs.
+- **Shoulder Camera preset** by latranchedepain added to community presets.
+- **Proper 3rd Person Camera preset** by orangeees added to community presets.
+- **Export writes `preset_mode`** - Exported .ucmpreset files now include `preset_mode` ("godmode" for raw imports, "ucm" for managed presets) so the preset type is preserved when shared.
+- **Export auto-populates metadata** - Export dialog pre-fills name, author, description, and URL from the active preset (including imported preset metadata).
 
 ### Changed
-- **All MessageBox.Show calls replaced** - Every alert, confirmation, and error dialog is now a themed overlay. No more Windows-style popups.
+- **All MessageBox.Show calls replaced** - Every alert, confirmation, and error dialog is now a themed overlay. No more Windows-style popups anywhere in the app.
 - **Error messages overhauled** - All major error messages rewritten with clear, actionable guidance. Tainted backup error auto-deletes 0.paz and provides simple Steam verify steps.
-- **Export dialog** - Removed redundant description under header (each format has its own description).
+- **Export dialog** - Removed redundant description under header. Metadata fields ordered before session_xml for 4KB header reads. Removed `UnsafeRelaxedJsonEscaping` from .ucmpreset export.
 - **Import type picker** - Cards with hover highlight instead of plain buttons.
+- **Import metadata dialog** - Textboxes enlarged (54px, 18px font, white text on dark background).
 - **Browse catalog cards** - Description/tags on left, Download/Nexus buttons on right.
 - **Game Default sidebar group** - Vanilla preset separated from UCM presets.
 - **Height slider** range extended to -1.6/1.5.
+- **Preset author text** enlarged from 10px to 13px in the active preset header.
+- **UCM presets can be deleted** - Users can delete downloaded UCM presets locally (re-download from catalog anytime). Rename still blocked.
+- **Community preset duplicates go to My Presets** - Instead of staying in the community_presets folder.
+- **Catalog workflow preserves existing SHAs** - Adding a new preset no longer changes SHAs of unchanged presets (prevents false update icons).
+- **All preset catalog URLs point to main branch** - UCM and community preset catalogs now served from main branch for long-term stability.
 
 ### Fixed
 - **Tainted vanilla backups from v2.5 upgrades** - Auto-detected and auto-cleaned with proper fix instructions.
 - **HShift slider staying gold on locked presets** - `ApplyCenteredLock` was re-enabling the slider after `ApplyPresetEditingLockUi` disabled it.
-- **God Mode columns squished on first load** - WPF DataGrid doesn't measure columns with collapsed groups. Fixed with double-bind on first entry and adjusted column widths (SECTION 200, SUB-ELEMENT 140, ATTRIBUTE 250, VALUE 120, VANILLA 120).
+- **God Mode columns squished on first load** - WPF DataGrid doesn't measure columns with collapsed groups. Fixed with double-bind on first entry and adjusted column widths.
 - **Camera preview not updating when switching presets** - `SyncPreview` was blocked by `_suppressEvents` during preset loading.
-- **Community preset "View on Nexus" link lost after update** - Updates now preserve URL, author, description metadata.
+- **Community preset "View on Nexus" link not showing** - URL field was past the 4KB header window. Fixed by ordering metadata before session_xml in preset files.
+- **Community preset update SHA mismatch** - Updates now write raw bytes instead of re-serializing (which changed the SHA).
 - **False update icons after downloading presets** - Raw byte downloads preserve SHA hash for update detection.
 - **Game crash on load** - Removed Player_Interaction_LockOn/Interaction_LookAt from LockOnSections. Removed unsafe byte-replacement fallback in ArchiveWriter.
 - **PAZ import from different game version** - Shows helpful overlay explaining PAMT version mismatch.
-- **UCM presets can no longer be renamed or deleted** - Rename and Delete now blocked on UCM/Vanilla presets with overlay message to duplicate first.
+- **Vanilla validation false positive after June 2026 game patch** - Relaxed FoV checks (only fail on UCM-specific value 40). Removed MaxZoomDistance=30 and padding comment checks (now vanilla values).
+- **Export missing `preset_mode`** - Exported .ucmpreset files now include the correct preset mode tag.
 
 ---
 
