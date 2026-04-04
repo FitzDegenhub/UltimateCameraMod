@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-04T18:15:49Z",
+  "updated_at": "2026-04-04T18:39:07Z",
   "presets": [
     {
       "id": "proper-3rd-person-camera-by-orangeees",
@@ -12,18 +12,6 @@
       "version": "",
       "sha256": "ac77e2cbeeeef797d9a452a1e38942304e832207929577584ff3ef76fe3e0d34",
       "size_bytes": 317243,
-      "tags": []
-    },
-    {
-      "id": "rdr2-by-orangeees",
-      "file": "rdr2-by-orangeees.ucmpreset",
-      "name": "RDR2",
-      "author": "orangeees",
-      "description": "A curated RDR2-inspired camera mod for Crimson Desert that delivers a lower, more grounded third-person view, preserves manual camera distance switching, softens movement zoom, improves horse camer...",
-      "url": "https://www.nexusmods.com/crimsondesert/mods/112",
-      "version": "",
-      "sha256": "3dfb126628c64e335bd0f2bb52ca2908ef78ae209294e515b92d9af5c1ab9987",
-      "size_bytes": 317122,
       "tags": []
     },
     {
