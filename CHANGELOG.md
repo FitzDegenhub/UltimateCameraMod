@@ -17,6 +17,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **Game update warning overlay** - Detected game updates show as overlay with Snooze/Dismiss instead of bottom strip.
 - **Fatal error overlay** - Unclosable overlay with "Close UCM" button for critical errors (tainted backup, unreadable camera files). Cannot be dismissed by clicking backdrop.
 - **Wiki** - 21 pages (11 user guide + 10 developer) published to GitHub Wiki tab with sidebar navigation.
+- **God Mode attribute tooltips** - 54 attributes documented with descriptions (up from 29). Covers interaction, blend, zoom level, damping, and targeting parameters.
+- **God Mode overrides persist across tab switches** - Edits made in God Mode are saved to `advanced_overrides.json` and re-applied when Quick or Fine Tune rebuilds the session XML. No more losing God Mode tweaks when switching tabs.
 
 ### Changed
 - **All MessageBox.Show calls replaced** - Every alert, confirmation, and error dialog is now a themed overlay. No more Windows-style popups.
@@ -36,6 +38,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **False update icons after downloading presets** - Raw byte downloads preserve SHA hash for update detection.
 - **Game crash on load** - Removed Player_Interaction_LockOn/Interaction_LookAt from LockOnSections. Removed unsafe byte-replacement fallback in ArchiveWriter.
 - **PAZ import from different game version** - Shows helpful overlay explaining PAMT version mismatch.
+- **UCM presets can no longer be renamed or deleted** - Rename and Delete now blocked on UCM/Vanilla presets with overlay message to duplicate first.
 
 ---
 
