@@ -463,26 +463,9 @@ public partial class MainWindow : Window
             bool hasStylePresets = _presetManagerItems.Any(i => i.KindId == "style" && !i.IsPlaceholder);
             if (!System.IO.File.Exists(tutorialDonePath) && !string.IsNullOrEmpty(_gameDir))
             {
-                // First-run: ensure user has verified game files before UCM captures its vanilla backup.
-                var verifyResult = MessageBox.Show(
-                    "Welcome to Ultimate Camera Mod!\n\n" +
-                    "Before continuing, UCM needs your game files to be unmodified (vanilla).\n\n" +
-                    "Have you verified your game files on Steam?\n" +
-                    "(Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\")\n\n" +
-                    "Click Yes to continue, or No to close UCM and verify first.",
-                    "Ultimate Camera Mod",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-
-                if (verifyResult == MessageBoxResult.No)
-                {
-                    Application.Current.Shutdown();
-                    return;
-                }
-
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    StartTutorial();
+                    ShowWelcomeVerifyScreen();
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
             // Users can click Browse to download UCM presets when ready
@@ -492,6 +475,125 @@ public partial class MainWindow : Window
             MessageBox.Show($"Startup error:\n{ex}", "Ultimate Camera Mod", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+    private void ShowWelcomeVerifyScreen()
+    {
+        double w = ActualWidth;
+        double h = ActualHeight;
+        if (w < 1) w = 1400;
+        if (h < 1) h = 900;
+
+        var overlay = new Canvas { Width = w, Height = h };
+
+        // Dark backdrop (same opacity as tutorial)
+        var backdrop = new System.Windows.Shapes.Rectangle
+        {
+            Width = w, Height = h,
+            Fill = new SolidColorBrush(Color.FromArgb(0xCC, 0, 0, 0)),
+            IsHitTestVisible = true
+        };
+        overlay.Children.Add(backdrop);
+
+        // Title
+        var titleBlock = new TextBlock
+        {
+            Text = "Welcome to Ultimate Camera Mod",
+            FontSize = 20, FontWeight = FontWeights.Bold,
+            Foreground = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
+            Margin = new Thickness(0, 0, 0, 14)
+        };
+
+        // Description
+        var descBlock = new TextBlock
+        {
+            Text = "Before getting started, UCM needs your game files to be unmodified (vanilla) " +
+                   "so it can create a clean baseline backup.\n\n" +
+                   "If you previously used UCM v2.x, another camera mod, or a mod manager " +
+                   "that modified game files, please verify first:\n\n" +
+                   "Steam \u2192 Crimson Desert \u2192 Properties \u2192 Installed Files \u2192 \"Verify integrity of game files\"\n\n" +
+                   "Have you verified your game files?",
+            FontSize = 13, TextWrapping = TextWrapping.Wrap,
+            Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)),
+            LineHeight = 20,
+            Margin = new Thickness(0, 0, 0, 20)
+        };
+
+        // Yes button (gold, matching tutorial Next button)
+        var yesBtn = new Button
+        {
+            Content = "Yes, continue",
+            Width = 130, Height = 36, FontSize = 13, FontWeight = FontWeights.SemiBold,
+            Background = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
+            Foreground = new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A)),
+            BorderThickness = new Thickness(0),
+            Cursor = Cursors.Hand, Padding = new Thickness(14, 4, 14, 4)
+        };
+
+        // No button (subtle, matching tutorial Skip button)
+        var noBtn = new Button
+        {
+            Content = "No, close UCM",
+            Width = 120, Height = 36, FontSize = 12,
+            Background = Brushes.Transparent,
+            Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88)),
+            BorderThickness = new Thickness(0),
+            Cursor = Cursors.Hand, Margin = new Thickness(12, 0, 0, 0)
+        };
+
+        yesBtn.Click += (_, _) =>
+        {
+            TutorialCanvas.Children.Clear();
+            TutorialCanvas.Visibility = Visibility.Collapsed;
+            StartTutorial();
+        };
+
+        noBtn.Click += (_, _) =>
+        {
+            Application.Current.Shutdown();
+        };
+
+        var buttonPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        buttonPanel.Children.Add(yesBtn);
+        buttonPanel.Children.Add(noBtn);
+
+        var stack = new StackPanel();
+        stack.Children.Add(titleBlock);
+        stack.Children.Add(descBlock);
+        stack.Children.Add(buttonPanel);
+
+        // Card (matching tutorial card style)
+        var card = new Border
+        {
+            Background = new SolidColorBrush(Color.FromRgb(0x24, 0x24, 0x24)),
+            BorderBrush = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
+            BorderThickness = new Thickness(1),
+            CornerRadius = new CornerRadius(10),
+            Padding = new Thickness(30, 24, 30, 24),
+            Width = 480,
+            Child = stack,
+            IsHitTestVisible = true
+        };
+
+        Canvas.SetLeft(card, (w - 480) / 2);
+        Canvas.SetTop(card, (h - 300) / 2);
+        overlay.Children.Add(card);
+
+        TutorialCanvas.Children.Clear();
+        TutorialCanvas.Children.Add(overlay);
+        TutorialCanvas.Visibility = Visibility.Visible;
+
+        // Handle resize
+        SizeChanged += WelcomeResizeHandler;
+        void WelcomeResizeHandler(object sender, SizeChangedEventArgs args)
+        {
+            overlay.Width = args.NewSize.Width;
+            overlay.Height = args.NewSize.Height;
+            backdrop.Width = args.NewSize.Width;
+            backdrop.Height = args.NewSize.Height;
+            Canvas.SetLeft(card, (args.NewSize.Width - 480) / 2);
+            Canvas.SetTop(card, (args.NewSize.Height - 300) / 2);
+        }
+    }
+
     private void StartTutorial()
     {
         var steps = new List<TutorialOverlay.TutorialStep>
