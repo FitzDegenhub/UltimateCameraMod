@@ -578,4 +578,85 @@ public partial class MainWindow : Window
         _ = ShowOverlayAsync(ctrl, width: 520);
         return await tcs.Task;
     }
+
+    /// <summary>Shows tainted backup overlay with option to delete 0.paz and instructions to verify on Steam.</summary>
+    private async Task HandleTaintedBackupAsync()
+    {
+        var stack = new StackPanel { Width = 500 };
+
+        stack.Children.Add(new TextBlock
+        {
+            Text = "Game Files Modified",
+            FontSize = 18,
+            FontWeight = FontWeights.SemiBold,
+            Foreground = new SolidColorBrush(Color.FromRgb(0xE6, 0xA2, 0x3C)),
+            Margin = new Thickness(0, 0, 0, 12)
+        });
+
+        stack.Children.Add(new TextBlock
+        {
+            Text = "Your game camera files have been modified by UCM v2.x, another camera mod, or a mod manager. " +
+                   "UCM needs the original vanilla files to create a clean backup.\n\n" +
+                   "Click the button below to remove the modified file, then verify on Steam to re-download the original.",
+            FontSize = 12,
+            TextWrapping = TextWrapping.Wrap,
+            LineHeight = 18,
+            Foreground = new SolidColorBrush(Color.FromRgb(0xcc, 0xcc, 0xcc)),
+            Margin = new Thickness(0, 0, 0, 16)
+        });
+
+        string? pazPath = null;
+        try
+        {
+            var entry = CameraMod.FindCameraEntry(_gameDir);
+            pazPath = entry.PazFile;
+        }
+        catch { }
+
+        var deleteBtn = OverlayPrimaryButton("Remove modified 0.paz");
+        var closeBtn = OverlayCancelButton("Close UCM");
+
+        var statusText = new TextBlock
+        {
+            FontSize = 11,
+            Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88)),
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 12, 0, 0)
+        };
+
+        deleteBtn.Click += (_, _) =>
+        {
+            if (!string.IsNullOrEmpty(pazPath))
+            {
+                try
+                {
+                    File.Delete(pazPath);
+                    deleteBtn.IsEnabled = false;
+                    deleteBtn.Content = "Removed";
+                    statusText.Text = "0.paz deleted. Now:\n" +
+                        "1. Close UCM\n" +
+                        "2. Steam \u2192 Crimson Desert \u2192 Properties \u2192 Installed Files \u2192 \"Verify integrity of game files\"\n" +
+                        "3. Relaunch UCM after verification completes";
+                    statusText.Foreground = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
+                }
+                catch (Exception ex)
+                {
+                    statusText.Text = $"Could not delete: {ex.Message}\nManually delete: {pazPath}";
+                    statusText.Foreground = new SolidColorBrush(Color.FromRgb(0xF4, 0x43, 0x36));
+                }
+            }
+        };
+
+        closeBtn.Click += (_, _) => Application.Current.Shutdown();
+
+        var row = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 16, 0, 0) };
+        row.Children.Add(deleteBtn);
+        row.Children.Add(new FrameworkElement { Width = 8 });
+        row.Children.Add(closeBtn);
+        stack.Children.Add(row);
+        stack.Children.Add(statusText);
+
+        _overlayIsFatal = true;
+        await ShowOverlayAsync(stack, width: 560);
+    }
 }
