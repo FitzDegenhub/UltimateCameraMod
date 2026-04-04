@@ -487,9 +487,11 @@ public partial class MainWindow : Window
             // First-launch vs upgrade detection
             string tutorialDonePath = System.IO.Path.Combine(ExeDir, "tutorial_done.flag");
             bool isTutorialDone = System.IO.File.Exists(tutorialDonePath);
+            // Check for genuine previous-install artifacts only.
+            // Do NOT check my_presets/ or ucm_presets/ — those dirs are auto-created by
+            // property getters during startup list refresh, so they always exist by this point.
             bool hasExistingData = System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "window_state.json"))
-                || Directory.Exists(System.IO.Path.Combine(ExeDir, "backups"))
-                || Directory.Exists(System.IO.Path.Combine(ExeDir, "my_presets"));
+                || System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "backups", "original_backup.bin"));
 
             if (!isTutorialDone && !string.IsNullOrEmpty(_gameDir))
             {
