@@ -497,6 +497,22 @@ public partial class MainWindow : Window
                 {
                     // Upgrading from a previous version — skip welcome, mark tutorial done, show update overlay
                     try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
+
+                    // Clear old community presets from v3.0.1 (downloaded from separate repo with wrong metadata/URLs)
+                    // Users can re-download fresh from the new main repo catalog via Browse
+                    try
+                    {
+                        string communityDir = Path.Combine(ExeDir, CommunityPresetsDirName);
+                        if (Directory.Exists(communityDir))
+                        {
+                            foreach (string f in Directory.GetFiles(communityDir, "*.ucmpreset"))
+                                File.Delete(f);
+                            foreach (string f in Directory.GetFiles(communityDir, "*.json"))
+                                File.Delete(f);
+                        }
+                        RefreshPresetManagerLists(preserveSelection: true);
+                    }
+                    catch { }
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         _ = ShowAlertOverlayAsync("Updated to v" + Ver,
@@ -505,10 +521,10 @@ public partial class MainWindow : Window
                             "- In-app overlay dialogs (no more Windows popups)\n" +
                             "- God Mode edits now persist across tab switches\n" +
                             "- Preset type selection (UCM Managed vs Full Manual Control)\n" +
-                            "- Community presets catalog in main repo\n" +
+                            "- Community presets catalog moved to main repo\n" +
                             "- Vanilla validation improved for latest game patch\n" +
                             "- 54 God Mode attribute tooltips\n\n" +
-                            "All your presets and settings have been preserved.");
+                            "Your presets and settings have been preserved. Community presets have been cleared and can be re-downloaded via Browse.");
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
                 else
