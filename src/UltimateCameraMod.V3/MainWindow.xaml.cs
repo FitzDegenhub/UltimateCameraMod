@@ -495,9 +495,21 @@ public partial class MainWindow : Window
             {
                 if (hasExistingData)
                 {
-                    // Upgrading from a previous version — skip welcome, mark tutorial done, show toast
+                    // Upgrading from a previous version — skip welcome, mark tutorial done, show update overlay
                     try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
-                    QueueSavedToast($"Updated to v{Ver}");
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        _ = ShowAlertOverlayAsync("Updated to v" + Ver,
+                            "Welcome back! UCM has been updated.\n\n" +
+                            "What's new:\n" +
+                            "- In-app overlay dialogs (no more Windows popups)\n" +
+                            "- God Mode edits now persist across tab switches\n" +
+                            "- Preset type selection (UCM Managed vs Full Manual Control)\n" +
+                            "- Community presets catalog in main repo\n" +
+                            "- Vanilla validation improved for latest game patch\n" +
+                            "- 54 God Mode attribute tooltips\n\n" +
+                            "All your presets and settings have been preserved.");
+                    }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
                 else
                 {
