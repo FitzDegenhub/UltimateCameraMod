@@ -2,6 +2,7 @@ name: Update preset catalogs
 
 on:
   push:
+    branches: [main]
     paths:
       - 'ucm_presets/*.ucmpreset'
       - 'community_presets/*.ucmpreset'
