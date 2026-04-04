@@ -97,7 +97,7 @@ v3 organizes editing into three tabs so you can go as deep as you want:
 - **New / Duplicate / Rename / Delete** from the sidebar
 - **Lock** presets to prevent accidental edits - UCM presets are permanently locked; user presets toggleable via padlock icon
 - **True Vanilla preset** - raw decoded `playercamerapreset` from your game backup with no modifications applied. Quick sliders are synced to the actual game baseline values
-- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages
+- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages. `.ucmpreset` imports get full UCM slider control; raw XML/PAZ/mod manager imports are standalone presets (God Mode editing only, no UCM rules applied) to preserve the original mod author's values
 - **Auto-save** - changes to unlocked presets write back to the preset file automatically (debounced)
 - Auto-migration from legacy `.json` presets to `.ucmpreset` on first launch
 
