@@ -1423,9 +1423,12 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             SetStatus("Failed to generate built-in presets.", "Warn");
-            // Don't show overlay if tutorial is active (first launch with no presets is normal)
+            // Dismiss tutorial if it's showing — errors take priority
             if (TutorialCanvas.Visibility == Visibility.Visible)
-                return;
+            {
+                TutorialCanvas.Children.Clear();
+                TutorialCanvas.Visibility = Visibility.Collapsed;
+            }
             // Tainted backup: offer to delete 0.paz and tell user to verify on Steam
             if (ex.Message.Contains("not vanilla") || ex.Message.Contains("modified"))
             {
