@@ -484,15 +484,29 @@ public partial class MainWindow : Window
 
             ScheduleTaskbarIconDelayedRetries();
 
-            // First-launch tutorial overlay
+            // First-launch vs upgrade detection
             string tutorialDonePath = System.IO.Path.Combine(ExeDir, "tutorial_done.flag");
-            bool hasStylePresets = _presetManagerItems.Any(i => i.KindId == "style" && !i.IsPlaceholder);
-            if (!System.IO.File.Exists(tutorialDonePath) && !string.IsNullOrEmpty(_gameDir))
+            bool isTutorialDone = System.IO.File.Exists(tutorialDonePath);
+            bool hasExistingData = System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "window_state.json"))
+                || Directory.Exists(System.IO.Path.Combine(ExeDir, "backups"))
+                || Directory.Exists(System.IO.Path.Combine(ExeDir, "my_presets"));
+
+            if (!isTutorialDone && !string.IsNullOrEmpty(_gameDir))
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                if (hasExistingData)
                 {
-                    ShowWelcomeVerifyScreen();
-                }), System.Windows.Threading.DispatcherPriority.Loaded);
+                    // Upgrading from a previous version — skip welcome, mark tutorial done, show toast
+                    try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
+                    QueueSavedToast($"Updated to v{Ver}");
+                }
+                else
+                {
+                    // Truly fresh install — show welcome screen
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        ShowWelcomeVerifyScreen();
+                    }), System.Windows.Threading.DispatcherPriority.Loaded);
+                }
             }
             // Users can click Browse to download UCM presets when ready
         }
