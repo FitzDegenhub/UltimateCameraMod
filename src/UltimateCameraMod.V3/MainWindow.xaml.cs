@@ -569,7 +569,22 @@ public partial class MainWindow : Window
         {
             TutorialCanvas.Children.Clear();
             TutorialCanvas.Visibility = Visibility.Collapsed;
-            StartTutorial();
+
+            // Try to generate presets now — if tainted backup, show the fix overlay instead of tutorial
+            try
+            {
+                if (!string.IsNullOrEmpty(_gameDir))
+                    GenerateBuiltInPresets();
+                RefreshPresetManagerLists(preserveSelection: true);
+                StartTutorial();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("not vanilla") || ex.Message.Contains("modified"))
+                    _ = HandleTaintedBackupAsync();
+                else
+                    StartTutorial(); // Non-tainted errors — still show tutorial
+            }
         };
 
         noBtn.Click += (_, _) =>

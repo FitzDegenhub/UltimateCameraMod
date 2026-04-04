@@ -1423,12 +1423,10 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             SetStatus("Failed to generate built-in presets.", "Warn");
-            // Dismiss tutorial if it's showing — errors take priority
-            if (TutorialCanvas.Visibility == Visibility.Visible)
-            {
-                TutorialCanvas.Children.Clear();
-                TutorialCanvas.Visibility = Visibility.Collapsed;
-            }
+            // If welcome screen is showing, let it handle the error flow — don't show overlays
+            string tutorialDonePath = Path.Combine(ExeDir, "tutorial_done.flag");
+            if (!File.Exists(tutorialDonePath))
+                return;
             // Tainted backup: offer to delete 0.paz and tell user to verify on Steam
             if (ex.Message.Contains("not vanilla") || ex.Message.Contains("modified"))
             {
