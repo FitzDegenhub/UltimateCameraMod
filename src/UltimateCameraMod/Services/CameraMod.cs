@@ -694,7 +694,13 @@ public static class CameraMod
                 if (part.StartsWith("comp_size="))
                     compMatch = int.TryParse(part["comp_size=".Length..], out int savedComp) && savedComp == entry.CompSize;
                 if (part.StartsWith("ucm_version="))
-                    versionMatch = part["ucm_version=".Length..] == AppVersion;
+                {
+                    // Accept any v3.x backup — don't require exact patch version match
+                    string savedVer = part["ucm_version=".Length..];
+                    string savedMajor = savedVer.Split('.')[0];
+                    string currentMajor = AppVersion.Split('.')[0];
+                    versionMatch = savedMajor == currentMajor;
+                }
                 if (part == "vanilla_verified")
                     vanillaValidated = true;
             }
