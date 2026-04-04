@@ -25,6 +25,8 @@ ucm_presets/
 !/ucm_presets/
 my_presets/
 community_presets/
+# Re-include the repo-level community_presets/ folder (community presets for GitHub download)
+!/community_presets/
 import_presets/
 imported_presets/
 presets/

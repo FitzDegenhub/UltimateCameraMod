@@ -3,6 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Width="680" MaxHeight="750">
     <UserControl.Resources>
+        <!-- TextBox style for all input fields in this dialog -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#303030"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
         <!-- Segmented format choice: reads like the rest of v3 (accent selection, dark inputs) -->
         <Style x:Key="ExportFormatRadioStyle" TargetType="RadioButton">
             <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>

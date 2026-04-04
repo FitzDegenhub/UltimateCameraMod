@@ -450,7 +450,9 @@ public partial class MainWindow : Window
 
         var yesBtn = OverlayPrimaryButton(yesText);
         var noBtn = OverlayCancelButton(noText);
+        noBtn.Margin = new Thickness(8, 0, 0, 0);
         var cancelBtn = OverlayCancelButton(cancelText);
+        cancelBtn.Margin = new Thickness(8, 0, 0, 0);
         yesBtn.Click += (_, _) => CloseOverlay(MessageBoxResult.Yes);
         noBtn.Click += (_, _) => CloseOverlay(MessageBoxResult.No);
         cancelBtn.Click += (_, _) => CloseOverlay(MessageBoxResult.Cancel);

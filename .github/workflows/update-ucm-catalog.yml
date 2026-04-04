@@ -1,80 +1,94 @@
-name: Update UCM preset catalog
+name: Update preset catalogs
 
 on:
   push:
     paths:
       - 'ucm_presets/*.ucmpreset'
+      - 'community_presets/*.ucmpreset'
 
 jobs:
-  update-catalog:
+  update-catalogs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate catalog from preset files
+      - name: Generate catalogs from preset files
         run: |
           python3 << 'SCRIPT'
           import json, hashlib, os, glob
+          from datetime import datetime, timezone
 
-          presets = []
-          for path in sorted(glob.glob("ucm_presets/*.ucmpreset")):
-              try:
-                  with open(path, "rb") as f:
-                      raw_bytes = f.read()
+          def generate_catalog(preset_dir, catalog_path, kind_filter=None):
+              presets = []
+              for path in sorted(glob.glob(f"{preset_dir}/*.ucmpreset")):
+                  try:
+                      with open(path, "rb") as f:
+                          raw_bytes = f.read()
 
-                  data = json.loads(raw_bytes.decode("utf-8"))
+                      data = json.loads(raw_bytes.decode("utf-8"))
 
-                  # Only include style presets
-                  if data.get("kind") != "style":
-                      continue
+                      if kind_filter and data.get("kind") != kind_filter:
+                          continue
 
-                  file_name = os.path.basename(path)
-                  file_id = os.path.splitext(file_name)[0].lower().replace(" ", "-")
+                      file_name = os.path.basename(path)
+                      file_id = os.path.splitext(file_name)[0].lower().replace(" ", "-")
 
-                  # SHA256 of raw file bytes (matches app's Encoding.UTF8.GetBytes hash)
-                  sha = hashlib.sha256(raw_bytes).hexdigest()
+                      sha = hashlib.sha256(raw_bytes).hexdigest()
+                      size = len(raw_bytes)
 
-                  name = data.get("name", file_name)
-                  author = data.get("author", "")
-                  desc = data.get("description", "")
-                  if len(desc) > 300:
-                      desc = desc[:297] + "..."
-                  tags = data.get("tags", ["style", "official"])
+                      name = data.get("name", file_name)
+                      author = data.get("author", "")
+                      desc = data.get("description", "")
+                      if len(desc) > 300:
+                          desc = desc[:297] + "..."
+                      url = data.get("url", "")
+                      version = data.get("version", "")
+                      tags = data.get("tags", [])
 
-                  presets.append({
-                      "id": file_id,
-                      "file": file_name,
-                      "name": name,
-                      "author": author,
-                      "description": desc,
-                      "tags": tags,
-                      "sha256": sha,
-                  })
-              except Exception as e:
-                  print(f"Skipping {path}: {e}")
+                      presets.append({
+                          "id": file_id,
+                          "file": file_name,
+                          "name": name,
+                          "author": author,
+                          "description": desc,
+                          "url": url,
+                          "version": version,
+                          "sha256": sha,
+                          "size_bytes": size,
+                          "tags": tags,
+                      })
+                  except Exception as e:
+                      print(f"Skipping {path}: {e}")
 
-          catalog = {
-              "version": 1,
-              "presets": presets,
-          }
+              catalog = {
+                  "catalog_version": 1,
+                  "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                  "presets": presets,
+              }
 
-          with open("ucm_presets/catalog.json", "w", encoding="utf-8") as f:
-              json.dump(catalog, f, indent=2, ensure_ascii=False)
-              f.write("\n")
+              with open(catalog_path, "w", encoding="utf-8") as f:
+                  json.dump(catalog, f, indent=2, ensure_ascii=False)
+                  f.write("\n")
 
-          print(f"Catalog updated: {len(presets)} presets")
+              print(f"{catalog_path}: {len(presets)} presets")
+
+          # UCM presets (style definitions only)
+          generate_catalog("ucm_presets", "ucm_presets/catalog.json", kind_filter="style")
+
+          # Community presets (all presets)
+          generate_catalog("community_presets", "community_presets/catalog.json")
           SCRIPT
 
-      - name: Commit updated catalog
+      - name: Commit updated catalogs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ucm_presets/catalog.json
+          git add ucm_presets/catalog.json community_presets/catalog.json
           if git diff --cached --quiet; then
-            echo "No changes to catalog"
+            echo "No changes to catalogs"
           else
-            git commit -m "Auto-update UCM preset catalog [skip ci]"
+            git commit -m "Auto-update preset catalogs [skip ci]"
             git push
           fi

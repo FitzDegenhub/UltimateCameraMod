@@ -983,6 +983,42 @@ public partial class MainWindow : Window
         if (item == null)
             return;
 
+        // Check if source preset is godmode — offer conversion option
+        bool sourceIsGodMode = false;
+        bool convertToUcm = false;
+        if (!string.IsNullOrEmpty(item.FilePath) && File.Exists(item.FilePath))
+        {
+            try
+            {
+                using var reader = new StreamReader(item.FilePath);
+                var buf = new char[512];
+                int read = reader.Read(buf, 0, buf.Length);
+                string head = new string(buf, 0, read);
+                sourceIsGodMode = head.Contains("\"preset_mode\"") && head.Contains("godmode");
+            }
+            catch { }
+        }
+        // Also check imported presets
+        if (item.KindId == "imported" && _sessionIsRawImport)
+            sourceIsGodMode = true;
+
+        if (sourceIsGodMode)
+        {
+            var choice = await ShowThreeChoiceOverlayAsync(
+                "Duplicate Preset",
+                $"'{item.Name}' is a God Mode preset. How would you like to duplicate it?\n\n" +
+                "Keep as God Mode: exact copy, UCM Quick and Fine Tune stay disabled. " +
+                "Preserves the original author's values exactly as they are.\n\n" +
+                "Convert to UCM Managed: enables UCM Quick and Fine Tune sliders. " +
+                "UCM camera rules will be applied which may change many of the original values " +
+                "(FoV consistency, lock-on scaling, smoothing, mount sync, etc.).",
+                yesText: "Keep God Mode",
+                noText: "Convert to UCM",
+                cancelText: "Cancel");
+            if (choice == MessageBoxResult.Cancel) return;
+            convertToUcm = choice == MessageBoxResult.No;
+        }
+
         string? response = await ShowInputOverlayAsync("Duplicate Preset", "Enter a name for the duplicated preset:", $"{item.Name}_copy");
         if (string.IsNullOrWhiteSpace(response))
             return;
@@ -1023,6 +1059,8 @@ public partial class MainWindow : Window
                 dict["locked"] = false;
                 if (promoteUcmToMyPresets)
                     dict["kind"] = "user";
+                if (convertToUcm)
+                    dict["preset_mode"] = "ucm";
                 File.WriteAllText(newPath, JsonSerializer.Serialize(dict, PresetFileJsonOptions));
             }
 

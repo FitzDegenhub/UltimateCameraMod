@@ -20,11 +20,22 @@ public partial class ExportJsonDialog : UserControl
     private string? _jsonLastJson;
     private string? _preparedXml;
 
-    public ExportJsonDialog(string gameDir, Func<string?> getSessionXmlForExport)
+    public ExportJsonDialog(string gameDir, Func<string?> getSessionXmlForExport,
+        string? presetName = null, string? presetAuthor = null,
+        string? presetDescription = null, string? presetUrl = null)
     {
         _gameDir = gameDir;
         _getSessionXml = getSessionXmlForExport;
         InitializeComponent();
+        // Pre-fill from active preset metadata
+        if (!string.IsNullOrWhiteSpace(presetName))
+            JsonTitleBox.Text = presetName;
+        if (!string.IsNullOrWhiteSpace(presetAuthor))
+            JsonAuthorBox.Text = presetAuthor;
+        if (!string.IsNullOrWhiteSpace(presetDescription))
+            JsonDescBox.Text = presetDescription;
+        if (!string.IsNullOrWhiteSpace(presetUrl))
+            JsonNexusBox.Text = presetUrl;
         // Do not use Checked= in XAML with IsChecked=True: the event runs mid-parse before HelpDetailText / Step 2 / preview controls exist.
         FormatJsonRadio.Checked += OnExportFormatChanged;
         FormatXmlRadio.Checked += OnExportFormatChanged;

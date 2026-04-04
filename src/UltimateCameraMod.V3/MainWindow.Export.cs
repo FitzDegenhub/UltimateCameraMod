@@ -28,11 +28,55 @@ public partial class MainWindow : Window
 {
     private void OnExportJson(object sender, RoutedEventArgs e)
     {
+        var item = _selectedPresetManagerItem;
+        string? expName = item?.Name;
+        string? expAuthor = item?.SourceLabel;
+        string? expDesc = item?.SummaryText;
+        string? expUrl = item?.Url;
+
+        // For imported presets, read metadata from the imported preset file
+        if (item?.KindId == "imported" && !string.IsNullOrEmpty(item.Name))
+        {
+            try
+            {
+                var imported = LoadImportedPreset(item.Name);
+                if (imported != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(imported.Author)) expAuthor = imported.Author;
+                    if (!string.IsNullOrWhiteSpace(imported.Description)) expDesc = imported.Description;
+                    if (!string.IsNullOrWhiteSpace(imported.Url)) expUrl = imported.Url;
+                }
+            }
+            catch { }
+        }
+        // For regular presets, try reading from the file
+        else if (!string.IsNullOrEmpty(item?.FilePath) && File.Exists(item.FilePath))
+        {
+            try
+            {
+                using var reader = new StreamReader(item.FilePath);
+                var buf = new char[4096];
+                int read = reader.Read(buf, 0, buf.Length);
+                string head = new string(buf, 0, read);
+                string? fileDesc = ExtractJsonStringField(head, "description");
+                string? fileUrl = ExtractJsonStringField(head, "url");
+                string? fileAuthor = ExtractJsonStringField(head, "author");
+                if (!string.IsNullOrWhiteSpace(fileDesc)) expDesc = fileDesc;
+                if (!string.IsNullOrWhiteSpace(fileUrl)) expUrl = fileUrl;
+                if (!string.IsNullOrWhiteSpace(fileAuthor)) expAuthor = fileAuthor;
+            }
+            catch { }
+        }
+
         var ctrl = new ExportJsonDialog(_gameDir, () =>
         {
             CaptureSessionXml();
             return _sessionXml;
-        });
+        },
+        presetName: expName,
+        presetAuthor: expAuthor,
+        presetDescription: expDesc,
+        presetUrl: expUrl);
         ctrl.OnCloseRequested = () => CloseOverlay();
         _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }
