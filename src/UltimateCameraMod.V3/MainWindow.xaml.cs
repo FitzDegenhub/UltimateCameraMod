@@ -451,6 +451,15 @@ public partial class MainWindow : Window
                 _detectedPlatform = platform;
             }
 
+            // Snapshot fresh-install state BEFORE anything creates files.
+            // Property getters (UcmPresetsDir, MyPresetsDir) auto-create directories,
+            // GenerateBuiltInPresets → EnsureBackup creates backups/original_backup.bin,
+            // so we must capture this before any of that runs.
+            string tutorialDonePath = System.IO.Path.Combine(ExeDir, "tutorial_done.flag");
+            bool isTutorialDone = System.IO.File.Exists(tutorialDonePath);
+            bool hasExistingData = System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "window_state.json"))
+                || System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "backups", "original_backup.bin"));
+
             if (string.IsNullOrEmpty(_gameDir))
             {
                 GamePathLabel.Text = "Game folder:  not detected (optional for browsing presets)";
@@ -483,15 +492,6 @@ public partial class MainWindow : Window
             ExpertDataGrid.LayoutUpdated += ExpertDataGrid_OnLayoutUpdated;
 
             ScheduleTaskbarIconDelayedRetries();
-
-            // First-launch vs upgrade detection
-            string tutorialDonePath = System.IO.Path.Combine(ExeDir, "tutorial_done.flag");
-            bool isTutorialDone = System.IO.File.Exists(tutorialDonePath);
-            // Check for genuine previous-install artifacts only.
-            // Do NOT check my_presets/ or ucm_presets/ — those dirs are auto-created by
-            // property getters during startup list refresh, so they always exist by this point.
-            bool hasExistingData = System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "window_state.json"))
-                || System.IO.File.Exists(System.IO.Path.Combine(ExeDir, "backups", "original_backup.bin"));
 
             if (!isTutorialDone && !string.IsNullOrEmpty(_gameDir))
             {
