@@ -1026,7 +1026,8 @@ public partial class MainWindow : Window
         {
             bool promoteUcmToMyPresets = !string.Equals(item.KindId, "imported", StringComparison.OrdinalIgnoreCase)
                 && (string.Equals(item.KindId, "default", StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(item.KindId, "style", StringComparison.OrdinalIgnoreCase));
+                    || string.Equals(item.KindId, "style", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(item.KindId, "community", StringComparison.OrdinalIgnoreCase));
 
             string newPath = item.KindId == "imported"
                 ? ImportedPresetPath(newName)

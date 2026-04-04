@@ -15,6 +15,7 @@ public partial class ExportJsonDialog : UserControl
 
     private readonly string _gameDir;
     private readonly Func<string?> _getSessionXml;
+    private readonly bool _isRawImport;
 
     private List<JsonModExporter.PatchChange>? _jsonLastPatches;
     private string? _jsonLastJson;
@@ -22,10 +23,12 @@ public partial class ExportJsonDialog : UserControl
 
     public ExportJsonDialog(string gameDir, Func<string?> getSessionXmlForExport,
         string? presetName = null, string? presetAuthor = null,
-        string? presetDescription = null, string? presetUrl = null)
+        string? presetDescription = null, string? presetUrl = null,
+        bool isRawImport = false)
     {
         _gameDir = gameDir;
         _getSessionXml = getSessionXmlForExport;
+        _isRawImport = isRawImport;
         InitializeComponent();
         // Pre-fill from active preset metadata
         if (!string.IsNullOrWhiteSpace(presetName))
@@ -497,36 +500,35 @@ public partial class ExportJsonDialog : UserControl
 
         try
         {
+            string url = JsonNexusBox.Text.Trim();
+
+            // Build with metadata BEFORE session_xml so url/author/description
+            // fall within the 4KB header window for fast reads
             var preset = new Dictionary<string, object>
             {
                 ["name"] = string.IsNullOrWhiteSpace(title) ? "Exported Preset" : title,
                 ["author"] = JsonAuthorBox.Text.Trim(),
                 ["description"] = JsonDescBox.Text.Trim(),
                 ["kind"] = "user",
-                ["session_xml"] = _preparedXml,
-                ["settings"] = new Dictionary<string, object>
-                {
-                    ["distance"] = 5.0,
-                    ["height"] = 0.0,
-                    ["right_offset"] = 0.0,
-                    ["fov"] = 0,
-                    ["combat"] = "default",
-                    ["centered"] = false,
-                    ["mount_height"] = false,
-                    ["steadycam"] = true
-                }
             };
-
-            string url = JsonNexusBox.Text.Trim();
             if (!string.IsNullOrWhiteSpace(url))
                 preset["url"] = url;
+            preset["preset_mode"] = _isRawImport ? "godmode" : "ucm";
+            preset["settings"] = new Dictionary<string, object>
+            {
+                ["distance"] = 5.0,
+                ["height"] = 0.0,
+                ["right_offset"] = 0.0,
+                ["fov"] = 0,
+                ["combat"] = "default",
+                ["centered"] = false,
+                ["mount_height"] = false,
+                ["steadycam"] = true
+            };
+            preset["session_xml"] = _preparedXml;
 
             string json = System.Text.Json.JsonSerializer.Serialize(preset,
-                new System.Text.Json.JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-                });
+                new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(sfd.FileName, json, new UTF8Encoding(false));
             SetStatus($"Saved {Path.GetFileName(sfd.FileName)}", false);
         }

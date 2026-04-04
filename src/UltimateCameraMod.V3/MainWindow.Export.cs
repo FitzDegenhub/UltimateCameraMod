@@ -76,7 +76,8 @@ public partial class MainWindow : Window
         presetName: expName,
         presetAuthor: expAuthor,
         presetDescription: expDesc,
-        presetUrl: expUrl);
+        presetUrl: expUrl,
+        isRawImport: _sessionIsRawImport);
         ctrl.OnCloseRequested = () => CloseOverlay();
         _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }
