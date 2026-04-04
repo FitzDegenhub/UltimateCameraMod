@@ -878,13 +878,11 @@ public partial class MainWindow : Window
         if (item == null)
             return;
 
-        if (item.IsUcmPreset)
-        {
-            _ = ShowAlertOverlayAsync("Cannot Delete", "UCM presets cannot be deleted. They are managed by the UCM catalog.");
-            return;
-        }
-
-        if (!await ShowConfirmOverlayAsync("Delete Preset", $"Delete preset '{item.Name}'? This cannot be undone.", "Delete", "Cancel"))
+        if (!await ShowConfirmOverlayAsync("Delete Preset",
+            item.IsUcmPreset
+                ? $"Delete '{item.Name}'? You can re-download it from the catalog anytime."
+                : $"Delete preset '{item.Name}'? This cannot be undone.",
+            "Delete", "Cancel"))
             return;
 
         try
