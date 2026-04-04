@@ -95,6 +95,22 @@ public partial class MainWindow : Window
         if (tab != "simple" && tab != "advanced" && tab != "expert")
             return;
 
+        // Raw XML imports only support God Mode editing
+        if (_sessionIsRawImport && (tab == "simple" || tab == "advanced"))
+        {
+            MessageBox.Show(
+                "This preset was imported as raw XML and is not managed by UCM.\n\n" +
+                "UCM Quick and Fine Tune use UCM's camera rule system which would override " +
+                "values from the imported mod. To protect your import, only God Mode editing " +
+                "is available.\n\n" +
+                "To use UCM features like Steadycam and FoV control, create a new UCM preset " +
+                "from the sidebar instead.",
+                "Raw XML Import",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+            return;
+        }
+
         // Rebuild session XML from the current editor when switching tabs — unless a full
         // preset was loaded externally (import, preset picker) and the user hasn't edited
         // Quick sliders since.  Quick sliders only cover a subset of values; rebuilding from
@@ -192,6 +208,7 @@ public partial class MainWindow : Window
     private void CaptureSessionXml()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
+        if (_sessionIsRawImport) return; // Raw imports must not be rebuilt through CameraRules
 
         try
         {
@@ -243,6 +260,13 @@ public partial class MainWindow : Window
 
     private string BuildGodModeSessionXml()
     {
+        // Raw imports: start from the imported XML, only layer explicit God Mode edits.
+        // No UCM rules (FoV normalization, Steadycam, etc.) applied.
+        if (_sessionIsRawImport && !string.IsNullOrWhiteSpace(_sessionXml))
+        {
+            return CameraMod.ApplyModifications(_sessionXml, BuildExpertModSet());
+        }
+
         // Start from the simple session (Steadycam, style, FOV, bane, etc. already applied)
         // then layer God Mode's explicit overrides on top. This ensures Steadycam and all
         // Quick settings are present in exports even when the user is on the God Mode tab.
@@ -370,6 +394,7 @@ public partial class MainWindow : Window
     private void SyncQuickSettingsToEditorsNow()
     {
         if (string.IsNullOrEmpty(_gameDir)) return;
+        if (_sessionIsRawImport) return; // Raw imports must not be rebuilt through CameraRules
         // Don't overwrite _sessionXml when a full preset (with Fine Tune/God Mode changes) is loaded
         if (_sessionIsFullPreset) return;
         try

@@ -412,6 +412,8 @@ public partial class MainWindow : Window
         if (string.IsNullOrWhiteSpace(_gameDir))
             throw new InvalidOperationException("Game folder not set. v3 needs the current game to rebuild this preset safely.");
 
+        _sessionIsRawImport = true;
+
         // Use the raw XML directly if available, otherwise rebuild from values
         string xml;
         if (!string.IsNullOrWhiteSpace(preset.RawXml))
@@ -426,8 +428,9 @@ public partial class MainWindow : Window
             SetStatus($"Imported preset '{preset.Name}' had no embedded XML; rebuilt from saved settings.", "Warn");
         }
         RefreshUIFromSessionXml(xml);
-        // Force Quick sliders to match the imported XML's ZL2 values
-        TryApplyQuickSlidersFromSessionXml(xml);
+        // Only sync Quick sliders for UCM-managed presets — raw imports disable Quick/Fine Tune
+        if (!_sessionIsRawImport)
+            TryApplyQuickSlidersFromSessionXml(xml);
         MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
 
         string authorOrSource = !string.IsNullOrWhiteSpace(preset.Author)
@@ -440,6 +443,13 @@ public partial class MainWindow : Window
             BuildImportedPresetStatusText(preset),
             BuildImportedPresetSummaryText(preset),
             preset.Url);
+
+        // Raw imports only support God Mode editing — auto-switch so the user lands there
+        if (_sessionIsRawImport)
+        {
+            ApplyPresetEditingLockUi();
+            SwitchEditorTab("expert", captureCurrent: false);
+        }
     }
 
     private string BuildRebuiltXmlFromImportedPreset(ImportedPreset preset)
@@ -807,9 +817,19 @@ public partial class MainWindow : Window
 
         try
         {
-            _sessionXml = BuildRebuiltXmlFromImportedPreset(preset);
+            // Use raw XML directly if available — don't rebuild through CameraRules
+            if (!string.IsNullOrWhiteSpace(preset.RawXml))
+            {
+                _sessionXml = CameraMod.StripComments(preset.RawXml.TrimStart('\uFEFF'));
+                _sessionIsRawImport = true;
+            }
+            else
+            {
+                _sessionXml = BuildRebuiltXmlFromImportedPreset(preset);
+            }
             SwitchAppMode("expert", captureCurrent: false);
             MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
+            ApplyPresetEditingLockUi();
             QueueSavedToast("Imported preset loaded");
             SetStatus($"Loaded imported preset '{preset.Name}' into God Mode.", "Success");
         }
@@ -834,7 +854,16 @@ public partial class MainWindow : Window
         string rebuiltXml;
         try
         {
-            rebuiltXml = BuildRebuiltXmlFromImportedPreset(preset);
+            // Use raw XML directly if available — don't rebuild through CameraRules
+            if (!string.IsNullOrWhiteSpace(preset.RawXml))
+            {
+                rebuiltXml = CameraMod.StripComments(preset.RawXml.TrimStart('\uFEFF'));
+                _sessionIsRawImport = true;
+            }
+            else
+            {
+                rebuiltXml = BuildRebuiltXmlFromImportedPreset(preset);
+            }
             _sessionXml = rebuiltXml;
             MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
         }

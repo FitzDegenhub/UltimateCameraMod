@@ -92,6 +92,7 @@ public partial class MainWindow : Window
     private bool _advCtrlNeedsRefresh;
     private bool _expertNeedsRefresh;
     private bool _sessionIsFullPreset;
+    private bool _sessionIsRawImport;
     private string _selectedStyleId = "panoramic";
     private List<AdvancedRow> _advAllRows = new();
 
