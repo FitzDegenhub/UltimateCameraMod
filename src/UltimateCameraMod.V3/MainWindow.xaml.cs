@@ -35,8 +35,8 @@ public partial class MainWindow : Window
     private const string UcmPresetsDirName = "ucm_presets";
     private const string MyPresetsDirName = "my_presets";
     private const string CommunityPresetsDirName = "community_presets";
-    private const string UcmPresetsCatalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/ucm_presets/catalog.json";
-    private const string UcmPresetsRawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/ucm_presets/";
+    private const string UcmPresetsCatalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/ucm_presets/catalog.json";
+    private const string UcmPresetsRawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/ucm_presets/";
     private const string ImportPresetsDirName = "import_presets";
     private const string LegacyImportedPresetsDirName = "imported_presets";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";

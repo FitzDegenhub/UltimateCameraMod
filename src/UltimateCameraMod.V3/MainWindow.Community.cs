@@ -330,7 +330,7 @@ public partial class MainWindow : Window
             http.Timeout = TimeSpan.FromSeconds(8);
 
             string json = await http.GetStringAsync(
-                "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/community_presets/catalog.json");
+                "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/community_presets/catalog.json");
             using var doc = JsonDocument.Parse(json);
             if (!doc.RootElement.TryGetProperty("presets", out var presetsArr)
                 || presetsArr.ValueKind != JsonValueKind.Array)
@@ -431,7 +431,7 @@ public partial class MainWindow : Window
             bool isCommunity = item.KindId == "community";
             string downloadUrl;
             if (isCommunity)
-                downloadUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/community_presets/"
+                downloadUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/community_presets/"
                     + Uri.EscapeDataString(fileName);
             else
                 downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(fileName);

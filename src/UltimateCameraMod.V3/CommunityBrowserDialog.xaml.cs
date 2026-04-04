@@ -33,8 +33,8 @@ public partial class CommunityBrowserDialog : UserControl
     }
 
     public CommunityBrowserDialog(string presetsDir, Action onPresetsChanged,
-        string catalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/community_presets/catalog.json",
-        string rawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/v3-dev/community_presets/",
+        string catalogUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/community_presets/catalog.json",
+        string rawBaseUrl = "https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/community_presets/",
         string title = "Community Presets",
         bool needsSessionXmlBake = false)
     {
