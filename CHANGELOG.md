@@ -9,17 +9,33 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ## [Unreleased] (v3.1.0)
 
 ### Added
-- **Preset type selection** - New preset dialog now offers two modes: "Managed by UCM" (default, full slider control with UCM camera rules) and "Full Manual Control" (vanilla XML start, God Mode only, no UCM rules). Choice stored as `preset_mode` in preset file and persists across saves, reloads, and duplicates.
-- **Raw XML import separation** - Raw XML / PAZ / mod manager imports are now standalone presets with no UCM rules applied on top. UCM Quick and Fine Tune tabs are disabled with a clear explanation. Only God Mode editing is available. Prevents UCM from silently overwriting imported mod values (FoV, zoom effects, camera sway).
-- **Vanilla backup validation** - `ValidateVanilla()` now checks 5 modification signatures (FoV values, ZoomDistance="3.4", OffsetByVelocity zeroing, MaxZoomDistance="30", padding comments). Existing backups without a `vanilla_verified` stamp are re-validated on launch. Tainted backups auto-deleted with step-by-step fix instructions.
-- **First-run welcome overlay** - Styled verification prompt (matching tutorial gold/dark theme) before the tutorial on first launch. Asks users to confirm game files are verified on Steam. "No, close UCM" shuts down the app for verification first.
+- **In-app overlay dialog system** - All dialogs converted from Windows popups to themed in-app overlays (gold-bordered dark cards). New `MainWindow.Overlay.cs` with reusable `ShowOverlayAsync`, `ShowAlertOverlayAsync`, `ShowConfirmOverlayAsync`, `ShowThreeChoiceOverlayAsync`, `ShowFatalOverlayAndClose`. X close button on all overlays (except fatal). Backdrop clicks disabled.
+- **Preset type selection** - New preset dialog with two clickable cards: "Managed by UCM" (recommended, full slider control) and "Full Manual Control" (vanilla XML, God Mode only). Feature tags with green ticks/red crosses show what's enabled. OR divider between options. Choice stored as `preset_mode` in preset file.
+- **Raw XML import separation** - Raw XML / PAZ / mod manager imports are standalone presets with no UCM rules. UCM Quick and Fine Tune disabled. Only God Mode available. Prevents UCM from overwriting imported mod values.
+- **Vanilla backup validation** - `ValidateVanilla()` checks FoV=40 and OffsetByVelocity=0 signatures. Relaxed checks for June 2026 game patch (MaxZoomDistance=30 and XML comments now vanilla). Auto-deletes tainted backup AND 0.paz when validation fails (Steam verify alone doesn't restore modded files).
+- **First-run welcome overlay** - Styled verification prompt before tutorial. "No, close UCM" shuts down app.
+- **Game update warning overlay** - Detected game updates show as overlay with Snooze/Dismiss instead of bottom strip.
+- **Fatal error overlay** - Unclosable overlay with "Close UCM" button for critical errors (tainted backup, unreadable camera files). Cannot be dismissed by clicking backdrop.
+- **Wiki** - 21 pages (11 user guide + 10 developer) published to GitHub Wiki tab with sidebar navigation.
 
 ### Changed
-- **Error messages overhauled** - All major error messages rewritten with clear, actionable guidance: archive not found explains folder structure, camera file not found suggests verifying on Steam, size too large lists common causes, corrupted backup explains auto-clear with next steps, install/restore uses plain language, imported preset failures explain possible causes.
-- **Release notes** - Clean install section updated with warning emoji and stronger wording about verifying game files.
+- **All MessageBox.Show calls replaced** - Every alert, confirmation, and error dialog is now a themed overlay. No more Windows-style popups.
+- **Error messages overhauled** - All major error messages rewritten with clear, actionable guidance. Tainted backup error auto-deletes 0.paz and provides simple Steam verify steps.
+- **Export dialog** - Removed redundant description under header (each format has its own description).
+- **Import type picker** - Cards with hover highlight instead of plain buttons.
+- **Browse catalog cards** - Description/tags on left, Download/Nexus buttons on right.
+- **Game Default sidebar group** - Vanilla preset separated from UCM presets.
+- **Height slider** range extended to -1.6/1.5.
 
 ### Fixed
-- **Tainted vanilla backups from v2.5 upgrades** - Users upgrading from v2.5 or running other PAZ mods (e.g. NO HUD) could end up with a backup captured from modified game files. The old `ValidateVanilla()` only checked FoV on two sections and allowed "40" which UCM itself sets. Now caught automatically.
+- **Tainted vanilla backups from v2.5 upgrades** - Auto-detected and auto-cleaned with proper fix instructions.
+- **HShift slider staying gold on locked presets** - `ApplyCenteredLock` was re-enabling the slider after `ApplyPresetEditingLockUi` disabled it.
+- **God Mode columns squished on first load** - Star-width column recalculation after render with delay.
+- **Camera preview not updating when switching presets** - `SyncPreview` was blocked by `_suppressEvents` during preset loading.
+- **Community preset "View on Nexus" link lost after update** - Updates now preserve URL, author, description metadata.
+- **False update icons after downloading presets** - Raw byte downloads preserve SHA hash for update detection.
+- **Game crash on load** - Removed Player_Interaction_LockOn/Interaction_LookAt from LockOnSections. Removed unsafe byte-replacement fallback in ArchiveWriter.
+- **PAZ import from different game version** - Shows helpful overlay explaining PAMT version mismatch.
 
 ---
 

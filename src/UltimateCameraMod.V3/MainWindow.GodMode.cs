@@ -52,10 +52,12 @@ public partial class MainWindow : Window
             AdvRefreshPresetCombo();
             AdvUpdateRowCount();
 
-            // Force column layout recalculation — without this, the star-width ATTRIBUTE column
-            // doesn't size correctly on first load because all groups are collapsed and no rows are measured.
-            Dispatcher.BeginInvoke(new Action(() =>
+            // Force column layout recalculation after render. The star-width ATTRIBUTE column
+            // doesn't size correctly on first load because groups are collapsed and no rows are measured.
+            // Use Render priority + a second pass to ensure the DataGrid has actually laid out.
+            Dispatcher.BeginInvoke(new Action(async () =>
             {
+                await Task.Delay(100);
                 ExpertDataGrid.UpdateLayout();
                 foreach (var col in ExpertDataGrid.Columns)
                     if (col.Width.IsStar)
@@ -63,7 +65,7 @@ public partial class MainWindow : Window
                         col.Width = 0;
                         col.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
                     }
-            }), System.Windows.Threading.DispatcherPriority.Loaded);
+            }), System.Windows.Threading.DispatcherPriority.Render);
 
             var lightText = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
             AdvSearchBox.Foreground = lightText;
