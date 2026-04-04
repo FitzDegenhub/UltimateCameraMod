@@ -1,6 +1,6 @@
 ﻿> **Nexus Mods page temporarily unavailable** — Hey everyone, apologies for the Nexus page being down. As a new author on the platform, the Nexus Mods team are currently reviewing my source code before allowing the project back on the site - which honestly makes total sense and I fully support it. I've already been in contact with them and they've been really helpful, so we just have to wait it out. In the meantime all downloads are available right here on **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)**. Thank you so much for your patience - I've been busy working on v3 in the meantime!
 >
-> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0.1 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. You can download v3.0.1 Beta from [GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1).
+> **Branch note:** `main` has been left at v2.5 (the version currently under Nexus review). The source code for **v3.0.2 Beta** lives on the [`v3-dev`](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev) branch. You can download v3.0.2 Beta from [GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.2).
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -13,12 +13,12 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 <p align="center">
 
 [![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
-[![Download v3.0.1 Beta](https://img.shields.io/badge/Download-v3.0.1_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1)
+[![Download v3.0.2 Beta](https://img.shields.io/badge/Download-v3.0.2_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
-[![VirusTotal v3.0.1](https://img.shields.io/badge/VirusTotal_v3.0.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/5123741f7c78f8b234f082025c4097dc6411440744749f018b3ba02e3f64afd8)
+[![VirusTotal v3.0.2](https://img.shields.io/badge/VirusTotal_v3.0.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/3d35746f1df8f26807490c1421c3b96c5bb1f322c018c7990338b91bae87f410)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
@@ -56,7 +56,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 | Branch | Status | What it is |
 |--------|--------|------------|
 | **`main`** | Stable (v2.5) — under Nexus source review | v2.x direct-install app (single exe, writes straight to game PAZ) |
-| **`v3-dev`** | Beta - source for v3.0.1 Beta release | v3 export-first app — tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
+| **`v3-dev`** | Beta - source for v3.0.2 Beta release | v3 export-first app -- tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
@@ -270,7 +270,8 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ## Version history
 
-- **v3.0.1-beta** (`v3-dev`) - Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode). `.ucmpreset` file format. File-based preset system with collapsible sidebar. **[UCM preset catalog](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev/ucm_presets)** - official presets downloaded on demand via Browse button (no longer generated locally). **[Community preset catalog](https://github.com/FitzDegenhub/UltimateCameraMod/tree/main/community_presets)** - browse and download community presets from GitHub. Preset update detection with revision tracking. Multi-format export (JSON for **JSON Mod Manager** + **CDUMM**, XML, 0.paz, `.ucmpreset`). Preset lock system (UCM presets permanently locked, user presets toggleable with padlock). Auto-save to preset files. Quick to Fine Tune to God Mode settings sync. Raw XML import for PAZ/XML presets. Style IDs renamed to match preset names (heroic, panoramic, close-up, etc.). Steadycam expanded to 30+ camera states with greyed-out indicators on controlled sliders. Lock-on zoom slider replaces combat camera dropdown (-60% to +60%). Value-edits only design - no structural XML injection. UCM Quick side-by-side layout (offsets + global settings top, previews bottom). Live camera preview with preset name. Game patch awareness. Windows taskbar identity. New app icon.
+- **v3.0.2-beta** (`v3-dev`) - All dialogs converted to in-app overlay system (no more Windows popups). God Mode overrides persist across tab switches. New preset type selection (UCM Managed vs Full Manual Control). Community preset catalog moved to main repo. 54 God Mode attribute tooltips. Game crash fixes for LockOn/LookAt sections. Vanilla validation updated for June 2026 game patch. Interactive tainted backup handling. Fresh install/upgrade detection. 21-page Wiki. Multiple bug fixes. See [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.2).
+- **v3.0.1-beta** - Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode). `.ucmpreset` file format. File-based preset system with collapsible sidebar. UCM and community preset catalogs with revision tracking. Multi-format export (JSON, XML, 0.paz, `.ucmpreset`). Preset lock system. Raw XML import. Steadycam expanded to 30+ camera states. Lock-on zoom slider (-60% to +60%). Live camera preview. Game patch awareness.
 - **v2.5** - Current stable release on GitHub Releases.
 - **v2.4** - Proportional horizontal shift, shift on all mounts and aim abilities, horse camera overhaul, version-aware backups, FoV preview, resizable window.
 - **v2.3** - Horizontal shift fix for 16:9, delta-based slider, full install config banner.
