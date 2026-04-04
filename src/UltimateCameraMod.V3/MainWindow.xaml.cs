@@ -463,6 +463,23 @@ public partial class MainWindow : Window
             bool hasStylePresets = _presetManagerItems.Any(i => i.KindId == "style" && !i.IsPlaceholder);
             if (!System.IO.File.Exists(tutorialDonePath) && !string.IsNullOrEmpty(_gameDir))
             {
+                // First-run: ensure user has verified game files before UCM captures its vanilla backup.
+                var verifyResult = MessageBox.Show(
+                    "Welcome to Ultimate Camera Mod!\n\n" +
+                    "Before continuing, UCM needs your game files to be unmodified (vanilla).\n\n" +
+                    "Have you verified your game files on Steam?\n" +
+                    "(Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\")\n\n" +
+                    "Click Yes to continue, or No to close UCM and verify first.",
+                    "Ultimate Camera Mod",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (verifyResult == MessageBoxResult.No)
+                {
+                    Application.Current.Shutdown();
+                    return;
+                }
+
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     StartTutorial();
