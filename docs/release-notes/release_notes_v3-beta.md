@@ -216,6 +216,55 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 ---
 
+## New in v3.0.2
+
+### Preset type selection: Managed by UCM vs Full Manual Control
+
+When creating a new preset, you now choose between two modes:
+
+| Mode | What it does |
+|------|-------------|
+| **Managed by UCM** (default) | UCM handles camera rules like FoV consistency, smooth transitions, lock-on scaling, and mount sync automatically. You get Quick sliders, Fine Tune controls, and Steadycam out of the box. Some values are managed by UCM and can only be overridden in God Mode. |
+| **Full Manual Control** | Start from the game's vanilla camera XML with no UCM rules applied. Every value is yours to edit in God Mode. Nothing is automated or overridden. You won't have access to Quick sliders, Fine Tune, or Steadycam. Best for advanced users or when matching values from another camera mod. |
+
+The choice is stored in the preset file and persists across saves, reloads, and duplicates.
+
+### Raw XML imports separated from UCM presets
+
+Raw XML / PAZ / mod manager imports are now treated as standalone presets with no UCM camera rules applied on top. This prevents UCM from silently overwriting imported mod values like per-state FoV, zoom effects, and camera sway settings.
+
+- UCM Quick and Fine Tune tabs are disabled for raw imports with a clear explanation
+- Only God Mode editing is available for raw imports
+- God Mode edits layer on top of the original imported XML without UCM rule interference
+- `.ucmpreset` imports continue to work as before with full slider control
+
+### Vanilla backup validation
+
+UCM now validates that your game files are actually vanilla before creating a backup. This catches users upgrading from v2.5, running other mods (e.g. NO HUD), or any tool that modifies `0.paz`.
+
+- `ValidateVanilla()` checks 5 modification signatures: FoV values, ZoomDistance, OffsetByVelocity zeroing, MaxZoomDistance, and padding comments
+- Existing backups without a `vanilla_verified` stamp are re-validated on launch
+- Tainted backups are automatically deleted with clear step-by-step fix instructions
+
+### First-run welcome overlay
+
+A styled verification prompt (matching the tutorial's gold/dark theme) now appears before the tutorial on first launch. Asks users to confirm they have verified game files on Steam before proceeding. "No, close UCM" shuts down the app so they can verify first.
+
+### Improved error messages
+
+All major error messages rewritten with clear, actionable guidance:
+
+| Error | What changed |
+|-------|-------------|
+| Archive/PAMT not found | Explains expected folder structure, suggests wrong game folder |
+| Camera file not found | Suggests verifying game files on Steam |
+| Preset too large to install | Leads with "preset is too large", lists common causes including tainted backup |
+| Corrupted backup | Explains it was auto-cleared, gives next steps |
+| Install/restore status | Plain language instead of developer jargon |
+| Imported preset failures | Explains possible causes (missing, corrupted, unsupported format) |
+
+---
+
 ## Known limitations
 
 - **HUD centering (ultrawide) is temporarily disabled** - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found
