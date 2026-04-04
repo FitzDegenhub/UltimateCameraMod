@@ -15,6 +15,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
 [![Download v3.0.1 Beta](https://img.shields.io/badge/Download-v3.0.1_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
+[![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![VirusTotal v3.0.1](https://img.shields.io/badge/VirusTotal_v3.0.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/5123741f7c78f8b234f082025c4097dc6411440744749f018b3ba02e3f64afd8)
@@ -22,6 +23,8 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
 </p>
+
+> Need help? Check the **[Wiki](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)** for setup guides, camera settings explained, preset management, troubleshooting, and developer documentation.
 
 ---
 
