@@ -302,8 +302,8 @@
                         <DockPanel Grid.Column="1">
                             <StackPanel DockPanel.Dock="Right" VerticalAlignment="Top" Margin="12,2,0,0"
                                        HorizontalAlignment="Right">
-                                <TextBlock x:Name="ActivePresetAuthor" FontSize="10"
-                                           Foreground="{StaticResource TextDimBrush}" Text=""
+                                <TextBlock x:Name="ActivePresetAuthor" FontSize="13"
+                                           Foreground="{StaticResource TextSecondaryBrush}" Text=""
                                            HorizontalAlignment="Right"/>
                                 <Button x:Name="ActivePresetLinkBtn" Visibility="Collapsed"
                                         Style="{StaticResource SubtleButton}"
