@@ -434,21 +434,31 @@ public static class CameraMod
         string pamtPath = Path.Combine(gameDir, "0010", "0.pamt");
         string pazDir = Path.Combine(gameDir, "0010");
         if (!File.Exists(pamtPath))
-            throw new FileNotFoundException($"PAMT not found: {pamtPath}");
+            throw new FileNotFoundException(
+                $"Game archive index not found at:\n{pamtPath}\n\n" +
+                "Make sure you selected the correct Crimson Desert install folder. " +
+                "The folder should contain a '0010' subfolder with 0.paz and 0.pamt files.");
 
         var entries = PamtReader.Parse(pamtPath, pazDir);
         return entries.FirstOrDefault(e => e.Path.Contains("playercamerapreset.xml"))
-            ?? throw new InvalidOperationException("playercamerapreset.xml not found in PAMT");
+            ?? throw new InvalidOperationException(
+                "Camera file (playercamerapreset.xml) was not found in the game archive.\n\n" +
+                "This can happen if the game was partially installed or the archive is from a different version.\n" +
+                "Try verifying game files on Steam, then launch UCM again.");
     }
 
     public static PazEntry FindCameraEntryFromPamt(string pamtPath, string? pazDir = null)
     {
         if (!File.Exists(pamtPath))
-            throw new FileNotFoundException($"PAMT not found: {pamtPath}");
+            throw new FileNotFoundException(
+                $"Game archive index not found at:\n{pamtPath}\n\n" +
+                "Make sure the selected folder contains 0.paz and 0.pamt files.");
 
         var entries = PamtReader.Parse(pamtPath, pazDir);
         return entries.FirstOrDefault(e => e.Path.Contains("playercamerapreset.xml"))
-            ?? throw new InvalidOperationException("playercamerapreset.xml not found in PAMT");
+            ?? throw new InvalidOperationException(
+                "Camera file (playercamerapreset.xml) was not found in the game archive.\n\n" +
+                "Try verifying game files on Steam, then launch UCM again.");
     }
 
     private static byte[] ReadEntryBytes(PazEntry entry)
@@ -762,11 +772,13 @@ public static class CameraMod
         catch (Exception)
         {
             throw new InvalidOperationException(
-                "Game files appear to be corrupted or modified by another tool.\n\n" +
+                "Could not read camera data from the game archive. The file may be corrupted, " +
+                "partially downloaded, or modified by another tool.\n\n" +
                 "TO FIX:\n" +
-                "1. Close this tool\n" +
-                "2. Steam > Crimson Desert > Properties > Installed Files > \"Verify integrity of game files\"\n" +
-                "3. Run this tool again");
+                "1. Close UCM\n" +
+                "2. Delete the 'backups' folder next to UltimateCameraMod.exe (if it exists)\n" +
+                "3. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
+                "4. Wait for verification to complete before launching UCM again");
         }
 
         File.WriteAllBytes(backupPath, data);
@@ -802,10 +814,10 @@ public static class CameraMod
             string metaPath = Path.Combine(BackupsDir, "backup_meta.txt");
             if (File.Exists(metaPath)) File.Delete(metaPath);
             throw new InvalidOperationException(
-                "Backup file is corrupted (possibly from a previous version or another tool).\n\n" +
-                "The bad backup has been cleared. TO FIX:\n" +
-                "1. Steam > Crimson Desert > Properties > Installed Files > \"Verify integrity of game files\"\n" +
-                "2. Try Install again");
+                "UCM's vanilla backup could not be read — it may be from a previous version or corrupted.\n\n" +
+                "The bad backup has been automatically cleared. TO FIX:\n" +
+                "1. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
+                "2. Launch UCM and try Install again — a fresh backup will be created");
         }
     }
 

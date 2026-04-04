@@ -724,11 +724,15 @@ public static class ArchiveWriter
 
         // Compressed payload is larger than the game's camera slot allows. Do not mutate XML bytes
         // (replacing characters with spaces) — that produces invalid XML and crashes the game at load.
+        int overBy = comp.Length - targetCompSize;
         throw new InvalidOperationException(
-            $"This camera XML compresses to {comp.Length} bytes but the game only allows {targetCompSize} bytes " +
-            $"in 0.paz (uncompressed buffer is {targetOrigSize} bytes). The preset cannot be installed safely.\n\n" +
-            "Try: fewer Fine Tune / God Mode edits, a lighter style preset, or verify the game install matches " +
-            "the build this tool expects. If the game was just updated, reinstall after a Steam verify.");
+            $"Preset is too large to install — camera data exceeds the game's limit by {overBy:N0} bytes " +
+            $"({comp.Length:N0} / {targetCompSize:N0} bytes).\n\n" +
+            "This usually means:\n" +
+            "• Your vanilla backup was captured from already-modified game files. " +
+            "Delete the 'backups' folder next to UltimateCameraMod.exe, verify game files on Steam, then try again.\n" +
+            "• Too many Fine Tune / God Mode edits. Try a simpler preset or reduce the number of overrides.\n" +
+            "• The game was updated. Verify game files on Steam and reinstall.");
     }
 
     // ── Core write ──────────────────────────────────────────────────

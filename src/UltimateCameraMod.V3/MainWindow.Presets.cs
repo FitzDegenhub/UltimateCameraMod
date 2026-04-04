@@ -281,7 +281,7 @@ public partial class MainWindow : Window
             {
                 case "imported":
                 {
-                    var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded.");
+                    var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded — the file may be missing, corrupted, or in an unsupported format.");
                     item.IsLocked = preset.Locked;
                     _selectedImportedPreset = preset;
                     LoadImportedPresetIntoSession(preset);
@@ -877,7 +877,7 @@ public partial class MainWindow : Window
 
             if (item.KindId == "imported")
             {
-                var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded.");
+                var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded — the file may be missing, corrupted, or in an unsupported format.");
                 preset.Name = newName;
                 SaveImportedPreset(preset);
                 if (File.Exists(item.FilePath))
@@ -950,7 +950,7 @@ public partial class MainWindow : Window
 
             if (item.KindId == "imported")
             {
-                var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded.");
+                var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded — the file may be missing, corrupted, or in an unsupported format.");
                 preset.Name = newName;
                 preset.Locked = false;
                 SaveImportedPreset(preset);
@@ -1003,7 +1003,7 @@ public partial class MainWindow : Window
 
         try
         {
-            var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded.");
+            var preset = LoadImportedPreset(item.Name) ?? throw new InvalidOperationException("Imported preset could not be loaded — the file may be missing, corrupted, or in an unsupported format.");
             _selectedImportedPreset = preset;
             string xml = BuildRebuiltXmlFromImportedPreset(preset);
             RefreshUIFromSessionXml(xml);

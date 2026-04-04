@@ -118,7 +118,7 @@ public partial class MainWindow : Window
                         && string.Equals(statusObj?.ToString(), "ok", StringComparison.OrdinalIgnoreCase);
                     if (!ok)
                     {
-                        SetStatus($"Install returned unexpected status. See {Path.GetFileName(tracePath)}.", "Warn");
+                        SetStatus("Install completed but returned an unexpected result. Camera may not have been applied correctly — try launching the game to verify.", "Warn");
                         return;
                     }
 
@@ -179,11 +179,11 @@ public partial class MainWindow : Window
                             SetStatus("No backup found. The game camera may already be vanilla.", "Warn");
                             break;
                         case "stale_backup":
-                            SetStatus("Backup was stale after a game update and has been cleared. Verify files, then install again.", "Warn");
+                            SetStatus("Game was updated since last install — backup has been refreshed. Verify game files on Steam, then install again.", "Warn");
                             RefreshGameUpdateNotice();
                             break;
                         default:
-                            SetStatus("Restore finished with an unknown result.", "Warn");
+                            SetStatus("Restore completed but the result could not be confirmed. Launch the game to check if the camera is back to vanilla.", "Warn");
                             break;
                     }
                 });
