@@ -216,7 +216,7 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 ---
 
-## New in v3.0.2
+## New in v3.1.0
 
 ### Preset type selection: Managed by UCM vs Full Manual Control
 
