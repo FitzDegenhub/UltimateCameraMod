@@ -15,6 +15,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Download v2.5](https://img.shields.io/badge/Download-v2.5_stable-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v2.5)
 [![Download v3.0.1 Beta](https://img.shields.io/badge/Download-v3.0.1_Beta-orange?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.1)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
+[![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
 [![VirusTotal v2.5](https://img.shields.io/badge/VirusTotal_v2.5-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a)
 [![VirusTotal v3.0.1](https://img.shields.io/badge/VirusTotal_v3.0.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/5123741f7c78f8b234f082025c4097dc6411440744749f018b3ba02e3f64afd8)
@@ -22,6 +23,8 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
 </p>
+
+> Need help? Check the **[Wiki](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)** for setup guides, camera settings explained, preset management, troubleshooting, and developer documentation.
 
 ---
 
@@ -97,7 +100,7 @@ v3 organizes editing into three tabs so you can go as deep as you want:
 - **New / Duplicate / Rename / Delete** from the sidebar
 - **Lock** presets to prevent accidental edits - UCM presets are permanently locked; user presets toggleable via padlock icon
 - **True Vanilla preset** - raw decoded `playercamerapreset` from your game backup with no modifications applied. Quick sliders are synced to the actual game baseline values
-- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages
+- **Import** from `.ucmpreset`, raw XML, PAZ archives, or Mod Manager packages. `.ucmpreset` imports get full UCM slider control; raw XML/PAZ/mod manager imports are standalone presets (God Mode editing only, no UCM rules applied) to preserve the original mod author's values
 - **Auto-save** - changes to unlocked presets write back to the preset file automatically (debounced)
 - Auto-migration from legacy `.json` presets to `.ucmpreset` on first launch
 
