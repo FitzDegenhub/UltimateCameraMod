@@ -878,6 +878,12 @@ public partial class MainWindow : Window
         if (item == null)
             return;
 
+        if (item.IsUcmPreset)
+        {
+            _ = ShowAlertOverlayAsync("Cannot Delete", "UCM presets cannot be deleted. They are managed by the UCM catalog.");
+            return;
+        }
+
         if (!await ShowConfirmOverlayAsync("Delete Preset", $"Delete preset '{item.Name}'? This cannot be undone.", "Delete", "Cancel"))
             return;
 
@@ -904,6 +910,12 @@ public partial class MainWindow : Window
         var item = RequireSelectedPresetManagerItem();
         if (item == null)
             return;
+
+        if (item.IsUcmPreset)
+        {
+            _ = ShowAlertOverlayAsync("Cannot Rename", "UCM presets cannot be renamed. Duplicate it first to create your own editable copy.");
+            return;
+        }
 
         string? response = await ShowInputOverlayAsync("Rename Preset", "Enter the new preset name:", item.Name);
         if (string.IsNullOrWhiteSpace(response))
