@@ -93,17 +93,19 @@ jobs:
               print(f"{catalog_path}: {len(presets)} presets")
 
           # UCM presets (style definitions only)
-          generate_catalog("ucm_presets", "ucm_presets/catalog.json", kind_filter="style")
+          if os.path.isdir("ucm_presets"):
+              generate_catalog("ucm_presets", "ucm_presets/catalog.json", kind_filter="style")
 
           # Community presets (all presets)
-          generate_catalog("community_presets", "community_presets/catalog.json")
+          if os.path.isdir("community_presets"):
+              generate_catalog("community_presets", "community_presets/catalog.json")
           SCRIPT
 
       - name: Commit updated catalogs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ucm_presets/catalog.json community_presets/catalog.json
+          git add ucm_presets/catalog.json community_presets/catalog.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to catalogs"
           else

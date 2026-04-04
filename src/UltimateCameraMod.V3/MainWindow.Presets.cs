@@ -1423,7 +1423,14 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             SetStatus("Failed to generate built-in presets.", "Warn");
-            ShowFatalOverlayAndClose("Failed to Generate Presets", ex.Message);
+            // Don't show fatal overlay if tutorial is active (first launch with no presets is normal)
+            if (TutorialCanvas.Visibility == Visibility.Visible)
+                return;
+            // Only show fatal overlay if the error is about tainted backup (needs user action)
+            if (ex.Message.Contains("modified") || ex.Message.Contains("vanilla"))
+                ShowFatalOverlayAndClose("Failed to Generate Presets", ex.Message);
+            else
+                _ = ShowAlertOverlayAsync("Failed to Generate Presets", ex.Message, isError: true);
         }
     }
 
