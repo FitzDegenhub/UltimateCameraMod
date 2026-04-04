@@ -752,33 +752,27 @@ public static class CameraMod
             string xmlText = Encoding.UTF8.GetString(xmlBytes).TrimEnd('\0');
             if (!ValidateVanilla(xmlText))
             {
-                // Auto-delete tainted backup and the game's 0.paz so Steam re-downloads it
+                // Only delete the UCM backup — NOT the game's 0.paz (too destructive)
                 try { if (File.Exists(backupPath)) File.Delete(backupPath); } catch { }
                 try { if (File.Exists(metaPath)) File.Delete(metaPath); } catch { }
-                try
-                {
-                    string pazPath = entry.PazFile;
-                    if (File.Exists(pazPath)) File.Delete(pazPath);
-                }
-                catch { }
 
                 throw new InvalidOperationException(
-                    "Game camera files were modified by UCM v2.x, another camera mod, or a mod manager.\n\n" +
-                    "UCM has automatically removed the affected files.\n\n" +
-                    "TO FINISH:\n" +
+                    "Game camera files are not vanilla — they have been modified by UCM v2.x, " +
+                    "another camera mod, or a mod manager.\n\n" +
+                    "TO FIX:\n" +
                     "1. Close UCM\n" +
-                    "2. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
-                    "3. Wait for verification to complete, then relaunch UCM\n\n" +
-                    "Steam will re-download the original camera file (~200 MB). This only needs to happen once.");
+                    "2. Open your game folder → 0010 → delete 0.paz\n" +
+                    "3. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
+                    "4. Wait for verification to complete, then relaunch UCM\n\n" +
+                    "Steam will re-download the original camera file. This only needs to happen once.");
             }
         }
         catch (InvalidOperationException) { throw; }
         catch (Exception)
         {
-            // Auto-cleanup so Steam can re-download
+            // Only delete the UCM backup — NOT the game's 0.paz
             try { if (File.Exists(backupPath)) File.Delete(backupPath); } catch { }
             try { if (File.Exists(metaPath)) File.Delete(metaPath); } catch { }
-            try { File.Delete(entry.PazFile); } catch { }
 
             throw new InvalidOperationException(
                 "Could not read camera data from the game archive. The file may be corrupted, " +

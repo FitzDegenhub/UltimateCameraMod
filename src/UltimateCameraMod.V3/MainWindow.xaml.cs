@@ -394,7 +394,7 @@ public partial class MainWindow : Window
             _previewDebounceTimer?.Stop();
             FlushInstallStateWriteIfNeeded();
 
-            string json = JsonSerializer.Serialize(new { width = Width, height = Height });
+            string json = JsonSerializer.Serialize(new { width = Width, height = Height, game_dir = _gameDir, platform = _detectedPlatform });
             File.WriteAllText(WindowStatePath, json);
         }
         catch { }
@@ -422,9 +422,34 @@ public partial class MainWindow : Window
             string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "";
             // _activeTab assignment removed (always custom)
 
-            var (detectedPath, platform) = GameDetector.FindGameDir();
-            _gameDir = detectedPath ?? "";
-            _detectedPlatform = platform;
+            // Try to restore saved game dir first (instant), fall back to detection (slow)
+            string? savedGameDir = null;
+            string? savedPlatform = null;
+            try
+            {
+                if (File.Exists(WindowStatePath))
+                {
+                    var wsDoc = JsonDocument.Parse(File.ReadAllText(WindowStatePath));
+                    if (wsDoc.RootElement.TryGetProperty("game_dir", out var gdEl))
+                        savedGameDir = gdEl.GetString();
+                    if (wsDoc.RootElement.TryGetProperty("platform", out var plEl))
+                        savedPlatform = plEl.GetString();
+                }
+            }
+            catch { }
+
+            if (!string.IsNullOrEmpty(savedGameDir) && Directory.Exists(savedGameDir)
+                && File.Exists(Path.Combine(savedGameDir, "0010", "0.paz")))
+            {
+                _gameDir = savedGameDir;
+                _detectedPlatform = savedPlatform ?? "Steam";
+            }
+            else
+            {
+                var (detectedPath, platform) = GameDetector.FindGameDir();
+                _gameDir = detectedPath ?? "";
+                _detectedPlatform = platform;
+            }
 
             if (string.IsNullOrEmpty(_gameDir))
             {
