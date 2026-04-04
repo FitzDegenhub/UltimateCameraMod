@@ -30,7 +30,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ### Fixed
 - **Tainted vanilla backups from v2.5 upgrades** - Auto-detected and auto-cleaned with proper fix instructions.
 - **HShift slider staying gold on locked presets** - `ApplyCenteredLock` was re-enabling the slider after `ApplyPresetEditingLockUi` disabled it.
-- **God Mode columns squished on first load** - Star-width column recalculation after render with delay.
+- **God Mode columns squished on first load** - WPF DataGrid doesn't measure columns with collapsed groups. Fixed with double-bind on first entry and adjusted column widths (SECTION 200, SUB-ELEMENT 140, ATTRIBUTE 250, VALUE 120, VANILLA 120).
 - **Camera preview not updating when switching presets** - `SyncPreview` was blocked by `_suppressEvents` during preset loading.
 - **Community preset "View on Nexus" link lost after update** - Updates now preserve URL, author, description metadata.
 - **False update icons after downloading presets** - Raw byte downloads preserve SHA hash for update detection.
