@@ -8,9 +8,13 @@
 
 ---
 
-## Clean install required
+## ⚠️ Clean install required
 
-Remove any previous UCM folders from your game directory and verify game files via Steam before running v3.0 for the first time. v3 will auto-migrate any legacy `.json` presets on first launch.
+**Remove any previous UCM folders from your game directory and verify game files via Steam before running v3.0 for the first time.** If you previously used UCM v2.x or any other mod that modifies `0.paz`, you **must** verify game files first — UCM v3 will not work correctly with modified game files.
+
+> **Steam → Crimson Desert → Properties → Installed Files → "Verify integrity of game files"**
+
+v3 will auto-migrate any legacy `.json` presets on first launch.
 
 ---
 
