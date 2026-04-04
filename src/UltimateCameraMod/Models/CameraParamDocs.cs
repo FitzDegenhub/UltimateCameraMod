@@ -121,6 +121,117 @@ public static class CameraParamDocs
         ["DistanceMax"] =
             "Maximum camera distance (furthest zoom). " +
             "The camera won't zoom out further than this value.",
+
+        // ── Section-level attributes ────────────────────────────────
+
+        ["Type"] =
+            "Camera behavior type. 'TPS' = third-person shooter. 'CinematicLockOn' = NPC interaction/dialogue camera. " +
+            "Determines how the camera tracks the character and targets.",
+
+        ["PivotSetType"] =
+            "What the camera orbits around. 'FocusActor' = player character. " +
+            "Other values may focus on targets, NPCs, or world positions.",
+
+        ["UseZoomInByPitch"] =
+            "When true, the camera zooms in slightly as you look down (pitch down). " +
+            "Creates a more cinematic feel when looking at the ground.",
+
+        ["UseUpOffsetByPitch"] =
+            "When true, the vertical offset shifts as you tilt the camera up/down. " +
+            "Helps keep the character framed when looking at extreme angles.",
+
+        // ── Interaction / lock-on attributes ────────────────────────
+
+        ["CameraAutoRotateSpeed"] =
+            "How aggressively the camera rotates toward a target (NPC, enemy). " +
+            "Higher = stronger magnetic pull toward the target. Vanilla interaction = 10 (very aggressive). " +
+            "Set to 0 to disable auto-rotation entirely.",
+
+        ["CameraAutoRotateMaxSpeed"] =
+            "Maximum rotation speed cap for auto-rotate. Limits how fast the camera can snap to a target. " +
+            "Vanilla interaction = 300. Lower values = smoother, less jarring rotation.",
+
+        ["CameraAutoRotateAccelSpeed"] =
+            "How quickly the auto-rotate accelerates. Higher = snappier pull toward target. " +
+            "Lower = more gradual acceleration, feels less magnetic.",
+
+        ["CameraAutoRotateDecelSpeed"] =
+            "How quickly the auto-rotate decelerates. -1 = instant stop. " +
+            "Higher positive values = gradual slowdown when reaching the target.",
+
+        ["IsTargetFixed"] =
+            "When true, the camera locks rigidly onto the target with no player input allowed. " +
+            "When false, the player can still move the camera while the auto-rotate pulls.",
+
+        ["CloseTargetPitchCorrection"] =
+            "When true, the camera adjusts its vertical angle when close to a target. " +
+            "Prevents the camera from looking at the ground when standing right next to an NPC.",
+
+        ["RestoreYawOnEnd"] =
+            "When true, the camera snaps back to its original horizontal rotation after the interaction ends. " +
+            "When false, the camera stays where the interaction left it.",
+
+        ["RestorePitchOnEnd"] =
+            "When true, the camera snaps back to its original vertical angle after the interaction ends. " +
+            "When false, the camera stays at whatever pitch the interaction used.",
+
+        ["TargetHeightRatio"] =
+            "Where on the target the camera looks. 0 = feet, 0.5 = waist, 0.8 = head, 1.0 = above head. " +
+            "Vanilla interaction = 0.8 (roughly head height).",
+
+        ["InputDampingRate"] =
+            "Smoothing applied to mouse/controller input. Higher = more sluggish camera movement. " +
+            "Lower = snappier response. 0 = no smoothing.",
+
+        // ── Blend / transition attributes ───────────────────────────
+
+        ["BlendInEaseType"] =
+            "Easing curve when blending INTO this camera state. " +
+            "'OutQuad' = fast start, slow end (smooth arrival). 'InOutQuad' = smooth both ways. " +
+            "'Linear' = constant speed.",
+
+        ["BlendOutEaseType"] =
+            "Easing curve when blending OUT of this camera state. " +
+            "'OutQuad' = fast start, slow end. 'InQuad' = slow start, fast end.",
+
+        // ── Zoom level attributes ───────────────────────────────────
+
+        ["Level"] =
+            "Zoom tier index. 0 = closest (over-shoulder), 1 = close, 2 = default on-foot, " +
+            "3 = pulled back, 4 = furthest. Scroll wheel cycles through these.",
+
+        ["InDoorZoomRatio"] =
+            "Zoom distance multiplier when indoors. 1.0 = same as outdoor. " +
+            "Lower values pull the camera in tighter to avoid clipping indoor geometry.",
+
+        ["DisableOn"] =
+            "Conditions that prevent this zoom level from being used. " +
+            "Space-separated list: 'WeaponOut', 'Move', 'RemoteCatch', 'Catcher', etc.",
+
+        ["EnableDepthOfField"] =
+            "When true, enables depth-of-field blur at this zoom level. " +
+            "Creates a cinematic background blur effect.",
+
+        ["Aperture"] =
+            "Depth-of-field aperture. Lower = more blur, higher = sharper. " +
+            "Only has effect when EnableDepthOfField is true.",
+
+        ["FocalLength"] =
+            "Depth-of-field focal length. Controls the distance at which objects are in focus. " +
+            "Only has effect when EnableDepthOfField is true.",
+
+        ["EnableCameraReflector"] =
+            "When true, enables environmental reflections in the camera view at this zoom level.",
+
+        // ── Damping / smoothing attributes ──────────────────────────
+
+        ["PivotDamping"] =
+            "Camera pivot smoothing. Higher = more smoothing on the orbit point. " +
+            "Reduces jitter when the character moves erratically.",
+
+        ["HeightRatio"] =
+            "Character height used for camera pivot calculation. " +
+            "0.875 = typical for adult character. Affects where the camera orbits.",
     };
 
     public static string? Get(string attributeName) =>
