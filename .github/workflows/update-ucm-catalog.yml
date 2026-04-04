@@ -21,6 +21,17 @@ jobs:
           from datetime import datetime, timezone
 
           def generate_catalog(preset_dir, catalog_path, kind_filter=None):
+              # Load existing catalog to preserve SHAs for unchanged files
+              existing = {}
+              if os.path.exists(catalog_path):
+                  try:
+                      with open(catalog_path) as f:
+                          old_catalog = json.load(f)
+                      for p in old_catalog.get("presets", []):
+                          existing[p["file"]] = p
+                  except:
+                      pass
+
               presets = []
               for path in sorted(glob.glob(f"{preset_dir}/*.ucmpreset")):
                   try:
@@ -37,6 +48,13 @@ jobs:
 
                       sha = hashlib.sha256(raw_bytes).hexdigest()
                       size = len(raw_bytes)
+
+                      # If file exists in old catalog with same SHA, keep old entry
+                      # This prevents false update notifications when other files change
+                      old_entry = existing.get(file_name)
+                      if old_entry and old_entry.get("sha256") == sha:
+                          presets.append(old_entry)
+                          continue
 
                       name = data.get("name", file_name)
                       author = data.get("author", "")
