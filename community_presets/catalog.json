@@ -1,0 +1,42 @@
+{
+  "catalog_version": 1,
+  "updated_at": "2026-04-04T17:49:37Z",
+  "presets": [
+    {
+      "id": "rdr2-by-orangeees",
+      "file": "rdr2-by-orangeees.ucmpreset",
+      "name": "RDR2",
+      "author": "orangeees",
+      "description": "A curated RDR2-inspired camera mod for Crimson Desert that delivers a lower, more grounded third-person view, preserves manual camera distance switching, softens movement zoom, improves horse camer...",
+      "url": "https://www.nexusmods.com/crimsondesert/mods/112",
+      "version": "",
+      "sha256": "161d177291eb02d6d865e26c12261857ee502d4eca643ace495855295992c028",
+      "size_bytes": 317123,
+      "tags": []
+    },
+    {
+      "id": "shoulder-camera-by-latranchedepain",
+      "file": "shoulder-camera-by-latranchedepain.ucmpreset",
+      "name": "Shoulder Camera",
+      "author": "latranchedepain",
+      "description": "my custom shoulder camera preset",
+      "url": "https://www.nexusmods.com/crimsondesert/mods/217",
+      "version": "",
+      "sha256": "61df55d20b65cbe8b33075af0d9455bbb8fec194b1586b4391398ac6f90a2187",
+      "size_bytes": 318637,
+      "tags": []
+    },
+    {
+      "id": "testing-by-0xfitz",
+      "file": "testing-by-0xfitz.ucmpreset",
+      "name": "Testing",
+      "author": "0xFitz",
+      "description": "Testing preset v4",
+      "url": "https://www.nexusmods.com/crimsondesert/mods/438",
+      "version": "",
+      "sha256": "4f0773fa3cd0e8ebc5540b47880f19ad80a0b59db40ad68a911af9bd8e2d81d6",
+      "size_bytes": 324091,
+      "tags": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Knee Cam",
+  "author": "0xFitz",
+  "description": "Knee-height dramatic low angle, action movie feel",
+  "kind": "style",
+  "locked": true,
+  "style_id": "knee-cam",
+  "settings": {
+    "distance": 5,
+    "height": -1.2,
+    "right_offset": 0,
+    "fov": 25,
+    "combat_pullback": 0,
+    "centered": false,
+    "mount_height": true,
+    "steadycam": true
+  }
+}

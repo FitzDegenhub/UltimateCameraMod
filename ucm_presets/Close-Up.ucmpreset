@@ -1,0 +1,18 @@
+{
+  "name": "Close-Up",
+  "author": "0xFitz",
+  "description": "Tight shoulder OTS with lock-on pull-back, cinematic framing",
+  "kind": "style",
+  "locked": true,
+  "style_id": "close-up",
+  "settings": {
+    "distance": 3.2,
+    "height": -0.2,
+    "right_offset": 0.25,
+    "fov": 30,
+    "combat_pullback": 0.0,
+    "centered": false,
+    "mount_height": true,
+    "steadycam": true
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "catalog_version": 1,
+  "updated_at": "2026-04-04T17:49:37Z",
+  "presets": [
+    {
+      "id": "close-up",
+      "file": "Close-Up.ucmpreset",
+      "name": "Close-Up",
+      "author": "0xFitz",
+      "description": "Tight shoulder OTS with lock-on pull-back, cinematic framing",
+      "url": "",
+      "version": "",
+      "sha256": "2b261ea0a8a9b65e76e1fc4d6dcd798027ed3f83fcc04776884cca40b83775c9",
+      "size_bytes": 392,
+      "tags": []
+    },
+    {
+      "id": "dirt-cam",
+      "file": "Dirt Cam.ucmpreset",
+      "name": "Dirt Cam",
+      "author": "0xFitz",
+      "description": "Ground-level extreme low angle, intense and gritty",
+      "url": "",
+      "version": "",
+      "sha256": "c0e3e8136bc1e595221417e8c710aac6800fb502d52d19c2f56cf19b2280784f",
+      "size_bytes": 375,
+      "tags": []
+    },
+    {
+      "id": "heroic",
+      "file": "Heroic.ucmpreset",
+      "name": "Heroic",
+      "author": "0xFitz",
+      "description": "Shoulder-level OTS with smoothed transitions",
+      "url": "",
+      "version": "",
+      "sha256": "0ee3a6b3d9af0dc9b860f71d133968bc1d5c65da82b9e28ecc91d1f9a4d29261",
+      "size_bytes": 365,
+      "tags": []
+    },
+    {
+      "id": "knee-cam",
+      "file": "Knee Cam.ucmpreset",
+      "name": "Knee Cam",
+      "author": "0xFitz",
+      "description": "Knee-height dramatic low angle, action movie feel",
+      "url": "",
+      "version": "",
+      "sha256": "dc640b5441b83365670fa018426bb02e9d2e04fab54e275302af9d5db4a1c939",
+      "size_bytes": 374,
+      "tags": []
+    },
+    {
+      "id": "low-rider",
+      "file": "Low Rider.ucmpreset",
+      "name": "Low Rider",
+      "author": "0xFitz",
+      "description": "Hip-level full body view with wide horizon",
+      "url": "",
+      "version": "",
+      "sha256": "798b8839631eb532ebb19b1a5df2a661a00e69016d3716ec276240a153329c49",
+      "size_bytes": 371,
+      "tags": []
+    },
+    {
+      "id": "panoramic",
+      "file": "Panoramic.ucmpreset",
+      "name": "Panoramic",
+      "author": "0xFitz",
+      "description": "Wide filmic pullback, head-height, great for exploration",
+      "url": "",
+      "version": "",
+      "sha256": "0828d9ac986f77528dced5144b1c01b1129edc4a724b253c9984c405ce07dc1d",
+      "size_bytes": 380,
+      "tags": []
+    },
+    {
+      "id": "survival",
+      "file": "Survival.ucmpreset",
+      "name": "Survival",
+      "author": "0xFitz",
+      "description": "Tight OTS with offset, tense horror-game feel",
+      "url": "",
+      "version": "",
+      "sha256": "3e9d824e8a620e001125e9a2d6887adbd5e26ef1edd165fe559f4132fc91b309",
+      "size_bytes": 369,
+      "tags": []
+    }
+  ]
+}

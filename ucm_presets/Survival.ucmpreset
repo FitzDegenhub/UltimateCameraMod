@@ -1,0 +1,18 @@
+{
+  "name": "Survival",
+  "author": "0xFitz",
+  "description": "Tight OTS with offset, tense horror-game feel",
+  "kind": "style",
+  "locked": true,
+  "style_id": "survival",
+  "settings": {
+    "distance": 3,
+    "height": 0,
+    "right_offset": 0.3,
+    "fov": 25,
+    "combat_pullback": 0,
+    "centered": false,
+    "mount_height": true,
+    "steadycam": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Low Rider",
+  "author": "0xFitz",
+  "description": "Hip-level full body view with wide horizon",
+  "kind": "style",
+  "locked": true,
+  "style_id": "low-rider",
+  "settings": {
+    "distance": 5.7,
+    "height": -0.8,
+    "right_offset": 0,
+    "fov": 25,
+    "combat_pullback": 0,
+    "centered": false,
+    "mount_height": true,
+    "steadycam": true
+  }
+}
