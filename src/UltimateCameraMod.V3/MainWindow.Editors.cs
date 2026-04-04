@@ -478,7 +478,11 @@ public partial class MainWindow : Window
         }
         else
         {
-            HShiftSlider.IsEnabled = true;
+            // Only re-enable if the preset isn't locked
+            bool offsetsLocked = _selectedPresetManagerItem?.IsUcmPreset == true
+                || IsQuickEditLocked()
+                || _sessionIsRawImport;
+            HShiftSlider.IsEnabled = !offsetsLocked;
             HShiftLabel.Foreground = (Brush)FindResource("TextPrimaryBrush");
             HShiftTip.Text = HShiftTipUnlocked;
         }

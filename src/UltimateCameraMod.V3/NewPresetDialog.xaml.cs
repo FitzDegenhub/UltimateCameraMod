@@ -1,14 +1,17 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace UltimateCameraMod.V3;
 
-public partial class NewPresetDialog : Window
+public partial class NewPresetDialog : UserControl
 {
     public string PresetName { get; private set; } = "";
     public string AuthorName { get; private set; } = "";
     public string Description { get; private set; } = "";
     public bool IsManualPreset { get; private set; }
+
+    public Action<NewPresetDialog>? OnResult;
 
     public NewPresetDialog()
     {
@@ -32,7 +35,7 @@ public partial class NewPresetDialog : Window
             UcmCard.BorderBrush = (SolidColorBrush)FindResource("BorderBrush");
         };
 
-        NameBox.Focus();
+        Loaded += (_, _) => NameBox.Focus();
     }
 
     private void OnCreate(object sender, RoutedEventArgs e)
@@ -46,8 +49,8 @@ public partial class NewPresetDialog : Window
         AuthorName = AuthorBox.Text.Trim();
         Description = DescriptionBox.Text.Trim();
         IsManualPreset = RadioManual.IsChecked == true;
-        DialogResult = true;
+        OnResult?.Invoke(this);
     }
 
-    private void OnCancel(object sender, RoutedEventArgs e) => DialogResult = false;
+    private void OnCancel(object sender, RoutedEventArgs e) => OnResult?.Invoke(null!);
 }

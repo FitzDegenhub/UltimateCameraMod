@@ -6,8 +6,9 @@ using System.Windows.Media;
 
 namespace UltimateCameraMod.V3;
 
-public partial class CommunityBrowserDialog : Window
+public partial class CommunityBrowserDialog : UserControl
 {
+    public Action? OnCloseRequested;
     private const long MaxPresetSize = 2 * 1024 * 1024; // 2MB
 
     private readonly string _catalogUrl;
@@ -43,7 +44,6 @@ public partial class CommunityBrowserDialog : Window
         _rawBaseUrl = rawBaseUrl;
         _needsSessionXmlBake = needsSessionXmlBake;
         InitializeComponent();
-        Title = title;
         HeaderTitle.Text = title.ToUpperInvariant();
         if (needsSessionXmlBake)
             HeaderSubtitle.Text = "Browse and download official UCM camera presets. Downloaded presets appear in your sidebar.";
@@ -367,5 +367,5 @@ public partial class CommunityBrowserDialog : Window
 
     private async void OnRetry(object sender, RoutedEventArgs e) => await FetchCatalogAsync();
     private async void OnRefresh(object sender, RoutedEventArgs e) => await FetchCatalogAsync();
-    private void OnClose(object sender, RoutedEventArgs e) => Close();
+    private void OnClose(object sender, RoutedEventArgs e) => OnCloseRequested?.Invoke();
 }

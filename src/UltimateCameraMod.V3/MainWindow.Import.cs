@@ -26,12 +26,12 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private void OnImportPreset(object sender, RoutedEventArgs e)
+    private async void OnImportPreset(object sender, RoutedEventArgs e)
     {
-        var dlg = new ImportPresetDialog { Owner = this };
-        if (dlg.ShowDialog() != true) return;
+        string? mode = await ShowImportTypeOverlayAsync();
+        if (mode == null) return;
 
-        switch (dlg.SelectedMode)
+        switch (mode)
         {
             case "mod_package": ImportModManagerPackage(); break;
             case "xml": ImportRawXml(); break;
@@ -40,7 +40,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ImportModManagerPackage()
+    private async void ImportModManagerPackage()
     {
         using var folderDlg = new System.Windows.Forms.FolderBrowserDialog
         {
@@ -86,14 +86,13 @@ public partial class MainWindow : Window
             string shortDesc = rawDesc.Split("\n\n")[0].Replace("\n", " ").Trim();
             if (shortDesc.Length > 200) shortDesc = shortDesc[..197] + "...";
 
-            var metaDlg = new ImportMetadataDialog(
+            var metaDlg = await ShowImportMetadataOverlayAsync(
                 $"Importing mod package: {Path.GetFileName(folder)}",
                 safeStem,
                 string.IsNullOrWhiteSpace(author) ? null : author,
                 string.IsNullOrWhiteSpace(shortDesc) ? null : shortDesc,
-                string.IsNullOrWhiteSpace(nexusUrl) ? null : nexusUrl)
-            { Owner = this };
-            if (metaDlg.ShowDialog() != true) return;
+                string.IsNullOrWhiteSpace(nexusUrl) ? null : nexusUrl);
+            if (metaDlg == null) return;
 
             string chosenName = SanitizeFileStem(metaDlg.PresetName);
             if (chosenName.Length > 60) chosenName = chosenName[..60];
@@ -128,7 +127,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ImportRawXml()
+    private async void ImportRawXml()
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
@@ -145,11 +144,10 @@ public partial class MainWindow : Window
             if (baseName.Equals("playercamerapreset", StringComparison.OrdinalIgnoreCase))
                 baseName = "Imported Camera";
 
-            var metaDlg = new ImportMetadataDialog(
+            var metaDlg = await ShowImportMetadataOverlayAsync(
                 $"Importing XML: {Path.GetFileName(ofd.FileName)}",
-                baseName)
-            { Owner = this };
-            if (metaDlg.ShowDialog() != true) return;
+                baseName);
+            if (metaDlg == null) return;
 
             string chosenName = SanitizeFileStem(metaDlg.PresetName);
             if (chosenName.Length > 60) chosenName = chosenName[..60];
@@ -205,14 +203,30 @@ public partial class MainWindow : Window
         SetGlobalBusy(true, "Decrypting 0.paz\u2026");
         try
         {
-            string xml = await Task.Run(() => CameraMod.ReadXmlFromPaz(pazPath, pamtPath)).ConfigureAwait(true);
+            string xml;
+            try
+            {
+                xml = await Task.Run(() => CameraMod.ReadXmlFromPaz(pazPath, pamtPath)).ConfigureAwait(true);
+            }
+            catch (Exception decEx)
+            {
+                SetGlobalBusy(false);
+                _ = ShowAlertOverlayAsync("PAZ Import Failed",
+                    $"{decEx.Message}\n\n" +
+                    "This usually means the PAZ file is from a different game version than your current install. " +
+                    "The archive index (0.pamt) doesn't match the PAZ file structure.\n\n" +
+                    "TO FIX:\n" +
+                    "Place the matching 0.pamt file in the same folder as the 0.paz you're importing. " +
+                    "Both files must be from the same game version.",
+                    isError: true);
+                return;
+            }
             SetGlobalBusy(false);
 
-            var metaDlg = new ImportMetadataDialog(
+            var metaDlg = await ShowImportMetadataOverlayAsync(
                 $"Importing PAZ: {Path.GetFileName(pazPath)}",
-                "Imported Camera")
-            { Owner = this };
-            if (metaDlg.ShowDialog() != true) return;
+                "Imported Camera");
+            if (metaDlg == null) return;
 
             string chosenName = SanitizeFileStem(metaDlg.PresetName);
             if (chosenName.Length > 60) chosenName = chosenName[..60];
@@ -545,10 +559,10 @@ public partial class MainWindow : Window
             "No matching 0.pamt was found beside the selected 0.paz. Set your game folder so v3 can use the current 0010\\0.pamt as the archive index.");
     }
 
-    private void SaveImportedPresetFromXml(string sourceType, string sourceDisplayName, string? sourcePath,
+    private async void SaveImportedPresetFromXml(string sourceType, string sourceDisplayName, string? sourcePath,
         string xml, ImportedPresetFingerprint? importedFingerprint = null)
     {
-        string name = PromptForImportedPresetName(sourceDisplayName);
+        string name = await PromptForImportedPresetNameAsync(sourceDisplayName);
         if (string.IsNullOrWhiteSpace(name))
             return;
 
@@ -572,17 +586,14 @@ public partial class MainWindow : Window
         SetStatus($"Imported preset '{preset.Name}' saved with {preset.Values.Count} values.", "Success");
     }
 
-    private string PromptForImportedPresetName(string suggestedName)
+    private async Task<string> PromptForImportedPresetNameAsync(string suggestedName)
     {
-        var dlg = new InputDialog("Save Imported Preset", "Enter a name for this imported preset:")
-        {
-            Owner = this
-        };
-        dlg.InitialText = SanitizeFileStem(Path.GetFileNameWithoutExtension(suggestedName));
-        if (dlg.ShowDialog() != true || string.IsNullOrWhiteSpace(dlg.ResponseText))
+        string initial = SanitizeFileStem(Path.GetFileNameWithoutExtension(suggestedName));
+        string? response = await ShowInputOverlayAsync("Save Imported Preset", "Enter a name for this imported preset:", initial);
+        if (string.IsNullOrWhiteSpace(response))
             return "";
 
-        string name = SanitizeFileStem(dlg.ResponseText);
+        string name = SanitizeFileStem(response);
         if (name.Length > 60)
             name = name[..60];
         return name;
@@ -874,8 +885,9 @@ public partial class MainWindow : Window
         }
 
         // Use rebuilt XML directly — CaptureSessionXml() would rebuild from God Mode UI and can diverge.
-        var dlg = new ExportJsonDialog(_gameDir, () => rebuiltXml) { Owner = this };
-        dlg.ShowDialog();
+        var ctrl = new ExportJsonDialog(_gameDir, () => rebuiltXml);
+        ctrl.OnCloseRequested = () => CloseOverlay();
+        _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }
 
 }

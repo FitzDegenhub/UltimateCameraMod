@@ -908,6 +908,18 @@
             </StackPanel>
         </Border>
 
+        <!-- In-app overlay dialog host (replaces separate Window dialogs) -->
+        <Border x:Name="OverlayHost" Grid.RowSpan="6" Panel.ZIndex="90"
+                Visibility="Collapsed" Background="#CC000000" IsHitTestVisible="True"
+                MouseDown="OnOverlayBackdropClick">
+            <Border x:Name="OverlayCard" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Background="#242424" BorderBrush="{StaticResource AccentBrush}"
+                    BorderThickness="2" CornerRadius="10" Padding="24,20"
+                    MaxWidth="800" MaxHeight="850">
+                <ContentPresenter x:Name="OverlayContent"/>
+            </Border>
+        </Border>
+
         <!-- First-launch tutorial overlay -->
         <Canvas x:Name="TutorialCanvas" Grid.RowSpan="6" Panel.ZIndex="100" Visibility="Collapsed"/>
     </Grid>

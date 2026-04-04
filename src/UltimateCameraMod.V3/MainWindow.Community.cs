@@ -35,7 +35,7 @@ public partial class MainWindow : Window
 
         if (groupName == "UCM presets")
         {
-            var dlg = new CommunityBrowserDialog(UcmPresetsDir, () =>
+            var ctrl = new CommunityBrowserDialog(UcmPresetsDir, () =>
             {
                 Dispatcher.Invoke(() =>
                 {
@@ -47,23 +47,19 @@ public partial class MainWindow : Window
             catalogUrl: UcmPresetsCatalogUrl,
             rawBaseUrl: UcmPresetsRawBaseUrl,
             title: "UCM Presets",
-            needsSessionXmlBake: true)
-            {
-                Owner = this
-            };
-            dlg.ShowDialog();
+            needsSessionXmlBake: true);
+            ctrl.OnCloseRequested = () => CloseOverlay();
+            _ = ShowOverlayAsync(ctrl, width: 660, height: 700);
         }
         else
         {
-            var dlg = new CommunityBrowserDialog(CommunityPresetsDir, () =>
+            var ctrl = new CommunityBrowserDialog(CommunityPresetsDir, () =>
             {
                 Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
             },
-            title: "Community Presets")
-            {
-                Owner = this
-            };
-            dlg.ShowDialog();
+            title: "Community Presets");
+            ctrl.OnCloseRequested = () => CloseOverlay();
+            _ = ShowOverlayAsync(ctrl, width: 660, height: 700);
         }
     }
 
@@ -244,15 +240,12 @@ public partial class MainWindow : Window
             }
 
             if (_gameUpdateNoticeSessionDismissed)
-            {
-                GameUpdateStrip.Visibility = Visibility.Collapsed;
                 return;
-            }
 
-            GameUpdateText.Text = string.IsNullOrEmpty(_gameUpdatePostRefreshNote)
+            string message = string.IsNullOrEmpty(_gameUpdatePostRefreshNote)
                 ? ev.Message
                 : ev.Message + "\n\n" + _gameUpdatePostRefreshNote;
-            GameUpdateStrip.Visibility = Visibility.Visible;
+            ShowGameUpdateOverlay(message);
         }
         catch
         {
@@ -263,7 +256,7 @@ public partial class MainWindow : Window
     private void OnGameUpdateDismissClick(object sender, RoutedEventArgs e)
     {
         _gameUpdateNoticeSessionDismissed = true;
-        GameUpdateStrip.Visibility = Visibility.Collapsed;
+        CloseOverlay();
     }
 
     private void OnGameUpdateSnoozeClick(object sender, RoutedEventArgs e)

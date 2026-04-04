@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -8,8 +9,10 @@ using UltimateCameraMod.Services;
 
 namespace UltimateCameraMod.V3;
 
-public partial class ExportJsonDialog : Window
+public partial class ExportJsonDialog : UserControl
 {
+    public Action? OnCloseRequested;
+
     private readonly string _gameDir;
     private readonly Func<string?> _getSessionXml;
 
@@ -366,7 +369,7 @@ public partial class ExportJsonDialog : Window
             Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
             FileName = $"{safeName}.json"
         };
-        if (sfd.ShowDialog(this) != true)
+        if (sfd.ShowDialog(Window.GetWindow(this)) != true)
             return;
 
         try
@@ -399,7 +402,7 @@ public partial class ExportJsonDialog : Window
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = $"{safeName}.xml"
         };
-        if (sfd.ShowDialog(this) != true)
+        if (sfd.ShowDialog(Window.GetWindow(this)) != true)
             return;
 
         try
@@ -427,7 +430,7 @@ public partial class ExportJsonDialog : Window
             Filter = "PAZ archive (*.paz)|*.paz|All files (*.*)|*.*",
             FileName = "0.paz"
         };
-        if (sfd.ShowDialog(this) != true)
+        if (sfd.ShowDialog(Window.GetWindow(this)) != true)
             return;
 
         string destPath = sfd.FileName;
@@ -479,7 +482,7 @@ public partial class ExportJsonDialog : Window
             Filter = "UCM Preset (*.ucmpreset)|*.ucmpreset|All files (*.*)|*.*",
             FileName = $"{safeName}.ucmpreset"
         };
-        if (sfd.ShowDialog(this) != true) return;
+        if (sfd.ShowDialog(Window.GetWindow(this)) != true) return;
 
         try
         {

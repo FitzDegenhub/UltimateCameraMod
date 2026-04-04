@@ -28,13 +28,13 @@ public partial class MainWindow : Window
 {
     private void OnExportJson(object sender, RoutedEventArgs e)
     {
-        var dlg = new ExportJsonDialog(_gameDir, () =>
+        var ctrl = new ExportJsonDialog(_gameDir, () =>
         {
             CaptureSessionXml();
             return _sessionXml;
-        })
-        { Owner = this };
-        dlg.ShowDialog();
+        });
+        ctrl.OnCloseRequested = () => CloseOverlay();
+        _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }
 
     // ── Install ──────────────────────────────────────────────────

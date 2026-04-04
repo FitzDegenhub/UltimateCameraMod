@@ -767,11 +767,14 @@ public partial class MainWindow : Window
         // Manager view removed; sidebar handles preset browsing.
     }
 
-    private void OnPresetNew(object sender, RoutedEventArgs e)
+    private async void OnPresetNew(object sender, RoutedEventArgs e)
     {
-        var dlg = new NewPresetDialog { Owner = this };
-        if (dlg.ShowDialog() != true)
-            return;
+        var ctrl = new NewPresetDialog();
+        var tcs = new TaskCompletionSource<NewPresetDialog?>();
+        ctrl.OnResult = result => { CloseOverlay(null); tcs.TrySetResult(result?.PresetName != null ? result : null); };
+        _ = ShowOverlayAsync(ctrl, width: 540, height: 900);
+        var dlg = await tcs.Task;
+        if (dlg == null) return;
 
         string name = dlg.PresetName;
         string safeName = new string(name.Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c).ToArray());
@@ -869,18 +872,13 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnPresetManagerDelete(object sender, RoutedEventArgs e)
+    private async void OnPresetManagerDelete(object sender, RoutedEventArgs e)
     {
         var item = RequireSelectedPresetManagerItem();
         if (item == null)
             return;
 
-        var confirm = MessageBox.Show(
-            $"Delete preset '{item.Name}'?",
-            "Delete Preset",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
-        if (confirm != MessageBoxResult.Yes)
+        if (!await ShowConfirmOverlayAsync("Delete Preset", $"Delete preset '{item.Name}'? This cannot be undone.", "Delete", "Cancel"))
             return;
 
         try
@@ -901,21 +899,17 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnPresetManagerRename(object sender, RoutedEventArgs e)
+    private async void OnPresetManagerRename(object sender, RoutedEventArgs e)
     {
         var item = RequireSelectedPresetManagerItem();
         if (item == null)
             return;
 
-        var dlg = new InputDialog("Rename Preset", "Enter the new preset name:")
-        {
-            Owner = this,
-            InitialText = item.Name
-        };
-        if (dlg.ShowDialog() != true || string.IsNullOrWhiteSpace(dlg.ResponseText))
+        string? response = await ShowInputOverlayAsync("Rename Preset", "Enter the new preset name:", item.Name);
+        if (string.IsNullOrWhiteSpace(response))
             return;
 
-        string newName = SanitizeFileStem(dlg.ResponseText);
+        string newName = SanitizeFileStem(response);
         if (string.Equals(newName, item.Name, StringComparison.OrdinalIgnoreCase))
             return;
 
@@ -947,7 +941,7 @@ public partial class MainWindow : Window
                 {
                     string json = File.ReadAllText(item.FilePath);
                     var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(json) ?? new();
-                    dict["name"] = dlg.ResponseText.Trim();
+                    dict["name"] = response.Trim();
                     File.WriteAllText(item.FilePath, JsonSerializer.Serialize(dict, PresetFileJsonOptions));
                 }
                 catch { /* proceed with rename even if internal update fails */ }
@@ -971,21 +965,17 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnPresetManagerDuplicate(object sender, RoutedEventArgs e)
+    private async void OnPresetManagerDuplicate(object sender, RoutedEventArgs e)
     {
         var item = RequireSelectedPresetManagerItem();
         if (item == null)
             return;
 
-        var dlg = new InputDialog("Duplicate Preset", "Enter a name for the duplicated preset:")
-        {
-            Owner = this,
-            InitialText = $"{item.Name}_copy"
-        };
-        if (dlg.ShowDialog() != true || string.IsNullOrWhiteSpace(dlg.ResponseText))
+        string? response = await ShowInputOverlayAsync("Duplicate Preset", "Enter a name for the duplicated preset:", $"{item.Name}_copy");
+        if (string.IsNullOrWhiteSpace(response))
             return;
 
-        string newName = SanitizeFileStem(dlg.ResponseText);
+        string newName = SanitizeFileStem(response);
         try
         {
             bool promoteUcmToMyPresets = !string.Equals(item.KindId, "imported", StringComparison.OrdinalIgnoreCase)
@@ -1017,7 +1007,7 @@ public partial class MainWindow : Window
                 string json = File.ReadAllText(item.FilePath);
                 var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(json)
                     ?? new Dictionary<string, object>();
-                dict["name"] = dlg.ResponseText.Trim();
+                dict["name"] = response.Trim();
                 dict["locked"] = false;
                 if (promoteUcmToMyPresets)
                     dict["kind"] = "user";
@@ -1383,7 +1373,8 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Failed to generate built-in presets: {ex.Message}", "Warn");
+            SetStatus("Failed to generate built-in presets.", "Warn");
+            ShowFatalOverlayAndClose("Failed to Generate Presets", ex.Message);
         }
     }
 

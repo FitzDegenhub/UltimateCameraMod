@@ -627,29 +627,22 @@ public static class CameraMod
 
     private static bool ValidateVanilla(string xmlText)
     {
-        // FoV check: UCM sets Fov="40" on these sections. Vanilla is "45" or "53".
-        // "40" is removed from VanillaFovValues because vanilla never uses 40 on these two sections.
+        var reasons = new List<string>();
+
+        // FoV check: UCM sets Fov="40" on run sections.
         var m1 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?Fov=""(\d+)""");
-        if (m1.Success && m1.Groups[1].Value != "45" && m1.Groups[1].Value != "53") return false;
+        if (m1.Success && m1.Groups[1].Value == "40") reasons.Add($"Run Fov={m1.Groups[1].Value}");
         var m2 = Regex.Match(xmlText, @"<Player_Basic_Default_Runfast\s+[^>]*?Fov=""(\d+)""");
-        if (m2.Success && m2.Groups[1].Value != "45" && m2.Groups[1].Value != "53") return false;
+        if (m2.Success && m2.Groups[1].Value == "40") reasons.Add($"Runfast Fov={m2.Groups[1].Value}");
 
-        // ZoomDistance check: UCM always sets Player_Basic_Default ZL2 to "3.4" — not a vanilla value.
-        var m3 = Regex.Match(xmlText, @"<Player_Basic_Default\s+[^>]*?>[\s\S]*?<ZoomLevel[^>]*?ZoomDistance=""3\.4""", RegexOptions.Multiline);
-        if (m3.Success) return false;
-
-        // OffsetByVelocity check: UCM zeros camera sway on run sections. Vanilla has non-zero values.
+        // OffsetByVelocity check: UCM zeros camera sway.
         var m4 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?>[\s\S]*?<OffsetByVelocity[^>]*?OffsetLength=""0""", RegexOptions.Multiline);
-        if (m4.Success) return false;
+        if (m4.Success) reasons.Add("OffsetByVelocity=0");
 
-        // MaxZoomDistance check: UCM v3 sets "30" on lock-on sections. Vanilla is much lower.
-        var m5 = Regex.Match(xmlText, @"<Player_Weapon_LockOn\s+[^>]*?>[\s\S]*?<ZoomLevel[^>]*?MaxZoomDistance=""30""", RegexOptions.Multiline);
-        if (m5.Success) return false;
+        // Note: MaxZoomDistance="30" and XML comments are no longer checked because
+        // the June 2026 game patch added both to the vanilla camera XML.
 
-        // Padding comment check: UCM ArchiveWriter injects random XML comments for size matching.
-        if (Regex.IsMatch(xmlText, @"<!--\s*[a-zA-Z0-9]{8,}\s*-->")) return false;
-
-        return true;
+        return reasons.Count == 0;
     }
 
     /// <param name="forceRefreshFromPaz">
@@ -758,27 +751,44 @@ public static class CameraMod
             var xmlBytes = CompressionUtils.Lz4Decompress(dec, entry.OrigSize);
             string xmlText = Encoding.UTF8.GetString(xmlBytes).TrimEnd('\0');
             if (!ValidateVanilla(xmlText))
+            {
+                // Auto-delete tainted backup and the game's 0.paz so Steam re-downloads it
+                try { if (File.Exists(backupPath)) File.Delete(backupPath); } catch { }
+                try { if (File.Exists(metaPath)) File.Delete(metaPath); } catch { }
+                try
+                {
+                    string pazPath = entry.PazFile;
+                    if (File.Exists(pazPath)) File.Delete(pazPath);
+                }
+                catch { }
+
                 throw new InvalidOperationException(
-                    "Game camera files are not vanilla — they have been modified by UCM v2.x, " +
-                    "another camera mod, or a mod manager.\n\n" +
-                    "TO FIX:\n" +
+                    "Game camera files were modified by UCM v2.x, another camera mod, or a mod manager.\n\n" +
+                    "UCM has automatically removed the affected files.\n\n" +
+                    "TO FINISH:\n" +
                     "1. Close UCM\n" +
-                    "2. Delete the 'backups' folder next to UltimateCameraMod.exe\n" +
-                    "3. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
-                    "4. Wait for verification to complete before launching UCM again\n\n" +
-                    "UCM needs unmodified game files to create a clean baseline backup.");
+                    "2. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
+                    "3. Wait for verification to complete, then relaunch UCM\n\n" +
+                    "Steam will re-download the original camera file (~200 MB). This only needs to happen once.");
+            }
         }
         catch (InvalidOperationException) { throw; }
         catch (Exception)
         {
+            // Auto-cleanup so Steam can re-download
+            try { if (File.Exists(backupPath)) File.Delete(backupPath); } catch { }
+            try { if (File.Exists(metaPath)) File.Delete(metaPath); } catch { }
+            try { File.Delete(entry.PazFile); } catch { }
+
             throw new InvalidOperationException(
                 "Could not read camera data from the game archive. The file may be corrupted, " +
                 "partially downloaded, or modified by another tool.\n\n" +
-                "TO FIX:\n" +
+                "UCM has automatically removed the affected files.\n\n" +
+                "TO FINISH:\n" +
                 "1. Close UCM\n" +
-                "2. Delete the 'backups' folder next to UltimateCameraMod.exe (if it exists)\n" +
-                "3. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
-                "4. Wait for verification to complete before launching UCM again");
+                "2. Steam → Crimson Desert → Properties → Installed Files → \"Verify integrity of game files\"\n" +
+                "3. Wait for verification to complete, then relaunch UCM\n\n" +
+                "Steam will re-download the original camera file (~200 MB). This only needs to happen once.");
         }
 
         File.WriteAllBytes(backupPath, data);

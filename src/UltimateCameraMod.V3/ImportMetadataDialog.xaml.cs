@@ -1,14 +1,17 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace UltimateCameraMod.V3;
 
-public partial class ImportMetadataDialog : Window
+public partial class ImportMetadataDialog : UserControl
 {
     public string PresetName { get; private set; } = "";
     public string? PresetAuthor { get; private set; }
     public string? PresetDescription { get; private set; }
     public string? PresetUrl { get; private set; }
+
+    public Action<ImportMetadataDialog?>? OnResult;
 
     public ImportMetadataDialog(string sourceHint, string suggestedName,
         string? author = null, string? description = null, string? url = null)
@@ -50,8 +53,8 @@ public partial class ImportMetadataDialog : Window
         PresetAuthor = string.IsNullOrWhiteSpace(AuthorBox.Text) ? null : AuthorBox.Text.Trim();
         PresetDescription = string.IsNullOrWhiteSpace(DescriptionBox.Text) ? null : DescriptionBox.Text.Trim();
         PresetUrl = string.IsNullOrWhiteSpace(UrlBox.Text) ? null : UrlBox.Text.Trim();
-        DialogResult = true;
+        OnResult?.Invoke(this);
     }
 
-    private void OnCancel(object sender, RoutedEventArgs e) => DialogResult = false;
+    private void OnCancel(object sender, RoutedEventArgs e) => OnResult?.Invoke(null);
 }

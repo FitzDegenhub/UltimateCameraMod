@@ -271,20 +271,19 @@ public partial class MainWindow : Window
         string json = JsonSerializer.Serialize(payload);
         string encoded = "UCM_ADV:" + Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
 
-        var dlg = new ExportDialog("God Mode Overrides", encoded) { Owner = this };
-        dlg.ShowDialog();
+        _ = ShowExportStringOverlayAsync("God Mode Overrides", encoded);
         SetStatus($"Exported {modified.Count} modified values.", "Success");
     }
 
-    private void OnAdvImport(object sender, RoutedEventArgs e)
+    private async void OnAdvImport(object sender, RoutedEventArgs e)
     {
-        var dlg = new AdvancedImportDialog { Owner = this };
-        if (dlg.ShowDialog() != true || dlg.Result == null) return;
+        var importResult = await ShowAdvancedImportOverlayAsync();
+        if (importResult == null) return;
 
         int applied = 0;
         var lookup = new Dictionary<string, AdvancedRow>();
         foreach (var r in _advAllRows) lookup[r.FullKey] = r;
-        foreach (var (key, val) in dlg.Result)
+        foreach (var (key, val) in importResult)
         {
             if (lookup.TryGetValue(key, out var row)) { row.Value = val; applied++; }
         }
