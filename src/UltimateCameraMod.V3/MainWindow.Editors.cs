@@ -98,16 +98,13 @@ public partial class MainWindow : Window
         // Raw XML imports only support God Mode editing
         if (_sessionIsRawImport && (tab == "simple" || tab == "advanced"))
         {
-            MessageBox.Show(
+            _ = ShowAlertOverlayAsync("Raw XML Import",
                 "This preset was imported as raw XML and is not managed by UCM.\n\n" +
                 "UCM Quick and Fine Tune use UCM's camera rule system which would override " +
                 "values from the imported mod. To protect your import, only God Mode editing " +
                 "is available.\n\n" +
                 "To use UCM features like Steadycam and FoV control, create a new UCM preset " +
-                "from the sidebar instead.",
-                "Raw XML Import",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+                "from the sidebar instead.");
             return;
         }
 
