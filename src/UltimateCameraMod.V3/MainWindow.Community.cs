@@ -388,11 +388,9 @@ public partial class MainWindow : Window
         if (!item.HasUpdate) return;
 
         // Ask if they want to duplicate first
-        var result = MessageBox.Show(
+        var result = await ShowThreeChoiceOverlayAsync("Preset Update",
             $"An update is available for '{item.Name}'.\n\nWould you like to save a copy of the current version to My Presets before updating?",
-            "Preset Update",
-            MessageBoxButton.YesNoCancel,
-            MessageBoxImage.Question);
+            "Yes, backup first", "No, just update", "Cancel");
 
         if (result == MessageBoxResult.Cancel) return;
 

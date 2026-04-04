@@ -91,8 +91,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Failed to load camera XML:\n{ex.Message}", "UCM Fine Tune",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = ShowAlertOverlayAsync("Fine Tune Error", $"Failed to load camera XML:\n{ex.Message}", isError: true);
             SwitchAppMode("simple");
         }
 

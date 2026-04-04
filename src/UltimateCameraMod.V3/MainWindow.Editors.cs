@@ -90,7 +90,7 @@ public partial class MainWindow : Window
     private void OnTabFineTune(object s, RoutedEventArgs e) => SwitchEditorTab("advanced");
     private void OnTabGodMode(object s, RoutedEventArgs e) => SwitchEditorTab("expert");
 
-    private void SwitchEditorTab(string tab, bool captureCurrent = true)
+    private async void SwitchEditorTab(string tab, bool captureCurrent = true)
     {
         if (tab != "simple" && tab != "advanced" && tab != "expert")
             return;
@@ -117,8 +117,8 @@ public partial class MainWindow : Window
 
         if (tab != "simple" && string.IsNullOrEmpty(_gameDir))
         {
-            MessageBox.Show("Game-file install is not available in v3. Use Export (sidebar) for JSON, XML, or 0.paz sharing.",
-                "Ultimate Camera Mod", MessageBoxButton.OK, MessageBoxImage.Warning);
+            _ = ShowAlertOverlayAsync("Game Folder Not Set",
+                "Fine Tune and God Mode need your game folder to read camera data. Set your game folder first.");
             return;
         }
 
@@ -127,14 +127,11 @@ public partial class MainWindow : Window
         if ((tab == "advanced" || tab == "expert") && _selectedPresetManagerItem?.IsUcmPreset == true)
         {
             string tabName = tab == "advanced" ? "Fine Tune" : "God Mode";
-            var result = MessageBox.Show(
-                $"UCM presets are protected — {tabName} changes could corrupt the preset's carefully tuned values.\n\n" +
+            if (!await ShowConfirmOverlayAsync($"UCM Preset - {tabName}",
+                $"UCM presets are protected. {tabName} changes could corrupt the preset's carefully tuned values.\n\n" +
                 "Duplicate this preset first to create your own editable copy, then use Fine Tune or God Mode freely.\n\n" +
                 $"Open {tabName} in read-only mode anyway? (You can browse values but changes won't save.)",
-                $"UCM Preset — {tabName}",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Information);
-            if (result == MessageBoxResult.No)
+                "Open Read-Only", "Cancel"))
                 return;
         }
 

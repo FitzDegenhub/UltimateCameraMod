@@ -473,7 +473,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Startup error:\n{ex}", "Ultimate Camera Mod", MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = ShowAlertOverlayAsync("Startup Error", $"{ex.Message}", isError: true);
         }
     }
     private void ShowWelcomeVerifyScreen()
@@ -665,14 +665,13 @@ public partial class MainWindow : Window
                 if (File.Exists(Path.Combine(folder, "0010", "0.paz")))
                     return folder;
 
-                MessageBox.Show("That folder doesn't contain 0010\\0.paz.\n" +
-                    "Make sure you selected the correct Crimson Desert directory.",
-                    "Wrong Folder", MessageBoxButton.OK, MessageBoxImage.Warning);
+                _ = ShowAlertOverlayAsync("Wrong Folder",
+                    "That folder doesn't contain 0010\\0.paz.\nMake sure you selected the correct Crimson Desert directory.");
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Folder dialog error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = ShowAlertOverlayAsync("Error", $"Folder dialog error: {ex.Message}", isError: true);
         }
         return "";
     }
@@ -717,12 +716,11 @@ public partial class MainWindow : Window
         if (_detectedPlatform == "Xbox/GamePass" && !GameDetector.CheckWritePermission(_gameDir))
         {
             SetStatus("Xbox/Game Pass: game folder is read-only. Move the game or fix folder permissions.", "Warn");
-            MessageBox.Show(
+            _ = ShowAlertOverlayAsync("Write Permission Required",
                 "Xbox / Game Pass game folder appears to be read-only.\n\n" +
                 "To fix this, try one of:\n" +
-                "  1. Xbox App \u2192 Crimson Desert \u2192 Manage \u2192 Move to a different drive\n" +
-                "  2. Right-click the game folder \u2192 Properties \u2192 uncheck \"Read-only\" \u2192 Apply to all subfolders",
-                "Write Permission Required", MessageBoxButton.OK, MessageBoxImage.Warning);
+                "1. Xbox App \u2192 Crimson Desert \u2192 Manage \u2192 Move to a different drive\n" +
+                "2. Right-click the game folder \u2192 Properties \u2192 uncheck \"Read-only\" \u2192 Apply to all subfolders");
         }
 
         CheckForUpdate();

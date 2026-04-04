@@ -68,8 +68,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Failed to load camera XML:\n{ex.Message}", "God Mode",
-                MessageBoxButton.OK, MessageBoxImage.Error);
+            _ = ShowAlertOverlayAsync("God Mode Error", $"Failed to load camera XML:\n{ex.Message}", isError: true);
             SwitchAppMode("simple");
         }
 
@@ -417,10 +416,9 @@ public partial class MainWindow : Window
         };
         if (ofd.ShowDialog(this) != true) return;
 
-        var confirm = MessageBox.Show(
+        if (!await ShowConfirmOverlayAsync("Import XML",
             $"Install '{Path.GetFileName(ofd.FileName)}' directly to the game?\n\nThis will overwrite your current camera settings.",
-            "Import XML", MessageBoxButton.YesNo, MessageBoxImage.Question);
-        if (confirm != MessageBoxResult.Yes) return;
+            "Install", "Cancel")) return;
 
         string gameDir = _gameDir;
         string platform = _detectedPlatform;

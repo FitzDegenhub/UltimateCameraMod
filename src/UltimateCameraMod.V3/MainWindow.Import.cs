@@ -100,12 +100,7 @@ public partial class MainWindow : Window
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
             {
-                var overwrite = MessageBox.Show(
-                    $"Overwrite imported preset '{chosenName}'?",
-                    "Import Preset",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                if (overwrite != MessageBoxResult.Yes)
+                if (!await ShowConfirmOverlayAsync("Import Preset", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
                     return;
             }
 
@@ -155,12 +150,7 @@ public partial class MainWindow : Window
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
             {
-                var overwrite = MessageBox.Show(
-                    $"Overwrite imported preset '{chosenName}'?",
-                    "Import XML",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                if (overwrite != MessageBoxResult.Yes)
+                if (!await ShowConfirmOverlayAsync("Import XML", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
                     return;
             }
 
@@ -234,12 +224,7 @@ public partial class MainWindow : Window
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
             {
-                var overwrite = MessageBox.Show(
-                    $"Overwrite imported preset '{chosenName}'?",
-                    "Import 0.paz",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                if (overwrite != MessageBoxResult.Yes)
+                if (!await ShowConfirmOverlayAsync("Import 0.paz", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
                     return;
             }
 
@@ -258,7 +243,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ImportUcmPreset()
+    private async void ImportUcmPreset()
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
@@ -286,9 +271,8 @@ public partial class MainWindow : Window
 
             if (File.Exists(destPath))
             {
-                var overwrite = MessageBox.Show($"A preset named '{name}' already exists. Overwrite?",
-                    "Import UCM Preset", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (overwrite != MessageBoxResult.Yes) return;
+                if (!await ShowConfirmOverlayAsync("Import UCM Preset", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+                    return;
             }
 
             File.Copy(ofd.FileName, destPath, true);
@@ -569,13 +553,8 @@ public partial class MainWindow : Window
         string path = ImportedPresetPath(name);
         if (File.Exists(path))
         {
-            var overwrite = MessageBox.Show(
-                $"Overwrite imported preset '{name}'?",
-                "Overwrite Imported Preset",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-            if (overwrite != MessageBoxResult.Yes)
-                return;
+            if (!await ShowConfirmOverlayAsync("Overwrite Imported Preset", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+                    return;
         }
 
         var preset = BuildImportedPreset(name, sourceType, sourceDisplayName, sourcePath, xml, importedFingerprint);
@@ -779,7 +758,7 @@ public partial class MainWindow : Window
         return $"Imported from {preset.SourceType.ToUpperInvariant()} ({preset.SourceDisplayName})";
     }
 
-    private void OnImportedPresetDelete(object sender, RoutedEventArgs e)
+    private async void OnImportedPresetDelete(object sender, RoutedEventArgs e)
     {
         var item = RequireSelectedPresetManagerItem();
         if (item == null || item.KindId != "imported")
@@ -789,13 +768,8 @@ public partial class MainWindow : Window
         }
 
         string name = item.Name;
-        var confirm = MessageBox.Show(
-            $"Delete imported preset '{name}'?",
-            "Delete Imported Preset",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
-        if (confirm != MessageBoxResult.Yes)
-            return;
+        if (!await ShowConfirmOverlayAsync("Delete Imported Preset", "Are you sure? This cannot be undone.", "Yes", "Cancel"))
+                    return;
 
         try
         {
