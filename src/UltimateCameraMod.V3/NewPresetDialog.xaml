@@ -1,10 +1,50 @@
 <Window x:Class="UltimateCameraMod.V3.NewPresetDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="New Preset" Width="460" Height="340" ResizeMode="NoResize"
+        Title="New Preset" Width="520" Height="530" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
         Background="{StaticResource BgDarkBrush}">
     <StackPanel Margin="24">
+        <TextBlock Text="Preset Type" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,8"/>
+
+        <!-- UCM Managed (default) -->
+        <RadioButton x:Name="RadioUcm" GroupName="PresetType" IsChecked="True" Margin="0,0,0,6"
+                     Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource TextPrimaryBrush}">
+            <Border x:Name="UcmCard" Background="{StaticResource BgInputBrush}"
+                    BorderBrush="{StaticResource AccentBrush}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,10,14,10" Width="448">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Managed by UCM" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource AccentBrush}"/>
+                        <TextBlock Text="  (Recommended)" FontSize="11"
+                                   Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock TextWrapping="Wrap" FontSize="11" LineHeight="16" Margin="0,6,0,0"
+                               Foreground="{StaticResource TextSecondaryBrush}">
+                        UCM handles camera rules like FoV consistency, smooth transitions, lock-on scaling, and mount sync automatically. You get Quick sliders, Fine Tune controls, and Steadycam out of the box. Some values are managed by UCM and can only be overridden in God Mode.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </RadioButton>
+
+        <!-- Full Manual Control -->
+        <RadioButton x:Name="RadioManual" GroupName="PresetType" Margin="0,0,0,10"
+                     Background="Transparent" BorderBrush="Transparent" Foreground="{StaticResource TextPrimaryBrush}">
+            <Border x:Name="ManualCard" Background="{StaticResource BgInputBrush}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,10,14,10" Width="448">
+                <StackPanel>
+                    <TextBlock Text="Full Manual Control" FontSize="13" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="11" LineHeight="16" Margin="0,6,0,0"
+                               Foreground="{StaticResource TextSecondaryBrush}">
+                        Start from the game's vanilla camera XML with no UCM rules applied. Every value is yours to edit in God Mode. Nothing is automated or overridden. You won't have access to Quick sliders, Fine Tune, or Steadycam. Best for advanced users or when matching values from another camera mod.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </RadioButton>
+
         <TextBlock Text="Name" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,4"/>
         <TextBox x:Name="NameBox" FontSize="13" Height="32" Padding="8,4"
                  Background="{StaticResource BgInputBrush}" Foreground="{StaticResource TextPrimaryBrush}"
@@ -16,7 +56,7 @@
                  BorderBrush="{StaticResource BorderBrush}"/>
 
         <TextBlock Text="Description" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,12,0,4"/>
-        <TextBox x:Name="DescriptionBox" FontSize="12" Height="70" Padding="8,6"
+        <TextBox x:Name="DescriptionBox" FontSize="12" Height="52" Padding="8,6"
                  TextWrapping="Wrap" AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto"
                  Background="{StaticResource BgInputBrush}" Foreground="{StaticResource TextPrimaryBrush}"

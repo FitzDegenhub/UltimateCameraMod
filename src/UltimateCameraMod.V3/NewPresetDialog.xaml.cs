@@ -8,6 +8,7 @@ public partial class NewPresetDialog : Window
     public string PresetName { get; private set; } = "";
     public string AuthorName { get; private set; } = "";
     public string Description { get; private set; } = "";
+    public bool IsManualPreset { get; private set; }
 
     public NewPresetDialog()
     {
@@ -18,6 +19,19 @@ public partial class NewPresetDialog : Window
         AuthorBox.CaretBrush = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
         DescriptionBox.Foreground = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
         DescriptionBox.CaretBrush = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
+
+        // Highlight selected card border
+        RadioUcm.Checked += (_, _) =>
+        {
+            UcmCard.BorderBrush = (SolidColorBrush)FindResource("AccentBrush");
+            ManualCard.BorderBrush = (SolidColorBrush)FindResource("BorderBrush");
+        };
+        RadioManual.Checked += (_, _) =>
+        {
+            ManualCard.BorderBrush = (SolidColorBrush)FindResource("AccentBrush");
+            UcmCard.BorderBrush = (SolidColorBrush)FindResource("BorderBrush");
+        };
+
         NameBox.Focus();
     }
 
@@ -31,6 +45,7 @@ public partial class NewPresetDialog : Window
         PresetName = NameBox.Text.Trim();
         AuthorName = AuthorBox.Text.Trim();
         Description = DescriptionBox.Text.Trim();
+        IsManualPreset = RadioManual.IsChecked == true;
         DialogResult = true;
     }
 
