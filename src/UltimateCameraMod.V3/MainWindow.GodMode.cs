@@ -52,20 +52,13 @@ public partial class MainWindow : Window
             AdvRefreshPresetCombo();
             AdvUpdateRowCount();
 
-            // Force column layout recalculation after render. The star-width ATTRIBUTE column
-            // doesn't size correctly on first load because groups are collapsed and no rows are measured.
-            // Use Render priority + a second pass to ensure the DataGrid has actually laid out.
-            Dispatcher.BeginInvoke(new Action(async () =>
+            // WPF DataGrid doesn't measure columns correctly on first load with collapsed groups.
+            // Force a re-bind after render so columns size properly.
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                await Task.Delay(100);
-                ExpertDataGrid.UpdateLayout();
-                foreach (var col in ExpertDataGrid.Columns)
-                    if (col.Width.IsStar)
-                    {
-                        col.Width = 0;
-                        col.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-                    }
-            }), System.Windows.Threading.DispatcherPriority.Render);
+                ExpertDataGrid.ItemsSource = null;
+                AdvBindGrid();
+            }), System.Windows.Threading.DispatcherPriority.Loaded);
 
             var lightText = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
             AdvSearchBox.Foreground = lightText;

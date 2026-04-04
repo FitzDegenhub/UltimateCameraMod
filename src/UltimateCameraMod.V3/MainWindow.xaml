@@ -803,9 +803,9 @@
                     </GroupStyle>
                 </DataGrid.GroupStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="SECTION" Binding="{Binding Section, Mode=OneWay}" Width="320" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="SUB-ELEMENT" Binding="{Binding SubElement, Mode=OneWay}" Width="180" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="ATTRIBUTE" Binding="{Binding Attribute, Mode=OneWay}" Width="*" MinWidth="150" IsReadOnly="True">
+                    <DataGridTextColumn Header="SECTION" Binding="{Binding Section, Mode=OneWay}" Width="200" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="SUB-ELEMENT" Binding="{Binding SubElement, Mode=OneWay}" Width="140" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ATTRIBUTE" Binding="{Binding Attribute, Mode=OneWay}" Width="250" IsReadOnly="True">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="ToolTip" Value="{Binding AttributeDoc}"/>
