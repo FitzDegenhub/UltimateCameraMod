@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-04T17:55:19Z",
+  "updated_at": "2026-04-04T18:13:25Z",
   "presets": [
     {
       "id": "rdr2-by-orangeees",
@@ -10,8 +10,8 @@
       "description": "A curated RDR2-inspired camera mod for Crimson Desert that delivers a lower, more grounded third-person view, preserves manual camera distance switching, softens movement zoom, improves horse camer...",
       "url": "https://www.nexusmods.com/crimsondesert/mods/112",
       "version": "",
-      "sha256": "161d177291eb02d6d865e26c12261857ee502d4eca643ace495855295992c028",
-      "size_bytes": 317123,
+      "sha256": "3dfb126628c64e335bd0f2bb52ca2908ef78ae209294e515b92d9af5c1ab9987",
+      "size_bytes": 317122,
       "tags": []
     },
     {
@@ -22,7 +22,7 @@
       "description": "my custom shoulder camera preset",
       "url": "https://www.nexusmods.com/crimsondesert/mods/217",
       "version": "",
-      "sha256": "61df55d20b65cbe8b33075af0d9455bbb8fec194b1586b4391398ac6f90a2187",
+      "sha256": "252ee051f81b5a02bf05e0caf282d4959fa9f9a6290dab8b8256f9dc7a5de9ee",
       "size_bytes": 318637,
       "tags": []
     }
