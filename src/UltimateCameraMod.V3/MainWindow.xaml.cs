@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.0.3-beta";
+    private const string Ver = "3.1";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
@@ -494,50 +494,62 @@ public partial class MainWindow : Window
 
             ScheduleTaskbarIconDelayedRetries();
 
+            // Read saved version from window_state.json for version-change detection
+            string savedVersion = "";
+            try
+            {
+                if (System.IO.File.Exists(WindowStatePath))
+                {
+                    var ws = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(
+                        System.IO.File.ReadAllText(WindowStatePath));
+                    if (ws != null && ws.TryGetValue("ucm_version", out var vObj) && vObj is System.Text.Json.JsonElement je
+                        && je.ValueKind == System.Text.Json.JsonValueKind.String)
+                        savedVersion = je.GetString() ?? "";
+                }
+            }
+            catch { }
+
             if (!isTutorialDone && !string.IsNullOrEmpty(_gameDir))
             {
                 if (hasExistingData)
                 {
-                    // Upgrading from a previous version — skip welcome, mark tutorial done, show update overlay
+                    // Upgrading from pre-v3.0.2 (no tutorial_done.flag) -- skip welcome, mark tutorial done
                     try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
-
-                    // Clear old community presets from v3.0.1 (downloaded from separate repo with wrong metadata/URLs)
-                    // Users can re-download fresh from the new main repo catalog via Browse
-                    try
-                    {
-                        string communityDir = Path.Combine(ExeDir, CommunityPresetsDirName);
-                        if (Directory.Exists(communityDir))
-                        {
-                            foreach (string f in Directory.GetFiles(communityDir, "*.ucmpreset"))
-                                File.Delete(f);
-                            foreach (string f in Directory.GetFiles(communityDir, "*.json"))
-                                File.Delete(f);
-                        }
-                        RefreshPresetManagerLists(preserveSelection: true);
-                    }
-                    catch { }
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         _ = ShowAlertOverlayAsync("Updated to v" + Ver,
                             "Welcome back! UCM has been updated.\n\n" +
-                            "What's new:\n" +
-                            "- In-app overlay dialogs (no more Windows popups)\n" +
-                            "- God Mode edits now persist across tab switches\n" +
-                            "- Preset type selection (UCM Managed vs Full Manual Control)\n" +
-                            "- Community presets catalog moved to main repo\n" +
-                            "- Vanilla validation improved for latest game patch\n" +
-                            "- 54 God Mode attribute tooltips\n\n" +
-                            "Your presets and settings have been preserved. Community presets have been cleared and can be re-downloaded via Browse.");
+                            "What's new in v3.1:\n" +
+                            "- Sacred God Mode: your edits are now permanently protected from Quick/Fine Tune rebuilds\n" +
+                            "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
+                            "- Green indicators for sacred values in God Mode\n" +
+                            "- Full Manual Control install fix\n\n" +
+                            "Your presets and settings have been preserved.");
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
                 else
                 {
-                    // Truly fresh install — show welcome screen
+                    // Truly fresh install -- show welcome screen
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         ShowWelcomeVerifyScreen();
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
+            }
+            else if (isTutorialDone && !string.IsNullOrEmpty(_gameDir) && savedVersion != Ver && !string.IsNullOrEmpty(savedVersion))
+            {
+                // Existing user upgrading between versions (e.g. v3.0.2 -> v3.1)
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _ = ShowAlertOverlayAsync("Updated to v" + Ver,
+                        "Welcome back! UCM has been updated from v" + savedVersion + ".\n\n" +
+                        "What's new in v3.1:\n" +
+                        "- Sacred God Mode: your edits are now permanently protected from Quick/Fine Tune rebuilds\n" +
+                        "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
+                        "- Green indicators for sacred values in God Mode\n" +
+                        "- Full Manual Control install fix\n\n" +
+                        "Your presets and settings have been preserved.");
+                }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
             // Users can click Browse to download UCM presets when ready
         }

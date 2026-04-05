@@ -6,7 +6,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
-## [Unreleased] (v3.0.3)
+## [v3.1] - 2026-04-05
 
 ### Camera
 - **Lock-on auto-rotate toggle** - New checkbox in UCM Quick to disable camera snap-to-target when locking on. Prevents the camera from whipping around to face a target behind you. Discovered by [sillib1980](https://github.com/sillib1980). Sets `IsAutoRotate` and `IsTargetFixed` on lock-on camera sections.
@@ -17,6 +17,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **"Sacred only" filter** - New filter option in God Mode dropdown to show only your protected values.
 - **Fine Tune slider locking** - Fine Tune sliders that control sacred God Mode values are greyed out with a green label and tooltip "Sacred -- controlled by God Mode".
 - **One-time sacred toast** - First God Mode edit on a managed preset shows a status message explaining the value is protected.
+
+### UI
+- **Version-aware upgrade overlay** - Existing users upgrading between versions (e.g. v3.0.2 to v3.1) now see a "What's new" overlay on first launch. Previously only triggered for users without tutorial_done.flag.
 
 ### Bug Fixes
 - **Full Manual Control presets not installing edits** - Install was using the original vanilla XML from preset creation instead of rebuilding from current God Mode edits. God Mode changes on Full Manual Control presets now work correctly.
