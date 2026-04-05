@@ -260,6 +260,7 @@ public partial class MainWindow : Window
             try
             {
                 CaptureSessionXml();
+                // Save outgoing preset (including sacred overrides) BEFORE clearing the file
                 var previousItem = FindPresetItemByKey(previousPickerKey);
                 if (previousItem != null)
                     SavePresetManagerItemSession(previousItem);
@@ -269,6 +270,7 @@ public partial class MainWindow : Window
                 // Do not block switching presets if autosave fails.
             }
         }
+        // No need to clear sacred overrides -- each preset has its own .sacred.json file
 
         // Commit slot key before any work. Imported presets call RefreshPresetManagerLists(), which
         // invokes ActivatePickerFromSelection again; without this, the nested call does not early-return
@@ -406,6 +408,11 @@ public partial class MainWindow : Window
                         }
                     }
 
+                    // Restore per-preset sacred overrides from the preset file
+                    try
+                    { /* Sacred overrides are now per-preset files (.sacred.json) -- no restore needed */ }
+                    catch { }
+
                     // Release _suppressEvents AFTER session XML is set, so Quick event handlers
                     // don't schedule SyncQuickSettingsToEditors which would overwrite _sessionXml
                     _suppressEvents = false;
@@ -473,8 +480,8 @@ public partial class MainWindow : Window
         _sessionIsFullPreset = true;
         // Cancel any pending Quick→editors sync that would overwrite _sessionXml with Quick-only values
         _syncEditorsDebounceTimer?.Stop();
-        // Full session snapshots replace God Mode overlay file so stale overrides cannot fight the grid.
-        TryClearAdvOverridesFile();
+        // Sacred God Mode overrides persist across reloads of the same preset.
+        // Only cleared on explicit Reset to Defaults or when switching presets (ActivatePickerFromSelection).
         // UCM Quick sliders must track _sessionXml even on the default tab (imported presets / Picker loads
         // only ran ApplySessionXmlToAdvancedControls when Advanced was visible — left distance/height/shift stale).
         if (!skipQuickSliders)
@@ -529,15 +536,7 @@ public partial class MainWindow : Window
         catch { }
     }
 
-    private static void TryClearAdvOverridesFile()
-    {
-        try
-        {
-            if (File.Exists(AdvOverridesPath))
-                File.Delete(AdvOverridesPath);
-        }
-        catch { }
-    }
+    // TryClearAdvOverridesFile removed -- sacred overrides are per-preset .sacred.json files
 
     private void TryRestoreLastInstallSessionAfterGameDirResolved()
     {
@@ -547,7 +546,7 @@ public partial class MainWindow : Window
 
         try
         {
-            TryClearAdvOverridesFile();
+            // Sacred overrides persist -- don't clear on same-preset restore
             _sessionXml = xml;
             _sessionIsFullPreset = true;
             _advCtrlNeedsRefresh = true;
@@ -728,11 +727,26 @@ public partial class MainWindow : Window
             bool isSacred = sacredKeys != null && sacredKeys.Contains(key);
             if (isSacred && !presetLocked)
             {
+                var greenBrush = (Brush)FindResource("SuccessBrush");
                 slider.IsEnabled = false;
-                slider.Opacity = 0.38;
+                slider.Opacity = 0.6;
                 if (_advCtrlValueLabels.TryGetValue(key, out var lbl) && lbl != null)
-                    lbl.Foreground = (Brush)FindResource("SuccessBrush");
+                    lbl.Foreground = greenBrush;
                 slider.ToolTip = "Sacred -- controlled by God Mode";
+                // Override the thumb fill after the template renders
+                slider.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    var thumb = FindVisualChild<System.Windows.Controls.Primitives.Thumb>(slider);
+                    if (thumb != null)
+                    {
+                        var ellipse = FindVisualChild<System.Windows.Shapes.Ellipse>(thumb);
+                        if (ellipse != null)
+                        {
+                            ellipse.Fill = greenBrush;
+                            ellipse.Opacity = 1.0;
+                        }
+                    }
+                }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
         }
     }
@@ -1092,6 +1106,12 @@ public partial class MainWindow : Window
                 if (convertToUcm)
                     dict["preset_mode"] = "ucm";
                 File.WriteAllText(newPath, JsonSerializer.Serialize(dict, PresetFileJsonOptions));
+
+                // Copy sacred overrides file if it exists for the source preset
+                string srcSacred = Path.Combine(SacredOverridesDir, Path.GetFileNameWithoutExtension(item.FilePath) + ".json");
+                string dstSacred = Path.Combine(SacredOverridesDir, newName + ".json");
+                if (File.Exists(srcSacred))
+                    File.Copy(srcSacred, dstSacred, overwrite: true);
             }
 
             RefreshPresetManagerLists(preserveSelection: false);
@@ -1325,6 +1345,8 @@ public partial class MainWindow : Window
             preset["session_xml"] = _sessionXml;
             preset["settings"] = BuildCurrentPresetSettingsPayload();
         }
+
+        // Sacred overrides are stored in per-preset .sacred.json files -- no embedding needed
 
         File.WriteAllText(item.FilePath, JsonSerializer.Serialize(preset, PresetFileJsonOptions));
     }

@@ -120,7 +120,25 @@ public partial class MainWindow : Window
     private readonly ConditionalWeakTable<System.Windows.Controls.Expander, object> _godModeExpanderHooked = new();
     private DispatcherTimer? _godModeExpandHookDebounceTimer;
 
-    private static string AdvOverridesPath => Path.Combine(ExeDir, "advanced_overrides.json");
+    private static string SacredOverridesDir
+    {
+        get { string d = Path.Combine(ExeDir, "sacred_overrides"); Directory.CreateDirectory(d); return d; }
+    }
+
+    /// <summary>Returns the sacred overrides file path for the currently active preset, or the legacy global path as fallback.</summary>
+    private string AdvOverridesPath
+    {
+        get
+        {
+            var item = FindPresetItemByKey(_activePickerKey);
+            if (item != null && !string.IsNullOrEmpty(item.FilePath))
+            {
+                string name = Path.GetFileNameWithoutExtension(item.FilePath);
+                return Path.Combine(SacredOverridesDir, name + ".json");
+            }
+            return Path.Combine(ExeDir, "advanced_overrides.json");
+        }
+    }
     private static string AdvPresetsDir
     {
         get { string d = Path.Combine(ExeDir, "advanced_presets"); Directory.CreateDirectory(d); return d; }
@@ -395,7 +413,9 @@ public partial class MainWindow : Window
             _previewDebounceTimer?.Stop();
             FlushInstallStateWriteIfNeeded();
 
-            string json = JsonSerializer.Serialize(new { width = Width, height = Height, game_dir = _gameDir, platform = _detectedPlatform });
+            // Sacred overrides are per-preset .sacred.json files -- no save-on-close needed
+
+            string json = JsonSerializer.Serialize(new { ucm_version = Ver, width = Width, height = Height, game_dir = _gameDir, platform = _detectedPlatform });
             File.WriteAllText(WindowStatePath, json);
         }
         catch { }
@@ -536,13 +556,14 @@ public partial class MainWindow : Window
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
             }
-            else if (isTutorialDone && !string.IsNullOrEmpty(_gameDir) && savedVersion != Ver && !string.IsNullOrEmpty(savedVersion))
+            else if (isTutorialDone && !string.IsNullOrEmpty(_gameDir) && savedVersion != Ver)
             {
                 // Existing user upgrading between versions (e.g. v3.0.2 -> v3.1)
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    string fromText = string.IsNullOrEmpty(savedVersion) ? "" : " from v" + savedVersion;
                     _ = ShowAlertOverlayAsync("Updated to v" + Ver,
-                        "Welcome back! UCM has been updated from v" + savedVersion + ".\n\n" +
+                        "Welcome back! UCM has been updated" + fromText + ".\n\n" +
                         "What's new in v3.1:\n" +
                         "- Sacred God Mode: your edits are now permanently protected from Quick/Fine Tune rebuilds\n" +
                         "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +

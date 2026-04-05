@@ -708,6 +708,10 @@
                     <Run> exposes the raw camera rows. Use it when UCM Quick is not enough and you want to jump straight into full direct control, or after UCM Fine Tune if you want to go even deeper.</Run>
                     <LineBreak/><LineBreak/>
                     <Run>Values here are the merged session: Quick + Fine Tune + any edits in this grid. FoV in Quick is a delta added per row (Fov and InDoorFov), so angles differ by state. Fine Tune matches here row-for-row only for the attributes those sliders control.</Run>
+                    <LineBreak/><LineBreak/>
+                    <Run Foreground="{StaticResource TextPrimaryBrush}">White</Run><Run> = vanilla  |  </Run>
+                    <Run Foreground="{StaticResource AccentBrush}">Gold</Run><Run> = modified by UCM Quick/Fine Tune  |  </Run>
+                    <Run Foreground="{StaticResource SuccessBrush}">Green</Run><Run> = sacred (your God Mode edits, protected from rebuilds)</Run>
                 </TextBlock>
             </Border>
 
@@ -781,9 +785,13 @@
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="#30c8a24e"/>
                             </Trigger>
-                            <DataTrigger Binding="{Binding IsModified}" Value="True">
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsModified}" Value="True"/>
+                                    <Condition Binding="{Binding IsUserEdited}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
                                 <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
-                            </DataTrigger>
+                            </MultiDataTrigger>
                             <DataTrigger Binding="{Binding IsUserEdited}" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource SuccessBrush}"/>
                             </DataTrigger>

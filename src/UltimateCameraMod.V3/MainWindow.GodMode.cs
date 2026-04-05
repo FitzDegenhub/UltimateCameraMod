@@ -46,6 +46,7 @@ public partial class MainWindow : Window
 
             // File overlays session: after Quick tab, _sessionXml is curated XML and omits God-only cells;
             // advanced_overrides.json keeps those edits. Preset / full session loads clear that file first.
+            // Load overrides first, then bind grid so cells render with correct IsUserEdited state.
             AdvLoadOverrides();
             AdvBindGrid();
             AdvPopulateFilter();
@@ -54,10 +55,13 @@ public partial class MainWindow : Window
 
             // WPF DataGrid doesn't measure columns correctly on first load with collapsed groups.
             // Force a re-bind after render so columns size properly.
+            // Re-load overrides to ensure IsUserEdited triggers are picked up by fresh cells.
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 ExpertDataGrid.ItemsSource = null;
+                AdvLoadOverrides();
                 AdvBindGrid();
+                AdvUpdateRowCount();
             }), System.Windows.Threading.DispatcherPriority.Loaded);
 
             var lightText = new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
@@ -89,8 +93,18 @@ public partial class MainWindow : Window
     {
         AdvFilterCombo.Items.Clear();
         AdvFilterCombo.Items.Add("All");
-        AdvFilterCombo.Items.Add("Modified only");
-        AdvFilterCombo.Items.Add("Sacred only");
+        AdvFilterCombo.Items.Add(new System.Windows.Controls.TextBlock
+        {
+            Text = "Modified only",
+            Foreground = (Brush)FindResource("AccentBrush"),
+            Tag = "Modified only"
+        });
+        AdvFilterCombo.Items.Add(new System.Windows.Controls.TextBlock
+        {
+            Text = "Sacred only",
+            Foreground = (Brush)FindResource("SuccessBrush"),
+            Tag = "Sacred only"
+        });
 
         var prefixes = _advAllRows
             .Select(r =>
@@ -127,7 +141,8 @@ public partial class MainWindow : Window
     private void AdvApplyFilter()
     {
         string search = AdvSearchBox.Text?.Trim().ToLowerInvariant() ?? "";
-        string filter = AdvFilterCombo.SelectedItem?.ToString() ?? "All";
+        var selectedItem = AdvFilterCombo.SelectedItem;
+        string filter = selectedItem is System.Windows.Controls.TextBlock tb ? (tb.Tag?.ToString() ?? "All") : selectedItem?.ToString() ?? "All";
 
         var filtered = _advAllRows.AsEnumerable();
 
@@ -164,20 +179,29 @@ public partial class MainWindow : Window
         if (e.EditAction != DataGridEditAction.Commit)
             return;
 
+        // Capture the row reference now -- dispatcher may fire after DataGrid recycles the row
+        var editedRow = e.Row.DataContext as AdvancedRow;
+
+        // CellEditEnding fires BEFORE the binding commits the new value,
+        // so we must defer to let the Value property update first.
         Dispatcher.BeginInvoke(new Action(() =>
         {
-            if (e.Row.DataContext is AdvancedRow editedRow)
-                editedRow.IsUserEdited = editedRow.IsModified;
+            if (editedRow != null)
+            {
+                // Any explicit God Mode edit is sacred -- even if the value matches vanilla.
+                // The user's intent is to lock this value from Quick/Fine Tune rebuilds.
+                editedRow.IsUserEdited = true;
+            }
             AdvSaveOverrides();
             AdvUpdateRowCount();
             SaveCurrentUiState();
             QueueSavedToast();
-            if (!_sacredToastShown && e.Row.DataContext is AdvancedRow r && r.IsUserEdited)
+            if (!_sacredToastShown && editedRow != null && editedRow.IsUserEdited)
             {
                 _sacredToastShown = true;
                 SetStatus("Sacred edit: this value is now protected from Quick/Fine Tune rebuilds.", "Success");
             }
-        }), DispatcherPriority.Background);
+        }), DispatcherPriority.ContextIdle);
     }
 
     private void OnAdvExpandAll(object sender, RoutedEventArgs e)
@@ -499,6 +523,9 @@ public partial class MainWindow : Window
             return;
         Dispatcher.BeginInvoke(new Action(HookGodModeGroupExpanders), DispatcherPriority.Loaded);
     }
+
+    private static T? FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject
+        => FindVisualChildren<T>(depObj).FirstOrDefault();
 
     private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
     {
