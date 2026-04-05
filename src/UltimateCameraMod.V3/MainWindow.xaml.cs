@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.1";
+    private const string Ver = "3.1.1";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
