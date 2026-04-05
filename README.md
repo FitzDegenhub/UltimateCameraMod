@@ -69,11 +69,12 @@ v3 includes every camera feature from v2 plus a redesigned UI, file-based preset
 | **Field of view** | Vanilla 40° up to 80°. Universal FoV consistency across guard, aim, mount, glide, and cinematic states |
 | **Centered camera** | Dead-center character across 150+ camera states, eliminating the left-offset shoulder cam |
 | **Lock-on zoom** | Slider from -60% (zoom in on target) to +60% (pull back wide). Affects all lock-on, guard, and rush states. Works independently of Steadycam |
+| **Lock-on auto-rotate** | Disable camera snap-to-target when locking on. Prevents the camera whipping around to face enemies behind you. Credits to [@sillib1980](https://github.com/sillib1980) |
 | **Mount camera sync** | Mount cameras match your chosen player camera height |
 | **Horizontal shift on all mounts** | Horse, elephant, wyvern, canoe, warmachine, and broom all respect your shift setting with proportional scaling |
 | **Skill aiming consistency** | Lantern, Blinding Flash, Bow, and all aim/zoom/interaction skills respect horizontal shift. No camera snap when activating abilities |
 | **Steadycam smoothing** | Normalized blend timing and velocity sway across 30+ camera states: idle, walk, run, sprint, combat, guard, rush/charge, freefall, super jump, rope pull/swing, knockback, all lock-on variants, mount lock-on, revive lock-on, aggro/wanted, warmachine, and all mount states. Every value is community-tunable via the Fine Tune editor |
-| **HUD centering** | Width slider (1200–3840 px) for ultrawide. *Currently disabled - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found.* |
+| **Sacred God Mode** | Values you edit in God Mode are permanently protected from Quick/Fine Tune rebuilds. Green indicators show which values are sacred. Per-preset storage |
 
 > **v3 design philosophy: value edits only, no structural injection.**
 >
@@ -85,9 +86,9 @@ v3 organizes editing into three tabs so you can go as deep as you want:
 
 | Tier | Tab | What it does |
 |------|-----|--------------|
-| 1 | **UCM Quick** | The fast layer - distance/height/shift sliders, FoV, centered camera, lock-on zoom (-60% to +60%), mount sync, steadycam, live camera + FoV previews |
+| 1 | **UCM Quick** | The fast layer - distance/height/shift sliders, FoV, centered camera, lock-on zoom (-60% to +60%), lock-on auto-rotate, mount sync, steadycam, live camera + FoV previews |
 | 2 | **Fine Tune** | Curated deep-tuning. Searchable sections for on-foot zoom levels, horse/mount zoom, global FoV, special mounts & traversal, combat & lock-on, camera smoothing, and aiming & crosshair position. Builds on top of UCM Quick |
-| 3 | **God Mode** | Full raw XML editor - every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column with modified values highlighted. Expand/collapse all, search, and per-state filtering |
+| 3 | **God Mode** | Full raw XML editor - every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column. Sacred overrides (green) protected from rebuilds. "Sacred only" filter. 54 attribute tooltips |
 
 ### File-based preset system (v3)
 
@@ -166,9 +167,7 @@ Export your camera setup as a `.ucmpreset` file and share it with others. Import
 5. Parses and modifies the XML camera parameters based on your selections
 6. Re-compresses, re-encrypts, and writes the modified entry back into the archive
 
-HUD modifications follow the same pipeline for `ui/minimaphudview2.html`, `ui/statusgaugeview2.html`, and `ui/gamecommon.css` in archive `0012`.
-
-No DLL injection, no memory hacking, no internet connection required - pure data file modification.
+No DLL injection, no memory hacking, no internet connection required -- pure data file modification.
 
 ---
 
@@ -185,15 +184,6 @@ Stop-Process -Name "UltimateCameraMod.V3" -Force -ErrorAction SilentlyContinue
 dotnet build "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release
 Start-Process "src/UltimateCameraMod.V3/bin/Release/net6.0-windows/UltimateCameraMod.V3.exe"
 ```
-
-### v2.x (single-file publish)
-
-```bash
-cd src/UltimateCameraMod
-dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
-```
-
-Output: `bin/Release/net6.0-windows/win-x64/publish/`
 
 ### Dependencies (NuGet - restored automatically)
 
@@ -227,7 +217,8 @@ src/UltimateCameraMod.V3/           v3 export-first WPF app (references shared c
 ├── ApplicationIdentity.cs          Shared App User Model ID
 └── UltimateCameraMod.V3.csproj
 
-docs/                               Release notes, Nexus stub, PR summary
+community_presets/                  Community-contributed camera presets
+ucm_presets/                        Official UCM style preset definitions
 ```
 
 ---
@@ -249,13 +240,13 @@ UCM modifies offline data files only. It does not touch game memory, inject code
 Normal - game updates overwrite modded files. Re-open UCM and click Install (or re-export JSON for JSON Mod Manager / CDUMM). Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
-Known false positive with self-contained .NET apps. VirusTotal scans are clean: [v2.5](https://www.virustotal.com/gui/file/091bdb6456df85b25ce80a90d26710ae1a7f55edf189f8921cbafb153262074a) / [v3-beta](https://www.virustotal.com/gui/file/c4c3451d9dff70ed36d6d60a4e59de4718a5cfdd248ac9e7bc4a9ef50d22c947/detection). Full source is available here to review and build yourself.
+Known false positive with self-contained .NET apps. VirusTotal scan is clean: [v3.1](https://www.virustotal.com/gui/file/88c7b83a367fddda81d8a903cdd492ae039b8b83729838a5c1cdca4a38bb946a). Full source is available here to review and build yourself.
 
 **What does horizontal shift 0 mean?**
 0 = vanilla camera position (character slightly to the left). 0.5 = character centered on screen. Negative values move further left, positive values move further right.
 
 **Upgrading from a previous version?**
-v2.4+ automatically cleans stale data from previous versions on first launch. v3 migrates legacy presets on first run.
+v3.x users: just replace the exe, all presets and settings are preserved. v2.x users: delete the old UCM folder, verify game files on Steam, then run v3.1 from a new folder. See the [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) for detailed instructions.
 
 ---
 
@@ -276,7 +267,8 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ## Credits & acknowledgements
 
-- **0xFitz** - UCM development, camera tuning, advanced editor, ultrawide HUD support
+- **0xFitz** - UCM development, camera tuning, advanced editor
+- **[@sillib1980](https://github.com/sillib1980)** - Discovered Lock-on Auto-Rotate camera fields
 
 ### C# rewrite (v2.0)
 - **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - CrimsonDesertTools - C# PAZ/PAMT parser, ChaCha20 encryption, LZ4 compression, PaChecksum, archive repacker (.NET 8, MIT)
