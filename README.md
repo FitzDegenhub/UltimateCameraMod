@@ -14,7 +14,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1](https://img.shields.io/badge/VirusTotal_v3.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/PENDING)
+[![VirusTotal v3.1](https://img.shields.io/badge/VirusTotal_v3.1-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/88c7b83a367fddda81d8a903cdd492ae039b8b83729838a5c1cdca4a38bb946a)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
