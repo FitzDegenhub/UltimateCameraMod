@@ -473,27 +473,23 @@
 
                             <TextBlock Text="Lock-on auto-rotate" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
                             <CheckBox x:Name="LockOnAutoRotateCheck" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Disable camera snap to target when locking on"
-                                      Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,4"
+                                      Content="Disable camera snap to target when locking on  --  Credits to @sillib1980"
+                                      Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,8"
                                       ToolTip="When checked, the camera stays in place instead of snapping around to face the locked-on target."/>
-                            <TextBlock Grid.Row="4" Grid.ColumnSpan="3"
-                                       FontSize="9" Foreground="{StaticResource TextDimBrush}"
-                                       Margin="0,0,0,8"
-                                       Text="Credits to @sillib1980"/>
 
-                            <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="5"/>
-                            <CheckBox x:Name="BaneCheck" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
+                            <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="4"/>
+                            <CheckBox x:Name="BaneCheck" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                                       Content="Center character on screen"
                                       Checked="OnBaneChanged" Unchecked="OnBaneChanged" Margin="0,0,0,8"
                                       ToolTip="Separate from Horizontal shift ~0.5: that value is often vanilla lateral bias in the XML. This option forces shift to 0 and applies stronger centering rules (RightOffset toward 0 where supported)."/>
 
-                            <TextBlock Text="Mount camera" Style="{StaticResource FieldLabel}" Grid.Row="6"/>
-                            <CheckBox x:Name="MountHeightCheck" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
+                            <TextBlock Text="Mount camera" Style="{StaticResource FieldLabel}" Grid.Row="5"/>
+                            <CheckBox x:Name="MountHeightCheck" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
                                       Content="Match mount/horse height to player camera height"
                                       Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,8"/>
 
-                            <TextBlock Text="Steadycam" Style="{StaticResource FieldLabel}" Grid.Row="7"/>
-                            <CheckBox x:Name="SteadycamCheck" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+                            <TextBlock Text="Steadycam" Style="{StaticResource FieldLabel}" Grid.Row="6"/>
+                            <CheckBox x:Name="SteadycamCheck" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
                                       Content="Smooth camera transitions (eliminates zoom jitter between states)"
                                       IsChecked="True" Margin="0,0,0,8"
                                       ToolTip="Smooths blending, damping and velocity offsets between movement states. Disable to restore vanilla camera transitions."/>
