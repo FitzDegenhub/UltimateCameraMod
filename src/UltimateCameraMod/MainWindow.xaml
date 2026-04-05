@@ -40,7 +40,11 @@
                             Foreground="#d98f40" Click="OnNexusClick" Margin="0,0,4,0"
                             BorderThickness="0" FontSize="10" Padding="8,4"/>
                     <Button Content="⚑  GitHub" Style="{StaticResource SubtleButton}"
-                            Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4"/>
+                            Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4" Margin="0,0,4,0"/>
+                    <Button Content="☕ Buy me a coffee" Style="{StaticResource SubtleButton}"
+                            Click="OnKofiClick" BorderThickness="0" FontSize="10" Padding="8,4"
+                            ToolTip="Opens Ko-fi — tips help keep UCM going"
+                            Foreground="#FF5E5B"/>
                 </StackPanel>
             </DockPanel>
         </Border>
@@ -237,45 +241,6 @@
                                       IsChecked="True" Margin="0,0,0,8"
                                       ToolTip="Smooths blending, damping and velocity offsets between movement states. Disable to restore vanilla camera transitions."/>
 
-                            <TextBlock Text="Extra zoom" Style="{StaticResource FieldLabel}" Grid.Row="5"/>
-                            <CheckBox x:Name="ExtraZoomCheck" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Add two extra zoom-out levels (scroll further out on foot and mounted)"
-                                      Margin="0,0,0,8"
-                                      ToolTip="Injects ZoomLevel 5 and 6 into gameplay camera states, letting you scroll much further out."/>
-
-                            <TextBlock Text="Horse first person" Style="{StaticResource FieldLabel}" Grid.Row="6"/>
-                            <CheckBox x:Name="HorseFirstPersonCheck" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Enable first-person view while mounted (scroll all the way in)"
-                                      Margin="0,0,0,8"
-                                      ToolTip="Adds a first-person zoom level to horse and mount states using the character eye bone as pivot."/>
-
-                            <TextBlock Text="HUD X-axis" Style="{StaticResource FieldLabel}" Grid.Row="7" Opacity="0.4"/>
-                            <CheckBox x:Name="HudCheck" Grid.Row="7" Grid.Column="1"
-                                      Content="Disabled — recent game update causes publisher watermark"
-                                      IsEnabled="False" Margin="0,0,0,4" Opacity="0.5"/>
-
-                            <Slider x:Name="HudWidthSlider" Grid.Row="8" Grid.Column="1"
-                                    Minimum="1200" Maximum="3840" Value="2520" TickFrequency="20"
-                                    IsSnapToTickEnabled="True" ValueChanged="OnHudSliderChanged"
-                                    IsEnabled="False" Margin="0,0,0,8" Opacity="0.3"/>
-                            <TextBlock x:Name="HudWidthLabel" Grid.Row="8" Grid.Column="2"
-                                       FontFamily="Consolas" FontSize="11"
-                                       Foreground="{StaticResource TextDimBrush}"
-                                       VerticalAlignment="Center" Text="Off"/>
-
-                            <TextBlock Text="HUD Y-axis" Style="{StaticResource FieldLabel}" Grid.Row="9" Opacity="0.4"/>
-                            <CheckBox x:Name="HudHeightCheck" Grid.Row="9" Grid.Column="1"
-                                      Content="Disabled — recent game update causes publisher watermark"
-                                      IsEnabled="False" Margin="0,0,0,4" Opacity="0.5"/>
-
-                            <Slider x:Name="HudHeightSlider" Grid.Row="10" Grid.Column="1"
-                                    Minimum="500" Maximum="2160" Value="1080" TickFrequency="10"
-                                    IsSnapToTickEnabled="True" ValueChanged="OnHudSliderChanged"
-                                    IsEnabled="False" Margin="0,0,0,8" Opacity="0.3"/>
-                            <TextBlock x:Name="HudHeightLabel" Grid.Row="10" Grid.Column="2"
-                                       FontFamily="Consolas" FontSize="11"
-                                       Foreground="{StaticResource TextDimBrush}"
-                                       VerticalAlignment="Center" Text="Off"/>
                         </Grid>
                     </Border>
                     <!-- Update notice -->
@@ -305,8 +270,170 @@
             </StackPanel>
         </Grid>
 
-        <!-- ═══ Body: Advanced Mode ═══ -->
-        <Grid x:Name="AdvancedView" Grid.Row="3" Visibility="Collapsed">
+        <!-- ═══ Body: Advanced Controls ═══ -->
+        <Grid x:Name="AdvancedControlsView" Grid.Row="3" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="220"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: scrollable sections -->
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled" Margin="16,12,6,12">
+                <StackPanel x:Name="AdvCtrlPanel" HorizontalAlignment="Stretch">
+
+                    <!-- Preset bar -->
+                    <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="12,8" Margin="0,0,0,10">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                                <TextBlock Text="Preset" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <ComboBox x:Name="AdvCtrlPresetCombo" Width="200" Height="26"
+                                          SelectionChanged="OnAdvCtrlPresetSelected"/>
+                                <Button Content="Save" Style="{StaticResource SubtleButton}"
+                                        Click="OnAdvCtrlSavePreset" Height="26" FontSize="11" Padding="10,2" Margin="6,0,0,0"/>
+                                <Button Content="Delete" Style="{StaticResource SubtleButton}"
+                                        Click="OnAdvCtrlDeletePreset" Height="26" FontSize="11" Padding="10,2" Margin="4,0,0,0"
+                                        Foreground="#aa6666"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Button Content="Load from Simple" Style="{StaticResource SubtleButton}"
+                                        Click="OnAdvCtrlLoadFromSimple" Height="26" FontSize="11" Padding="10,2"
+                                        ToolTip="Populate all sliders from your current Simple mode settings"/>
+                                <Button Content="Reset to Vanilla" Style="{StaticResource SubtleButton}"
+                                        Click="OnAdvCtrlResetVanilla" Height="26" FontSize="11" Padding="10,2" Margin="6,0,0,0"
+                                        Foreground="#aa6666" ToolTip="Reset all sliders to vanilla XML values"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- Section A: On-Foot Zoom Levels -->
+                    <Expander x:Name="AdvSectionA" IsExpanded="True" Margin="0,0,0,8">
+                        <Expander.Header>
+                            <TextBlock Text="A  —  On-Foot Zoom Levels" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentBrush}"/>
+                        </Expander.Header>
+                        <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18">
+                                    The game has 3 scroll-wheel zoom levels on foot. ZL2 is closest (default view), ZL3 is mid-range, ZL4 is furthest out.
+                                    Each level independently controls camera distance, height, and horizontal position.
+                                    These apply to all on-foot states: idle, walking, running, sprinting, and combat movement.
+                                </TextBlock>
+                                <Grid x:Name="AdvCtrlOnFootGrid"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+
+                    <!-- Section B: Horse / Mount Zoom Levels -->
+                    <Expander x:Name="AdvSectionB" IsExpanded="False" Margin="0,0,0,8">
+                        <Expander.Header>
+                            <TextBlock Text="B  —  Horse / Mount Zoom Levels" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentBrush}"/>
+                        </Expander.Header>
+                        <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18">
+                                    Mounted cameras have 4 zoom levels (ZL0–ZL3). All 8 horse states are synchronized so the camera
+                                    doesn't jolt during speed changes. ZL0 is the closest scroll-in level (or first-person if enabled).
+                                </TextBlock>
+                                <Grid x:Name="AdvCtrlMountGrid"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+
+                    <!-- Section C: Combat / Lock-On -->
+                    <Expander x:Name="AdvSectionC" IsExpanded="False" Margin="0,0,0,8">
+                        <Expander.Header>
+                            <TextBlock Text="C  —  Combat / Lock-On" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentBrush}"/>
+                        </Expander.Header>
+                        <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18">
+                                    When you lock onto an enemy the camera switches to combat tracking mode.
+                                    TargetRate controls how aggressively the camera follows the enemy — lower values give you more manual control.
+                                    ScreenClampRate controls how centered the enemy stays on screen.
+                                </TextBlock>
+                                <Grid x:Name="AdvCtrlCombatGrid"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+
+                    <!-- Section D: Camera Smoothing / Steadycam -->
+                    <Expander x:Name="AdvSectionD" IsExpanded="False" Margin="0,0,0,8">
+                        <Expander.Header>
+                            <TextBlock Text="D  —  Camera Smoothing / Steadycam" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentBrush}"/>
+                        </Expander.Header>
+                        <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="16,12">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18">
+                                    These control how the camera transitions between movement states.
+                                    BlendInTime is how many seconds the camera takes to ease into a state.
+                                    OffsetLength controls camera sway — setting it to 0 gives a steadycam feel with no sideways movement.
+                                </TextBlock>
+                                <Grid x:Name="AdvCtrlSmoothGrid"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+
+                    <!-- Section E: Aiming / Crosshair Position -->
+                    <Expander x:Name="AdvSectionE" IsExpanded="False" Margin="0,0,0,8">
+                        <Expander.Header>
+                            <TextBlock Text="E  —  Aiming / Crosshair Position" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{StaticResource AccentBrush}"/>
+                        </Expander.Header>
+                        <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="16,12">
+                            <StackPanel>
+                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18">
+                                    When you aim with the lantern, bow, or weapon zoom the camera shifts to position the crosshair.
+                                    These RightOffset values scale proportionally from your horizontal shift so the camera doesn't snap sideways when activating abilities.
+                                </TextBlock>
+                                <Grid x:Name="AdvCtrlAimGrid"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Right: status / apply panel -->
+            <Border Grid.Column="1" Background="{StaticResource BgPanelBrush}" Margin="0,12,20,12"
+                    CornerRadius="6" Padding="14,14">
+                <StackPanel>
+                    <TextBlock Text="ADVANCED CONTROLS" FontSize="11" FontWeight="Bold"
+                               Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="10" Foreground="{StaticResource TextDimBrush}"
+                               Margin="0,0,0,16" LineHeight="16">
+                        Each slider shows the current value and the vanilla default (dimmed).
+                        Click ↺ on any row to reset that parameter to vanilla.
+                        Hit Apply to write all changes to the game.
+                    </TextBlock>
+
+                    <TextBlock x:Name="AdvCtrlChangedLabel" Text="0 changes" FontSize="12"
+                               Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,10"/>
+
+                    <Button x:Name="AdvCtrlApplyBtn" Content="Apply to Game"
+                            Style="{StaticResource AccentButton}" Click="OnAdvCtrlApply"
+                            Height="36" FontSize="13" Margin="0,0,0,8"/>
+
+                    <TextBlock TextWrapping="Wrap" FontSize="10" Foreground="{StaticResource TextDimBrush}"
+                               LineHeight="16" Margin="0,8,0,0">
+                        Changes are applied on top of vanilla XML — they do not interact with Simple mode presets.
+                        Use "Load from Simple" to start from your current preset.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- ═══ Body: Expert Mode (raw XML editor) ═══ -->
+        <Grid x:Name="ExpertView" Grid.Row="3" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -364,7 +491,7 @@
             </Border>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="AdvDataGrid" Grid.Row="2"
+            <DataGrid x:Name="ExpertDataGrid" Grid.Row="2"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
                       CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                       HeadersVisibility="Column" GridLinesVisibility="Horizontal"
@@ -442,7 +569,14 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="SECTION" Binding="{Binding Section}" Width="220" IsReadOnly="True"/>
                     <DataGridTextColumn Header="SUB-ELEMENT" Binding="{Binding SubElement}" Width="150" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="ATTRIBUTE" Binding="{Binding Attribute}" Width="170" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="ATTRIBUTE" Binding="{Binding Attribute}" Width="170" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="ToolTip" Value="{Binding AttributeDoc}"/>
+                                <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="VALUE" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Width="120">
                         <DataGridTextColumn.EditingElementStyle>
                             <Style TargetType="TextBox">
@@ -465,6 +599,135 @@
             </DataGrid>
         </Grid>
 
+        <!-- ═══ Body: JSON Mod Manager ═══ -->
+        <ScrollViewer x:Name="JsonModManagerView" Grid.Row="3" Visibility="Collapsed"
+                      VerticalScrollBarVisibility="Auto" Background="{StaticResource BgDarkBrush}"
+                      TextElement.Foreground="{StaticResource TextPrimaryBrush}">
+            <StackPanel Margin="28,20,28,20" MaxWidth="760">
+
+                <!-- How it works banner -->
+                <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="16,14" Margin="0,0,0,16"
+                        BorderBrush="#333" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="HOW IT WORKS" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}" Margin="0,0,0,8"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="{StaticResource TextPrimaryBrush}"
+                                   LineHeight="20" Margin="0,0,0,8">
+                            This tab generates a <Run FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">.json patch file</Run>
+                            compatible with <Run FontWeight="SemiBold">Crimson Desert JSON Mod Manager v8</Run>.
+                            Drop the file into the mod manager's <Run FontFamily="Consolas">Mods/</Run> folder and your camera settings
+                            will appear as a toggleable mod — no UCM required.
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18">
+                            The patch works by comparing your modified camera file against the vanilla file byte-by-byte
+                            and recording only the differences. This means it's game-version specific — if the game updates,
+                            regenerate the patch.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 1: Mod Info -->
+                <TextBlock Text="STEP 1  —  NAME YOUR MOD" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
+                <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="16,14" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="This info appears inside the mod manager so people know what the mod is."
+                                   FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                   TextWrapping="Wrap" Margin="0,0,0,12"/>
+                        <!-- Title -->
+                        <DockPanel Margin="0,0,0,8">
+                            <TextBlock Text="Title" Width="90" VerticalAlignment="Center"
+                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBox x:Name="JsonTitleBox" Text="UCM Camera Config" FontSize="12"/>
+                        </DockPanel>
+                        <!-- Version + Author -->
+                        <DockPanel Margin="0,0,0,8">
+                            <TextBlock Text="Version" Width="90" VerticalAlignment="Center"
+                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock Text="Author" Width="60" VerticalAlignment="Center"
+                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
+                                       DockPanel.Dock="Right" Margin="12,0,0,0"/>
+                            <TextBox x:Name="JsonAuthorBox" Width="200" DockPanel.Dock="Right" FontSize="12"/>
+                            <TextBox x:Name="JsonVersionBox" FontSize="12"/>
+                        </DockPanel>
+                        <!-- Nexus URL -->
+                        <DockPanel Margin="0,0,0,8">
+                            <TextBlock Text="Nexus URL" Width="90" VerticalAlignment="Center"
+                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBox x:Name="JsonNexusBox"
+                                     Text="https://www.nexusmods.com/crimsondesert/mods/438" FontSize="12"/>
+                        </DockPanel>
+                        <!-- Description -->
+                        <DockPanel>
+                            <TextBlock Text="Description" Width="90" VerticalAlignment="Top"
+                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,8,0,0"/>
+                            <TextBox x:Name="JsonDescBox" Height="70" FontSize="12"
+                                     TextWrapping="Wrap" AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto"/>
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 2: Generate -->
+                <TextBlock Text="STEP 2  —  GENERATE THE PATCH" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
+                <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="16,14" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,0,0,12" LineHeight="18">
+                            Choose what settings to patch from. <Run FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}">Current Settings</Run>
+                            uses whatever is active in Simple mode right now.
+                            <Run FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}">From XML File</Run>
+                            lets you pick any exported <Run FontFamily="Consolas">playercamerapreset.xml</Run> to patch from instead.
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Generate from Current Settings" Style="{StaticResource AccentButton}"
+                                    Click="OnJsonGenerate" Height="34" FontSize="12" Padding="14,0"
+                                    ToolTip="Uses whatever is currently configured in Simple mode"/>
+                            <Button Content="Generate from XML File..." Style="{StaticResource SubtleButton}"
+                                    Click="OnJsonGenerateFromXml" Height="34" FontSize="11" Padding="12,0" Margin="8,0,0,0"
+                                    ToolTip="Pick a playercamerapreset.xml file to diff against vanilla"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 3: Save (shown after generate) -->
+                <Border x:Name="JsonPreviewPanel" Visibility="Collapsed"
+                        Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="16,14" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="STEP 3  —  SAVE THE FILE" FontSize="10" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <Border Background="#1a1a1a" CornerRadius="4" Padding="12,6" Margin="0,0,8,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="JsonPatchCountLabel" Text="0" FontSize="20" FontWeight="Bold"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Text=" patch regions" FontSize="11"
+                                               Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Bottom" Margin="4,0,0,5"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Background="#1a1a1a" CornerRadius="4" Padding="12,6">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="JsonBytesChangedLabel" Text="0" FontSize="20" FontWeight="Bold"
+                                               Foreground="{StaticResource AccentBrush}"/>
+                                    <TextBlock Text=" bytes changed" FontSize="11"
+                                               Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Bottom" Margin="4,0,0,5"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,0,0,12" LineHeight="18">
+                            Save the <Run FontFamily="Consolas">.json</Run> file, then drop it into the
+                            <Run FontFamily="Consolas">Mods/</Run> folder inside your Crimson Desert JSON Mod Manager installation.
+                            It will appear as a toggleable mod.
+                        </TextBlock>
+                        <Button Content="Save .json..." Style="{StaticResource AccentButton}"
+                                Click="OnJsonSave" Height="34" FontSize="12" Padding="14,0"
+                                HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
         <!-- ═══ Separator ═══ -->
         <Border Grid.Row="4" Background="{StaticResource BorderBrush}"/>
 
@@ -475,25 +738,75 @@
                            Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center"
                            DockPanel.Dock="Left"/>
 
-                <!-- Simple mode buttons -->
-                <StackPanel x:Name="SimpleButtons" Orientation="Horizontal" DockPanel.Dock="Right"
+                <!-- Mode selector (always visible) -->
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right"
                             VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <Button Content="Advanced" Style="{StaticResource SubtleButton}"
-                            Click="OnToggleAdvanced" Width="110" Height="34" FontSize="12"
-                            Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,8,0"/>
-                    <Button x:Name="InstallBtn" Content="Install" Style="{StaticResource AccentButton}"
-                            Click="OnInstall" Width="110" Height="34" FontSize="13"/>
-                    <Button x:Name="RestoreBtn" Content="Restore Vanilla" Style="{StaticResource SubtleButton}"
-                            Click="OnRestore" Width="130" Height="34" Margin="4,0,0,0"/>
-                </StackPanel>
 
-                <!-- Advanced mode buttons -->
-                <StackPanel x:Name="AdvancedButtons" Orientation="Horizontal" DockPanel.Dock="Right"
-                            VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="Collapsed">
-                    <Button Content="← Simple" Style="{StaticResource SubtleButton}"
-                            Click="OnToggleAdvanced" Width="100" Height="34" FontSize="12" Margin="0,0,8,0"/>
-                    <Button x:Name="AdvApplyBtn" Content="Apply to Game" Style="{StaticResource AccentButton}"
-                            Click="OnAdvApply" Width="140" Height="34" FontSize="13"/>
+                    <!-- Mode navigation buttons -->
+                    <Border Background="#1a1a1a" CornerRadius="4" Padding="3" Margin="0,0,12,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="ModeSimpleBtn" Content="Simple" Width="86" Height="30" FontSize="11"
+                                    Style="{StaticResource AccentButton}" Click="OnModeSimple"/>
+                            <Button x:Name="ModeAdvancedBtn" Content="Advanced" Width="96" Height="30" FontSize="11"
+                                    Style="{StaticResource SubtleButton}" Click="OnModeAdvanced"
+                                    BorderThickness="0" Margin="3,0,0,0"/>
+                            <Button x:Name="ModeExpertBtn" Content="Expert" Width="80" Height="30" FontSize="11"
+                                    Style="{StaticResource SubtleButton}" Click="OnModeExpert"
+                                    BorderThickness="0" Margin="3,0,0,0"/>
+                            <Button x:Name="ModeJsonBtn" Content="JSON Mod Mgr" Width="118" Height="30" FontSize="11"
+                                    Style="{StaticResource SubtleButton}" Click="OnModeJson"
+                                    BorderThickness="0" Margin="3,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Per-mode action buttons -->
+                    <StackPanel x:Name="SimpleButtons" Orientation="Horizontal">
+                        <Button Content="Export XML" Style="{StaticResource SubtleButton}"
+                                Click="OnExportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Save the current live camera XML to a file"/>
+                        <Button Content="Import XML" Style="{StaticResource SubtleButton}"
+                                Click="OnImportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Install a camera XML file directly to the game"/>
+                        <Button x:Name="InstallBtn" Content="Install" Style="{StaticResource AccentButton}"
+                                Click="OnInstall" Width="110" Height="34" FontSize="13"/>
+                        <Button x:Name="RestoreBtn" Content="Restore Vanilla" Style="{StaticResource SubtleButton}"
+                                Click="OnRestore" Width="130" Height="34" Margin="4,0,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="AdvancedControlsButtons" Orientation="Horizontal" Visibility="Collapsed">
+                        <Button Content="Export XML" Style="{StaticResource SubtleButton}"
+                                Click="OnExportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Save the current live camera XML to a file"/>
+                        <Button Content="Import XML" Style="{StaticResource SubtleButton}"
+                                Click="OnImportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Install a camera XML file directly to the game"/>
+                        <Button x:Name="AdvCtrlApplyBtnBar" Content="Apply to Game" Style="{StaticResource AccentButton}"
+                                Click="OnAdvCtrlApply" Width="140" Height="34" FontSize="13"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="ExpertButtons" Orientation="Horizontal" Visibility="Collapsed">
+                        <Button Content="Export XML" Style="{StaticResource SubtleButton}"
+                                Click="OnExportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Save the current live camera XML to a file"/>
+                        <Button Content="Import XML" Style="{StaticResource SubtleButton}"
+                                Click="OnImportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Install a camera XML file directly to the game"/>
+                        <Button x:Name="ExpertApplyBtn" Content="Apply to Game" Style="{StaticResource AccentButton}"
+                                Click="OnAdvApply" Width="140" Height="34" FontSize="13"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="JsonModManagerButtons" Orientation="Horizontal" Visibility="Collapsed">
+                        <Button Content="Export XML" Style="{StaticResource SubtleButton}"
+                                Click="OnExportXmlFile" Height="34" FontSize="11" Padding="10,2" Margin="0,0,4,0"
+                                Foreground="{StaticResource AccentBrush}" BorderBrush="{StaticResource AccentBrush}"
+                                ToolTip="Save the current live camera XML to a file"/>
+                    </StackPanel>
                 </StackPanel>
             </DockPanel>
         </Border>

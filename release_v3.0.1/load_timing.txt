@@ -1,0 +1,7 @@
+File.Read: 1ms
+JsonParse: 1ms
+Settings: 1ms
+GetXml: 1ms
+RefreshUI: 6ms
+Total: 10ms
+XML len: 281063

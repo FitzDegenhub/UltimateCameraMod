@@ -13,7 +13,7 @@ release/
 *.suo
 *.csproj.user
 
-# Claude Code worktrees
+# Local-only worktree under src (do not commit)
 src/.claude/
 
 # Runtime data
@@ -21,11 +21,12 @@ backups/
 custom_presets/
 advanced_presets/
 ucm_presets/
-# Re-include repo-level preset folders (official definitions + community presets for GitHub download)
+# Re-include the repo-level ucm_presets/ folder (official preset definitions for GitHub download)
 !/ucm_presets/
-community_presets/
-!/community_presets/
 my_presets/
+community_presets/
+# Re-include the repo-level community_presets/ folder (community presets for GitHub download)
+!/community_presets/
 import_presets/
 imported_presets/
 presets/
@@ -34,6 +35,7 @@ advanced_overrides.json
 window_state.json
 u3_draft_slot.json
 crash.log
+tutorial_done.flag
 debug/
 *.marker
 

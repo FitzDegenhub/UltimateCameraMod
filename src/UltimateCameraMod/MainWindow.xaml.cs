@@ -20,6 +20,7 @@ public partial class MainWindow : Window
     private const string Ver = "2.5";
     private const string NexusUrl = "https://www.nexusmods.com/crimsondesert/mods/438";
     private const string GitHubUrl = "https://github.com/FitzDegenhub/UltimateCameraMod";
+    private const string KoFiUrl = "https://ko-fi.com/0xfitz";
 
     private static readonly string ExeDir =
         Path.GetDirectoryName(Environment.ProcessPath) ?? AppContext.BaseDirectory;
@@ -30,9 +31,14 @@ public partial class MainWindow : Window
     private bool _suppressEvents;
     private Dictionary<string, object>? _savedState;
 
-    // ── Advanced mode state ───────────────────────────────────────────
-    private bool _isAdvancedMode;
+    // ── Mode state ────────────────────────────────────────────────────
+    private string _activeMode = "simple";
+    private bool _isExpertMode;
     private List<AdvancedRow> _advAllRows = new();
+
+    // ── JSON Mod Manager state ────────────────────────────────────────
+    private List<JsonModExporter.PatchChange>? _jsonLastPatches;
+    private string? _jsonLastJson;
     private ObservableCollection<AdvancedRow> _advFilteredRows = new();
     private static string AdvOverridesPath => Path.Combine(ExeDir, "advanced_overrides.json");
     private static string AdvPresetsDir
@@ -44,19 +50,19 @@ public partial class MainWindow : Window
 
     private static readonly (string Id, string Label)[] Styles =
     {
-        ("western",   "Heroic  -  Shoulder-level OTS, great framing"),
-        ("cinematic", "Panoramic  -  Head-height wide pullback, filmic"),
+        ("heroic",    "Heroic  -  Shoulder-level OTS, great framing"),
+        ("panoramic", "Panoramic  -  Head-height wide pullback, filmic"),
         ("default",   "Vanilla  -  Default framing + steadycam smoothing"),
-        ("immersive", "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
-        ("lowcam",    "Low Rider  -  Hip-level, full body + horizon"),
-        ("vlowcam",   "Knee Cam  -  Knee-height dramatic low angle"),
-        ("ulowcam",   "Dirt Cam  -  Ground-level, extreme low"),
-        ("re2",       "Survival  -  Tight horror-game OTS (16:9 feel)"),
+        ("close-up",  "Close-Up  -  Shoulder OTS, tighter (16:9 feel)"),
+        ("low-rider", "Low Rider  -  Hip-level, full body + horizon"),
+        ("knee-cam",  "Knee Cam  -  Knee-height dramatic low angle"),
+        ("dirt-cam",  "Dirt Cam  -  Ground-level, extreme low"),
+        ("survival",  "Survival  -  Tight horror-game OTS (16:9 feel)"),
     };
 
     private static readonly (int Value, string Label)[] FovOptions =
     {
-        (0,  "No change (40\u00b0)  -  Vanilla"),
+        (0,  "No FoV boost (0\u00b0)  -  vanilla varies by state (40\u00b0, 45\u00b0, 53\u00b0\u2026)"),
         (10, "+10\u00b0 (50\u00b0)  -  Minimal, good for 16:9"),
         (15, "+15\u00b0 (55\u00b0)  -  Subtle improvement"),
         (20, "+20\u00b0 (60\u00b0)  -  Sweet spot for 21:9"),
@@ -74,14 +80,14 @@ public partial class MainWindow : Window
 
     private static readonly Dictionary<string, (double Dist, double Up, double Ro)> StyleParams = new()
     {
-        ["western"] = (5.0, -0.2, 0.0),
-        ["cinematic"] = (7.5, 0.0, 0.0),
+        ["heroic"] = (5.0, -0.2, 0.0),
+        ["panoramic"] = (7.5, 0.0, 0.0),
         ["default"] = (3.4, 0.0, 0.0),
-        ["immersive"] = (4.0, -0.2, 0.0),
-        ["lowcam"] = (5.0, -0.8, 0.0),
-        ["vlowcam"] = (5.0, -1.2, 0.0),
-        ["ulowcam"] = (5.0, -1.5, 0.0),
-        ["re2"] = (3.0, 0.0, 0.7),
+        ["close-up"] = (4.0, -0.2, 0.0),
+        ["low-rider"] = (5.0, -0.8, 0.0),
+        ["knee-cam"] = (5.0, -1.2, 0.0),
+        ["dirt-cam"] = (5.0, -1.5, 0.0),
+        ["survival"] = (3.0, 0.0, 0.7),
     };
 
     // ── Constructor ──────────────────────────────────────────────────
@@ -189,7 +195,6 @@ public partial class MainWindow : Window
         string backupsDir = Path.Combine(ExeDir, "backups");
         CameraMod.BackupsDirOverride = () => backupsDir;
         CameraMod.AppVersion = Ver;
-        HudMod.BackupsDirOverride = () => Path.Combine(backupsDir, "hud");
 
         CleanStaleData(backupsDir);
         _savedState = LoadInstallState();
@@ -242,7 +247,7 @@ public partial class MainWindow : Window
         foreach (var (_, label) in Styles)
             StyleCombo.Items.Add(label);
 
-        string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "cinematic";
+        string savedStyle = _savedState?.GetValueOrDefault("style")?.ToString() ?? "panoramic";
         int styleIdx = Array.FindIndex(Styles, s => s.Id == savedStyle);
         StyleCombo.SelectedIndex = styleIdx >= 0 ? styleIdx : 1;
 
@@ -265,14 +270,6 @@ public partial class MainWindow : Window
         BaneCheck.IsChecked = GetBool(_savedState, "bane");
         MountHeightCheck.IsChecked = GetBool(_savedState, "mount_height");
         SteadycamCheck.IsChecked = GetBool(_savedState, "steadycam", true);
-        ExtraZoomCheck.IsChecked = GetBool(_savedState, "extra_zoom");
-        HorseFirstPersonCheck.IsChecked = GetBool(_savedState, "horse_first_person");
-
-        // HUD mods disabled — recent game update causes publisher watermark
-        HudCheck.IsChecked = false;
-        HudHeightCheck.IsChecked = false;
-        HudWidthSlider.Value = 2520;
-        HudHeightSlider.Value = 1080;
 
         RefreshPresetCombo();
 
@@ -366,19 +363,14 @@ public partial class MainWindow : Window
     }
 
     private void SaveInstallState(int compSize, string style, int fov, bool bane, string combat,
-        Dictionary<string, double>? customParams, bool mountHeight, int hudWidth,
-        int hudHeight = 0, bool steadycam = true, bool extraZoom = false,
-        bool horseFirstPerson = false)
+        Dictionary<string, double>? customParams, bool mountHeight, bool steadycam = true)
     {
         var state = new Dictionary<string, object>
         {
             ["ucm_version"] = Ver,
             ["comp_size"] = compSize, ["style"] = style, ["fov"] = fov,
             ["bane"] = bane, ["combat"] = combat, ["mount_height"] = mountHeight,
-            ["hud_width"] = hudWidth, ["hud_height"] = hudHeight,
             ["steadycam"] = steadycam,
-            ["extra_zoom"] = extraZoom,
-            ["horse_first_person"] = horseFirstPerson,
         };
         if (customParams != null) state["custom"] = customParams;
         if (style == "custom" && PresetCombo.SelectedIndex > 0)
@@ -411,8 +403,6 @@ public partial class MainWindow : Window
         string combat = state.GetValueOrDefault("combat")?.ToString() ?? "default";
         bool mountH = GetBool(state, "mount_height");
         bool steadycam = GetBool(state, "steadycam", true);
-        bool extraZoom = GetBool(state, "extra_zoom");
-        bool horseFP = GetBool(state, "horse_first_person");
 
         double dist = 5.0, height = 0.0, hshift = 0.0;
         if (state.ContainsKey("custom"))
@@ -445,11 +435,10 @@ public partial class MainWindow : Window
         if (bane) parts.Add("Centered");
 
         var globals = new List<string>();
-        if (combat != "default") globals.Add("Combat");
+        double combatPb = CombatIdToPullback(combat);
+        if (combatPb != 0) globals.Add($"Lock-on {(int)Math.Round(combatPb * 100):+0;-0}%");
         if (mountH) globals.Add("Mount cam");
         if (steadycam) globals.Add("Steadycam");
-        if (extraZoom) globals.Add("Extra zoom");
-        if (horseFP) globals.Add("Horse FP");
         if (globals.Count > 0)
             parts.Add(string.Join(", ", globals));
 
@@ -458,28 +447,6 @@ public partial class MainWindow : Window
             BannerPanel.Visibility = Visibility.Collapsed;
             return;
         }
-
-        BannerPanel.Visibility = Visibility.Visible;
-        BannerPanel.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x1F, 0x00));
-        BannerText.Text = $"\u26A0  Game files modified:  {string.Join("  |  ", parts)}";
-        BannerText.Foreground = FindResource("WarnBrush") as Brush;
-    }
-
-    private void UpdateBannerFromInstall(int fov, string style, bool bane, string combat, bool mount, bool hud)
-    {
-        if (_savedState != null)
-        {
-            ShowBannerFromState(_savedState);
-            return;
-        }
-
-        var parts = new List<string>();
-        if (fov != 0) parts.Add($"FoV +{fov}\u00b0");
-        if (style != "default") parts.Add(style == "custom" ? "Custom" : "Preset");
-        if (bane) parts.Add("Centered");
-        if (combat != "default") parts.Add("Combat");
-        if (mount) parts.Add("Mount cam, Steadycam");
-        if (parts.Count == 0) { BannerPanel.Visibility = Visibility.Collapsed; return; }
 
         BannerPanel.Visibility = Visibility.Visible;
         BannerPanel.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x1F, 0x00));
@@ -503,10 +470,14 @@ public partial class MainWindow : Window
             string latest = tag.TrimStart('v', 'V');
 
             string pad(string v) => v.Contains('.') && v.Split('.').Length == 2 ? v + ".0" : v;
+            // Strip pre-release suffix before numeric compare ("3-beta" -> "3", "3.0-beta" -> "3.0")
+            string numericLatest = latest.Split('-')[0];
+            string numericVer   = Ver.Split('-')[0];
             bool isOutdated = !string.IsNullOrEmpty(latest)
-                && Version.TryParse(pad(latest), out var remote)
-                && Version.TryParse(pad(Ver), out var local)
-                && remote > local;
+                && !string.Equals(latest.Trim(), Ver.Trim(), StringComparison.OrdinalIgnoreCase)
+                && Version.TryParse(pad(numericLatest), out var remote)
+                && Version.TryParse(pad(numericVer), out var local)
+                && remote >= local;
 
             Dispatcher.Invoke(() =>
             {
@@ -610,17 +581,6 @@ public partial class MainWindow : Window
 
     private void OnBaneChanged(object s, RoutedEventArgs e) { if (!IsLoaded) return; ApplyCenteredLock(); SyncPreview(); }
 
-    private void OnHudToggle(object s, RoutedEventArgs e) { if (!IsLoaded) return; ApplyHudLock(); SyncPreview(); }
-
-    private void OnHudSliderChanged(object s, RoutedPropertyChangedEventArgs<double> e)
-    {
-        if (_suppressEvents || !IsLoaded) return;
-        if (HudCheck.IsChecked == true)
-            HudWidthLabel.Text = $"{(int)Math.Round(HudWidthSlider.Value)}px";
-        if (HudHeightCheck.IsChecked == true)
-            HudHeightLabel.Text = $"{(int)Math.Round(HudHeightSlider.Value)}px";
-    }
-
     private void ApplyCenteredLock()
     {
         if (BaneCheck.IsChecked == true)
@@ -639,30 +599,12 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ApplyHudLock()
-    {
-        bool on = HudCheck.IsChecked == true;
-        HudWidthSlider.IsEnabled = on;
-        HudWidthLabel.Text = on ? $"{(int)HudWidthSlider.Value}px" : "Off";
-        HudWidthLabel.Foreground = (Brush)FindResource(on ? "TextPrimaryBrush" : "TextDimBrush");
-    }
-
-    private void OnHudHeightToggle(object s, RoutedEventArgs e) { if (!IsLoaded) return; ApplyHudHeightLock(); }
-
-    private void ApplyHudHeightLock()
-    {
-        bool on = HudHeightCheck.IsChecked == true;
-        HudHeightSlider.IsEnabled = on;
-        HudHeightLabel.Text = on ? $"{(int)HudHeightSlider.Value}px" : "Off";
-        HudHeightLabel.Foreground = (Brush)FindResource(on ? "TextPrimaryBrush" : "TextDimBrush");
-    }
-
     // ── Selections ───────────────────────────────────────────────────
 
     private string GetSelectedStyleId()
     {
         int idx = StyleCombo.SelectedIndex;
-        return idx >= 0 && idx < Styles.Length ? Styles[idx].Id : "cinematic";
+        return idx >= 0 && idx < Styles.Length ? Styles[idx].Id : "panoramic";
     }
 
     private int GetSelectedFov()
@@ -676,6 +618,13 @@ public partial class MainWindow : Window
         int idx = CombatCombo.SelectedIndex;
         return idx >= 0 && idx < CombatOptions.Length ? CombatOptions[idx].Id : "default";
     }
+
+    private static double CombatIdToPullback(string id) => id switch
+    {
+        "wide" => 0.25,
+        "max"  => 0.5,
+        _      => 0.0,
+    };
 
     // ── Presets ──────────────────────────────────────────────────────
 
@@ -832,10 +781,6 @@ public partial class MainWindow : Window
         bool bane = BaneCheck.IsChecked == true;
         bool mountHeight = MountHeightCheck.IsChecked == true;
         bool steadycam = SteadycamCheck.IsChecked == true;
-        bool extraZoom = ExtraZoomCheck.IsChecked == true;
-        bool horseFirstPerson = HorseFirstPersonCheck.IsChecked == true;
-        int hudWidth = HudCheck.IsChecked == true ? (int)HudWidthSlider.Value : 0;
-        int hudHeight = HudHeightCheck.IsChecked == true ? (int)HudHeightSlider.Value : 0;
 
         Dictionary<string, double>? customParams = null;
         double? customUp = null;
@@ -855,30 +800,18 @@ public partial class MainWindow : Window
         {
             try
             {
-                var result = CameraMod.InstallCameraMod(_gameDir, styleId, fov, bane, combat,
+                var result = CameraMod.InstallCameraMod(_gameDir, styleId, fov, bane, CombatIdToPullback(combat),
                     mountHeight: mountHeight, customUp: customUp, steadycam: steadycam,
-                    extraZoom: extraZoom, horseFirstPerson: horseFirstPerson,
                     log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
                 bool ok = result.GetValueOrDefault("status")?.ToString() == "ok";
                 int compSize = ok && result.ContainsKey("comp_size") ? (int)result["comp_size"] : 0;
-
-                if (ok && hudWidth > 0)
-                {
-                    var hudResult = HudMod.InstallCenteredHud(_gameDir, hudWidth, hudHeight,
-                        log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
-                    if (hudResult.GetValueOrDefault("status")?.ToString() != "ok") ok = false;
-                }
-                else if (ok && hudWidth == 0)
-                {
-                    HudMod.RestoreHud(_gameDir);
-                }
 
                 Dispatcher.Invoke(() =>
                 {
                     if (ok)
                     {
                         SetStatus("Installed! Launch the game.", "Success");
-                        SaveInstallState(compSize, styleId, fov, bane, combat, customParams, mountHeight, hudWidth, hudHeight, steadycam, extraZoom, horseFirstPerson);
+                        SaveInstallState(compSize, styleId, fov, bane, combat, customParams, mountHeight, steadycam);
                         _savedState = LoadInstallState();
                         CheckForUpdate();
                     }
@@ -916,14 +849,13 @@ public partial class MainWindow : Window
                 var result = CameraMod.RestoreCamera(_gameDir,
                     log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
                 string status = result.GetValueOrDefault("status")?.ToString() ?? "error";
-                HudMod.RestoreHud(_gameDir);
 
                 Dispatcher.Invoke(() =>
                 {
                     switch (status)
                     {
                         case "ok":
-                            SetStatus("Vanilla restored (camera + HUD).", "Success"); break;
+                            SetStatus("Vanilla restored.", "Success"); break;
                         case "no_backup":
                             SetStatus("No backup found. Camera may already be vanilla.", "TextSecondary"); break;
                         case "stale_backup":
@@ -970,25 +902,73 @@ public partial class MainWindow : Window
 
     // ── Advanced mode toggle ─────────────────────────────────────────
 
-    private void OnToggleAdvanced(object s, RoutedEventArgs e)
+    // ── 4-Mode navigation ────────────────────────────────────────────
+
+    private void OnModeSimple(object s, RoutedEventArgs e) => SwitchAppMode("simple");
+    private void OnModeAdvanced(object s, RoutedEventArgs e) => SwitchAppMode("advanced");
+    private void OnModeExpert(object s, RoutedEventArgs e) => SwitchAppMode("expert");
+    private void OnModeJson(object s, RoutedEventArgs e) => SwitchAppMode("json");
+
+    private void SwitchAppMode(string mode)
     {
-        if (!_isAdvancedMode)
+        if (mode != "simple" && string.IsNullOrEmpty(_gameDir))
         {
-            if (string.IsNullOrEmpty(_gameDir))
-            {
-                MessageBox.Show("Set a game folder first (click Install to browse).",
-                    "Advanced Settings", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            EnterAdvancedMode();
+            MessageBox.Show("Set a game folder first (click Install to browse).",
+                "Ultimate Camera Mod", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
         }
-        else
+
+        // Hide all views and button groups
+        SimpleView.Visibility = Visibility.Collapsed;
+        AdvancedControlsView.Visibility = Visibility.Collapsed;
+        ExpertView.Visibility = Visibility.Collapsed;
+        JsonModManagerView.Visibility = Visibility.Collapsed;
+
+        SimpleButtons.Visibility = Visibility.Collapsed;
+        AdvancedControlsButtons.Visibility = Visibility.Collapsed;
+        ExpertButtons.Visibility = Visibility.Collapsed;
+        JsonModManagerButtons.Visibility = Visibility.Collapsed;
+
+        // Update mode button styles
+        ModeSimpleBtn.Style = (Style)FindResource(mode == "simple" ? "AccentButton" : "SubtleButton");
+        ModeAdvancedBtn.Style = (Style)FindResource(mode == "advanced" ? "AccentButton" : "SubtleButton");
+        ModeExpertBtn.Style = (Style)FindResource(mode == "expert" ? "AccentButton" : "SubtleButton");
+        ModeJsonBtn.Style = (Style)FindResource(mode == "json" ? "AccentButton" : "SubtleButton");
+
+        _activeMode = mode;
+        _isExpertMode = mode == "expert";
+
+        switch (mode)
         {
-            ExitAdvancedMode();
+            case "simple":
+                SimpleView.Visibility = Visibility.Visible;
+                SimpleButtons.Visibility = Visibility.Visible;
+                CheckForUpdate();
+                SetStatus("Ready", "TextDim");
+                break;
+
+            case "advanced":
+                AdvancedControlsView.Visibility = Visibility.Visible;
+                AdvancedControlsButtons.Visibility = Visibility.Visible;
+                EnterAdvancedControlsMode();
+                SetStatus("Advanced Controls — guided per-parameter camera tuning.", "TextDim");
+                break;
+
+            case "expert":
+                ExpertView.Visibility = Visibility.Visible;
+                ExpertButtons.Visibility = Visibility.Visible;
+                EnterExpertMode();
+                break;
+
+            case "json":
+                JsonModManagerView.Visibility = Visibility.Visible;
+                JsonModManagerButtons.Visibility = Visibility.Visible;
+                SetStatus("JSON Mod Manager — generate Crimson Desert Mod Manager v8 patch files.", "TextDim");
+                break;
         }
     }
 
-    private void EnterAdvancedMode()
+    private void EnterExpertMode()
     {
         try
         {
@@ -1016,29 +996,14 @@ public partial class MainWindow : Window
             AdvSearchBox.Foreground = lightText;
             AdvSearchBox.CaretBrush = lightText;
 
-            _isAdvancedMode = true;
-            SimpleView.Visibility = Visibility.Collapsed;
-            AdvancedView.Visibility = Visibility.Visible;
-            SimpleButtons.Visibility = Visibility.Collapsed;
-            AdvancedButtons.Visibility = Visibility.Visible;
-            SetStatus("Advanced mode — edit values and click Apply to Game.", "TextDim");
+            SetStatus("Expert mode — edit raw XML values and click Apply to Game.", "TextDim");
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Failed to load camera XML:\n{ex.Message}", "Advanced Editor",
+            MessageBox.Show($"Failed to load camera XML:\n{ex.Message}", "Expert Editor",
                 MessageBoxButton.OK, MessageBoxImage.Error);
+            SwitchAppMode("simple");
         }
-    }
-
-    private void ExitAdvancedMode()
-    {
-        _isAdvancedMode = false;
-        SimpleView.Visibility = Visibility.Visible;
-        AdvancedView.Visibility = Visibility.Collapsed;
-        SimpleButtons.Visibility = Visibility.Visible;
-        AdvancedButtons.Visibility = Visibility.Collapsed;
-        CheckForUpdate();
-        SetStatus("Ready", "TextDim");
     }
 
     private void AdvBindGrid()
@@ -1047,7 +1012,7 @@ public partial class MainWindow : Window
         var view = CollectionViewSource.GetDefaultView(_advFilteredRows);
         view.GroupDescriptions.Clear();
         view.GroupDescriptions.Add(new PropertyGroupDescription("Section"));
-        AdvDataGrid.ItemsSource = view;
+        ExpertDataGrid.ItemsSource = view;
     }
 
     private void AdvPopulateFilter()
@@ -1081,7 +1046,7 @@ public partial class MainWindow : Window
 
     private void OnAdvFilterChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (!IsLoaded || !_isAdvancedMode) return;
+        if (!IsLoaded || !_isExpertMode) return;
         AdvApplyFilter();
     }
 
@@ -1110,15 +1075,15 @@ public partial class MainWindow : Window
         var view = CollectionViewSource.GetDefaultView(_advFilteredRows);
         view.GroupDescriptions.Clear();
         view.GroupDescriptions.Add(new PropertyGroupDescription("Section"));
-        AdvDataGrid.ItemsSource = view;
+        ExpertDataGrid.ItemsSource = view;
         AdvUpdateRowCount();
     }
 
     private void OnAdvExpandAll(object sender, RoutedEventArgs e)
     {
         bool expanding = (sender as System.Windows.Controls.Button)?.Content?.ToString() == "Expand All";
-        AdvDataGrid.GroupStyle.Clear();
-        AdvDataGrid.GroupStyle.Add(BuildAdvGroupStyle(expanding));
+        ExpertDataGrid.GroupStyle.Clear();
+        ExpertDataGrid.GroupStyle.Add(BuildAdvGroupStyle(expanding));
         if (sender is System.Windows.Controls.Button btn)
             btn.Content = expanding ? "Collapse All" : "Expand All";
     }
@@ -1163,9 +1128,7 @@ public partial class MainWindow : Window
                 customUp = HeightSlider.Value;
             }
             bool sc = SteadycamCheck.IsChecked == true;
-            bool ez = ExtraZoomCheck.IsChecked == true;
-            bool hfp = HorseFirstPersonCheck.IsChecked == true;
-            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combat, mountHeight: mount, customUp: customUp, steadycam: sc, extraZoom: ez, horseFirstPerson: hfp);
+            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combatPullback: CombatIdToPullback(combat), mountHeight: mount, customUp: customUp, steadycam: sc);
             vanillaXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
             var defaultRows = CameraMod.ParseXmlToRows(vanillaXml);
@@ -1259,7 +1222,7 @@ public partial class MainWindow : Window
         var modifiedRows = _advAllRows.Where(r => r.IsModified).ToList();
         if (modifiedRows.Count == 0) { SetStatus("No changes to apply.", "TextSecondary"); return; }
 
-        AdvApplyBtn.IsEnabled = false;
+        ExpertApplyBtn.IsEnabled = false;
         SetStatus("Applying...", "Accent");
 
         var elementMods = new Dictionary<string, Dictionary<string, (string Action, string Value)>>();
@@ -1284,7 +1247,7 @@ public partial class MainWindow : Window
                 {
                     AdvSaveOverrides();
                     SetStatus($"Applied {modifiedRows.Count} changes to game files.", "Success");
-                    AdvApplyBtn.IsEnabled = true;
+                    ExpertApplyBtn.IsEnabled = true;
                 });
             }
             catch (Exception ex)
@@ -1292,7 +1255,7 @@ public partial class MainWindow : Window
                 Dispatcher.Invoke(() =>
                 {
                     SetStatus($"Apply failed: {ex.Message}", "Error");
-                    AdvApplyBtn.IsEnabled = true;
+                    ExpertApplyBtn.IsEnabled = true;
                 });
             }
         });
@@ -1343,7 +1306,7 @@ public partial class MainWindow : Window
 
     private void OnAdvPresetSelected(object sender, SelectionChangedEventArgs e)
     {
-        if (!_isAdvancedMode || AdvPresetCombo.SelectedIndex <= 0) return;
+        if (!_isExpertMode || AdvPresetCombo.SelectedIndex <= 0) return;
         string name = AdvPresetCombo.SelectedItem?.ToString() ?? "";
         try
         {
@@ -1418,8 +1381,781 @@ public partial class MainWindow : Window
         catch (Exception ex) { SetStatus($"Delete failed: {ex.Message}", "Error"); }
     }
 
+    // ── XML Export / Import ──────────────────────────────────────────
+
+    private void OnExportXmlFile(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(_gameDir))
+        {
+            SetStatus("Game folder not set.", "Warn");
+            return;
+        }
+
+        var sfd = new Microsoft.Win32.SaveFileDialog
+        {
+            Title = "Export Camera XML",
+            Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
+            FileName = "playercamerapreset.xml"
+        };
+        if (sfd.ShowDialog(this) != true) return;
+
+        try
+        {
+            CameraMod.ExportLiveXml(_gameDir, sfd.FileName);
+            SetStatus($"Exported to {Path.GetFileName(sfd.FileName)}.", "Success");
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Export failed: {ex.Message}", "Error");
+        }
+    }
+
+    private void OnImportXmlFile(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(_gameDir))
+        {
+            SetStatus("Game folder not set.", "Warn");
+            return;
+        }
+
+        var ofd = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Import Camera XML — installs directly to game",
+            Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
+            FileName = "playercamerapreset.xml"
+        };
+        if (ofd.ShowDialog(this) != true) return;
+
+        var confirm = MessageBox.Show(
+            $"Install '{Path.GetFileName(ofd.FileName)}' directly to the game?\n\nThis will overwrite your current camera settings.",
+            "Import XML", MessageBoxButton.YesNo, MessageBoxImage.Question);
+        if (confirm != MessageBoxResult.Yes) return;
+
+        try
+        {
+            string xml = File.ReadAllText(ofd.FileName);
+            CameraMod.InstallRawXml(_gameDir, xml);
+            SetStatus($"Installed {Path.GetFileName(ofd.FileName)} to game.", "Success");
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Import failed: {ex.Message}", "Error");
+        }
+    }
+
+    // ── Advanced Controls ────────────────────────────────────────────
+
+    // Stores all slider controls keyed by ModKey.Attribute (same as AdvancedRow.FullKey)
+    private readonly Dictionary<string, Slider> _advCtrlSliders = new();
+    private readonly Dictionary<string, TextBlock> _advCtrlValueLabels = new();
+    private readonly Dictionary<string, string> _advCtrlVanilla = new();
+    private static string AdvCtrlPresetsDir
+    {
+        get { string d = Path.Combine(ExeDir, "advanced_presets"); Directory.CreateDirectory(d); return d; }
+    }
+
+    private void EnterAdvancedControlsMode()
+    {
+        if (_advCtrlSliders.Count > 0) return; // already built
+
+        try
+        {
+            // Load vanilla values for display and reset
+            string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
+            var vanillaRows = CameraMod.ParseXmlToRows(vanillaXml);
+            _advCtrlVanilla.Clear();
+            foreach (var r in vanillaRows) _advCtrlVanilla[r.FullKey] = r.VanillaValue;
+
+            BuildAdvCtrlSection_OnFoot();
+            BuildAdvCtrlSection_Mount();
+            BuildAdvCtrlSection_Combat();
+            BuildAdvCtrlSection_Smooth();
+            BuildAdvCtrlSection_Aim();
+
+            AdvCtrlRefreshPresetCombo();
+            AdvCtrlUpdateChangedLabel();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to load camera XML:\n{ex.Message}", "Advanced Controls",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+            SwitchAppMode("simple");
+        }
+    }
+
+    // ── Control builder helpers ──────────────────────────────────────
+
+    private Grid BuildSliderRow(string modKey, string attribute, double min, double max, double step,
+        string? tooltip = null)
+    {
+        string fullKey = $"{modKey}.{attribute}";
+        _advCtrlVanilla.TryGetValue(fullKey, out string? vanillaStr);
+        double vanillaVal = double.TryParse(vanillaStr, System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture, out double vv) ? vv : (min + max) / 2;
+        double current = vanillaVal;
+
+        var row = new Grid { Margin = new Thickness(0, 2, 0, 2) };
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(130), MinWidth = 130 });
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MinWidth = 60 });
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(46), MinWidth = 46 });
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(46), MinWidth = 46 });
+        row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(28), MinWidth = 28 });
+
+        // Label
+        var label = new TextBlock
+        {
+            Text = attribute,
+            FontSize = 11,
+            Foreground = (Brush)FindResource("TextSecondaryBrush"),
+            VerticalAlignment = VerticalAlignment.Center,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+            ToolTip = tooltip ?? CameraParamDocs.Get(attribute)
+        };
+        Grid.SetColumn(label, 0);
+
+        // Slider
+        var slider = new Slider
+        {
+            Minimum = min, Maximum = max,
+            Value = current,
+            TickFrequency = step,
+            IsSnapToTickEnabled = true,
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(4, 0, 4, 0),
+            ToolTip = tooltip ?? CameraParamDocs.Get(attribute)
+        };
+        Grid.SetColumn(slider, 1);
+
+        // Value label
+        var valueLabel = new TextBlock
+        {
+            Text = $"{current:F2}",
+            FontFamily = new System.Windows.Media.FontFamily("Consolas"),
+            FontSize = 10,
+            Foreground = (Brush)FindResource("AccentBrush"),
+            VerticalAlignment = VerticalAlignment.Center,
+            TextAlignment = TextAlignment.Right,
+            Margin = new Thickness(0, 0, 2, 0)
+        };
+        Grid.SetColumn(valueLabel, 2);
+
+        // Vanilla label
+        var vanillaLabel = new TextBlock
+        {
+            Text = $"{vanillaVal:F2}",
+            FontFamily = new System.Windows.Media.FontFamily("Consolas"),
+            FontSize = 10,
+            Foreground = (Brush)FindResource("TextDimBrush"),
+            VerticalAlignment = VerticalAlignment.Center,
+            TextAlignment = TextAlignment.Right,
+            Margin = new Thickness(0, 0, 2, 0),
+            ToolTip = $"Vanilla: {vanillaVal:F2}"
+        };
+        Grid.SetColumn(vanillaLabel, 3);
+
+        // Reset button
+        var resetBtn = new System.Windows.Controls.Button
+        {
+            Content = "↺",
+            FontSize = 11,
+            Width = 22, Height = 20,
+            Margin = new Thickness(2, 0, 0, 0),
+            ToolTip = $"Reset to vanilla ({vanillaVal:F2})",
+            Style = (Style)FindResource("SubtleButton"),
+            Tag = (slider, vanillaVal)
+        };
+        Grid.SetColumn(resetBtn, 4);
+        resetBtn.Click += (s, e) =>
+        {
+            if (((System.Windows.Controls.Button)s).Tag is (Slider sl, double vv2))
+                sl.Value = vv2;
+        };
+
+        slider.ValueChanged += (s, e) =>
+        {
+            valueLabel.Text = $"{e.NewValue:F2}";
+            bool changed = Math.Abs(e.NewValue - vanillaVal) > 0.001;
+            valueLabel.Foreground = changed
+                ? (Brush)FindResource("AccentBrush")
+                : (Brush)FindResource("TextDimBrush");
+            AdvCtrlUpdateChangedLabel();
+        };
+
+        row.Children.Add(label);
+        row.Children.Add(slider);
+        row.Children.Add(valueLabel);
+        row.Children.Add(vanillaLabel);
+        row.Children.Add(resetBtn);
+
+        _advCtrlSliders[fullKey] = slider;
+        _advCtrlValueLabels[fullKey] = valueLabel;
+
+        return row;
+    }
+
+    private StackPanel BuildZoomLevelGroup(string title, string[] sections, int zoomLevel,
+        (string Attr, double Min, double Max, double Step)[] attrs)
+    {
+        var group = new StackPanel { Margin = new Thickness(0, 8, 0, 4) };
+        group.Children.Add(new TextBlock
+        {
+            Text = title,
+            FontSize = 11, FontWeight = FontWeights.SemiBold,
+            Foreground = (Brush)FindResource("TextSecondaryBrush"),
+            Margin = new Thickness(0, 0, 0, 4)
+        });
+
+        // Use first section as the representative key (all sections share same values in UCM)
+        string repSection = sections[0];
+        string modKey = $"{repSection}/ZoomLevel[{zoomLevel}]";
+
+        foreach (var (attr, min, max, step) in attrs)
+        {
+            // Register all sections' keys so BuildAdvancedControlsModSet can apply to all
+            foreach (var sec in sections)
+                _advCtrlSliders[$"{sec}/ZoomLevel[{zoomLevel}].{attr}"] = null!; // placeholder
+
+            var row = BuildSliderRow(modKey, attr, min, max, step);
+            group.Children.Add(row);
+
+            // Re-register the actual slider for all sections
+            var actualSlider = _advCtrlSliders[$"{modKey}.{attr}"];
+            foreach (var sec in sections)
+            {
+                string k = $"{sec}/ZoomLevel[{zoomLevel}].{attr}";
+                _advCtrlSliders[k] = actualSlider;
+            }
+        }
+        return group;
+    }
+
+    private void BuildAdvCtrlSection_OnFoot()
+    {
+        var panel = new StackPanel();
+        string[] allOnFoot = {
+            "Player_Basic_Default", "Player_Basic_Default_Walk",
+            "Player_Basic_Default_Run", "Player_Basic_Default_Runfast",
+            "Player_Weapon_Default", "Player_Weapon_Default_Walk",
+            "Player_Weapon_Default_Run", "Player_Weapon_Default_RunFast",
+            "Player_Weapon_Default_RunFast_Follow", "Player_Weapon_Rush", "Player_Weapon_Guard"
+        };
+
+        (string, double, double, double)[] zoomAttrs = {
+            ("ZoomDistance",    1.0, 20.0, 0.1),
+            ("UpOffset",       -2.0,  1.0, 0.1),
+            ("InDoorUpOffset", -2.0,  1.0, 0.1),
+            ("RightOffset",    -1.0,  3.0, 0.05),
+        };
+
+        foreach (int zl in new[] { 2, 3, 4 })
+            panel.Children.Add(BuildZoomLevelGroup($"Zoom Level {zl}", allOnFoot, zl, zoomAttrs));
+
+        AdvCtrlOnFootGrid.Children.Add(panel);
+    }
+
+    private void BuildAdvCtrlSection_Mount()
+    {
+        var panel = new StackPanel();
+        string[] horseSections = {
+            "Player_Ride_Horse", "Player_Ride_Horse_Run", "Player_Ride_Horse_Fast_Run",
+            "Player_Ride_Horse_Dash", "Player_Ride_Horse_Dash_Att",
+            "Player_Ride_Horse_Att_Thrust", "Player_Ride_Horse_Att_R", "Player_Ride_Horse_Att_L"
+        };
+
+        (string, double, double, double)[] zoomAttrs = {
+            ("ZoomDistance", 0.5, 25.0, 0.1),
+            ("UpOffset",    -2.0,  2.0, 0.1),
+            ("RightOffset", -1.0,  4.0, 0.05),
+        };
+
+        foreach (int zl in new[] { 0, 1, 2, 3 })
+            panel.Children.Add(BuildZoomLevelGroup($"Zoom Level {zl}", horseSections, zl, zoomAttrs));
+
+        AdvCtrlMountGrid.Children.Add(panel);
+    }
+
+    private void BuildAdvCtrlSection_Combat()
+    {
+        var panel = new StackPanel();
+
+        // Section-level attributes
+        var sectionAttrs = new[]
+        {
+            ("Player_Weapon_LockOn",    "TargetRate",      0.0, 1.0, 0.05),
+            ("Player_Weapon_LockOn",    "ScreenClampRate", 0.0, 1.0, 0.05),
+            ("Player_Weapon_TwoTarget", "TargetRate",      0.0, 1.0, 0.05),
+            ("Player_Weapon_TwoTarget", "ScreenClampRate", 0.0, 1.0, 0.05),
+            ("Player_Weapon_TwoTarget", "LimitUnderDistance", 0.5, 10.0, 0.5),
+        };
+
+        panel.Children.Add(new TextBlock
+        {
+            Text = "Lock-On Tracking",
+            FontSize = 11, FontWeight = FontWeights.SemiBold,
+            Foreground = (Brush)FindResource("TextSecondaryBrush"),
+            Margin = new Thickness(0, 8, 0, 4)
+        });
+        foreach (var (sec, attr, min, max, step) in sectionAttrs)
+        {
+            var row = BuildSliderRow(sec, attr, min, max, step);
+            // Prefix label with section name for clarity
+            if (row.Children[0] is TextBlock lbl)
+                lbl.Text = $"{sec.Replace("Player_Weapon_", "")} — {attr}";
+            panel.Children.Add(row);
+        }
+
+        // ZoomDistance per lock-on section per zoom level
+        var lockOnSections = new[]
+        {
+            ("Player_Weapon_LockOn",    new[] { 2, 3 }),
+            ("Player_Weapon_TwoTarget", new[] { 1, 2 }),
+            ("Player_FollowLearn_LockOn_Boss", new[] { 2, 3 }),
+        };
+
+        foreach (var (sec, levels) in lockOnSections)
+        {
+            panel.Children.Add(new TextBlock
+            {
+                Text = $"{sec.Replace("Player_", "")} — Zoom Distances",
+                FontSize = 11, FontWeight = FontWeights.SemiBold,
+                Foreground = (Brush)FindResource("TextSecondaryBrush"),
+                Margin = new Thickness(0, 10, 0, 4)
+            });
+            foreach (int zl in levels)
+            {
+                var row = BuildSliderRow($"{sec}/ZoomLevel[{zl}]", "ZoomDistance", 1.0, 20.0, 0.5);
+                if (row.Children[0] is TextBlock lbl) lbl.Text = $"ZL{zl} ZoomDistance";
+                panel.Children.Add(row);
+            }
+        }
+
+        AdvCtrlCombatGrid.Children.Add(panel);
+    }
+
+    private void BuildAdvCtrlSection_Smooth()
+    {
+        var panel = new StackPanel();
+
+        var smoothEntries = new[]
+        {
+            ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendInTime",  0.0, 3.0, 0.1, "Run blend-in"),
+            ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendOutTime", 0.0, 3.0, 0.1, "Run blend-out"),
+            ("Player_Weapon_Guard/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Guard blend-in"),
+            ("Player_Weapon_Guard/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Guard blend-out"),
+            ("Player_Basic_Default_Run/OffsetByVelocity",      "OffsetLength", 0.0, 2.0, 0.1, "Run sway"),
+            ("Player_Weapon_Default_Run/OffsetByVelocity",     "OffsetLength", 0.0, 2.0, 0.1, "Combat run sway"),
+            ("Player_Ride_Horse/CameraBlendParameter",         "BlendInTime",  0.0, 3.0, 0.1, "Horse blend-in"),
+            ("Player_Ride_Horse/CameraBlendParameter",         "BlendOutTime", 0.0, 3.0, 0.1, "Horse blend-out"),
+            ("Player_Ride_Horse/OffsetByVelocity",             "OffsetLength", 0.0, 2.0, 0.1, "Horse sway"),
+            ("Player_Ride_Horse/OffsetByVelocity",             "DampSpeed",    0.0, 2.0, 0.1, "Horse sway damp"),
+            ("Player_Ride_Horse",                              "FollowYawSpeedRate",   0.0, 2.0, 0.05, "Horse yaw follow"),
+            ("Player_Ride_Horse",                              "FollowPitchSpeedRate", 0.0, 2.0, 0.05, "Horse pitch follow"),
+            ("Player_Ride_Horse",                              "FollowStartTime",      0.0, 5.0, 0.1,  "Horse follow delay"),
+        };
+
+        foreach (var (modKey, attr, min, max, step, friendlyName) in smoothEntries)
+        {
+            var row = BuildSliderRow(modKey, attr, min, max, step);
+            if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
+            panel.Children.Add(row);
+        }
+
+        AdvCtrlSmoothGrid.Children.Add(panel);
+    }
+
+    private void BuildAdvCtrlSection_Aim()
+    {
+        var panel = new StackPanel();
+
+        // Group aim sections by type
+        var aimGroups = new[]
+        {
+            ("Lantern / Spotlight", new[] {
+                ("Player_Basic_Default_Aim_Zoom", 2), ("Player_Basic_Default_Aim_Zoom", 3), ("Player_Basic_Default_Aim_Zoom", 4) }),
+            ("Blinding Flash", new[] {
+                ("Player_Taeguk_Aim", 2), ("Player_Taeguk_Aim", 3) }),
+            ("Weapon Aim / Zoom", new[] {
+                ("Player_Weapon_Aim_Zoom", 2), ("Player_Weapon_Aim_Zoom", 3),
+                ("Player_Weapon_Zoom", 2), ("Player_Weapon_Zoom", 3) }),
+            ("Bow", new[] {
+                ("Player_Bow_Aim_Zoom", 2), ("Player_Bow_Aim_LockOn", 2) }),
+            ("Glide / FreeFall", new[] {
+                ("Glide_Kick_Aim_Zoom", 2), ("Player_Basic_FreeFall_Aim", 2) }),
+        };
+
+        foreach (var (groupName, entries) in aimGroups)
+        {
+            panel.Children.Add(new TextBlock
+            {
+                Text = groupName,
+                FontSize = 11, FontWeight = FontWeights.SemiBold,
+                Foreground = (Brush)FindResource("TextSecondaryBrush"),
+                Margin = new Thickness(0, 10, 0, 4)
+            });
+            foreach (var (sec, zl) in entries)
+            {
+                var row = BuildSliderRow($"{sec}/ZoomLevel[{zl}]", "RightOffset", -1.0, 3.0, 0.05);
+                if (row.Children[0] is TextBlock lbl)
+                    lbl.Text = $"{sec.Replace("Player_", "").Replace("_Aim_Zoom", "").Replace("_Aim", "")} ZL{zl}";
+                panel.Children.Add(row);
+            }
+        }
+
+        AdvCtrlAimGrid.Children.Add(panel);
+    }
+
+    // ── Advanced Controls apply / ModSet ─────────────────────────────
+
+    private ModificationSet BuildAdvancedControlsModSet()
+    {
+        var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
+
+        foreach (var (fullKey, slider) in _advCtrlSliders)
+        {
+            if (slider == null) continue;
+            _advCtrlVanilla.TryGetValue(fullKey, out string? vanillaStr);
+            double vanillaVal = double.TryParse(vanillaStr, System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture, out double vv) ? vv : double.NaN;
+
+            if (Math.Abs(slider.Value - vanillaVal) < 0.001) continue; // unchanged
+
+            int dotIdx = fullKey.LastIndexOf('.');
+            if (dotIdx < 0) continue;
+            string modKey = fullKey[..dotIdx];
+            string attr = fullKey[(dotIdx + 1)..];
+
+            if (!mods.TryGetValue(modKey, out var attrs))
+            {
+                attrs = new Dictionary<string, (string, string)>();
+                mods[modKey] = attrs;
+            }
+            attrs[attr] = ("SET", $"{slider.Value:F2}");
+        }
+
+        return new ModificationSet { ElementMods = mods, FovValue = 0 };
+    }
+
+    private void AdvCtrlUpdateChangedLabel()
+    {
+        if (!IsLoaded) return;
+        int changed = _advCtrlSliders.Values
+            .Where(s => s != null)
+            .Count(s =>
+            {
+                string? key = _advCtrlSliders.FirstOrDefault(kv => kv.Value == s).Key;
+                if (key == null) return false;
+                _advCtrlVanilla.TryGetValue(key, out string? vs);
+                double vv = double.TryParse(vs, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double d) ? d : double.NaN;
+                return Math.Abs(s.Value - vv) > 0.001;
+            });
+        AdvCtrlChangedLabel.Text = $"{changed} change{(changed == 1 ? "" : "s")}";
+    }
+
+    private void OnAdvCtrlApply(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(_gameDir)) { SetStatus("Game folder not set.", "Warn"); return; }
+
+        var modSet = BuildAdvancedControlsModSet();
+        int count = modSet.ElementMods.Values.Sum(v => v.Count);
+        if (count == 0) { SetStatus("No changes to apply.", "TextSecondary"); return; }
+
+        AdvCtrlApplyBtn.IsEnabled = false;
+        if (AdvCtrlApplyBtnBar != null) AdvCtrlApplyBtnBar.IsEnabled = false;
+        SetStatus("Applying...", "Accent");
+
+        Task.Run(() =>
+        {
+            try
+            {
+                CameraMod.InstallWithModSet(_gameDir, modSet,
+                    msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
+                Dispatcher.Invoke(() =>
+                {
+                    SetStatus($"Applied {count} Advanced Control changes to game.", "Success");
+                    AdvCtrlApplyBtn.IsEnabled = true;
+                    if (AdvCtrlApplyBtnBar != null) AdvCtrlApplyBtnBar.IsEnabled = true;
+                });
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    SetStatus($"Apply failed: {ex.Message}", "Error");
+                    AdvCtrlApplyBtn.IsEnabled = true;
+                    if (AdvCtrlApplyBtnBar != null) AdvCtrlApplyBtnBar.IsEnabled = true;
+                });
+            }
+        });
+    }
+
+    private void OnAdvCtrlLoadFromSimple(object sender, RoutedEventArgs e)
+    {
+        if (_advCtrlSliders.Count == 0) return;
+        try
+        {
+            var modSet = BuildCurrentSimpleModSet();
+            string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
+            string modifiedXml = CameraMod.ApplyModifications(vanillaXml, modSet);
+            var rows = CameraMod.ParseXmlToRows(modifiedXml);
+            var lookup = new Dictionary<string, string>();
+            foreach (var r in rows) lookup[r.FullKey] = r.Value;
+
+            _suppressEvents = true;
+            foreach (var (key, slider) in _advCtrlSliders)
+            {
+                if (slider == null) continue;
+                if (lookup.TryGetValue(key, out string? val) &&
+                    double.TryParse(val, System.Globalization.NumberStyles.Float,
+                        System.Globalization.CultureInfo.InvariantCulture, out double d))
+                    slider.Value = Math.Clamp(d, slider.Minimum, slider.Maximum);
+            }
+            _suppressEvents = false;
+            AdvCtrlUpdateChangedLabel();
+            SetStatus("Loaded values from Simple mode.", "Success");
+        }
+        catch (Exception ex)
+        {
+            _suppressEvents = false;
+            SetStatus($"Load failed: {ex.Message}", "Error");
+        }
+    }
+
+    private void OnAdvCtrlResetVanilla(object sender, RoutedEventArgs e)
+    {
+        if (_advCtrlSliders.Count == 0) return;
+        _suppressEvents = true;
+        foreach (var (key, slider) in _advCtrlSliders)
+        {
+            if (slider == null) continue;
+            if (_advCtrlVanilla.TryGetValue(key, out string? vs) &&
+                double.TryParse(vs, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double d))
+                slider.Value = Math.Clamp(d, slider.Minimum, slider.Maximum);
+        }
+        _suppressEvents = false;
+        AdvCtrlUpdateChangedLabel();
+        SetStatus("Reset all Advanced Controls to vanilla.", "Success");
+    }
+
+    // ── Advanced Controls presets ────────────────────────────────────
+
+    private void AdvCtrlRefreshPresetCombo()
+    {
+        var presets = Directory.GetFiles(AdvCtrlPresetsDir, "*.json")
+            .Select(f => Path.GetFileNameWithoutExtension(f))
+            .OrderBy(n => n).ToList();
+        AdvCtrlPresetCombo.Items.Clear();
+        AdvCtrlPresetCombo.Items.Add("(current)");
+        foreach (var p in presets) AdvCtrlPresetCombo.Items.Add(p);
+        AdvCtrlPresetCombo.SelectedIndex = 0;
+    }
+
+    private void OnAdvCtrlPresetSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (_advCtrlSliders.Count == 0 || AdvCtrlPresetCombo.SelectedIndex <= 0) return;
+        string name = AdvCtrlPresetCombo.SelectedItem?.ToString() ?? "";
+        try
+        {
+            string json = File.ReadAllText(Path.Combine(AdvCtrlPresetsDir, $"{name}.json"));
+            var data = JsonSerializer.Deserialize<Dictionary<string, double>>(json);
+            if (data == null) return;
+            _suppressEvents = true;
+            foreach (var (key, val) in data)
+                if (_advCtrlSliders.TryGetValue(key, out var sl) && sl != null)
+                    sl.Value = Math.Clamp(val, sl.Minimum, sl.Maximum);
+            _suppressEvents = false;
+            AdvCtrlUpdateChangedLabel();
+            SetStatus($"Loaded preset '{name}'.", "Success");
+        }
+        catch (Exception ex) { SetStatus($"Load failed: {ex.Message}", "Error"); }
+    }
+
+    private void OnAdvCtrlSavePreset(object sender, RoutedEventArgs e)
+    {
+        var dlg = new InputDialog("Save Advanced Preset", "Enter a name for this preset:") { Owner = this };
+        if (dlg.ShowDialog() != true || string.IsNullOrWhiteSpace(dlg.ResponseText)) return;
+        string name = dlg.ResponseText.Trim().Replace(" ", "_");
+        if (name.Length > 40) name = name[..40];
+
+        try
+        {
+            var data = new Dictionary<string, double>();
+            foreach (var (key, slider) in _advCtrlSliders)
+            {
+                if (slider == null) continue;
+                _advCtrlVanilla.TryGetValue(key, out string? vs);
+                double vv = double.TryParse(vs, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double d) ? d : double.NaN;
+                if (Math.Abs(slider.Value - vv) > 0.001)
+                    data[key] = slider.Value;
+            }
+            if (data.Count == 0) { SetStatus("No changes to save.", "TextSecondary"); return; }
+            File.WriteAllText(Path.Combine(AdvCtrlPresetsDir, $"{name}.json"),
+                JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true }));
+            AdvCtrlRefreshPresetCombo();
+            SetStatus($"Preset '{name}' saved ({data.Count} overrides).", "Success");
+        }
+        catch (Exception ex) { SetStatus($"Save failed: {ex.Message}", "Error"); }
+    }
+
+    private void OnAdvCtrlDeletePreset(object sender, RoutedEventArgs e)
+    {
+        if (AdvCtrlPresetCombo.SelectedIndex <= 0) { SetStatus("Select a saved preset first.", "TextSecondary"); return; }
+        string name = AdvCtrlPresetCombo.SelectedItem?.ToString() ?? "";
+        try
+        {
+            string path = Path.Combine(AdvCtrlPresetsDir, $"{name}.json");
+            if (File.Exists(path)) File.Delete(path);
+            AdvCtrlRefreshPresetCombo();
+            SetStatus($"Preset '{name}' deleted.", "Success");
+        }
+        catch (Exception ex) { SetStatus($"Delete failed: {ex.Message}", "Error"); }
+    }
+
+    // ── JSON Mod Manager ─────────────────────────────────────────────
+
+    private void OnJsonGenerate(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(_gameDir)) { SetStatus("Game folder not set.", "Warn"); return; }
+        // Capture UI values on UI thread before going async
+        var modSet = BuildCurrentSimpleModSet();
+        var info = BuildJsonModInfo();
+        var gameDir = _gameDir;
+        RunJsonGenerate(() => JsonModExporter.ExportFromModSet(gameDir, info, modSet,
+            msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent"))));
+    }
+
+    private void OnJsonGenerateFromXml(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(_gameDir)) { SetStatus("Game folder not set.", "Warn"); return; }
+
+        var ofd = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = "Select camera XML to patch",
+            Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
+            FileName = "playercamerapreset.xml"
+        };
+        if (ofd.ShowDialog(this) != true) return;
+
+        try
+        {
+            if (!CameraMod.IsLiveCameraPayloadMatchingStoredBackup(_gameDir))
+            {
+                MessageBox.Show(
+                    "The camera data in your game folder does not match UCM's vanilla backup.\n\n" +
+                    "JSON patches for external mod managers must use vanilla \"original\" bytes. " +
+                    "Verify the game in Steam (or revert camera changes in your mod manager), then try again.",
+                    "Cannot export JSON",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                SetStatus("JSON export needs vanilla camera files first.", "Warn");
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Could not verify camera files: {ex.Message}", "Error");
+            return;
+        }
+
+        // Capture UI values on UI thread before going async
+        string xmlPath = ofd.FileName;
+        var info = BuildJsonModInfo();
+        var gameDir = _gameDir;
+        RunJsonGenerate(() =>
+        {
+            string xml = File.ReadAllText(xmlPath);
+            return JsonModExporter.ExportFromXml(gameDir, info, xml,
+                msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent")));
+        });
+    }
+
+    private void RunJsonGenerate(Func<(List<JsonModExporter.PatchChange>, string)> work)
+    {
+        SetStatus("Generating patches...", "Accent");
+        JsonPreviewPanel.Visibility = Visibility.Collapsed;
+        _jsonLastPatches = null;
+        _jsonLastJson = null;
+
+        Task.Run(() =>
+        {
+            try
+            {
+                var (changes, json) = work();
+                Dispatcher.Invoke(() =>
+                {
+                    _jsonLastPatches = changes;
+                    _jsonLastJson = json;
+                    JsonPatchCountLabel.Text = changes.Count.ToString();
+                    JsonBytesChangedLabel.Text = changes.Sum(c => c.Original.Length / 2).ToString();
+                    JsonPreviewPanel.Visibility = Visibility.Visible;
+                    SetStatus($"Generated {changes.Count} patch regions. Click Save .json to export.", "Success");
+                });
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.Invoke(() => SetStatus($"Generate failed: {ex.Message}", "Error"));
+            }
+        });
+    }
+
+    private void OnJsonSave(object sender, RoutedEventArgs e)
+    {
+        if (_jsonLastJson == null) { SetStatus("Generate a patch first.", "TextSecondary"); return; }
+
+        string title = JsonTitleBox.Text.Trim();
+        string safeName = string.IsNullOrWhiteSpace(title)
+            ? "ucm_patch"
+            : new string(title.Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c).ToArray());
+
+        var sfd = new Microsoft.Win32.SaveFileDialog
+        {
+            Title = "Save JSON Patch",
+            Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+            FileName = $"{safeName}.json"
+        };
+        if (sfd.ShowDialog(this) != true) return;
+
+        try
+        {
+            File.WriteAllText(sfd.FileName, _jsonLastJson, new UTF8Encoding(false));
+            SetStatus($"Saved {Path.GetFileName(sfd.FileName)} ({_jsonLastPatches!.Count} patches).", "Success");
+        }
+        catch (Exception ex)
+        {
+            SetStatus($"Save failed: {ex.Message}", "Error");
+        }
+    }
+
+    private JsonModExporter.ModInfo BuildJsonModInfo() => new(
+        Title: JsonTitleBox.Text.Trim().Length > 0 ? JsonTitleBox.Text.Trim() : "UCM Camera Config",
+        Version: JsonVersionBox.Text.Trim().Length > 0 ? JsonVersionBox.Text.Trim() : "1.0",
+        Author: JsonAuthorBox.Text.Trim(),
+        Description: JsonDescBox.Text.Trim(),
+        NexusUrl: JsonNexusBox.Text.Trim().Length > 0 ? JsonNexusBox.Text.Trim() : NexusUrl);
+
+    private ModificationSet BuildCurrentSimpleModSet()
+    {
+        string styleId = _activeTab == "custom" ? "custom" : GetSelectedStyleId();
+        int fov = GetSelectedFov();
+        bool bane = BaneCheck.IsChecked == true;
+        string combat = GetSelectedCombat();
+        bool mount = MountHeightCheck.IsChecked == true;
+        double? customUp = null;
+        if (styleId == "custom")
+        {
+            CameraRules.RegisterCustomStyle(DistSlider.Value, HeightSlider.Value, HShiftSlider.Value);
+            customUp = HeightSlider.Value;
+        }
+        bool sc = SteadycamCheck.IsChecked == true;
+        return CameraRules.BuildModifications(styleId, fov, bane, combatPullback: CombatIdToPullback(combat),
+            mountHeight: mount, customUp: customUp, steadycam: sc);
+    }
+
     private void OnNexusClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(NexusUrl) { UseShellExecute = true });
     private void OnGitHubClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(GitHubUrl) { UseShellExecute = true });
+    private void OnKofiClick(object s, RoutedEventArgs e) => Process.Start(new ProcessStartInfo(KoFiUrl) { UseShellExecute = true });
     private void OnOpenGameFolder(object s, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(_gameDir) && Directory.Exists(_gameDir))

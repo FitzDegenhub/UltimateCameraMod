@@ -1,5 +1,126 @@
 namespace UltimateCameraMod.Models;
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// CameraRules — Architecture Overview
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// This file is the entire camera modification rule engine. It produces a
+// ModificationSet (a dictionary of XML attribute patches) that CameraMod.cs
+// applies to the vanilla playercamerapreset.xml inside the game's 0.paz file.
+//
+// ── Layering order (BuildModifications) ─────────────────────────────────────
+//
+//  1. BuildSharedBase()
+//     Global normalisation: FOV=40 across all sections, on-foot ZoomDistance
+//     set to 3.4/6/8 for ZL2/ZL3/ZL4, combat/guard distances matched to on-foot
+//     so idle→walk→run→combat transitions have no distance jump.
+//
+//  2. BuildSmoothing()  [only when Steadycam is enabled]
+//     Smooths every camera transition the user will notice:
+//     - CameraBlendParameter (BlendInTime/BlendOutTime) on all major sections
+//     - OffsetByVelocity damping so the camera doesn't sway on run/dash
+//     - MaxZoomDistance=30 on all lock-on and finisher sections so vanilla
+//       ceilings (e.g. "5") never clamp the camera when the user has a high
+//       custom distance set
+//     - Blend smoothing on stealth finishers (SilenceKill) and combat
+//       finisher (Weapon_Down) so kill animations ease in instead of snapping
+//     NOTE: ZoomDistance is NOT set here for lock-on/finisher sections.
+//           That is handled by BuildLockOnDistances() called from each style
+//           builder so distances always match the user's chosen style.
+//
+//  2b. BuildSharedSteadycam()  [only when Steadycam is enabled]
+//      UpOffset zeroing on horse/mount sections so the camera height doesn't
+//      jump when mounting.
+//
+//  3. BuildLockOnDistances(zl2, zl3, zl4)  [seeded with default 3.4/6/8]
+//     Sets ZoomDistance on ALL lock-on sections, stealth finishers, and the
+//     combat finisher (Weapon_Down) to match the style's on-foot distances.
+//     This is the key fix for the "zoom-in on lock-on" problem:
+//     - Vanilla lock-on sections have fixed low ZoomDistance values (e.g. 1.2,
+//       3, 4) with MaxZoomDistance ceilings as low as 5 that clamp the camera
+//       inward the moment lock-on engages.
+//     - Every style builder calls Merge(m, BuildLockOnDistances(...)) with its
+//       own distances so lock-on always mirrors on-foot.
+//     - BuildModifications seeds the default (3.4/6/8) before the style layer
+//       so "default" style and custom presets are also covered.
+//     - After Fine Tune or God Mode overrides are applied, BuildCuratedSessionXml
+//       and BuildGodModeSessionXml re-read the actual on-foot ZL2/ZL3/ZL4 from
+//       the resulting XML and call BuildLockOnDistancesPublic() again so manual
+//       ZoomDistance edits are also reflected in lock-on.
+//
+//  4. Style builder (BuildHeroic / BuildPanoramic / BuildCloseUp /
+//                    BuildLowVariant / BuildSurvival / BuildCustom)
+//     Sets ZoomDistance, UpOffset, RightOffset for AllMain sections.
+//     Each builder ends with Merge(m, BuildLockOnDistances(zl2, zl3, zl4))
+//     using its own distances so lock-on is always in sync.
+//
+//  5. BuildBaneMods()  [optional]
+//     Centres the camera (RightOffset=0) for the Bane centred-camera option.
+//
+//  6. BuildCombatPullback(zl2, zl3, zl4, offset)  [optional]
+//     Proportional offset on top of the base lock-on distances.
+//     +0.25 = 25% further out; -0.25 = 25% closer (zoom-in on guard/lock-on).
+//
+//  7. BuildMountHeightMods()  [optional]
+//     Matches horse camera height to the player's UpOffset setting.
+//
+// ── Lock-on zoom problem & fix ───────────────────────────────────────────────
+//
+//  Problem: When you lock onto a target the game switches to a lock-on camera
+//  section (Player_Weapon_LockOn, Player_Weapon_TwoTarget, etc.). Vanilla these
+//  sections have hardcoded ZoomDistance values much lower than on-foot, AND
+//  MaxZoomDistance ceilings (e.g. 5) that clamp the camera inward. At a custom
+//  distance of 12 the on-foot camera is at ZL3=12 but lock-on snaps to ZL3=4
+//  with a ceiling of 5 — a brutal zoom-in.
+//
+//  Fix applied in two places:
+//  a) BuildSmoothing sets MaxZoomDistance=30 on all lock-on/finisher ZLs
+//     (a non-constraining ceiling — no gameplay downside).
+//  b) BuildLockOnDistances sets ZoomDistance to match the style's on-foot
+//     values, called by every style builder and seeded as a default in
+//     BuildModifications before the style layer runs.
+//
+// ── Sections that are NOT in AllMain but need distance scaling ───────────────
+//
+//  Player_Weapon_LockOn, Player_Weapon_TwoTarget, Player_Weapon_LockOn_System,
+//  Player_Revive_LockOn_System, Player_FollowLearn_LockOn_Boss,
+//  Player_Weapon_LockOn_Non_Rotate, Player_Weapon_LockOn_WrestleOnly,
+//  Player_Interaction_TwoTarget  → handled by BuildLockOnDistances (ZL2/3/4)
+//
+//  Player_Interaction_LockOn, Interaction_LookAt  → NPC dialogue camera (LB+X).
+//  Intentionally NOT in LockOnSections: scaling ZoomDistance / MaxZoomDistance / injecting
+//  ZL2–4 here has correlated with game crashes on load (same class of risk as SilenceKill).
+//  Leave dialogue camera vanilla; combat lock-on scaling remains on LockOnSections below.
+//
+//  Player_SilenceKill, Player_SilenceKill_Back  → stealth finishers, only ZL2,
+//  vanilla ZoomDistance=1.2 (extreme close-up).
+//  !! DO NOT MODIFY THESE SECTIONS !! Changing any attribute (ZoomDistance,
+//  MaxZoomDistance, or CameraBlendParameter) on either SilenceKill section
+//  causes an immediate game crash on load. Confirmed via bisect testing.
+//  Root cause unknown — likely the engine treats these sections specially.
+//  Leave them at vanilla values.
+//
+//  Player_Weapon_Down  → combat finisher when enemy is downed, vanilla 3/4/6
+//  fixed distances with BlendInTime=0.5 (hard snap). Scaled via
+//  BuildLockOnDistances; blend softened in BuildSmoothing.
+//
+//  Player_Weapon_Guard  → IS in AllMain (WeaponSections) so it gets distance
+//  scaling from the style builder automatically. Guard distance matches on-foot.
+//
+// ── XML injection ────────────────────────────────────────────────────────────
+//
+//  Some lock-on sections only have ZL1 or ZL2 in vanilla. When BuildSmoothing
+//  or BuildLockOnDistances targets ZL3/ZL4 on those sections, CameraMod.cs
+//  auto-injects the missing ZoomLevel nodes when it closes the ZoomLevelInfo
+//  block. This is intentional — all lock-on sections should have ZL2/3/4 so
+//  the game never forces a zoom level change on transition.
+//  CAUTION: injected nodes increase XML payload size. The compressed result
+//  must fit within the original PAZ slot (orig_size). If the game crashes on
+//  load after a fresh Steam verify, check install_trace.txt — comp_size must
+//  be <= orig_size. If it exceeds it, reduce the number of injections.
+//
+// ═══════════════════════════════════════════════════════════════════════════════
+
 /// <summary>
 /// Complete camera modification rule engine. Port of camera_rules.py.
 /// All presets, styles, section lists, and the layered composition system.
@@ -45,6 +166,18 @@ public static class CameraRules
     };
 
     private static readonly string[] AllMain = BasicSections.Concat(WeaponSections).ToArray();
+
+    private static readonly string[] LockOnSections =
+    {
+        "Player_Weapon_LockOn",
+        "Player_Weapon_TwoTarget",
+        "Player_Weapon_LockOn_System",
+        "Player_Revive_LockOn_System",
+        "Player_FollowLearn_LockOn_Boss",
+        "Player_Weapon_LockOn_Non_Rotate",
+        "Player_Weapon_LockOn_WrestleOnly",
+        "Player_Interaction_TwoTarget",
+    };
 
     private static readonly string[] BaneSections =
         BasicSections.Concat(WeaponSections).ToArray();
@@ -106,9 +239,17 @@ public static class CameraRules
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
         string upStr = $"{upOffset}";
-        foreach (var sec in AllMountSections)
-            for (int level = 2; level <= 4; level++)
+        foreach (var sec in HorseRideSections)
+            for (int level = 2; level <= 3; level++)
                 Set(mods, $"{sec}/ZoomLevel[{level}]", "UpOffset", upStr);
+
+        foreach (var sec in new[] { "Player_Ride_Elephant", "Player_Ride_Canoe", "Player_Ride_Warmachine", "Player_Ride_Broom" })
+            for (int level = 2; level <= 3; level++)
+                Set(mods, $"{sec}/ZoomLevel[{level}]", "UpOffset", upStr);
+
+        for (int level = 2; level <= 4; level++)
+            Set(mods, $"Player_Ride_Wyvern/ZoomLevel[{level}]", "UpOffset", upStr);
+
         return mods;
     }
 
@@ -118,16 +259,11 @@ public static class CameraRules
 
         foreach (var sec in HorseRideSections)
         {
-            Set(mods, $"{sec}/ZoomLevel[1]", "ZoomDistance", $"{1.8 * scale:F1}");
             Set(mods, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{7.5 * scale:F1}");
             Set(mods, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{10.5 * scale:F1}");
-            Set(mods, $"{sec}/ZoomLevel[4]", "ZoomDistance", $"{14.0 * scale:F1}");
         }
-        Set(mods, "Player_Ride_Elephant/ZoomLevel[1]", "ZoomDistance", $"{2.0 * scale:F1}");
         Set(mods, "Player_Ride_Elephant/ZoomLevel[2]", "ZoomDistance", $"{8 * scale:F1}");
         Set(mods, "Player_Ride_Elephant/ZoomLevel[3]", "ZoomDistance", $"{11 * scale:F1}");
-        Set(mods, "Player_Ride_Elephant/ZoomLevel[4]", "ZoomDistance", $"{14.0 * scale:F1}");
-        Set(mods, "Player_Ride_Wyvern/ZoomLevel[1]", "ZoomDistance", $"{4.0 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[2]", "ZoomDistance", $"{12 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", $"{16 * scale:F1}");
         Set(mods, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", $"{20 * scale:F1}");
@@ -164,54 +300,41 @@ public static class CameraRules
         })
             Set(m, sec, "Fov", "40");
 
-        // Lock-on behavior
+        // Lock-on behavior (ZoomDistance values are handled by BuildSmoothing when Steadycam is on)
         Set(m, "Player_Weapon_LockOn", "Fov", "40");
         Set(m, "Player_Weapon_LockOn", "TargetRate", "0.25");
         Set(m, "Player_Weapon_LockOn", "ScreenClampRate", "0.6");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[3]", "ZoomDistance", "8");
 
         Set(m, "Player_Weapon_TwoTarget", "Fov", "40");
         Set(m, "Player_Weapon_TwoTarget", "TargetRate", "0.25");
         Set(m, "Player_Weapon_TwoTarget", "ScreenClampRate", "0.6");
         Set(m, "Player_Weapon_TwoTarget", "LimitUnderDistance", "3");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[1]", "ZoomDistance", "6");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[2]", "ZoomDistance", "8");
 
         Set(m, "Player_Interaction_TwoTarget", "Fov", "40");
         Set(m, "Player_Interaction_TwoTarget", "TargetRate", "0.45");
         Set(m, "Player_Interaction_TwoTarget", "ScreenClampRate", "0.65");
-        Set(m, "Player_Interaction_TwoTarget/ZoomLevel[1]", "ZoomDistance", "6");
-        Set(m, "Player_Interaction_TwoTarget/ZoomLevel[2]", "ZoomDistance", "8");
         Set(m, "Player_Interaction_TwoTarget/ZoomLevel[3]", "MaxZoomDistance", "10");
         Set(m, "Player_Interaction_TwoTarget/ZoomLevel[4]", "MaxZoomDistance", "10");
 
         Set(m, "Player_FollowLearn_LockOn_Boss", "Fov", "40");
         Set(m, "Player_FollowLearn_LockOn_Boss", "ScreenClampRate", "0.7");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[2]", "ZoomDistance", "4.5");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[3]", "ZoomDistance", "6.5");
 
         Set(m, "Player_Weapon_LockOn_System", "Fov", "40");
         Set(m, "Player_Weapon_LockOn_System", "TargetRate", "0.3");
         Set(m, "Player_Weapon_LockOn_System", "ScreenClampRate", "0.65");
-        Set(m, "Player_Weapon_LockOn_System/ZoomLevel[2]", "ZoomDistance", "6");
         Set(m, "Player_Weapon_LockOn_System/ZoomLevel[3]", "Fov", "40");
-        Set(m, "Player_Weapon_LockOn_System/ZoomLevel[3]", "ZoomDistance", "8");
         Set(m, "Player_Weapon_LockOn_System/ZoomLevel[4]", "Fov", "40");
 
         Set(m, "Player_Revive_LockOn_System", "Fov", "40");
         Set(m, "Player_Revive_LockOn_System", "ScreenClampRate", "0.65");
-        Set(m, "Player_Revive_LockOn_System/ZoomLevel[2]", "ZoomDistance", "6");
         Set(m, "Player_Revive_LockOn_System/ZoomLevel[3]", "Fov", "40");
-        Set(m, "Player_Revive_LockOn_System/ZoomLevel[3]", "ZoomDistance", "8");
         Set(m, "Player_Revive_LockOn_System/ZoomLevel[4]", "Fov", "40");
 
         Set(m, "Player_Weapon_LockOn_Non_Rotate", "Fov", "40");
         Set(m, "Player_Weapon_LockOn_Non_Rotate", "ScreenClampRate", "0.6");
-        Set(m, "Player_Weapon_LockOn_Non_Rotate/ZoomLevel[3]", "ZoomDistance", "8");
 
         Set(m, "Player_Weapon_LockOn_WrestleOnly", "Fov", "40");
         Set(m, "Player_Weapon_LockOn_WrestleOnly", "ScreenClampRate", "0.6");
-        Set(m, "Player_Weapon_LockOn_WrestleOnly/ZoomLevel[3]", "ZoomDistance", "8");
 
         Set(m, "Player_StartAggro_TwoTarget", "Fov", "40");
         Set(m, "Player_StartAggro_TwoTarget", "ScreenClampRate", "0.6");
@@ -220,11 +343,17 @@ public static class CameraRules
         Set(m, "Player_Wanted_TwoTarget", "ScreenClampRate", "0.6");
 
         // On-foot ZoomDistance normalization (includes idle to prevent idle→walk zoom jumps)
+        // Also normalize ZoomLevel Fov to 40 so the FoV slider delta applies consistently
+        // at every zoom level. Vanilla ZL3/ZL4 often carry Fov="53" which would otherwise
+        // produce a different effective FoV when the user zooms out.
         foreach (var sec in new[] { "Player_Basic_Default", "Player_Basic_Default_Walk", "Player_Basic_Default_Run", "Player_Basic_Default_Runfast" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
+            Set(m, $"{sec}/ZoomLevel[2]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
+            Set(m, $"{sec}/ZoomLevel[3]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
+            Set(m, $"{sec}/ZoomLevel[4]", "Fov", "40");
         }
 
         // Combat ZoomDistance normalization (includes idle so guard→idle→walk has no zoom gap)
@@ -233,16 +362,22 @@ public static class CameraRules
                  "Player_Weapon_Default_RunFast", "Player_Weapon_Default_RunFast_Follow" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
+            Set(m, $"{sec}/ZoomLevel[2]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
+            Set(m, $"{sec}/ZoomLevel[3]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
+            Set(m, $"{sec}/ZoomLevel[4]", "Fov", "40");
         }
 
         Set(m, "Player_Weapon_Guard", "Fov", "40");
         foreach (var sec in new[] { "Player_Weapon_Guard", "Player_Weapon_Rush" })
         {
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", "3.4");
+            Set(m, $"{sec}/ZoomLevel[2]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", "6");
+            Set(m, $"{sec}/ZoomLevel[3]", "Fov", "40");
             Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", "8");
+            Set(m, $"{sec}/ZoomLevel[4]", "Fov", "40");
         }
 
         // RightOffset normalization (prevents horizontal drift during walk/run/guard)
@@ -264,6 +399,21 @@ public static class CameraRules
         Set(m, "Player_Ride_Elephant", "Fov", "40");
         Set(m, "Player_Ride_Wyvern", "Fov", "50");
 
+        // Lock-on MaxZoomDistance -- vanilla values (often 5) clamp the camera hard,
+        // overriding any ZoomDistance we set. Raise the ceiling unconditionally so the
+        // lock-on offset and style distances can actually take effect regardless of
+        // whether Steadycam is enabled.
+        foreach (var sec in LockOnSections)
+        {
+            Set(m, $"{sec}/ZoomLevel[1]", "MaxZoomDistance", "30");
+            Set(m, $"{sec}/ZoomLevel[2]", "MaxZoomDistance", "30");
+            Set(m, $"{sec}/ZoomLevel[3]", "MaxZoomDistance", "30");
+            Set(m, $"{sec}/ZoomLevel[4]", "MaxZoomDistance", "30");
+        }
+        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[1]", "MaxZoomDistance", "30");
+        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[2]", "MaxZoomDistance", "30");
+        Set(m, "Player_Ride_Aim_LockOn/ZoomLevel[3]", "MaxZoomDistance", "30");
+
         return m;
     }
 
@@ -272,6 +422,18 @@ public static class CameraRules
     private static Dictionary<string, Dictionary<string, (string, string)>> BuildSmoothing()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
+
+        // On-foot idle/walk/run blend -- smooths the run→stop zoom-out snap.
+        // Vanilla Player_Basic_Default (idle) has no BlendInTime so when the player
+        // stops running the camera snaps back to the idle position immediately.
+        Set(m, "Player_Basic_Default/CameraBlendParameter", "BlendInTime", "0.6");
+        Set(m, "Player_Basic_Default/CameraBlendParameter", "BlendOutTime", "0.4");
+        Set(m, "Player_Basic_Default_Walk/CameraBlendParameter", "BlendInTime", "0.4");
+        Set(m, "Player_Basic_Default_Walk/CameraBlendParameter", "BlendOutTime", "0.3");
+        Set(m, "Player_Basic_Default_Run/CameraBlendParameter", "BlendInTime", "0.4");
+        Set(m, "Player_Basic_Default_Run/CameraBlendParameter", "BlendOutTime", "0.4");
+        Set(m, "Player_Basic_Default_Runfast/CameraBlendParameter", "BlendInTime", "0.4");
+        Set(m, "Player_Basic_Default_Runfast/CameraBlendParameter", "BlendOutTime", "0.4");
 
         // Guard blend: smooth enter/exit to prevent zoom snap on release
         Set(m, "Player_Weapon_Guard/CameraBlendParameter", "BlendInTime", "1.0");
@@ -307,12 +469,6 @@ public static class CameraRules
             Set(m, $"{sec}/CameraDamping", "PivotDampingMaxDistance", "0.5");
             Set(m, $"{sec}/OffsetByVelocity", "OffsetLength", "0.0");
             Set(m, $"{sec}/OffsetByVelocity", "DampSpeed", "0.5");
-            Set(m, $"{sec}/ZoomLevel[0]", "RightOffset", "0.8");
-            Set(m, $"{sec}/ZoomLevel[0]", "UpOffset", "0.2");
-            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", "1.8");
-            Set(m, $"{sec}/ZoomLevel[1]", "RightOffset", "1.1");
-            Set(m, $"{sec}/ZoomLevel[1]", "UpOffset", "0.3");
-            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", "3.5");
             Set(m, $"{sec}/ZoomLevel[2]", "RightOffset", "1.45");
             Set(m, $"{sec}/ZoomLevel[3]", "RightOffset", "1.8");
         }
@@ -343,6 +499,73 @@ public static class CameraRules
         Set(m, "Player_Ride_Wyvern/ZoomLevel[2]", "ZoomDistance", "12.0");
         Set(m, "Player_Ride_Wyvern/ZoomLevel[3]", "ZoomDistance", "16.0");
         Set(m, "Player_Ride_Wyvern/ZoomLevel[4]", "ZoomDistance", "20.0");
+
+
+        // Combat finisher (Player_Weapon_Down) -- vanilla BlendInTime=0.5 snaps hard on kill
+        Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendInTime", "1.2");
+        Set(m, "Player_Weapon_Down/CameraBlendParameter", "BlendOutTime", "1.5");
+
+        // Rush / charge -- vanilla 0.25 is extremely jarring when entering a charge attack
+        Set(m, "Player_Weapon_Rush/CameraBlendParameter", "BlendInTime", "0.6");
+        Set(m, "Player_Weapon_Rush/CameraBlendParameter", "BlendOutTime", "0.6");
+
+        // Freefall -- vanilla 0.65 snaps on jump-off; ease in smoothly
+        Set(m, "Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Basic_FreeFall/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Basic_FreeFall/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Super jump -- vanilla 0.5 snaps on launch
+        Set(m, "Player_Basic_SuperJump/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Basic_SuperJump/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Rope pull / swing -- vanilla 0.5 snaps on grab
+        Set(m, "Player_Basic_RopePull/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Basic_RopePull/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Basic_RopeSwing/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Basic_RopeSwing/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Hit / thrown -- vanilla 0.5 snaps when knocked back
+        Set(m, "Player_Hit_Throw/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Hit_Throw/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Warmachine aim / dash -- vanilla 0.5 snaps on weapon draw / dash
+        Set(m, "Player_Ride_Warmachine_Aim/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Ride_Warmachine_Aim/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Ride_Warmachine_Dash/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Ride_Warmachine_Dash/CameraBlendParameter", "BlendOutTime", "1.0");
+
+        // Mount lock-on -- vanilla 0.5 snaps when locking on from horseback
+        Set(m, "Player_Ride_Aim_LockOn/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Ride_Aim_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
+
+        // Lock-on blend smoothing -- soften transitions into and out of lock-on cameras
+        Set(m, "Player_Weapon_LockOn/CameraBlendParameter", "BlendInTime", "1.25");
+        Set(m, "Player_Weapon_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Weapon_TwoTarget/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Weapon_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Weapon_LockOn_System/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Weapon_LockOn_System/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_FollowLearn_LockOn_Boss/CameraBlendParameter", "BlendInTime", "0.6");
+        Set(m, "Player_FollowLearn_LockOn_Boss/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Interaction_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
+
+        // Extended lock-on coverage -- sections not previously smoothed
+        Set(m, "Player_Revive_LockOn_System/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Revive_LockOn_System/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Force_LockOn/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Force_LockOn/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_LockOn_Titan/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_LockOn_Titan/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendInTime", "1.0");
+        Set(m, "Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter", "BlendOutTime", "1.2");
+        Set(m, "Player_StartAggro_TwoTarget/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_StartAggro_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
+        Set(m, "Player_Wanted_TwoTarget/CameraBlendParameter", "BlendInTime", "0.8");
+        Set(m, "Player_Wanted_TwoTarget/CameraBlendParameter", "BlendOutTime", "1.0");
 
         return m;
     }
@@ -375,78 +598,58 @@ public static class CameraRules
         return m;
     }
 
-    // ── Extra zoom (ZL5 + ZL6) ────────────────────────────────────────
+    // ── Steadycam key set ────────────────────────────────────────────
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildExtraZoom()
+    /// <summary>
+    /// Returns all "modKey.attr" strings that BuildSmoothing() and BuildSharedSteadycam()
+    /// control. Used by the fine-tune UI to disable sliders when Steadycam is active.
+    /// </summary>
+    public static HashSet<string> GetSteadycamKeys()
     {
-        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-
-        foreach (var sec in AllMain)
-        {
-            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.85");
-            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.25");
-            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24");
-            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "2.45");
-            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.40");
-            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48");
-        }
-
-        foreach (var sec in HorseRideSections)
-        {
-            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.15");
-            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.15");
-            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24.6");
-            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "1.55");
-            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.30");
-            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48.6");
-        }
-
-        foreach (var sec in new[] { "Player_Ride_Elephant", "Player_Ride_Wyvern" })
-        {
-            Set(m, $"{sec}/ZoomLevel[5]", "RightOffset", "1.40");
-            Set(m, $"{sec}/ZoomLevel[5]", "UpOffset", "0.25");
-            Set(m, $"{sec}/ZoomLevel[5]", "ZoomDistance", "24");
-            Set(m, $"{sec}/ZoomLevel[6]", "RightOffset", "1.90");
-            Set(m, $"{sec}/ZoomLevel[6]", "UpOffset", "0.40");
-            Set(m, $"{sec}/ZoomLevel[6]", "ZoomDistance", "48");
-        }
-
-        return m;
+        var keys = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var (modKey, attrs) in BuildSmoothing())
+            foreach (var (attr, _) in attrs)
+                keys.Add($"{modKey}.{attr}");
+        foreach (var (modKey, attrs) in BuildSharedSteadycam())
+            foreach (var (attr, _) in attrs)
+                keys.Add($"{modKey}.{attr}");
+        return keys;
     }
 
-    // ── Horse first-person (ZL0 with eye-bone pivot) ────────────────
+    // ── Lock-on distance helper ──────────────────────────────────────
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildHorseFirstPerson()
+    /// <summary>
+    /// Sets ZoomDistance on all lock-on sections to match the given on-foot distances.
+    /// Called by every style builder (private) and exposed publicly so the Fine Tune
+    /// layer can re-sync lock-on after user overrides are applied.
+    /// </summary>
+    public static Dictionary<string, Dictionary<string, (string, string)>> BuildLockOnDistancesPublic(
+        double zl2, double zl3, double zl4)
+        => BuildLockOnDistances(zl2, zl3, zl4);
+
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildLockOnDistances(
+        double zl2, double zl3, double zl4)
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-
-        foreach (var sec in HorseRideSections)
+        string zl2s = $"{zl2}";
+        string zl3s = $"{zl3}";
+        string zl4s = $"{zl4}";
+        foreach (var sec in LockOnSections)
         {
-            Set(m, sec, "PivotSetType", "FocusActor");
-            Set(m, sec, "DisableHidePivotActor", "True");
-
-            Set(m, $"{sec}/ZoomLevel[0]", "PivotBoneName", "B_Eyeball_L");
-            Set(m, $"{sec}/ZoomLevel[0]", "RightOffset", "0");
-            Set(m, $"{sec}/ZoomLevel[0]", "UpOffset", "0.10");
-            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", "0.0");
-            Set(m, $"{sec}/ZoomLevel[0]", "Fov", "75");
-            Set(m, $"{sec}/ZoomLevel[0]", "OverlapCharacterHide", "False");
-            Set(m, $"{sec}/ZoomLevel[0]", "MeshCutOffset", "-0.16");
-
-            if (sec == "Player_Ride_Horse_Dash" || sec == "Player_Ride_Horse_Dash_Att")
-                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.20");
-            else if (sec == "Player_Ride_Horse_Fast_Run")
-                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.15");
-            else
-                Set(m, $"{sec}/ZoomLevel[0]", "PivotFrontOffset", "0.05");
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", zl2s);
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
+            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
         }
-
+        // Player_Weapon_Down distance scaling -- scale with user's distance
+        Set(m, "Player_Weapon_Down/ZoomLevel[2]", "ZoomDistance", zl2s);
+        Set(m, "Player_Weapon_Down/ZoomLevel[3]", "ZoomDistance", zl3s);
+        Set(m, "Player_Weapon_Down/ZoomLevel[4]", "ZoomDistance", zl4s);
         return m;
     }
 
     // ── Style layers ─────────────────────────────────────────────────
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildWestern()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildHeroic()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -470,10 +673,11 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "InDoorUpOffset", "-0.2");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", "2.5");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", "-0.2");
+        Merge(m, BuildLockOnDistances(2.5, 5, 8));
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCinematic()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildPanoramic()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -496,10 +700,11 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", "3.75");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", "0.0");
         Merge(m, BuildMountDistances(1.2));
+        Merge(m, BuildLockOnDistances(3.75, 7.5, 11.25));
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildImmersive()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCloseUp()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -521,10 +726,11 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", "2.0");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", "-0.2");
         Merge(m, BuildMountDistances(0.75));
+        Merge(m, BuildLockOnDistances(2.0, 4.0, 6.0));
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildLowcamVariant(string baseUp, string? indoorUp = null)
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildLowVariant(string baseUp, string? indoorUp = null)
     {
         indoorUp ??= baseUp;
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
@@ -599,11 +805,12 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", "2.5");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "UpOffset", baseUp);
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "InDoorUpOffset", indoorUp);
+        Merge(m, BuildLockOnDistances(2.5, 5, 8));
 
         return m;
     }
 
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildRe2()
+    private static Dictionary<string, Dictionary<string, (string, string)>> BuildSurvival()
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
         foreach (var sec in AllMain)
@@ -623,6 +830,7 @@ public static class CameraRules
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[2]", "ZoomDistance", "1.8");
         Set(m, "Player_Basic_Default_Aim_Zoom/ZoomLevel[3]", "ZoomDistance", "3");
         Merge(m, BuildMountDistances(0.65));
+        Merge(m, BuildLockOnDistances(1.8, 3, 6));
         return m;
     }
 
@@ -751,41 +959,51 @@ public static class CameraRules
         return m;
     }
 
-    // ── Combat lock-on ───────────────────────────────────────────────
+    // ── Combat lock-on pull-back ─────────────────────────────────────
 
-    private static readonly Dictionary<string, Dictionary<string, Dictionary<string, (string, string)>>> CombatLockOn = new()
-    {
-        ["wide"] = BuildCombatWide(),
-        ["max"] = BuildCombatMax(),
-    };
-
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatWide()
-    {
-        var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[2]", "ZoomDistance", "4.5");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[3]", "ZoomDistance", "8.3");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[4]", "ZoomDistance", "9.9");
-        Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", "15");
-        Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", "15");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[3]", "ZoomDistance", "9.8");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[1]", "ZoomDistance", "5.3");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[2]", "ZoomDistance", "9");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[3]", "ZoomDistance", "9");
-        return m;
-    }
-
-    private static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatMax()
+    /// <summary>
+    /// Applies a proportional offset to lock-on camera distances relative to the
+    /// on-foot base set by BuildLockOnDistances. 0 = seamless with Steadycam.
+    /// Positive values pull the camera further out (battlefield awareness).
+    /// Negative values zoom in (cinematic focus / guard close-up).
+    /// </summary>
+    public static Dictionary<string, Dictionary<string, (string, string)>> BuildCombatPullback(
+        double zl2, double zl3, double zl4, double offset)
     {
         var m = new Dictionary<string, Dictionary<string, (string, string)>>();
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[2]", "ZoomDistance", "6.0");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[3]", "ZoomDistance", "9.9");
-        Set(m, "Player_FollowLearn_LockOn_Boss/ZoomLevel[4]", "ZoomDistance", "9.9");
-        Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", "20");
-        Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", "20");
-        Set(m, "Player_Weapon_LockOn/ZoomLevel[3]", "ZoomDistance", "9.9");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[1]", "ZoomDistance", "7.0");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[2]", "ZoomDistance", "9");
-        Set(m, "Player_Weapon_TwoTarget/ZoomLevel[3]", "ZoomDistance", "9");
+        if (offset == 0) return m;
+
+        double f = 1.0 + offset;
+        string zl2s = $"{Math.Round(zl2 * f, 1)}";
+        string zl3s = $"{Math.Round(zl3 * f, 1)}";
+        string zl4s = $"{Math.Round(zl4 * f, 1)}";
+
+        // All lock-on sections
+        foreach (var sec in LockOnSections)
+        {
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", zl2s);
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
+            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
+        }
+
+        // Guard and rush -- game switches to these when guarding/charging,
+        // not to a LockOn section, so they need the offset applied separately
+        foreach (var sec in new[] { "Player_Weapon_Guard", "Player_Weapon_Rush" })
+        {
+            Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", zl2s);
+            Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", zl3s);
+            Set(m, $"{sec}/ZoomLevel[4]", "ZoomDistance", zl4s);
+        }
+
+        // Force/Titan lock-on -- these use a wider base distance in vanilla
+        double forceDist = Math.Round(zl3 * f * 2.0, 1);
+        Set(m, "Player_Force_LockOn/ZoomLevel[2]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_Force_LockOn/ZoomLevel[3]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_Force_LockOn/ZoomLevel[4]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[1]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[2]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[3]", "ZoomDistance", $"{forceDist}");
+        Set(m, "Player_LockOn_Titan/ZoomLevel[4]", "ZoomDistance", $"{forceDist}");
         return m;
     }
 
@@ -794,24 +1012,24 @@ public static class CameraRules
     private static readonly Dictionary<string, double> StyleUpOffset = new()
     {
         ["default"] = 0.0,
-        ["western"] = -0.2,
-        ["cinematic"] = 0.0,
-        ["immersive"] = -0.2,
-        ["lowcam"] = -0.8,
-        ["vlowcam"] = -1.2,
-        ["ulowcam"] = -1.5,
-        ["re2"] = 0.0,
+        ["heroic"] = -0.2,
+        ["panoramic"] = 0.0,
+        ["close-up"] = -0.2,
+        ["low-rider"] = -0.8,
+        ["knee-cam"] = -1.2,
+        ["dirt-cam"] = -1.5,
+        ["survival"] = 0.0,
     };
 
     private static readonly Dictionary<string, Func<Dictionary<string, Dictionary<string, (string, string)>>>> StyleBuilders = new()
     {
-        ["western"] = BuildWestern,
-        ["cinematic"] = BuildCinematic,
-        ["immersive"] = BuildImmersive,
-        ["lowcam"] = () => BuildLowcamVariant("-0.8"),
-        ["vlowcam"] = () => BuildLowcamVariant("-1.2"),
-        ["ulowcam"] = () => BuildLowcamVariant("-1.5"),
-        ["re2"] = BuildRe2,
+        ["heroic"] = BuildHeroic,
+        ["panoramic"] = BuildPanoramic,
+        ["close-up"] = BuildCloseUp,
+        ["low-rider"] = () => BuildLowVariant("-0.8"),
+        ["knee-cam"] = () => BuildLowVariant("-1.2"),
+        ["dirt-cam"] = () => BuildLowVariant("-1.5"),
+        ["survival"] = BuildSurvival,
     };
 
     // ── Custom style builder ─────────────────────────────────────────
@@ -878,8 +1096,6 @@ public static class CameraRules
         var list = new List<(string, int, double)>();
         foreach (var sec in HorseRideSections)
         {
-            list.Add((sec, 0, 0.8));
-            list.Add((sec, 1, 1.1));
             list.Add((sec, 2, 1.45));
             list.Add((sec, 3, 1.8));
         }
@@ -898,6 +1114,14 @@ public static class CameraRules
         list.Add(("Player_Ride_Broom", 3, 0.4));
         return list.ToArray();
     }
+
+    /// <summary>
+    /// Inverse of <see cref="BuildCustom"/> for on-foot ZL2: maps XML <c>RightOffset</c> at
+    /// <c>Player_Basic_Default/ZoomLevel[2]</c> to the UCM Quick horizontal shift (delta).
+    /// Vanilla (~0.5) → 0; file-centered (0) → 0.5.
+    /// </summary>
+    public static double QuickShiftDeltaFromFootZl2RightOffset(double rightOffsetZl2)
+        => VanillaRoZL2 - rightOffsetZl2;
 
     public static Dictionary<string, Dictionary<string, (string, string)>> BuildCustom(
         double distance, double upOffset, double rightOffset)
@@ -945,14 +1169,10 @@ public static class CameraRules
             Set(m, $"{sec}/ZoomLevel[{zl}]", "RightOffset", $"{vanilla * factor:F2}");
 
         // Scale horse zoom distances from the user's distance value
-        double horseZL0Dist = Math.Round(distance * 0.36, 1);
-        double horseZL1Dist = Math.Round(distance * 0.7, 1);
         double horseZL2Dist = Math.Round(distance * 1.5, 1);
         double horseZL3Dist = Math.Round(distance * 2.1, 1);
         foreach (var sec in HorseRideSections)
         {
-            Set(m, $"{sec}/ZoomLevel[0]", "ZoomDistance", $"{horseZL0Dist}");
-            Set(m, $"{sec}/ZoomLevel[1]", "ZoomDistance", $"{horseZL1Dist}");
             Set(m, $"{sec}/ZoomLevel[2]", "ZoomDistance", $"{horseZL2Dist}");
             Set(m, $"{sec}/ZoomLevel[3]", "ZoomDistance", $"{horseZL3Dist}");
         }
@@ -962,6 +1182,10 @@ public static class CameraRules
         // (lantern, blinding flash, bow, CTRL focus, etc.)
         foreach (var (sec, zl, vanilla) in AimInteractionRoBaselines)
             Set(m, $"{sec}/ZoomLevel[{zl}]", "RightOffset", $"{vanilla * factor:F2}");
+
+        // Lock-on distances scale with the user's chosen distance so there's no
+        // zoom-in when transitioning from on-foot to lock-on.
+        Merge(m, BuildLockOnDistances(zl2Dist, zl3Dist, zl4Dist));
 
         return m;
     }
@@ -977,9 +1201,10 @@ public static class CameraRules
         StyleUpOffset["custom"] = height;
     }
 
-    public static ModificationSet BuildModifications(string style, int fov, bool bane, string combat,
+    public static ModificationSet BuildModifications(string style, int fov, bool bane,
+        double combatPullback = 0.0,
         bool mountHeight = false, double? customUp = null, bool steadycam = true,
-        bool extraZoom = false, bool horseFirstPerson = false)
+        bool lockOnAutoRotate = true)
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
 
@@ -993,7 +1218,11 @@ public static class CameraRules
             Merge(mods, BuildSharedSteadycam());
         }
 
-        // Layer 2: style overrides
+        // Layer 2: style overrides.
+        // Always seed lock-on distances from the default (matching BuildSharedBase on-foot values)
+        // so custom/user presets on the "default" style get the same normalization as named styles.
+        // Named style builders will Merge their own BuildLockOnDistances on top and win.
+        Merge(mods, BuildLockOnDistances(3.4, 6, 8));
         if (StyleBuilders.TryGetValue(style, out var builder))
             Merge(mods, builder());
 
@@ -1001,9 +1230,26 @@ public static class CameraRules
         if (bane)
             Merge(mods, BuildBaneMods());
 
-        // Layer 4: combat lock-on distance
-        if (CombatLockOn.TryGetValue(combat, out var combatMods))
-            Merge(mods, combatMods);
+        // Layer 4: lock-on offset -- proportional delta on top of base lock-on distances.
+        // Read the actual ZL2/ZL3/ZL4 that ended up in mods after the style layer so the
+        // offset always scales relative to the user's chosen distance.
+        // Positive = pull back (more awareness), negative = zoom in (cinematic focus).
+        if (combatPullback != 0)
+        {
+            double zl2 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[2]", out var zl2d)
+                && zl2d.TryGetValue("ZoomDistance", out var zl2v)
+                && double.TryParse(zl2v.Item2, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double zl2p) ? zl2p : 3.4;
+            double zl3 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[3]", out var zl3d)
+                && zl3d.TryGetValue("ZoomDistance", out var zl3v)
+                && double.TryParse(zl3v.Item2, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double zl3p) ? zl3p : 6.0;
+            double zl4 = mods.TryGetValue("Player_Basic_Default/ZoomLevel[4]", out var zl4d)
+                && zl4d.TryGetValue("ZoomDistance", out var zl4v)
+                && double.TryParse(zl4v.Item2, System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture, out double zl4p) ? zl4p : 8.0;
+            Merge(mods, BuildCombatPullback(zl2, zl3, zl4, combatPullback));
+        }
 
         // Layer 5: match mount height to player
         if (mountHeight)
@@ -1012,13 +1258,16 @@ public static class CameraRules
             Merge(mods, BuildMountHeightMods(up));
         }
 
-        // Layer 6: extra zoom levels (ZL5 + ZL6)
-        if (extraZoom)
-            Merge(mods, BuildExtraZoom());
-
-        // Layer 7: horse first-person (ZL0 with eye-bone pivot)
-        if (horseFirstPerson)
-            Merge(mods, BuildHorseFirstPerson());
+        // Layer 6: lock-on auto-rotate (disable camera snap to target).
+        // Credit: sillib1980 (https://github.com/sillib1980) discovered these fields.
+        if (!lockOnAutoRotate)
+        {
+            var ar = new Dictionary<string, Dictionary<string, (string, string)>>();
+            Set(ar, "Player_Weapon_LockOn", "IsAutoRotate", "false");
+            Set(ar, "Player_Weapon_LockOn_System", "IsAutoRotate", "false");
+            Set(ar, "Player_Weapon_TwoTarget", "IsTargetFixed", "false");
+            Merge(mods, ar);
+        }
 
         return new ModificationSet { ElementMods = mods, FovValue = fov };
     }
