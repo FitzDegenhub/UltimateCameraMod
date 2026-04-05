@@ -246,7 +246,8 @@ public partial class MainWindow : Window
                 customUp = HeightSlider.Value;
             }
             bool sc = SteadycamCheck.IsChecked == true;
-            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combatPullback: pullback, mountHeight: mount, customUp: customUp, steadycam: sc);
+            bool lockOnAutoRotate = LockOnAutoRotateCheck.IsChecked != true;
+            var modSet = CameraRules.BuildModifications(styleId, fov, bane, combatPullback: pullback, mountHeight: mount, customUp: customUp, steadycam: sc, lockOnAutoRotate: lockOnAutoRotate);
             vanillaXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
             var defaultRows = CameraMod.ParseXmlToRows(vanillaXml);

@@ -308,6 +308,7 @@ public partial class MainWindow : Window
         double pullback = GetCombatPullback();
         bool mount = MountHeightCheck.IsChecked == true;
         bool sc = SteadycamCheck.IsChecked == true;
+        bool lockOnAutoRotate = LockOnAutoRotateCheck.IsChecked != true; // Checkbox is "Disable", so checked = false
 
         // Match v2: named styles use StyleUpOffset for mount height; custom sliders apply only when style_id is "custom".
         double? customUp = null;
@@ -318,7 +319,8 @@ public partial class MainWindow : Window
         }
 
         return CameraRules.BuildModifications(styleId, fov, bane, combatPullback: pullback,
-            mountHeight: mount, customUp: customUp, steadycam: sc);
+            mountHeight: mount, customUp: customUp, steadycam: sc,
+            lockOnAutoRotate: lockOnAutoRotate);
     }
 
     /// <summary>

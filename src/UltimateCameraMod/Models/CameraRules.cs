@@ -1203,7 +1203,8 @@ public static class CameraRules
 
     public static ModificationSet BuildModifications(string style, int fov, bool bane,
         double combatPullback = 0.0,
-        bool mountHeight = false, double? customUp = null, bool steadycam = true)
+        bool mountHeight = false, double? customUp = null, bool steadycam = true,
+        bool lockOnAutoRotate = true)
     {
         var mods = new Dictionary<string, Dictionary<string, (string, string)>>();
 
@@ -1255,6 +1256,17 @@ public static class CameraRules
         {
             double up = customUp ?? (StyleUpOffset.TryGetValue(style, out var u) ? u : 0.0);
             Merge(mods, BuildMountHeightMods(up));
+        }
+
+        // Layer 6: lock-on auto-rotate (disable camera snap to target).
+        // Credit: sillib1980 (https://github.com/sillib1980) discovered these fields.
+        if (!lockOnAutoRotate)
+        {
+            var ar = new Dictionary<string, Dictionary<string, (string, string)>>();
+            Set(ar, "Player_Weapon_LockOn", "IsAutoRotate", "false");
+            Set(ar, "Player_Weapon_LockOn_System", "IsAutoRotate", "false");
+            Set(ar, "Player_Weapon_TwoTarget", "IsTargetFixed", "false");
+            Merge(mods, ar);
         }
 
         return new ModificationSet { ElementMods = mods, FovValue = fov };

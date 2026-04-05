@@ -8,6 +8,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ## [Unreleased] (v3.0.3)
 
+### Camera
+- **Lock-on auto-rotate toggle** - New checkbox in UCM Quick to disable camera snap-to-target when locking on. Prevents the camera from whipping around to face a target behind you. Discovered by [sillib1980](https://github.com/sillib1980). Sets `IsAutoRotate` and `IsTargetFixed` on lock-on camera sections.
+
 ### God Mode
 - **Sacred God Mode overrides** - Values you edit in God Mode are now permanently protected from Quick/Fine Tune rebuilds. The camera rule engine skips any field you've explicitly touched. Your values stay exactly where you put them, no matter what happens in Quick or Fine Tune. Addresses issues #18, #20.
 - **Green sacred indicators** - Sacred values show in green in the God Mode grid (white = vanilla, gold = rules-modified, green = sacred/protected). Row count shows sacred count.

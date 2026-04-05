@@ -364,6 +364,10 @@ public partial class MainWindow : Window
                                 MountHeightCheck.IsChecked = mountEl.ValueKind == JsonValueKind.True;
                             if (settings.TryGetProperty("steadycam", out var scEl))
                                 SteadycamCheck.IsChecked = scEl.ValueKind == JsonValueKind.True;
+                            if (settings.TryGetProperty("lock_on_auto_rotate_disabled", out var arEl))
+                                LockOnAutoRotateCheck.IsChecked = arEl.ValueKind == JsonValueKind.True;
+                            else
+                                LockOnAutoRotateCheck.IsChecked = false; // Default: auto-rotate on (vanilla)
                         }
                         finally
                         {
@@ -1249,7 +1253,8 @@ public partial class MainWindow : Window
             ["combat_pullback"] = GetCombatPullback(),
             ["centered"] = BaneCheck.IsChecked == true,
             ["mount_height"] = MountHeightCheck.IsChecked == true,
-            ["steadycam"] = SteadycamCheck.IsChecked == true
+            ["steadycam"] = SteadycamCheck.IsChecked == true,
+            ["lock_on_auto_rotate_disabled"] = LockOnAutoRotateCheck.IsChecked == true
         };
     }
 
@@ -1415,6 +1420,7 @@ public partial class MainWindow : Window
                     double combatPullback = 0.0;
                     bool mountHeight = false;
                     bool steadycam = true;
+                    bool lockOnAutoRotate = true;
                     if (root.TryGetProperty("settings", out var settingsEl))
                     {
                         if (settingsEl.TryGetProperty("fov", out var fovEl) && fovEl.ValueKind == JsonValueKind.Number)
@@ -1425,10 +1431,13 @@ public partial class MainWindow : Window
                             mountHeight = mhEl.ValueKind == JsonValueKind.True;
                         if (settingsEl.TryGetProperty("steadycam", out var scEl))
                             steadycam = scEl.ValueKind == JsonValueKind.True;
+                        if (settingsEl.TryGetProperty("lock_on_auto_rotate_disabled", out var arEl))
+                            lockOnAutoRotate = arEl.ValueKind != JsonValueKind.True; // disabled=true means autoRotate=false
                     }
 
                     var modSet = CameraRules.BuildModifications(styleId, fov, false,
-                        combatPullback: combatPullback, mountHeight: mountHeight, steadycam: steadycam);
+                        combatPullback: combatPullback, mountHeight: mountHeight, steadycam: steadycam,
+                        lockOnAutoRotate: lockOnAutoRotate);
                     string builtXml = CameraMod.ApplyModifications(vanillaXml, modSet);
 
                     var rebuilt = new Dictionary<string, object>();

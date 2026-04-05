@@ -488,6 +488,12 @@
                                       IsChecked="True" Margin="0,0,0,8"
                                       ToolTip="Smooths blending, damping and velocity offsets between movement states. Disable to restore vanilla camera transitions."/>
 
+                            <TextBlock Text="Lock-on auto-rotate" Style="{StaticResource FieldLabel}" Grid.Row="6"/>
+                            <CheckBox x:Name="LockOnAutoRotateCheck" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
+                                      Content="Disable camera snap to target when locking on"
+                                      Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,8"
+                                      ToolTip="When checked, the camera stays in place instead of snapping around to face the locked-on target. Discovered by sillib1980."/>
+
                         </Grid>
                     </Border>
                         </DockPanel>
