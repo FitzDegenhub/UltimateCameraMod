@@ -143,22 +143,17 @@ Includes title, version, author, Nexus URL, and description fields for JSON/XML.
 - **Resizable window** - size persists between sessions
 - **Portable** - single `.exe`, no installer required
 
-### Preset sharing (v2 + v3)
+### Philosophy
 
-> **Nobody has perfected Crimson Desert's camera yet - and that's the point.**
+> **Nobody has perfected Crimson Desert's camera yet -- and that's the point.**
 >
-> The vanilla game has over 150 camera states, each with dozens of parameters. No single developer can tune all of that for every playstyle and display. UCM was built with sharing at its core.
+> The vanilla game has over 150 camera states, each with dozens of parameters. No single developer can tune all of that for every playstyle and display. That's why UCM exists -- not to tell you what the perfect camera is, but to give you the tools to find it yourself and share it with others.
 >
-> Every setting you tweak can be exported and shared. The guard-camera zoom snap that plagued the vanilla game was solved by a single user adjusting one FoV value. That kind of community-driven fine-tuning is exactly what this tool is for.
+> Every setting you tweak can be exported and shared. The lock-on auto-rotate fix that eliminated camera snap during combat was discovered by a single community member experimenting in God Mode. That kind of community-driven fine-tuning is exactly what this tool is for.
 
-**v2 string formats** (still supported):
+### Preset sharing
 
-| Format | Contains |
-|--------|----------|
-| `UCM:...` | Distance, height, horizontal shift |
-| `UCM_ADV:...` | Full XML parameter overrides |
-
-**v3** adds file-based JSON presets and multi-format export on top of these.
+Export your camera setup as a `.ucmpreset` file and share it with others. Import presets from the community catalog, Nexus Mods, or other players. UCM also exports to JSON (for [JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113) and [CDUMM](https://www.nexusmods.com/crimsondesert/mods/207)), raw XML, and direct PAZ install.
 
 ---
 
