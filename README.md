@@ -51,8 +51,8 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 
 | Branch | Status | What it is |
 |--------|--------|------------|
-| **`main`** | v3.1 Release | Full release -- tune in-app, export **.json** for **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** or **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** |
-| **`v3-dev`** | Development | Next version development branch |
+| **`main`** | v3.1 Release | Standalone camera toolkit with three-tier editor (UCM Quick / Fine Tune / God Mode), file-based presets, community catalog, multi-format export, and direct PAZ install |
+| **`development`** | Development | Next version development branch |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
@@ -266,9 +266,10 @@ v2.4+ automatically cleans stale data from previous versions on first launch. v3
 
 ## Version history
 
-- **v3.0.2-beta** (`v3-dev`) - All dialogs converted to in-app overlay system (no more Windows popups). God Mode overrides persist across tab switches. New preset type selection (UCM Managed vs Full Manual Control). Community preset catalog moved to main repo. 54 God Mode attribute tooltips. Game crash fixes for LockOn/LookAt sections. Vanilla validation updated for June 2026 game patch. Interactive tainted backup handling. Fresh install/upgrade detection. 21-page Wiki. Multiple bug fixes. See [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.0.2).
-- **v3.0.1-beta** - Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode). `.ucmpreset` file format. File-based preset system with collapsible sidebar. UCM and community preset catalogs with revision tracking. Multi-format export (JSON, XML, 0.paz, `.ucmpreset`). Preset lock system. Raw XML import. Steadycam expanded to 30+ camera states. Lock-on zoom slider (-60% to +60%). Live camera preview. Game patch awareness.
-- **v2.5** - Current stable release on GitHub Releases.
+- **v3.1** - Sacred God Mode overrides (user edits permanently protected from rebuilds). Lock-on Auto-Rotate toggle (credits to [sillib1980](https://github.com/sillib1980)). Green sacred indicators. Full Manual Control install fix. Version-aware upgrade overlay. See [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
+- **v3.0.2** - All dialogs converted to in-app overlay system. God Mode overrides persist across tab switches. Preset type selection (UCM Managed vs Full Manual Control). Community preset catalog moved to main repo. 54 God Mode attribute tooltips. Game crash fixes. Vanilla validation updated for June 2026 game patch. 21-page Wiki.
+- **v3.0.1** - Export-first redesign. Three-tier editor (UCM Quick / Fine Tune / God Mode). `.ucmpreset` file format. File-based preset system. UCM and community preset catalogs. Multi-format export. Steadycam expanded to 30+ camera states. Lock-on zoom slider.
+- **v2.5** - Last v2.x release.
 - **v2.4** - Proportional horizontal shift, shift on all mounts and aim abilities, horse camera overhaul, version-aware backups, FoV preview, resizable window.
 - **v2.3** - Horizontal shift fix for 16:9, delta-based slider, full install config banner.
 - **v2.2** - Steadycam, extra zoom levels, horse first person, horizontal shift, universal FoV, skill aiming consistency, Import XML, preset sharing, update notifications.
