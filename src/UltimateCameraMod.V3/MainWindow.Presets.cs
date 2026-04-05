@@ -679,7 +679,10 @@ public partial class MainWindow : Window
         TabGodMode.Opacity  = isUcmPreset ? 0.5 : 1.0;
 
         if (!fineTuneLocked)
+        {
             ApplySteadycamSliderLock();
+            ApplySacredSliderLock();
+        }
     }
 
     private void ApplySteadycamSliderLock()
@@ -703,6 +706,30 @@ public partial class MainWindow : Window
                 lbl.Opacity = shouldLock ? 0.38 : 1.0;
             if (shouldLock)
                 slider.ToolTip = "Controlled by Steadycam — uncheck Steadycam to adjust manually";
+        }
+    }
+
+    private void ApplySacredSliderLock()
+    {
+        if (_advCtrlSliders.Count == 0) return;
+        var sacredKeys = GetSacredKeys();
+        bool presetLocked = IsActivePresetEditingLocked() || IsActivePresetDeepEditLocked();
+
+        var alreadyProcessed = new HashSet<Slider>(ReferenceEqualityComparer.Instance);
+        foreach (var (key, slider) in _advCtrlSliders)
+        {
+            if (slider == null || alreadyProcessed.Contains(slider)) continue;
+            alreadyProcessed.Add(slider);
+
+            bool isSacred = sacredKeys != null && sacredKeys.Contains(key);
+            if (isSacred && !presetLocked)
+            {
+                slider.IsEnabled = false;
+                slider.Opacity = 0.38;
+                if (_advCtrlValueLabels.TryGetValue(key, out var lbl) && lbl != null)
+                    lbl.Foreground = (Brush)FindResource("SuccessBrush");
+                slider.ToolTip = "Sacred -- controlled by God Mode";
+            }
         }
     }
 

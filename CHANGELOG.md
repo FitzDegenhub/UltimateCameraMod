@@ -6,7 +6,23 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
-## [Unreleased] (v3.0.2)
+## [Unreleased] (v3.0.3)
+
+### God Mode
+- **Sacred God Mode overrides** - Values you edit in God Mode are now permanently protected from Quick/Fine Tune rebuilds. The camera rule engine skips any field you've explicitly touched. Your values stay exactly where you put them, no matter what happens in Quick or Fine Tune. Addresses issues #18, #20.
+- **Green sacred indicators** - Sacred values show in green in the God Mode grid (white = vanilla, gold = rules-modified, green = sacred/protected). Row count shows sacred count.
+- **"Sacred only" filter** - New filter option in God Mode dropdown to show only your protected values.
+- **Fine Tune slider locking** - Fine Tune sliders that control sacred God Mode values are greyed out with a green label and tooltip "Sacred -- controlled by God Mode".
+- **One-time sacred toast** - First God Mode edit on a managed preset shows a status message explaining the value is protected.
+
+### Bug Fixes
+- **Full Manual Control presets not installing edits** - Install was using the original vanilla XML from preset creation instead of rebuilding from current God Mode edits. God Mode changes on Full Manual Control presets now work correctly.
+- **God Mode overrides file polluted with CameraRules values** - `advanced_overrides.json` previously saved ALL values that differed from vanilla, including values set by CameraRules (not the user). Now only saves values the user explicitly edited.
+- **Fresh install showing upgrade overlay** - Startup created files (backups, preset dirs) before the fresh-install check ran, so it always detected "existing data". Detection now runs before any file creation.
+
+---
+
+## [v3.0.2] - 2026-04-04
 
 ### UI
 - **In-app overlay dialogs** - All dialogs converted from Windows popups to themed in-app overlays (gold-bordered dark cards). X close button on all overlays (except fatal errors). No more Windows-style popups anywhere.

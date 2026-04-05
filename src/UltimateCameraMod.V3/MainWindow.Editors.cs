@@ -224,22 +224,36 @@ public partial class MainWindow : Window
         };
     }
 
-    private string BuildSimpleSessionXml()
+    private IReadOnlySet<string>? GetSacredKeys()
+    {
+        try
+        {
+            if (!File.Exists(AdvOverridesPath)) return null;
+            string json = File.ReadAllText(AdvOverridesPath);
+            var overrides = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+            if (overrides == null || overrides.Count == 0) return null;
+            return new HashSet<string>(overrides.Keys, StringComparer.Ordinal);
+        }
+        catch { return null; }
+    }
+
+    private string BuildSimpleSessionXml(IReadOnlySet<string>? sacredKeys = null)
     {
         string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
-        return CameraMod.ApplyModifications(vanillaXml, BuildCurrentSimpleModSet());
+        return CameraMod.ApplyModifications(vanillaXml, BuildCurrentSimpleModSet(), sacredKeys);
     }
 
     private string BuildCuratedSessionXml()
     {
-        string xml = BuildSimpleSessionXml();
+        var sacredKeys = GetSacredKeys();
+        string xml = BuildSimpleSessionXml(sacredKeys);
         if (_advCtrlSliders.Count == 0)
         {
             // Still apply God Mode overrides even if Fine Tune hasn't been opened
             return ReapplyGodModeOverrides(xml);
         }
 
-        xml = CameraMod.ApplyModifications(xml, BuildAdvancedControlsModSet());
+        xml = CameraMod.ApplyModifications(xml, BuildAdvancedControlsModSet(), sacredKeys);
 
         // If Steadycam is on, re-sync lock-on ZoomDistances to whatever on-foot ZoomDistances
         // ended up in the XML after Fine Tune overrides. Fine Tune may have changed ZL2/ZL3/ZL4
@@ -249,7 +263,7 @@ public partial class MainWindow : Window
             && CameraMod.TryParseOnFootZoomDistances(xml, out double zl2, out double zl3, out double zl4))
         {
             var lockOnSync = new ModificationSet { ElementMods = CameraRules.BuildLockOnDistancesPublic(zl2, zl3, zl4), FovValue = 0 };
-            xml = CameraMod.ApplyModifications(xml, lockOnSync);
+            xml = CameraMod.ApplyModifications(xml, lockOnSync, sacredKeys);
         }
 
         // Re-apply saved God Mode overrides so they persist across tab switches
@@ -270,7 +284,8 @@ public partial class MainWindow : Window
         // Start from the simple session (Steadycam, style, FOV, bane, etc. already applied)
         // then layer God Mode's explicit overrides on top. This ensures Steadycam and all
         // Quick settings are present in exports even when the user is on the God Mode tab.
-        string baseXml = BuildSimpleSessionXml();
+        var sacredKeys = GetSacredKeys();
+        string baseXml = BuildSimpleSessionXml(sacredKeys);
         string xml = CameraMod.ApplyModifications(baseXml, BuildExpertModSet());
 
         // Re-sync lock-on distances to whatever on-foot ZoomDistances ended up in the XML
@@ -437,7 +452,8 @@ public partial class MainWindow : Window
         if (_sessionIsFullPreset) return;
         try
         {
-            string xml = BuildSimpleSessionXml();
+            var sacredKeys = GetSacredKeys();
+            string xml = BuildSimpleSessionXml(sacredKeys);
 
             // Re-apply saved God Mode overrides so they persist across tab switches
             xml = ReapplyGodModeOverrides(xml);
@@ -447,6 +463,7 @@ public partial class MainWindow : Window
             {
                 ApplySessionXmlToAdvancedControls(xml);
                 ApplySteadycamSliderLock();
+                ApplySacredSliderLock();
             }
             _advCtrlNeedsRefresh = true;
             _expertNeedsRefresh = true;

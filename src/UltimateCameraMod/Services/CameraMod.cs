@@ -30,6 +30,30 @@ public static class CameraMod
 
     // ── XML modification engine ──────────────────────────────────────
 
+    /// <summary>
+    /// Applies modifications but skips any attribute whose FullKey (ModKey.Attribute) is in the exclude set.
+    /// Used to protect sacred God Mode overrides from being overwritten by CameraRules rebuilds.
+    /// </summary>
+    public static string ApplyModifications(string xmlText, ModificationSet modSet, IReadOnlySet<string>? excludeKeys)
+    {
+        if (excludeKeys == null || excludeKeys.Count == 0)
+            return ApplyModifications(xmlText, modSet);
+
+        var filtered = new Dictionary<string, Dictionary<string, (string Action, string Value)>>();
+        foreach (var (modKey, attrs) in modSet.ElementMods)
+        {
+            var kept = new Dictionary<string, (string Action, string Value)>();
+            foreach (var (attr, av) in attrs)
+            {
+                if (!excludeKeys.Contains($"{modKey}.{attr}"))
+                    kept[attr] = av;
+            }
+            if (kept.Count > 0)
+                filtered[modKey] = kept;
+        }
+        return ApplyModifications(xmlText, new ModificationSet { ElementMods = filtered, FovValue = modSet.FovValue });
+    }
+
     public static string ApplyModifications(string xmlText, ModificationSet modSet)
     {
         var elementMods = modSet.ElementMods;

@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.0.2-beta";
+    private const string Ver = "3.0.3-beta";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
@@ -95,6 +95,7 @@ public partial class MainWindow : Window
     private bool _sessionIsRawImport;
     private string _selectedStyleId = "panoramic";
     private List<AdvancedRow> _advAllRows = new();
+    private bool _sacredToastShown;
 
     // â”€â”€ JSON Mod Manager state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     private List<JsonModExporter.PatchChange>? _jsonLastPatches;

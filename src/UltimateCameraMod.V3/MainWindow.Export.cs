@@ -95,12 +95,11 @@ public partial class MainWindow : Window
         string xml;
         try
         {
-            // Full preset / imported snapshot: install the loaded session XML, not a rebuild from Quick only
-            // (rebuild can diverge from the saved file and can change compressed size vs. the slot).
-            if (_sessionIsFullPreset && !string.IsNullOrWhiteSpace(_sessionXml))
-                xml = _sessionXml;
-            else
-                xml = BuildSessionXmlForMode(_activeMode);
+            // Always rebuild from current editor state so God Mode edits are captured.
+            // BuildSessionXmlForMode routes to BuildGodModeSessionXml (which layers
+            // BuildExpertModSet on top) or BuildCuratedSessionXml (which includes
+            // ReapplyGodModeOverrides), so all sacred edits are included.
+            xml = BuildSessionXmlForMode(_activeMode);
             _sessionXml = xml;
         }
         catch (Exception ex)

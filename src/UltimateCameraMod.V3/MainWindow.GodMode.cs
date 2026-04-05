@@ -90,6 +90,7 @@ public partial class MainWindow : Window
         AdvFilterCombo.Items.Clear();
         AdvFilterCombo.Items.Add("All");
         AdvFilterCombo.Items.Add("Modified only");
+        AdvFilterCombo.Items.Add("Sacred only");
 
         var prefixes = _advAllRows
             .Select(r =>
@@ -109,7 +110,10 @@ public partial class MainWindow : Window
     private void AdvUpdateRowCount()
     {
         int modified = _advAllRows.Count(r => r.IsModified);
-        AdvRowCountLabel.Text = $"{_advFilteredRows.Count} rows  |  {modified} modified";
+        int sacred = _advAllRows.Count(r => r.IsUserEdited);
+        AdvRowCountLabel.Text = sacred > 0
+            ? $"{_advFilteredRows.Count} rows  |  {modified} modified  |  {sacred} sacred"
+            : $"{_advFilteredRows.Count} rows  |  {modified} modified";
     }
 
     private void OnAdvSearchChanged(object sender, System.Windows.Input.KeyEventArgs e) => AdvApplyFilter();
@@ -129,6 +133,8 @@ public partial class MainWindow : Window
 
         if (filter == "Modified only")
             filtered = filtered.Where(r => r.IsModified);
+        else if (filter == "Sacred only")
+            filtered = filtered.Where(r => r.IsUserEdited);
         else if (filter != "All")
             filtered = filtered.Where(r => r.Section.Contains(filter, StringComparison.OrdinalIgnoreCase));
 
@@ -160,10 +166,17 @@ public partial class MainWindow : Window
 
         Dispatcher.BeginInvoke(new Action(() =>
         {
+            if (e.Row.DataContext is AdvancedRow editedRow)
+                editedRow.IsUserEdited = editedRow.IsModified;
             AdvSaveOverrides();
             AdvUpdateRowCount();
             SaveCurrentUiState();
             QueueSavedToast();
+            if (!_sacredToastShown && e.Row.DataContext is AdvancedRow r && r.IsUserEdited)
+            {
+                _sacredToastShown = true;
+                SetStatus("Sacred edit: this value is now protected from Quick/Fine Tune rebuilds.", "Success");
+            }
         }), DispatcherPriority.Background);
     }
 
@@ -242,11 +255,15 @@ public partial class MainWindow : Window
                 lookup[dr.FullKey] = dr.Value;
 
             foreach (var row in _advAllRows)
+            {
                 row.Value = lookup.TryGetValue(row.FullKey, out string? val) ? val : row.VanillaValue;
+                row.IsUserEdited = false;
+            }
 
             AdvApplyFilter();
             AdvSaveOverrides();
             SaveCurrentUiState(immediate: true);
+            _sacredToastShown = false;
             SetStatus("Reset to UCM Quick defaults plus vanilla.", "Success");
         }
         catch (Exception ex)
@@ -279,7 +296,7 @@ public partial class MainWindow : Window
         foreach (var r in _advAllRows) lookup[r.FullKey] = r;
         foreach (var (key, val) in importResult)
         {
-            if (lookup.TryGetValue(key, out var row)) { row.Value = val; applied++; }
+            if (lookup.TryGetValue(key, out var row)) { row.Value = val; row.IsUserEdited = true; applied++; }
         }
 
         AdvApplyFilter();
@@ -312,6 +329,7 @@ public partial class MainWindow : Window
                 if (lookup.TryGetValue(row.FullKey, out string? val) && val != row.Value)
                 {
                     row.Value = val;
+                    row.IsUserEdited = true;
                     applied++;
                 }
             }
@@ -337,7 +355,7 @@ public partial class MainWindow : Window
         try
         {
             var modified = new Dictionary<string, string>();
-            foreach (var r in _advAllRows.Where(r => r.IsModified)) modified[r.FullKey] = r.Value;
+            foreach (var r in _advAllRows.Where(r => r.IsUserEdited)) modified[r.FullKey] = r.Value;
             if (modified.Count == 0) { if (File.Exists(AdvOverridesPath)) File.Delete(AdvOverridesPath); return; }
             File.WriteAllText(AdvOverridesPath,
                 JsonSerializer.Serialize(modified, new JsonSerializerOptions { WriteIndented = true }));
@@ -356,7 +374,13 @@ public partial class MainWindow : Window
             var lookup = new Dictionary<string, AdvancedRow>();
             foreach (var r in _advAllRows) lookup[r.FullKey] = r;
             foreach (var (key, val) in overrides)
-                if (lookup.TryGetValue(key, out var row)) row.Value = val;
+            {
+                if (lookup.TryGetValue(key, out var row))
+                {
+                    row.Value = val;
+                    row.IsUserEdited = true;
+                }
+            }
         }
         catch { }
     }
