@@ -653,15 +653,24 @@ public static class CameraMod
     {
         var reasons = new List<string>();
 
-        // FoV check: UCM sets Fov="40" on run sections.
+        // FoV check: UCM sets Fov="40" on run sections (vanilla is 53).
         var m1 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?Fov=""(\d+)""");
         if (m1.Success && m1.Groups[1].Value == "40") reasons.Add($"Run Fov={m1.Groups[1].Value}");
         var m2 = Regex.Match(xmlText, @"<Player_Basic_Default_Runfast\s+[^>]*?Fov=""(\d+)""");
         if (m2.Success && m2.Groups[1].Value == "40") reasons.Add($"Runfast Fov={m2.Groups[1].Value}");
 
-        // OffsetByVelocity check: UCM zeros camera sway.
+        // OffsetByVelocity check: UCM zeros camera sway (vanilla is non-zero).
         var m4 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?>[\s\S]*?<OffsetByVelocity[^>]*?OffsetLength=""0""", RegexOptions.Multiline);
         if (m4.Success) reasons.Add("OffsetByVelocity=0");
+
+        // ZoomDistance check: UCM's BuildSharedBase always normalizes on-foot ZL2 to 3.4 (vanilla is ~1.7).
+        // This catches ALL UCM installs regardless of FoV or Steadycam settings.
+        var m5 = Regex.Match(xmlText, @"<ZoomLevel\s+Level=""2""[^>]*?ZoomDistance=""3\.4""");
+        if (m5.Success) reasons.Add("ZL2 ZoomDistance=3.4");
+
+        // RightOffset check: UCM normalizes weapon RightOffset to 0.5 (vanilla is ~0.3).
+        var m6 = Regex.Match(xmlText, @"<Player_Weapon_Default\s+[^>]*?>[\s\S]*?<ZoomLevel\s+Level=""2""[^>]*?RightOffset=""0\.5""", RegexOptions.Multiline);
+        if (m6.Success) reasons.Add("Weapon ZL2 RightOffset=0.5");
 
         // Note: MaxZoomDistance="30" and XML comments are no longer checked because
         // the June 2026 game patch added both to the vanilla camera XML.
