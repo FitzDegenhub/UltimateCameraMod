@@ -663,17 +663,9 @@ public static class CameraMod
         var m4 = Regex.Match(xmlText, @"<Player_Basic_Default_Run\s+[^>]*?>[\s\S]*?<OffsetByVelocity[^>]*?OffsetLength=""0""", RegexOptions.Multiline);
         if (m4.Success) reasons.Add("OffsetByVelocity=0");
 
-        // ZoomDistance check: UCM's BuildSharedBase always normalizes on-foot ZL2 to 3.4 (vanilla is ~1.7).
-        // This catches ALL UCM installs regardless of FoV or Steadycam settings.
-        var m5 = Regex.Match(xmlText, @"<ZoomLevel\s+Level=""2""[^>]*?ZoomDistance=""3\.4""");
-        if (m5.Success) reasons.Add("ZL2 ZoomDistance=3.4");
-
-        // RightOffset check: UCM normalizes weapon RightOffset to 0.5 (vanilla is ~0.3).
-        var m6 = Regex.Match(xmlText, @"<Player_Weapon_Default\s+[^>]*?>[\s\S]*?<ZoomLevel\s+Level=""2""[^>]*?RightOffset=""0\.5""", RegexOptions.Multiline);
-        if (m6.Success) reasons.Add("Weapon ZL2 RightOffset=0.5");
-
-        // Note: MaxZoomDistance="30" and XML comments are no longer checked because
-        // the June 2026 game patch added both to the vanilla camera XML.
+        // Note: ZoomDistance=3.4 and RightOffset=0.5 checks were removed because
+        // vanilla actually has these values in some sections (false positives).
+        // MaxZoomDistance="30" and XML comments also removed (June 2026 game patch).
 
         return reasons.Count == 0;
     }
