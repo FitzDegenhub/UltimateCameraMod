@@ -297,6 +297,11 @@ public partial class MainWindow : Window
             xml = CameraMod.ApplyModifications(xml, lockOnSync);
         }
 
+        // Re-apply sacred God Mode overrides last, same as BuildCuratedSessionXml.
+        // BuildExpertModSet only includes IsModified rows (value != vanilla), but sacred
+        // values that match vanilla would be missed without this.
+        xml = ReapplyGodModeOverrides(xml);
+
         return xml;
     }
 

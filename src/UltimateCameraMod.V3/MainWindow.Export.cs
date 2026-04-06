@@ -70,6 +70,11 @@ public partial class MainWindow : Window
 
         var ctrl = new ExportJsonDialog(_gameDir, () =>
         {
+            // Use the live session XML directly -- it already has all Quick, Fine Tune,
+            // and sacred God Mode values applied. Rebuilding from scratch would lose
+            // values that CameraRules computed earlier but aren't individually tracked.
+            if (!string.IsNullOrWhiteSpace(_sessionXml))
+                return _sessionXml;
             CaptureSessionXml();
             return _sessionXml;
         },

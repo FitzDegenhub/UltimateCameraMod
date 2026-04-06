@@ -6,6 +6,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
+## [Unreleased]
+
+### Bug Fixes
+- **Sacred values missing from exports** - God Mode sacred overrides were not included in XML/JSON/PAZ exports. BuildGodModeSessionXml now calls ReapplyGodModeOverrides at the end, and exports use the live session XML directly instead of rebuilding from scratch.
+
+---
+
+## [v3.1.1] - 2026-04-05
+
+### Bug Fixes
+- **False-positive tainted backup detection** - ZoomDistance=3.4 and RightOffset=0.5 checks matched vanilla values, causing all users with clean game files to see the tainted backup error on launch. Reverted to FoV=40 and OffsetByVelocity=0 checks only.
+
+---
+
 ## [v3.1] - 2026-04-05
 
 ### Camera
