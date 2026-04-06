@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
+## [Unreleased]
+
+### Features
+- **Center HUD** - New checkbox + slider in UCM Quick to center gameplay HUD elements within a configurable max width (1200-3840px). Modifies HTML/CSS files in PAZ archive 0012 independently from the camera archive. Useful for ultrawide displays where HUD elements are spread too far apart. Credits to [CentreHUD mod](https://github.com/bdsm/centrehud) (0BSD license) for the technique.
+
+### Bug Fixes
+- **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.
+
+---
+
 ## [v3.1.2] - 2026-04-06
 
 ### Bug Fixes

@@ -368,8 +368,11 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- CUSTOM OFFSETS (left) -->
-                        <DockPanel Grid.Column="0" x:Name="QuickOffsetsPanel">
+                        <!-- LEFT COLUMN: Custom Offsets + Center HUD stacked -->
+                        <StackPanel Grid.Column="0">
+
+                        <!-- CUSTOM OFFSETS -->
+                        <DockPanel x:Name="QuickOffsetsPanel">
                         <TextBlock DockPanel.Dock="Top" Text="CUSTOM OFFSETS" Style="{StaticResource SectionHeader}"/>
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="16,14">
                         <StackPanel>
@@ -421,8 +424,52 @@
                             </Grid>
                         </StackPanel>
                     </Border>
-
                         </DockPanel>
+
+                        <!-- CENTER HUD -->
+                        <DockPanel x:Name="QuickHudPanel" Margin="0,6,0,0">
+                            <TextBlock DockPanel.Dock="Top" Text="CENTER HUD" Style="{StaticResource SectionHeader}"/>
+                            <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="16,14">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Center HUD" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
+                                    <CheckBox x:Name="CenterHudCheck" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                              Content="Center gameplay HUD within max width"
+                                              Checked="OnCenterHudChanged" Unchecked="OnCenterHudChanged" Margin="0,0,0,8"/>
+
+                                    <TextBlock Text="HUD width" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                                    <Slider x:Name="HudWidthSlider" Grid.Row="1" Grid.Column="1"
+                                            Minimum="1200" Maximum="3840" SmallChange="10" LargeChange="100"
+                                            TickFrequency="10" IsSnapToTickEnabled="True"
+                                            IsEnabled="False"
+                                            ValueChanged="OnHudWidthChanged"
+                                            Value="1920"
+                                            VerticalAlignment="Center" Margin="0,0,0,8"/>
+                                    <TextBlock x:Name="HudWidthLabel" Grid.Row="1" Grid.Column="2"
+                                               FontFamily="Consolas" FontSize="11"
+                                               Foreground="{StaticResource TextPrimaryBrush}"
+                                               VerticalAlignment="Center" Margin="0,0,0,8"
+                                               Text="1920"/>
+
+                                    <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
+                                               FontSize="9" Foreground="{StaticResource TextDimBrush}"
+                                               TextWrapping="Wrap" LineHeight="14" Margin="0,4,0,0"
+                                               Text="Centers gameplay HUD elements within the specified max width (pixels). Useful for ultrawide displays where HUD elements are spread too far apart. Only affects gameplay HUD, not menus. Credits to CentreHUD mod."/>
+                                </Grid>
+                            </Border>
+                        </DockPanel>
+
+                        </StackPanel>
 
                         <!-- GLOBAL SETTINGS (right) -->
                         <DockPanel Grid.Column="2" x:Name="QuickGlobalPanel">
@@ -498,7 +545,6 @@
                     </Border>
                         </DockPanel>
                     </Grid>
-
 
                     <!-- Bottom row: Camera Preview + FoV Preview side by side -->
                     <Grid x:Name="PreviewsPanel" Margin="0,0,0,0">

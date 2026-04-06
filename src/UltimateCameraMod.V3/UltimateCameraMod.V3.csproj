@@ -55,6 +55,9 @@
     <Compile Include="..\UltimateCameraMod\Services\CameraMod.cs">
       <Link>Shared\Services\CameraMod.cs</Link>
     </Compile>
+    <Compile Include="..\UltimateCameraMod\Services\HudMod.cs">
+      <Link>Shared\Services\HudMod.cs</Link>
+    </Compile>
     <Compile Include="..\UltimateCameraMod\Services\GameDetector.cs">
       <Link>Shared\Services\GameDetector.cs</Link>
     </Compile>

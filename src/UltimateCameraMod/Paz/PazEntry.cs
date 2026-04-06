@@ -16,4 +16,6 @@ public sealed class PazEntry
     public bool Compressed => CompSize != OrigSize;
     public int CompressionType => (int)((Flags >> 16) & 0x0F);
     public bool IsXml => Path.EndsWith(".xml", StringComparison.OrdinalIgnoreCase);
+    public bool IsHtml => Path.EndsWith(".html", StringComparison.OrdinalIgnoreCase);
+    public bool IsCss => Path.EndsWith(".css", StringComparison.OrdinalIgnoreCase);
 }

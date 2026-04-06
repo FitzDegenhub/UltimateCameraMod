@@ -735,6 +735,96 @@ public static class ArchiveWriter
             "• The game was updated. Verify game files on Steam and reinstall.");
     }
 
+    // ── CSS size matching (uses /* */ comments instead of <!-- -->) ──
+
+    private static byte[] MakeCssSafeRandomContent(int length)
+    {
+        // Printable ASCII excluding * and / to avoid closing the CSS comment
+        byte[] rand = RandomNumberGenerator.GetBytes(length);
+        byte[] result = new byte[length];
+        for (int i = 0; i < length; i++)
+        {
+            int c = (rand[i] % 88) + 0x21; // 0x21-0x78 range
+            if (c == 0x2A || c == 0x2F) c = 0x41; // replace * and / with 'A'
+            result[i] = (byte)c;
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// Size-matches CSS content using /* */ comments instead of XML comments.
+    /// Used for HUD CSS files in archive 0012.
+    /// </summary>
+    public static byte[] MatchCompressedSizeCss(byte[] plaintext, int targetCompSize, int targetOrigSize)
+    {
+        byte[] padded = plaintext.Length > targetOrigSize
+            ? plaintext[..targetOrigSize]
+            : PadToOrigSize(plaintext, targetOrigSize);
+
+        byte[] comp = CompressionUtils.Lz4Compress(padded);
+        if (comp.Length == targetCompSize)
+            return padded;
+
+        if (comp.Length > targetCompSize)
+        {
+            int overBy = comp.Length - targetCompSize;
+            throw new InvalidOperationException(
+                $"CSS file exceeds slot by {overBy} bytes ({comp.Length} / {targetCompSize}). " +
+                "The compacted CSS is too large for the archive slot.");
+        }
+
+        // Inflate: append /* RANDOM_BODY */ to increase compressed size
+        int available = targetOrigSize - plaintext.Length;
+        if (available < 5) // need at least /* + X + */
+            throw new InvalidOperationException("Not enough room in CSS slot for comment padding.");
+
+        int maxBody = available - 4; // 2 for /* + 2 for */
+
+        for (int attempt = 0; attempt < 10; attempt++)
+        {
+            byte[] randPool = MakeCssSafeRandomContent(maxBody);
+
+            byte[] BuildTrial(int bodyLen)
+            {
+                byte[] buf = new byte[targetOrigSize];
+                Array.Copy(plaintext, buf, plaintext.Length);
+                int pos = plaintext.Length;
+                buf[pos++] = 0x2F; // /
+                buf[pos++] = 0x2A; // *
+                Array.Copy(randPool, 0, buf, pos, bodyLen);
+                pos += bodyLen;
+                buf[pos++] = 0x2A; // *
+                buf[pos++] = 0x2F; // /
+                return buf;
+            }
+
+            int cMin = CompressionUtils.Lz4Compress(BuildTrial(1)).Length;
+            int cMax = CompressionUtils.Lz4Compress(BuildTrial(maxBody)).Length;
+            if (targetCompSize < cMin || targetCompSize > cMax) continue;
+
+            int lo = 1, hi = maxBody;
+            while (lo <= hi)
+            {
+                int mid = (lo + hi) / 2;
+                int c = CompressionUtils.Lz4Compress(BuildTrial(mid)).Length;
+                if (c == targetCompSize) return BuildTrial(mid);
+                else if (c < targetCompSize) lo = mid + 1;
+                else hi = mid - 1;
+            }
+
+            for (int n = Math.Max(1, lo - 30); n < Math.Min(lo + 30, maxBody + 1); n++)
+            {
+                var trial = BuildTrial(n);
+                if (CompressionUtils.Lz4Compress(trial).Length == targetCompSize)
+                    return trial;
+            }
+        }
+
+        throw new InvalidOperationException(
+            $"Cannot match CSS target comp_size {targetCompSize} (got {comp.Length}). " +
+            "Could not find exact size match after 10 attempts.");
+    }
+
     // ── Core write ──────────────────────────────────────────────────
 
     public static void UpdateEntry(PazEntry entry, byte[] payload)

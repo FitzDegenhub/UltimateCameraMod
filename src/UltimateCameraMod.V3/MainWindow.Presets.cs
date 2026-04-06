@@ -370,6 +370,18 @@ public partial class MainWindow : Window
                                 LockOnAutoRotateCheck.IsChecked = arEl.ValueKind == JsonValueKind.True;
                             else
                                 LockOnAutoRotateCheck.IsChecked = false; // Default: auto-rotate on (vanilla)
+
+                            if (settings.TryGetProperty("center_hud", out var chEl))
+                                CenterHudCheck.IsChecked = chEl.ValueKind == JsonValueKind.True;
+                            else
+                                CenterHudCheck.IsChecked = false;
+                            if (settings.TryGetProperty("hud_width", out var hwEl) && hwEl.ValueKind == JsonValueKind.Number)
+                                HudWidthSlider.Value = Math.Clamp(hwEl.GetInt32(), 1200, 3840);
+                            else
+                                HudWidthSlider.Value = 1920;
+                            HudWidthSlider.IsEnabled = CenterHudCheck.IsChecked == true;
+                            HudWidthSlider.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
+                            HudWidthLabel.Text = $"{(int)HudWidthSlider.Value}";
                         }
                         finally
                         {
@@ -1277,7 +1289,9 @@ public partial class MainWindow : Window
             ["centered"] = BaneCheck.IsChecked == true,
             ["mount_height"] = MountHeightCheck.IsChecked == true,
             ["steadycam"] = SteadycamCheck.IsChecked == true,
-            ["lock_on_auto_rotate_disabled"] = LockOnAutoRotateCheck.IsChecked == true
+            ["lock_on_auto_rotate_disabled"] = LockOnAutoRotateCheck.IsChecked == true,
+            ["center_hud"] = CenterHudCheck.IsChecked == true,
+            ["hud_width"] = (int)HudWidthSlider.Value
         };
     }
 

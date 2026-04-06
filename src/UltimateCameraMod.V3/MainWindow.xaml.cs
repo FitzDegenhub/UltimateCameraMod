@@ -820,6 +820,7 @@ public partial class MainWindow : Window
 
         string backupsDir = Path.Combine(ExeDir, "backups");
         CameraMod.BackupsDirOverride = () => backupsDir;
+        HudMod.BackupsDirOverride = () => backupsDir;
         CameraMod.AppVersion = Ver;
 
         CleanStaleData(backupsDir);

@@ -117,6 +117,8 @@ public partial class MainWindow : Window
         string platform = _detectedPlatform;
         string activeMode = _activeMode;
         string styleId = GetSelectedStyleId();
+        bool hudEnabled = CenterHudCheck.IsChecked == true;
+        int hudWidth = (int)HudWidthSlider.Value;
 
         SetGlobalBusy(true, "Installing camera to game…");
         SetStatus("Preparing current session XML…", "Accent");
@@ -127,6 +129,20 @@ public partial class MainWindow : Window
 
             var (beforeEntry, beforeRaw) = CameraMod.ReadCameraEntryWithRawBytes(gameDir);
             Dictionary<string, object> installResult = CameraMod.InstallRawXml(gameDir, xml, log: log);
+
+            // HUD centering (archive 0012, independent from camera)
+            if (hudEnabled)
+            {
+                try
+                {
+                    log("Installing HUD centering...");
+                    HudMod.InstallHud(gameDir, hudWidth, log);
+                }
+                catch (Exception hudEx)
+                {
+                    log($"HUD install failed: {hudEx.Message}");
+                }
+            }
 
             var (afterEntry, afterRaw) = CameraMod.ReadCameraEntryWithRawBytes(gameDir);
             bool payloadChanged = !beforeRaw.AsSpan().SequenceEqual(afterRaw);

@@ -580,6 +580,26 @@ public partial class MainWindow : Window
         OnSettingChanged(s, e);
     }
 
+    // â"€â"€ HUD centering â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+
+    private void OnCenterHudChanged(object s, RoutedEventArgs e)
+    {
+        if (!IsLoaded || _suppressEvents) return;
+        HudWidthSlider.IsEnabled = CenterHudCheck.IsChecked == true;
+        HudWidthSlider.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
+        SaveCurrentUiState();
+        QueueSavedToast();
+    }
+
+    private void OnHudWidthChanged(object s, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (!IsLoaded || _suppressEvents) return;
+        if (HudWidthLabel != null)
+            HudWidthLabel.Text = $"{(int)HudWidthSlider.Value}";
+        SaveCurrentUiState();
+        QueueSavedToast();
+    }
+
     // â"€â"€ Presets â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     // Session presets: UcmPresetsDir (built-in default + styles), MyPresetsDir (user-created).
