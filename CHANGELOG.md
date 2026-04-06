@@ -6,10 +6,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
-## [Unreleased]
+## [v3.1.2] - 2026-04-06
 
 ### Bug Fixes
-- **Sacred values missing from exports** - God Mode sacred overrides were not included in XML/JSON/PAZ exports. BuildGodModeSessionXml now calls ReapplyGodModeOverrides at the end, and exports use the live session XML directly instead of rebuilding from scratch.
+- **Sacred values missing from Install and exports when on God Mode tab** - `BuildGodModeSessionXml` was missing the `ReapplyGodModeOverrides` call. Sacred values that matched vanilla were excluded from `BuildExpertModSet` and lost during rebuild. Now all Install and export paths correctly include sacred values regardless of which tab you're on.
 
 ---
 

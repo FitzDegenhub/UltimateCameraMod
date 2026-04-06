@@ -26,7 +26,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.1.1";
+    private const string Ver = "3.1.2";
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
     private const string HShiftTipUnlocked =
@@ -539,11 +539,11 @@ public partial class MainWindow : Window
                     {
                         _ = ShowAlertOverlayAsync("Updated to v" + Ver,
                             "Welcome back! UCM has been updated.\n\n" +
-                            "What's new in v3.1:\n" +
-                            "- Sacred God Mode: your edits are now permanently protected from Quick/Fine Tune rebuilds\n" +
+                            "What's new:\n" +
+                            "- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds\n" +
                             "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
                             "- Green indicators for sacred values in God Mode\n" +
-                            "- Full Manual Control install fix\n\n" +
+                            "- Fix: sacred values now correctly included in Install and all exports\n\n" +
                             "Your presets and settings have been preserved.");
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
@@ -564,11 +564,11 @@ public partial class MainWindow : Window
                     string fromText = string.IsNullOrEmpty(savedVersion) ? "" : " from v" + savedVersion;
                     _ = ShowAlertOverlayAsync("Updated to v" + Ver,
                         "Welcome back! UCM has been updated" + fromText + ".\n\n" +
-                        "What's new in v3.1:\n" +
-                        "- Sacred God Mode: your edits are now permanently protected from Quick/Fine Tune rebuilds\n" +
+                        "What's new:\n" +
+                        "- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds\n" +
                         "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
                         "- Green indicators for sacred values in God Mode\n" +
-                        "- Full Manual Control install fix\n\n" +
+                        "- Fix: sacred values now correctly included in Install and all exports\n\n" +
                         "Your presets and settings have been preserved.");
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
