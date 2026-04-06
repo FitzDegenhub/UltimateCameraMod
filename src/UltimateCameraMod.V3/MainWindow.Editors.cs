@@ -278,7 +278,8 @@ public partial class MainWindow : Window
         // No UCM rules (FoV normalization, Steadycam, etc.) applied.
         if (_sessionIsRawImport && !string.IsNullOrWhiteSpace(_sessionXml))
         {
-            return CameraMod.ApplyModifications(_sessionXml, BuildExpertModSet());
+            string rawXml = CameraMod.ApplyModifications(_sessionXml, BuildExpertModSet());
+            return ReapplyGodModeOverrides(rawXml);
         }
 
         // Start from the simple session (Steadycam, style, FOV, bane, etc. already applied)
