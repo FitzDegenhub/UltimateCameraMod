@@ -376,12 +376,11 @@ public partial class MainWindow : Window
                             else
                                 CenterHudCheck.IsChecked = false;
                             if (settings.TryGetProperty("hud_width", out var hwEl) && hwEl.ValueKind == JsonValueKind.Number)
-                                HudWidthSlider.Value = Math.Clamp(hwEl.GetInt32(), 1200, 3840);
+                                HudModeCombo.SelectedIndex = hwEl.GetInt32() > 1920 ? 1 : 0;
                             else
-                                HudWidthSlider.Value = 1920;
-                            HudWidthSlider.IsEnabled = CenterHudCheck.IsChecked == true;
-                            HudWidthSlider.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
-                            HudWidthLabel.Text = $"{(int)HudWidthSlider.Value}";
+                                HudModeCombo.SelectedIndex = 0;
+                            HudModeCombo.IsEnabled = CenterHudCheck.IsChecked == true;
+                            HudModeCombo.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
                         }
                         finally
                         {
@@ -1291,7 +1290,7 @@ public partial class MainWindow : Window
             ["steadycam"] = SteadycamCheck.IsChecked == true,
             ["lock_on_auto_rotate_disabled"] = LockOnAutoRotateCheck.IsChecked == true,
             ["center_hud"] = CenterHudCheck.IsChecked == true,
-            ["hud_width"] = (int)HudWidthSlider.Value
+            ["hud_width"] = GetHudWidth()
         };
     }
 

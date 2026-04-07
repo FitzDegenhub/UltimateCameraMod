@@ -754,13 +754,21 @@ public static class ArchiveWriter
 
         if (comp.Length < targetCompSize)
         {
-            // Need to inflate -- use existing strategies
-            return MatchCompressedSize(plaintext, targetCompSize, targetOrigSize);
+            // INFLATE: match CentreHUD's approach -- single trailing <!--random--> comment.
+            // This avoids scattered comments that trigger the Coherent Gameface watermark.
+            var result = InflateByRandomCommentPadding(plaintext, targetCompSize, targetOrigSize);
+            if (result != null) return result;
+
+            // Fallback: try InflateWithComments strategies (null->space, then distributed)
+            result = InflateWithComments(padded, plaintext.Length, targetCompSize, targetOrigSize);
+            if (result != null) return result;
+
+            throw new InvalidOperationException(
+                $"Cannot inflate HTML to target comp_size {targetCompSize} (got {comp.Length}).");
         }
 
         // SHRINK: compressed > target. Replace non-space bytes with spaces.
-        // Spaces compress better in LZ4 (back-references to prior runs).
-        // Build candidate list: non-space bytes, prioritized by proximity to spaces.
+        // CentreHUD uses the same approach: spaces are maximally compressible in LZ4.
         var adjacent = new List<int>();
         var nonAdjacent = new List<int>();
         for (int i = 0; i < padded.Length; i++)
@@ -778,7 +786,6 @@ public static class ArchiveWriter
             throw new InvalidOperationException(
                 $"Cannot shrink to target comp_size {targetCompSize} (got {comp.Length}): no replaceable bytes");
 
-        // Linear scan -- replace one byte at a time, check compressed size
         byte[] trial = (byte[])padded.Clone();
         int lastN = -1;
         for (int n = 0; n < candidates.Count; n++)
@@ -798,7 +805,6 @@ public static class ArchiveWriter
             throw new InvalidOperationException(
                 $"Cannot match target comp_size {targetCompSize} (got {comp.Length}): exhausted candidates");
 
-        // Overshot -- revert recent replacements to find exact target
         for (int revert = 1; revert < Math.Min(lastN + 2, 200); revert++)
         {
             byte[] trial2 = (byte[])padded.Clone();
@@ -814,24 +820,10 @@ public static class ArchiveWriter
             $"Cannot match target comp_size {targetCompSize} after shrink scan");
     }
 
-    // ── CSS size matching (uses /* */ comments instead of <!-- -->) ──
-
-    private static byte[] MakeCssSafeRandomContent(int length)
-    {
-        // Printable ASCII excluding * and / to avoid closing the CSS comment
-        byte[] rand = RandomNumberGenerator.GetBytes(length);
-        byte[] result = new byte[length];
-        for (int i = 0; i < length; i++)
-        {
-            int c = (rand[i] % 88) + 0x21; // 0x21-0x78 range
-            if (c == 0x2A || c == 0x2F) c = 0x41; // replace * and / with 'A'
-            result[i] = (byte)c;
-        }
-        return result;
-    }
+    // ── CSS size matching (uses <!-- --> like CentreHUD) ──────────────
 
     /// <summary>
-    /// Size-matches CSS content using /* */ comments instead of XML comments.
+    /// Size-matches CSS content using a trailing &lt;!-- --&gt; comment (matches CentreHUD's approach).
     /// Used for HUD CSS files in archive 0012.
     /// </summary>
     public static byte[] MatchCompressedSizeCss(byte[] plaintext, int targetCompSize, int targetOrigSize)
@@ -852,52 +844,9 @@ public static class ArchiveWriter
                 "The compacted CSS is too large for the archive slot.");
         }
 
-        // Inflate: append /* RANDOM_BODY */ to increase compressed size
-        int available = targetOrigSize - plaintext.Length;
-        if (available < 5) // need at least /* + X + */
-            throw new InvalidOperationException("Not enough room in CSS slot for comment padding.");
-
-        int maxBody = available - 4; // 2 for /* + 2 for */
-
-        for (int attempt = 0; attempt < 10; attempt++)
-        {
-            byte[] randPool = MakeCssSafeRandomContent(maxBody);
-
-            byte[] BuildTrial(int bodyLen)
-            {
-                byte[] buf = new byte[targetOrigSize];
-                Array.Copy(plaintext, buf, plaintext.Length);
-                int pos = plaintext.Length;
-                buf[pos++] = 0x2F; // /
-                buf[pos++] = 0x2A; // *
-                Array.Copy(randPool, 0, buf, pos, bodyLen);
-                pos += bodyLen;
-                buf[pos++] = 0x2A; // *
-                buf[pos++] = 0x2F; // /
-                return buf;
-            }
-
-            int cMin = CompressionUtils.Lz4Compress(BuildTrial(1)).Length;
-            int cMax = CompressionUtils.Lz4Compress(BuildTrial(maxBody)).Length;
-            if (targetCompSize < cMin || targetCompSize > cMax) continue;
-
-            int lo = 1, hi = maxBody;
-            while (lo <= hi)
-            {
-                int mid = (lo + hi) / 2;
-                int c = CompressionUtils.Lz4Compress(BuildTrial(mid)).Length;
-                if (c == targetCompSize) return BuildTrial(mid);
-                else if (c < targetCompSize) lo = mid + 1;
-                else hi = mid - 1;
-            }
-
-            for (int n = Math.Max(1, lo - 30); n < Math.Min(lo + 30, maxBody + 1); n++)
-            {
-                var trial = BuildTrial(n);
-                if (CompressionUtils.Lz4Compress(trial).Length == targetCompSize)
-                    return trial;
-            }
-        }
+        // Inflate: append <!--RANDOM_BODY--> (same as CentreHUD)
+        var result = InflateByRandomCommentPadding(plaintext, targetCompSize, targetOrigSize);
+        if (result != null) return result;
 
         throw new InvalidOperationException(
             $"Cannot match CSS target comp_size {targetCompSize} (got {comp.Length}). " +

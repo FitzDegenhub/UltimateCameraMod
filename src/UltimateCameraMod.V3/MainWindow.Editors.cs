@@ -585,20 +585,22 @@ public partial class MainWindow : Window
     private void OnCenterHudChanged(object s, RoutedEventArgs e)
     {
         if (!IsLoaded || _suppressEvents) return;
-        HudWidthSlider.IsEnabled = CenterHudCheck.IsChecked == true;
-        HudWidthSlider.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
+        HudModeCombo.IsEnabled = CenterHudCheck.IsChecked == true;
+        HudModeCombo.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
         SaveCurrentUiState();
         QueueSavedToast();
     }
 
-    private void OnHudWidthChanged(object s, RoutedPropertyChangedEventArgs<double> e)
+    private void OnHudModeChanged(object s, SelectionChangedEventArgs e)
     {
         if (!IsLoaded || _suppressEvents) return;
-        if (HudWidthLabel != null)
-            HudWidthLabel.Text = $"{(int)HudWidthSlider.Value}";
         SaveCurrentUiState();
         QueueSavedToast();
     }
+
+    private int GetHudWidth() =>
+        HudModeCombo.SelectedItem is System.Windows.Controls.ComboBoxItem item
+            && item.Tag is string tag && int.TryParse(tag, out int w) ? w : 1920;
 
     // â"€â"€ Presets â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 

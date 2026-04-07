@@ -304,19 +304,39 @@ public static class HudMod
             decoded[entry.Path] = DecodeText(entry, raw);
         }
 
-        bool allInstalled = entries
+        bool alreadyInstalled = entries
             .Where(e => e.Path.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
-            .All(e => decoded[e.Path].Text.Contains(SafeFrameId));
-        if (allInstalled)
-        {
-            log?.Invoke("[HUD] Already installed.");
-            return new() { ["status"] = "ok" };
-        }
+            .Any(e => decoded[e.Path].Text.Contains(SafeFrameId));
 
         if (!BackupExists())
         {
             log?.Invoke("[HUD] Saving backups...");
             SaveBackups(entries);
+        }
+
+        // If already installed (possibly different mode), restore vanilla first then reinstall
+        if (alreadyInstalled)
+        {
+            log?.Invoke("[HUD] Restoring vanilla before reinstall...");
+            foreach (var entry in entries)
+            {
+                byte[]? backup = LoadBackup(entry);
+                if (backup == null || backup.Length != entry.CompSize) continue;
+                var restoreTs = ArchiveWriter.SaveTimestamps(entry.PazFile);
+                using (var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Write))
+                {
+                    fs.Seek(entry.Offset, SeekOrigin.Begin);
+                    fs.Write(backup);
+                }
+                restoreTs();
+            }
+            // Re-decode from restored vanilla
+            decoded.Clear();
+            foreach (var entry in entries)
+            {
+                byte[] raw = ReadRaw(entry);
+                decoded[entry.Path] = DecodeText(entry, raw);
+            }
         }
 
         var writes = new List<(PazEntry Entry, byte[] Payload)>();

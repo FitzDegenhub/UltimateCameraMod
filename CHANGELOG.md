@@ -9,9 +9,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ## [Unreleased]
 
 ### Features
-- **Center HUD** - New checkbox + slider in UCM Quick to center gameplay HUD elements within a configurable max width (1200-3840px). Modifies HTML/CSS files in PAZ archive 0012 independently from the camera archive. Useful for ultrawide displays where HUD elements are spread too far apart. Credits to [CentreHUD mod](https://github.com/bdsm/centrehud) (0BSD license) for the technique.
+- **Center HUD** - New checkbox + dropdown in UCM Quick to center gameplay HUD elements for ultrawide displays. Choose between 16:9 (1920px) or 21:9 (2520px) safe areas. Modifies HTML/CSS in PAZ archive 0012 independently from camera. Switching modes or unchecking restores vanilla automatically. Credits to SRes from WSGF Discord for the technique.
 
 ### Bug Fixes
+- **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
+- **Center HUD mode switching had no effect** - Reinstalling with a different safe area (16:9 vs 21:9) was detected as "already installed" and skipped. Now restores vanilla first before reinstalling with the new mode.
 - **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.
 
 ---

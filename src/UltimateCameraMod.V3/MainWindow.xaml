@@ -447,24 +447,18 @@
                                               Content="Center gameplay HUD within max width"
                                               Checked="OnCenterHudChanged" Unchecked="OnCenterHudChanged" Margin="0,0,0,8"/>
 
-                                    <TextBlock Text="HUD width" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
-                                    <Slider x:Name="HudWidthSlider" Grid.Row="1" Grid.Column="1"
-                                            Minimum="1200" Maximum="3840" SmallChange="10" LargeChange="100"
-                                            TickFrequency="10" IsSnapToTickEnabled="True"
-                                            IsEnabled="False"
-                                            ValueChanged="OnHudWidthChanged"
-                                            Value="1920"
-                                            VerticalAlignment="Center" Margin="0,0,0,8"/>
-                                    <TextBlock x:Name="HudWidthLabel" Grid.Row="1" Grid.Column="2"
-                                               FontFamily="Consolas" FontSize="11"
-                                               Foreground="{StaticResource TextPrimaryBrush}"
-                                               VerticalAlignment="Center" Margin="0,0,0,8"
-                                               Text="1920"/>
+                                    <TextBlock Text="Safe area" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                                    <ComboBox x:Name="HudModeCombo" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                              Height="32" IsEnabled="False"
+                                              SelectionChanged="OnHudModeChanged" Margin="0,0,0,8">
+                                        <ComboBoxItem Content="16:9 (1920px)" Tag="1920" IsSelected="True"/>
+                                        <ComboBoxItem Content="21:9 (2520px)" Tag="2520"/>
+                                    </ComboBox>
 
                                     <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
                                                FontSize="9" Foreground="{StaticResource TextDimBrush}"
                                                TextWrapping="Wrap" LineHeight="14" Margin="0,4,0,0"
-                                               Text="Centers gameplay HUD elements within the specified max width (pixels). Useful for ultrawide displays where HUD elements are spread too far apart. Only affects gameplay HUD, not menus. Credits to CentreHUD mod."/>
+                                               Text="Centers gameplay HUD elements within the specified max width (pixels). Useful for ultrawide displays where HUD elements are spread too far apart. Only affects gameplay HUD, not menus. Credits to SRes from WSGF Discord."/>
                                 </Grid>
                             </Border>
                         </DockPanel>

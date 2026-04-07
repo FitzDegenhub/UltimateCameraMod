@@ -118,7 +118,7 @@ public partial class MainWindow : Window
         string activeMode = _activeMode;
         string styleId = GetSelectedStyleId();
         bool hudEnabled = CenterHudCheck.IsChecked == true;
-        int hudWidth = (int)HudWidthSlider.Value;
+        int hudWidth = GetHudWidth();
 
         SetGlobalBusy(true, "Installing camera to game…");
         SetStatus("Preparing current session XML…", "Accent");
@@ -141,6 +141,18 @@ public partial class MainWindow : Window
                 catch (Exception hudEx)
                 {
                     log($"HUD install failed: {hudEx.Message}");
+                }
+            }
+            else if (HudMod.DetectHudModified(gameDir))
+            {
+                try
+                {
+                    log("Restoring vanilla HUD...");
+                    HudMod.RestoreHud(gameDir, log);
+                }
+                catch (Exception hudEx)
+                {
+                    log($"HUD restore failed: {hudEx.Message}");
                 }
             }
 
