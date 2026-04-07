@@ -1,7 +1,3 @@
-// HUD centering logic adapted from CentreHUD (0BSD license).
-// Ported from Python to C# for UCM integration.
-// Original mod: https://github.com/bdsm/centrehud
-
 using System.Text;
 using System.Text.RegularExpressions;
 using UltimateCameraMod.Paz;
@@ -9,357 +5,379 @@ using UltimateCameraMod.Paz;
 namespace UltimateCameraMod.Services;
 
 /// <summary>
-/// Modifies HUD HTML/CSS files in PAZ archive 0012 to center gameplay UI within a max-width container.
-/// Independent from CameraMod (which handles archive 0010).
+/// HUD centering for ultrawide monitors. Updates UI HTML/CSS in archive 0012.
 /// </summary>
 public static class HudMod
 {
-    private const string ArchiveDir = "0012";
+    private const string UiArchive = "0012";
+    private static readonly string[] HudHtmlPaths = { "ui/minimaphudview2.html", "ui/statusgaugeview2.html" };
+    private const string CssPath = "ui/gamecommon.css";
+
     private const string SafeFrameId = "HUDSafeFrame";
-    private const string CssClassName = "ucm-hud-center";
+    private const int DefaultMaxWidth = 1920;
 
-    private static readonly string[] TargetPaths =
-    {
-        "ui/minimaphudview2.html",
-        "ui/statusgaugeview2.html",
-        "ui/gamecommon.css"
-    };
+    // CentreHUD approach: 16:9 uses class "ui-view-max-size-16-9", 21:9 uses "ui-view-max-size-21-9"
+    private static string GetSafeFrameClass(int maxWidth) => maxWidth > 1920 ? "ui-view-max-size-21-9" : "ui-view-max-size-16-9";
+    private static string GetSafeFrameOpen(int maxWidth) => $"    <div id=\"{SafeFrameId}\" class=\"{GetSafeFrameClass(maxWidth)}\">";
+    private const string SafeFrameClose = "    </div>";
 
-    // Markers in statusgaugeview2.html where the safe frame must be split
-    private const string HpGaugeTrackerMarker = "<div id=\"HPGaugeTracker\"";
-    private const string SkillPointMarker = "<div id=\"UIHudScaleSkillPointStatusGaugeContainer\"";
+    private static readonly Regex BodyOpenRe = new(@"(<body\b[^>]*>)", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
+    private static readonly Regex BodyCloseRe = new(@"(</body>)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex HtmlCommentRe = new(@"<!--.*?-->", RegexOptions.Singleline | RegexOptions.Compiled);
+
+    private const string GaugeTracker = "<div id=\"HPGaugeTracker\"";
+    private const string GaugeSkillPoint = "<div id=\"UIHudScaleSkillPointStatusGaugeContainer\"";
 
     public static Func<string>? BackupsDirOverride { get; set; }
+    private static string BackupsDir => BackupsDirOverride?.Invoke()
+        ?? Path.Combine(AppContext.BaseDirectory, "backups", "hud");
 
-    private static string HudBackupsDir
+    // ── Text compaction ──────────────────────────────────────────────
+
+    private static string CompactCss(string text)
     {
-        get
-        {
-            string baseDir = BackupsDirOverride?.Invoke() ?? Path.Combine(AppContext.BaseDirectory, "backups");
-            string dir = Path.Combine(baseDir, "hud");
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
+        var t = Regex.Replace(text, @"\n\s*\n+", "\n");
+        t = Regex.Replace(t, @"[ \t]+\n", "\n");
+        return Regex.Replace(t, @"\s*([{}:;,])\s*", "$1");
     }
 
-    // ── Entry discovery ─────────────────────────────────────────────
-
-    public static List<PazEntry> FindHudEntries(string gameDir)
+    private static string CompactText(string entryPath, string text)
     {
-        string pamtPath = Path.Combine(gameDir, ArchiveDir, "0.pamt");
-        string pazDir = Path.Combine(gameDir, ArchiveDir);
-
-        if (!File.Exists(pamtPath))
-            throw new FileNotFoundException(
-                $"HUD archive index not found at {pamtPath}. " +
-                "Verify your game files on Steam.");
-
-        var allEntries = PamtReader.Parse(pamtPath, pazDir);
-        var targetSet = new HashSet<string>(TargetPaths, StringComparer.OrdinalIgnoreCase);
-        var found = allEntries.Where(e => targetSet.Contains(e.Path)).ToList();
-
-        if (found.Count != TargetPaths.Length)
-        {
-            var missing = TargetPaths.Where(p => !found.Any(e =>
-                string.Equals(e.Path, p, StringComparison.OrdinalIgnoreCase)));
-            throw new InvalidOperationException(
-                $"Missing HUD entries in archive: {string.Join(", ", missing)}");
-        }
-
-        return found;
+        if (entryPath.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
+            return CompactCss(text);
+        var t = text;
+        if (entryPath.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+            t = HtmlCommentRe.Replace(t, "");
+        return Regex.Replace(t, @"\n\s*\n+", "\n");
     }
 
-    // ── Encryption detection ────────────────────────────────────────
+    // ── PAZ I/O ──────────────────────────────────────────────────────
 
-    private static byte[] ReadEntryBytes(PazEntry entry)
+    private static List<PazEntry> FindUiEntries(string gameDir)
     {
-        using var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Read, FileShare.Read);
+        string pamt = Path.Combine(gameDir, UiArchive, "0.pamt");
+        string pazDir = Path.Combine(gameDir, UiArchive);
+        if (!File.Exists(pamt))
+            throw new FileNotFoundException($"UI archive not found: {pamt}");
+
+        var entries = PamtReader.Parse(pamt, pazDir);
+        var byPath = new Dictionary<string, PazEntry>();
+        foreach (var e in entries)
+        {
+            string key = e.Path.ToLowerInvariant();
+            if (!byPath.ContainsKey(key))
+                byPath[key] = e;
+        }
+
+        var allPaths = HudHtmlPaths.Append(CssPath);
+        var result = new List<PazEntry>();
+        foreach (var p in allPaths)
+        {
+            if (!byPath.TryGetValue(p, out var entry))
+                throw new FileNotFoundException($"{p} not found in archive");
+            result.Add(entry);
+        }
+        return result;
+    }
+
+    private static byte[] ReadRaw(PazEntry entry)
+    {
+        using var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Read);
         fs.Seek(entry.Offset, SeekOrigin.Begin);
-        byte[] raw = new byte[entry.CompSize];
+        byte[] data = new byte[entry.CompSize];
         int totalRead = 0;
-        while (totalRead < raw.Length)
+        while (totalRead < data.Length)
         {
-            int n = fs.Read(raw, totalRead, raw.Length - totalRead);
+            int n = fs.Read(data, totalRead, data.Length - totalRead);
             if (n == 0) throw new EndOfStreamException();
             totalRead += n;
         }
-        return raw;
+        return data;
     }
 
-    /// <summary>
-    /// Decodes a HUD entry, trying unencrypted LZ4 first, then ChaCha20+LZ4.
-    /// Returns the decoded text and whether encryption was detected.
-    /// </summary>
-    private static (string Text, bool WasEncrypted) DecodeHudEntry(PazEntry entry, byte[] rawBytes)
+    private static (string Text, bool Encrypted) DecodeText(PazEntry entry, byte[] raw)
     {
-        string filename = Path.GetFileName(entry.Path);
-
-        if (!entry.Compressed)
+        if (entry.Compressed)
         {
-            // Uncompressed: try raw decode, then encrypted
+            if (entry.CompressionType != 2)
+                throw new InvalidOperationException($"Unsupported compression for {entry.Path}");
             try
             {
-                string text = Encoding.UTF8.GetString(rawBytes).TrimEnd('\0');
-                if (LooksLikeText(text)) return (text, false);
+                byte[] plain = CompressionUtils.Lz4Decompress(raw, entry.OrigSize);
+                try { return (Encoding.UTF8.GetString(plain).TrimEnd('\0'), false); }
+                catch (DecoderFallbackException) { }
             }
             catch { }
+
             try
             {
-                byte[] dec = AssetCodec.Decode(rawBytes, filename);
-                return (Encoding.UTF8.GetString(dec).TrimEnd('\0'), true);
+                byte[] dec = AssetCodec.Decode(raw, Path.GetFileName(entry.Path));
+                byte[] dp = CompressionUtils.Lz4Decompress(dec, entry.OrigSize);
+                return (Encoding.UTF8.GetString(dp).TrimEnd('\0'), true);
             }
             catch { }
-            throw new InvalidOperationException($"Could not decode HUD entry: {entry.Path}");
+
+            byte[] fallback = CompressionUtils.Lz4Decompress(raw, entry.OrigSize);
+            return (Encoding.UTF8.GetString(fallback).TrimEnd('\0'), false);
         }
 
-        // Compressed: try LZ4 first (unencrypted), then ChaCha20+LZ4
-        try
+        try { return (Encoding.UTF8.GetString(raw).TrimEnd('\0'), false); }
+        catch
         {
-            byte[] plain = CompressionUtils.Lz4Decompress(rawBytes, entry.OrigSize);
-            string text = Encoding.UTF8.GetString(plain).TrimEnd('\0');
-            if (LooksLikeText(text)) return (text, false);
+            byte[] dec = AssetCodec.Decode(raw, Path.GetFileName(entry.Path));
+            return (Encoding.UTF8.GetString(dec).TrimEnd('\0'), true);
         }
-        catch { }
+    }
 
-        try
+    // ── HTML modification ────────────────────────────────────────────
+
+    private static string ModifyHtml(string entryPath, string text, int maxWidth)
+    {
+        string sfOpen = GetSafeFrameOpen(maxWidth);
+        if (text.Contains(SafeFrameId)) return text;
+        if (!BodyOpenRe.IsMatch(text)) throw new InvalidOperationException($"No <body> in {entryPath}");
+        if (!BodyCloseRe.IsMatch(text)) throw new InvalidOperationException($"No </body> in {entryPath}");
+
+        string modified = BodyOpenRe.Replace(text, $"$1\n{sfOpen}\n", 1);
+
+        if (entryPath.Equals("ui/statusgaugeview2.html", StringComparison.OrdinalIgnoreCase))
         {
-            byte[] decrypted = AssetCodec.Decode(rawBytes, filename);
-            byte[] plain = CompressionUtils.Lz4Decompress(decrypted, entry.OrigSize);
-            string text = Encoding.UTF8.GetString(plain).TrimEnd('\0');
-            return (text, true);
-        }
-        catch { }
-
-        throw new InvalidOperationException(
-            $"Could not decode HUD entry: {entry.Path}. " +
-            "Both encrypted and unencrypted decode paths failed.");
-    }
-
-    private static bool LooksLikeText(string s)
-    {
-        if (string.IsNullOrEmpty(s)) return false;
-        // HTML starts with < or whitespace then <, CSS contains { or starts with . or @
-        string trimmed = s.TrimStart();
-        return trimmed.StartsWith('<') || trimmed.StartsWith('.') ||
-               trimmed.StartsWith('@') || trimmed.Contains('{');
-    }
-
-    // ── Text compaction ─────────────────────────────────────────────
-
-    private static string CompactHtml(string html)
-    {
-        // Strip HTML comments
-        string result = Regex.Replace(html, @"<!--.*?-->", "", RegexOptions.Singleline);
-        // Collapse multiple blank lines
-        result = Regex.Replace(result, @"\n\s*\n+", "\n");
-        return result;
-    }
-
-    private static string CompactCss(string css)
-    {
-        // Strip CSS comments
-        string result = Regex.Replace(css, @"/\*.*?\*/", "", RegexOptions.Singleline);
-        // Remove blank lines
-        result = Regex.Replace(result, @"\n\s*\n+", "\n");
-        // Remove trailing whitespace on lines
-        result = Regex.Replace(result, @"[ \t]+\n", "\n");
-        // Remove whitespace around syntax characters
-        result = Regex.Replace(result, @"\s*([{}:;,])\s*", "$1");
-        return result;
-    }
-
-    // ── HTML injection ──────────────────────────────────────────────
-
-    private static string BuildSafeFrameOpen()
-        => $"    <div id=\"{SafeFrameId}\" class=\"{CssClassName}\">";
-
-    private static string SafeFrameClose => "    </div>";
-
-    /// <summary>Injects the safe frame wrapper into minimaphudview2.html.</summary>
-    private static string InjectSafeFrameMinimap(string html, int maxWidth)
-    {
-        string compacted = CompactHtml(html);
-        string sfOpen = BuildSafeFrameOpen();
-
-        // Insert after <body...>
-        var bodyOpen = Regex.Match(compacted, @"(<body\b[^>]*>)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        if (!bodyOpen.Success)
-            throw new InvalidOperationException("Opening <body> tag not found in minimaphudview2.html");
-
-        string result = compacted.Insert(bodyOpen.Index + bodyOpen.Length, "\n" + sfOpen + "\n");
-
-        // Insert before </body>
-        var bodyClose = Regex.Match(result, @"(</body>)", RegexOptions.IgnoreCase);
-        if (!bodyClose.Success)
-            throw new InvalidOperationException("Closing </body> tag not found in minimaphudview2.html");
-
-        result = result.Insert(bodyClose.Index, SafeFrameClose + "\n");
-
-        return result;
-    }
-
-    /// <summary>
-    /// Injects the safe frame wrapper into statusgaugeview2.html with split handling.
-    /// The safe frame closes before HPGaugeTracker and reopens before SkillPointStatusGaugeContainer.
-    /// </summary>
-    private static string InjectSafeFrameStatus(string html, int maxWidth)
-    {
-        string compacted = CompactHtml(html);
-        string sfOpen = BuildSafeFrameOpen();
-
-        // Insert after <body...>
-        var bodyOpen = Regex.Match(compacted, @"(<body\b[^>]*>)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-        if (!bodyOpen.Success)
-            throw new InvalidOperationException("Opening <body> tag not found in statusgaugeview2.html");
-
-        string result = compacted.Insert(bodyOpen.Index + bodyOpen.Length, "\n" + sfOpen + "\n");
-
-        // Close before HPGaugeTracker
-        int hpIdx = result.IndexOf(HpGaugeTrackerMarker, StringComparison.Ordinal);
-        if (hpIdx < 0)
-            throw new InvalidOperationException("HPGaugeTracker marker not found in statusgaugeview2.html");
-        result = result.Insert(hpIdx, SafeFrameClose + "\n");
-
-        // Reopen before SkillPointStatusGaugeContainer
-        int spIdx = result.IndexOf(SkillPointMarker, StringComparison.Ordinal);
-        if (spIdx < 0)
-            throw new InvalidOperationException("SkillPointStatusGaugeContainer marker not found in statusgaugeview2.html");
-        result = result.Insert(spIdx, sfOpen + "\n");
-
-        // Close before </body>
-        var bodyClose = Regex.Match(result, @"(</body>)", RegexOptions.IgnoreCase);
-        if (!bodyClose.Success)
-            throw new InvalidOperationException("Closing </body> tag not found in statusgaugeview2.html");
-        result = result.Insert(bodyClose.Index, SafeFrameClose + "\n");
-
-        return result;
-    }
-
-    /// <summary>Appends the safe frame CSS rule to gamecommon.css.</summary>
-    private static string InjectCssRule(string css, int maxWidth)
-    {
-        string compacted = CompactCss(css);
-        // Remove any existing UCM HUD rule
-        compacted = Regex.Replace(compacted, @"\.ucm-hud-center\{[^}]*\}", "");
-        // Append the rule (compact, no whitespace)
-        string rule = $".{CssClassName}{{max-width:{maxWidth}px;margin:0 auto;width:100%;position:relative;}}";
-        return compacted.TrimEnd() + "\n" + rule;
-    }
-
-    // ── Backup management ───────────────────────────────────────────
-
-    private static string BackupFileName(string entryPath)
-        => entryPath.Replace("/", "__") + ".bin";
-
-    private static string MetaPath => Path.Combine(HudBackupsDir, "hud_meta.txt");
-
-    private static void EnsureHudBackup(List<PazEntry> entries, Action<string>? log)
-    {
-        foreach (var entry in entries)
-        {
-            string backupPath = Path.Combine(HudBackupsDir, BackupFileName(entry.Path));
-            if (File.Exists(backupPath)) continue;
-
-            log?.Invoke($"Backing up {entry.Path}...");
-            byte[] raw = ReadEntryBytes(entry);
-            File.WriteAllBytes(backupPath, raw);
+            if (!modified.Contains(GaugeTracker)) throw new InvalidOperationException("HPGaugeTracker not found");
+            if (!modified.Contains(GaugeSkillPoint)) throw new InvalidOperationException("SkillPointContainer not found");
+            modified = modified.Replace(GaugeTracker, $"{SafeFrameClose}\n{GaugeTracker}");
+            modified = modified.Replace(GaugeSkillPoint, $"{sfOpen}\n{GaugeSkillPoint}");
         }
 
-        // Save metadata for restore
-        var lines = entries.Select(e =>
-            $"{e.Path}|{e.CompSize}|{e.OrigSize}|{e.Offset}|{e.PazFile}");
-        File.WriteAllLines(MetaPath, lines);
+        modified = BodyCloseRe.Replace(modified, $"{SafeFrameClose}\n$1", 1);
+        return modified;
     }
 
-    // ── Install ─────────────────────────────────────────────────────
+    // ── CSS modification ─────────────────────────────────────────────
 
-    public static void InstallHud(string gameDir, int maxWidth, Action<string>? log)
+    private static string ModifyCss(string text, int maxWidth = DefaultMaxWidth)
     {
-        var entries = FindHudEntries(gameDir);
-        EnsureHudBackup(entries, log);
+        // CentreHUD approach: update 21-9 to 2520px, then create 16-9 with user's width
+        var pat219 = new Regex(@"(\.ui-view-max-size-21-9\s*\{)([^}]*)(\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        var m219 = pat219.Match(text);
+        if (!m219.Success) throw new InvalidOperationException(".ui-view-max-size-21-9 not found in CSS");
 
-        foreach (var entry in entries)
+        // Step 1: ensure 21-9 has max-width: 2520px
+        string body219 = m219.Groups[2].Value;
+        var propRe = new Regex(@"(max-width\s*:\s*)([^;]+)(;)", RegexOptions.IgnoreCase);
+        string newBody219;
+        if (propRe.IsMatch(body219))
+            newBody219 = propRe.Replace(body219, "${1}2520px${3}", 1);
+        else
+            newBody219 = body219.TrimEnd() + " max-width: 2520px;";
+        string modified = text[..m219.Groups[2].Index] + newBody219 + text[(m219.Groups[2].Index + m219.Groups[2].Length)..];
+
+        // Step 2: check if 16-9 rule exists
+        var pat169 = new Regex(@"(\.ui-view-max-size-16-9\s*\{)([^}]*)(\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        var m169 = pat169.Match(modified);
+        if (m169.Success)
         {
-            log?.Invoke($"Processing {entry.Path}...");
-
-            byte[] rawBytes = ReadEntryBytes(entry);
-            var (text, wasEncrypted) = DecodeHudEntry(entry, rawBytes);
-
-            // Inject modifications based on file type
-            string modified;
-            string pathLower = entry.Path.ToLowerInvariant();
-            if (pathLower == "ui/minimaphudview2.html")
-                modified = InjectSafeFrameMinimap(text, maxWidth);
-            else if (pathLower == "ui/statusgaugeview2.html")
-                modified = InjectSafeFrameStatus(text, maxWidth);
-            else if (pathLower == "ui/gamecommon.css")
-                modified = InjectCssRule(text, maxWidth);
+            // Update existing 16-9 rule
+            string body169 = m169.Groups[2].Value;
+            string newBody169;
+            if (propRe.IsMatch(body169))
+                newBody169 = propRe.Replace(body169, $"${{1}}{maxWidth}px${{3}}", 1);
             else
-                continue;
-
-            // Encode to bytes
-            byte[] modifiedBytes = Encoding.UTF8.GetBytes(modified);
-
-            // Size-match: use CSS method for CSS, XML/HTML method for HTML
-            byte[] sized = entry.IsCss
-                ? ArchiveWriter.MatchCompressedSizeCss(modifiedBytes, entry.CompSize, entry.OrigSize)
-                : ArchiveWriter.MatchCompressedSize(modifiedBytes, entry.CompSize, entry.OrigSize);
-
-            // Compress
-            byte[] compressed = CompressionUtils.Lz4Compress(sized);
-            if (compressed.Length != entry.CompSize)
-                throw new InvalidOperationException(
-                    $"Compressed size mismatch for {entry.Path}: {compressed.Length} != {entry.CompSize}");
-
-            // Encrypt if needed
-            byte[] payload = wasEncrypted
-                ? AssetCodec.Encode(compressed, Path.GetFileName(entry.Path))
-                : compressed;
-
-            // Write to archive
-            log?.Invoke($"Writing {entry.Path}...");
-            ArchiveWriter.UpdateEntry(entry, payload);
+                newBody169 = body169.TrimEnd() + $" max-width: {maxWidth}px;";
+            return modified[..m169.Groups[2].Index] + newBody169 + modified[(m169.Groups[2].Index + m169.Groups[2].Length)..];
         }
 
-        log?.Invoke("HUD centering installed.");
+        // Step 3: create 16-9 by cloning 21-9 properties with different max-width
+        var m219new = pat219.Match(modified);
+        string clonedBody = m219new.Groups[2].Value;
+        clonedBody = propRe.Replace(clonedBody, $"${{1}}{maxWidth}px${{3}}", 1);
+        string newRule = $".ui-view-max-size-16-9 {{{clonedBody}}}";
+        int insertAt = m219new.Index + m219new.Length;
+        return modified[..insertAt] + "\n" + newRule + modified[insertAt..];
     }
 
-    // ── Restore ─────────────────────────────────────────────────────
+    // ── Payload building ─────────────────────────────────────────────
 
-    public static void RestoreHud(string gameDir, Action<string>? log)
+    private static byte[] BuildPayload(string modifiedText, PazEntry entry, bool encrypted)
     {
-        if (!File.Exists(MetaPath))
+        string compacted = CompactText(entry.Path, modifiedText);
+        var candidates = new List<string>();
+        if (compacted != modifiedText) candidates.Add(compacted);
+        candidates.Add(modifiedText);
+
+        Exception? lastErr = null;
+        foreach (var candidate in candidates)
         {
-            log?.Invoke("No HUD backup found, skipping restore.");
-            return;
+            byte[] plaintext = Encoding.UTF8.GetBytes(candidate);
+            try
+            {
+                byte[] payload;
+                if (entry.Compressed)
+                {
+                    byte[] adjusted = entry.IsHtml
+                        ? ArchiveWriter.MatchCompressedSizeHtml(plaintext, entry.CompSize, entry.OrigSize)
+                        : entry.IsCss
+                            ? ArchiveWriter.MatchCompressedSizeCss(plaintext, entry.CompSize, entry.OrigSize)
+                            : ArchiveWriter.MatchCompressedSize(plaintext, entry.CompSize, entry.OrigSize);
+                    payload = CompressionUtils.Lz4Compress(adjusted);
+                    if (payload.Length != entry.CompSize)
+                        throw new InvalidOperationException($"comp_size mismatch: {payload.Length} != {entry.CompSize}");
+                }
+                else
+                {
+                    if (plaintext.Length > entry.CompSize)
+                        throw new InvalidOperationException($"Too large: {plaintext.Length} > {entry.CompSize}");
+                    payload = new byte[entry.CompSize];
+                    Array.Copy(plaintext, payload, plaintext.Length);
+                }
+
+                if (encrypted)
+                {
+                    payload = AssetCodec.Encode(payload, Path.GetFileName(entry.Path));
+                    if (payload.Length != entry.CompSize)
+                        throw new InvalidOperationException("Encrypted size mismatch");
+                }
+                return payload;
+            }
+            catch (Exception e) { lastErr = e; }
         }
 
-        var entries = FindHudEntries(gameDir);
+        throw new InvalidOperationException($"Cannot fit {entry.Path}: {lastErr?.Message}");
+    }
+
+    // ── Backup management ────────────────────────────────────────────
+
+    private static bool BackupExists() => File.Exists(Path.Combine(BackupsDir, "meta.txt"));
+
+    private static void SaveBackups(List<PazEntry> entries)
+    {
+        Directory.CreateDirectory(BackupsDir);
+        foreach (var entry in entries)
+        {
+            byte[] raw = ReadRaw(entry);
+            string fname = entry.Path.Replace('/', '_').Replace('\\', '_') + ".bin";
+            File.WriteAllBytes(Path.Combine(BackupsDir, fname), raw);
+        }
+        var meta = string.Join('\n', entries.Select(e => $"{e.Path}|{e.CompSize}|{e.OrigSize}|{e.Offset}"));
+        File.WriteAllText(Path.Combine(BackupsDir, "meta.txt"), meta);
+    }
+
+    private static byte[]? LoadBackup(PazEntry entry)
+    {
+        string fname = entry.Path.Replace('/', '_').Replace('\\', '_') + ".bin";
+        string path = Path.Combine(BackupsDir, fname);
+        return File.Exists(path) ? File.ReadAllBytes(path) : null;
+    }
+
+    // ── Live detection ─────────────────────────────────────────────
+
+    public static bool DetectHudModified(string gameDir)
+    {
+        try
+        {
+            var entries = FindUiEntries(gameDir);
+            foreach (var entry in entries)
+            {
+                if (!entry.Path.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+                    continue;
+                byte[] raw = ReadRaw(entry);
+                var (text, _) = DecodeText(entry, raw);
+                if (text.Contains(SafeFrameId))
+                    return true;
+            }
+        }
+        catch { }
+        return false;
+    }
+
+    // ── Public API ───────────────────────────────────────────────────
+
+    public static Dictionary<string, object> InstallCenteredHud(string gameDir,
+        int maxWidth = DefaultMaxWidth, Action<string>? log = null)
+    {
+        log?.Invoke($"[HUD] Finding UI entries (max-width: {maxWidth}px)...");
+        var entries = FindUiEntries(gameDir);
+
+        var decoded = new Dictionary<string, (string Text, bool Encrypted)>();
+        foreach (var entry in entries)
+        {
+            byte[] raw = ReadRaw(entry);
+            decoded[entry.Path] = DecodeText(entry, raw);
+        }
+
+        bool allInstalled = entries
+            .Where(e => e.Path.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+            .All(e => decoded[e.Path].Text.Contains(SafeFrameId));
+        if (allInstalled)
+        {
+            log?.Invoke("[HUD] Already installed.");
+            return new() { ["status"] = "ok" };
+        }
+
+        if (!BackupExists())
+        {
+            log?.Invoke("[HUD] Saving backups...");
+            SaveBackups(entries);
+        }
+
+        var writes = new List<(PazEntry Entry, byte[] Payload)>();
+        foreach (var entry in entries)
+        {
+            var (text, enc) = decoded[entry.Path];
+            string modified;
+            if (entry.Path.EndsWith(".html", StringComparison.OrdinalIgnoreCase))
+                modified = ModifyHtml(entry.Path, text, maxWidth);
+            else if (entry.Path.EndsWith(".css", StringComparison.OrdinalIgnoreCase))
+                modified = ModifyCss(text, maxWidth);
+            else continue;
+
+            if (modified == text) continue;
+            byte[] payload = BuildPayload(modified, entry, enc);
+            writes.Add((entry, payload));
+        }
+
+        foreach (var (entry, payload) in writes)
+        {
+            var restoreTs = ArchiveWriter.SaveTimestamps(entry.PazFile);
+            using (var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Write))
+            {
+                fs.Seek(entry.Offset, SeekOrigin.Begin);
+                fs.Write(payload);
+            }
+            restoreTs();
+            log?.Invoke($"[HUD] Updated: {entry.Path}");
+        }
+
+        log?.Invoke("[HUD] Done!");
+        return new() { ["status"] = "ok" };
+    }
+
+    public static Dictionary<string, object> RestoreHud(string gameDir, Action<string>? log = null)
+    {
+        if (!BackupExists())
+            return new() { ["status"] = "no_backup" };
+
+        var entries = FindUiEntries(gameDir);
 
         foreach (var entry in entries)
         {
-            string backupPath = Path.Combine(HudBackupsDir, BackupFileName(entry.Path));
-            if (!File.Exists(backupPath))
-            {
-                log?.Invoke($"Backup missing for {entry.Path}, skipping.");
-                continue;
-            }
-
-            byte[] backup = File.ReadAllBytes(backupPath);
-            if (backup.Length != entry.CompSize)
-            {
-                log?.Invoke($"Backup size mismatch for {entry.Path} ({backup.Length} != {entry.CompSize}), skipping.");
-                continue;
-            }
-
-            log?.Invoke($"Restoring {entry.Path}...");
-            ArchiveWriter.UpdateEntry(entry, backup);
+            byte[]? data = LoadBackup(entry);
+            if (data == null) return new() { ["status"] = "error" };
+            if (data.Length != entry.CompSize) return new() { ["status"] = "stale_backup" };
         }
 
-        log?.Invoke("HUD restored to vanilla.");
-    }
+        foreach (var entry in entries)
+        {
+            byte[] data = LoadBackup(entry)!;
+            var restoreTs = ArchiveWriter.SaveTimestamps(entry.PazFile);
+            using (var fs = new FileStream(entry.PazFile, FileMode.Open, FileAccess.Write))
+            {
+                fs.Seek(entry.Offset, SeekOrigin.Begin);
+                fs.Write(data);
+            }
+            restoreTs();
+            log?.Invoke($"[HUD] Restored: {entry.Path}");
+        }
 
-    /// <summary>Returns true if HUD backups exist (HUD was previously installed).</summary>
-    public static bool HasHudBackup()
-        => File.Exists(MetaPath);
+        return new() { ["status"] = "ok" };
+    }
 }

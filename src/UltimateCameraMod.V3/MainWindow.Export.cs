@@ -136,7 +136,7 @@ public partial class MainWindow : Window
                 try
                 {
                     log("Installing HUD centering...");
-                    HudMod.InstallHud(gameDir, hudWidth, log);
+                    HudMod.InstallCenteredHud(gameDir, hudWidth, log);
                 }
                 catch (Exception hudEx)
                 {

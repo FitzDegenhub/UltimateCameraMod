@@ -735,6 +735,85 @@ public static class ArchiveWriter
             "• The game was updated. Verify game files on Steam and reinstall.");
     }
 
+    // ── HTML size matching (with SHRINK support for HUD files) ─────
+
+    /// <summary>
+    /// Size-matches HTML content using CentreHUD's shrink strategy.
+    /// When compressed > target, replaces non-space bytes with spaces
+    /// (spaces are maximally compressible in LZ4) using a linear scan.
+    /// </summary>
+    public static byte[] MatchCompressedSizeHtml(byte[] plaintext, int targetCompSize, int targetOrigSize)
+    {
+        byte[] padded = plaintext.Length > targetOrigSize
+            ? ShrinkToOrigSize(plaintext, targetOrigSize)
+            : PadToOrigSize(plaintext, targetOrigSize);
+
+        byte[] comp = CompressionUtils.Lz4Compress(padded);
+        if (comp.Length == targetCompSize)
+            return padded;
+
+        if (comp.Length < targetCompSize)
+        {
+            // Need to inflate -- use existing strategies
+            return MatchCompressedSize(plaintext, targetCompSize, targetOrigSize);
+        }
+
+        // SHRINK: compressed > target. Replace non-space bytes with spaces.
+        // Spaces compress better in LZ4 (back-references to prior runs).
+        // Build candidate list: non-space bytes, prioritized by proximity to spaces.
+        var adjacent = new List<int>();
+        var nonAdjacent = new List<int>();
+        for (int i = 0; i < padded.Length; i++)
+        {
+            if (padded[i] == 0x20) continue;
+            if ((i > 0 && padded[i - 1] == 0x20) || (i + 1 < padded.Length && padded[i + 1] == 0x20))
+                adjacent.Add(i);
+            else
+                nonAdjacent.Add(i);
+        }
+        var candidates = new List<int>(adjacent);
+        candidates.AddRange(nonAdjacent);
+
+        if (candidates.Count == 0)
+            throw new InvalidOperationException(
+                $"Cannot shrink to target comp_size {targetCompSize} (got {comp.Length}): no replaceable bytes");
+
+        // Linear scan -- replace one byte at a time, check compressed size
+        byte[] trial = (byte[])padded.Clone();
+        int lastN = -1;
+        for (int n = 0; n < candidates.Count; n++)
+        {
+            trial[candidates[n]] = 0x20;
+            int c = CompressionUtils.Lz4Compress(trial).Length;
+            if (c == targetCompSize)
+                return (byte[])trial.Clone();
+            if (c < targetCompSize)
+            {
+                lastN = n;
+                break;
+            }
+        }
+
+        if (lastN < 0)
+            throw new InvalidOperationException(
+                $"Cannot match target comp_size {targetCompSize} (got {comp.Length}): exhausted candidates");
+
+        // Overshot -- revert recent replacements to find exact target
+        for (int revert = 1; revert < Math.Min(lastN + 2, 200); revert++)
+        {
+            byte[] trial2 = (byte[])padded.Clone();
+            int applyCount = lastN + 1 - revert;
+            for (int i = 0; i < applyCount; i++)
+                trial2[candidates[i]] = 0x20;
+            int c = CompressionUtils.Lz4Compress(trial2).Length;
+            if (c == targetCompSize)
+                return trial2;
+        }
+
+        throw new InvalidOperationException(
+            $"Cannot match target comp_size {targetCompSize} after shrink scan");
+    }
+
     // ── CSS size matching (uses /* */ comments instead of <!-- -->) ──
 
     private static byte[] MakeCssSafeRandomContent(int length)
