@@ -1,0 +1,240 @@
+<Application x:Class="UltimateCameraMod.Avalonia.App"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Brand Colors -->
+            <Color x:Key="BgDark">#1a1a1a</Color>
+            <Color x:Key="BgPanel">#242424</Color>
+            <Color x:Key="BgInput">#2e2e2e</Color>
+            <Color x:Key="Accent">#c8a24e</Color>
+            <Color x:Key="AccentHover">#dab95e</Color>
+            <Color x:Key="TextPrimary">#e0e0e0</Color>
+            <Color x:Key="TextSecondary">#999999</Color>
+            <Color x:Key="TextDim">#666666</Color>
+            <Color x:Key="Success">#4ade80</Color>
+            <Color x:Key="Error">#ef4444</Color>
+            <Color x:Key="Warn">#f59e0b</Color>
+            <Color x:Key="Border">#333333</Color>
+            <!-- shadcn-like sidebar surfaces -->
+            <Color x:Key="BgSidebar">#141414</Color>
+            <Color x:Key="SidebarBorder">#262626</Color>
+            <Color x:Key="SidebarNavHover">#1f1f1f</Color>
+            <Color x:Key="SidebarNavSelected">#242424</Color>
+            <Color x:Key="SidebarSessionCard">#1a1a1a</Color>
+
+            <SolidColorBrush x:Key="BgDarkBrush" Color="{DynamicResource BgDark}"/>
+            <SolidColorBrush x:Key="BgPanelBrush" Color="{DynamicResource BgPanel}"/>
+            <SolidColorBrush x:Key="BgInputBrush" Color="{DynamicResource BgInput}"/>
+            <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource Accent}"/>
+            <SolidColorBrush x:Key="AccentHoverBrush" Color="{DynamicResource AccentHover}"/>
+            <SolidColorBrush x:Key="TextPrimaryBrush" Color="{DynamicResource TextPrimary}"/>
+            <SolidColorBrush x:Key="TextSecondaryBrush" Color="{DynamicResource TextSecondary}"/>
+            <SolidColorBrush x:Key="TextDimBrush" Color="{DynamicResource TextDim}"/>
+            <SolidColorBrush x:Key="SuccessBrush" Color="{DynamicResource Success}"/>
+            <SolidColorBrush x:Key="ErrorBrush" Color="{DynamicResource Error}"/>
+            <SolidColorBrush x:Key="WarnBrush" Color="{DynamicResource Warn}"/>
+            <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Border}"/>
+            <SolidColorBrush x:Key="BgSidebarBrush" Color="{DynamicResource BgSidebar}"/>
+            <SolidColorBrush x:Key="SidebarBorderBrush" Color="{DynamicResource SidebarBorder}"/>
+            <SolidColorBrush x:Key="SidebarNavHoverBrush" Color="{DynamicResource SidebarNavHover}"/>
+            <SolidColorBrush x:Key="SidebarNavSelectedBrush" Color="{DynamicResource SidebarNavSelected}"/>
+            <SolidColorBrush x:Key="SidebarSessionCardBrush" Color="{DynamicResource SidebarSessionCard}"/>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <!-- ===== AccentButton style (use Classes="accent") ===== -->
+        <Style Selector="Button.accent">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource BgDarkBrush}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="16,6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}"/>
+        </Style>
+        <Style Selector="Button.accent:disabled">
+            <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+
+        <!-- ===== SubtleButton style (use Classes="subtle") ===== -->
+        <Style Selector="Button.subtle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="Button.subtle:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource BgInputBrush}"/>
+        </Style>
+        <Style Selector="Button.subtle:disabled">
+            <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+
+        <!-- ===== SidebarGhostButton (use Classes="sidebar-ghost") ===== -->
+        <Style Selector="Button.sidebar-ghost">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="Button.sidebar-ghost:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource BgInputBrush}"/>
+        </Style>
+        <Style Selector="Button.sidebar-ghost:disabled">
+            <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+
+        <!-- ===== PresetSidebarLockButton (use Classes="preset-lock") ===== -->
+        <Style Selector="Button.preset-lock">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="8,0,0,0"/>
+            <Setter Property="Width" Value="22"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style Selector="Button.preset-lock:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+        <Style Selector="Button.preset-lock:disabled">
+            <Setter Property="Opacity" Value="0.45"/>
+        </Style>
+
+        <!-- ===== SidebarPresetListBoxItem (use Classes="sidebar-preset-item") ===== -->
+        <Style Selector="ListBoxItem.sidebar-preset-item">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="0,0,0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="ListBoxItem.sidebar-preset-item:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SidebarNavHoverBrush}"/>
+        </Style>
+        <Style Selector="ListBoxItem.sidebar-preset-item:selected">
+            <Setter Property="Background" Value="{DynamicResource SidebarNavSelectedBrush}"/>
+            <Setter Property="BorderThickness" Value="2,0,0,0"/>
+        </Style>
+        <Style Selector="ListBoxItem.sidebar-preset-item:selected:pointerover">
+            <Setter Property="Background" Value="{DynamicResource BgInputBrush}"/>
+        </Style>
+
+        <!-- ===== SidebarPresetListBox (use Classes="sidebar-preset-list") ===== -->
+        <Style Selector="ListBox.sidebar-preset-list">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        </Style>
+
+        <!-- ===== ComboBox global style ===== -->
+        <Style Selector="ComboBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="{DynamicResource BgInputBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="ComboBox:pointerover /template/ Border#Background">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+
+        <!-- ===== ComboBoxItem global style ===== -->
+        <Style Selector="ComboBoxItem">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#26c8a24e"/>
+        </Style>
+        <Style Selector="ComboBoxItem:selected">
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+
+        <!-- ===== CheckBox global style ===== -->
+        <Style Selector="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <!-- ===== Slider global style ===== -->
+        <Style Selector="Slider">
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+        <Style Selector="Slider:disabled">
+            <Setter Property="Opacity" Value="0.45"/>
+        </Style>
+
+        <!-- ===== TextBox global style ===== -->
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="{DynamicResource BgInputBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="SelectionBrush" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+
+        <!-- ===== SectionHeader TextBlock (use Classes="section-header") ===== -->
+        <Style Selector="TextBlock.section-header">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextDimBrush}"/>
+            <Setter Property="Margin" Value="0,14,0,0"/>
+        </Style>
+
+        <!-- ===== FieldLabel TextBlock (use Classes="field-label") ===== -->
+        <Style Selector="TextBlock.field-label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="0,0,12,8"/>
+        </Style>
+
+        <!-- ===== ScrollBar thin style ===== -->
+        <Style Selector="ScrollBar">
+            <Setter Property="Width" Value="6"/>
+        </Style>
+
+    </Application.Styles>
+</Application>

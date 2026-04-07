@@ -1,0 +1,22 @@
+<Window x:Class="UltimateCameraMod.Avalonia.ExportDialog"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Export Preset String" Width="520" Height="320" CanResize="False"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{DynamicResource BgDarkBrush}">
+    <StackPanel Margin="24">
+        <TextBlock x:Name="TitleText" FontSize="14" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+        <TextBlock Text="Copy and paste on NexusMods, Discord, etc." FontSize="11"
+                   Foreground="{DynamicResource TextDimBrush}" Margin="0,0,0,10"/>
+        <TextBox x:Name="CodeBox" FontFamily="Consolas" FontSize="13" Height="90"
+                 Background="{DynamicResource BgInputBrush}" Foreground="{DynamicResource AccentBrush}"
+                 BorderBrush="{DynamicResource BorderBrush}" TextWrapping="Wrap"
+                 IsReadOnly="True" Padding="10,8"/>
+        <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+            <Button x:Name="CopyBtn" Content="Copy to clipboard" Classes="accent"
+                    Width="150" Height="34" Click="OnCopy"/>
+            <Button Content="Close" Classes="subtle"
+                    Width="90" Height="34" Click="OnClose" Margin="8,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,25 @@
+<Window x:Class="UltimateCameraMod.Avalonia.AdvancedImportDialog"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Import Advanced Settings String" Width="520" Height="360" CanResize="False"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="{DynamicResource BgDarkBrush}">
+    <StackPanel Margin="24">
+        <TextBlock Text="Paste an advanced settings string below:" FontSize="14"
+                   Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+        <TextBlock Text="Must start with UCM_ADV: (from Advanced Export)" FontSize="11"
+                   Foreground="{DynamicResource TextDimBrush}" Margin="0,0,0,10"/>
+        <TextBox x:Name="PasteBox" FontFamily="Consolas" FontSize="13" Height="90"
+                 Background="{DynamicResource BgInputBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                 BorderBrush="{DynamicResource BorderBrush}" TextWrapping="Wrap"
+                 Padding="10,8"/>
+        <TextBlock x:Name="PreviewText" FontSize="12" Foreground="{DynamicResource TextDimBrush}"
+                   Margin="0,10,0,10"/>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="ImportBtn" Content="Import" Classes="accent"
+                    Width="130" Height="34" Click="OnImport" IsEnabled="False"/>
+            <Button Content="Cancel" Classes="subtle"
+                    Width="90" Height="34" Click="OnCancel" Margin="8,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

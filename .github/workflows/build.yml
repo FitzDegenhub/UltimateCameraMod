@@ -1,0 +1,79 @@
+name: Build
+
+on:
+  push:
+    branches: [main, development, v3-dev]
+    paths:
+      - 'src/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    branches: [main, development]
+    paths:
+      - 'src/**'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            project: src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj
+            name: Windows (WPF)
+          - os: windows-latest
+            rid: win-x64
+            project: src/UltimateCameraMod.Avalonia/UltimateCameraMod.Avalonia.csproj
+            name: Windows (Avalonia)
+          - os: ubuntu-latest
+            rid: linux-x64
+            project: src/UltimateCameraMod.Avalonia/UltimateCameraMod.Avalonia.csproj
+            name: Linux (Avalonia)
+
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ matrix.project }}
+
+      - name: Build
+        run: dotnet build ${{ matrix.project }} -c Release --no-restore
+
+      - name: Publish
+        run: >
+          dotnet publish ${{ matrix.project }}
+          -c Release
+          -r ${{ matrix.rid }}
+          --self-contained
+          -p:PublishSingleFile=true
+          -p:EnableCompressionInSingleFile=true
+          -o publish/${{ matrix.rid }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ucm-${{ matrix.rid }}-${{ github.sha }}
+          path: publish/${{ matrix.rid }}/
+          retention-days: 14
+
+  build-core:
+    runs-on: ubuntu-latest
+    name: Core Library (cross-platform)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build Core
+        run: dotnet build src/UltimateCameraMod.Core/UltimateCameraMod.Core.csproj -c Release
