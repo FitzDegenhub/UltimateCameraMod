@@ -1,0 +1,113 @@
+<UserControl x:Class="UltimateCameraMod.Avalonia.NewPresetDialog"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="480">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="780">
+    <StackPanel Margin="0,0,4,0">
+        <TextBlock Text="Choose preset type" FontSize="14" FontWeight="SemiBold"
+                   Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,12"/>
+
+        <!-- UCM Managed (default) -->
+        <RadioButton x:Name="RadioUcm" GroupName="PresetType" IsChecked="True" Margin="0,0,0,8"
+                     Cursor="Hand">
+            <RadioButton.Styles>
+                <Style Selector="RadioButton">
+                    <Setter Property="Template">
+                        <ControlTemplate>
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Setter>
+                </Style>
+            </RadioButton.Styles>
+            <Border x:Name="UcmCard" Background="{DynamicResource BgInputBrush}"
+                    BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,12" Cursor="Hand">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Managed by UCM" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource AccentBrush}"/>
+                        <TextBlock Text="  (Recommended)" FontSize="10"
+                                   Foreground="{DynamicResource TextDimBrush}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock TextWrapping="Wrap" FontSize="11" Margin="0,6,0,0" LineHeight="16"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               Text="UCM manages over 150 camera states behind the scenes -- FoV consistency across combat, guard, mount, and lock-on; smooth transitions between every state; distance scaling so lock-on doesn't snap inward. Quick sliders and Fine Tune build on top of these rules safely. God Mode lets you override individual values when you need to."/>
+                    <WrapPanel Margin="0,8,0,0">
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; UCM Quick</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; Fine Tune</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; God Mode</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; Steadycam</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; Global FoV</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; Mount Camera</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; Lock-on Zoom</TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </RadioButton>
+
+        <!-- OR divider -->
+        <Grid Margin="0,2,0,2">
+            <Border Height="1" Background="{DynamicResource BorderBrush}" VerticalAlignment="Center"/>
+            <TextBlock Text="OR" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"
+                       Foreground="{DynamicResource TextDimBrush}" Background="#242424" Padding="12,0"/>
+        </Grid>
+
+        <!-- Full Manual Control -->
+        <RadioButton x:Name="RadioManual" GroupName="PresetType" Margin="0,0,0,10"
+                     Cursor="Hand">
+            <RadioButton.Styles>
+                <Style Selector="RadioButton">
+                    <Setter Property="Template">
+                        <ControlTemplate>
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Setter>
+                </Style>
+            </RadioButton.Styles>
+            <Border x:Name="ManualCard" Background="{DynamicResource BgInputBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                    CornerRadius="6" Padding="14,12" Cursor="Hand">
+                <StackPanel>
+                    <TextBlock Text="Full Manual Control" FontSize="13" FontWeight="SemiBold"
+                               Foreground="{DynamicResource AccentBrush}"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="11" Margin="0,6,0,0" LineHeight="16"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               Text="Starts from the game's vanilla camera XML with no UCM rules applied. UCM Quick and Fine Tune are disabled because their sliders would overwrite your manual edits -- UCM modifies hundreds of values across combat, mount, lock-on, and smoothing states, which would conflict with hand-tuned values. Only God Mode is available for direct XML editing. Use this when importing from another camera mod or when you need full control over every value."/>
+                    <WrapPanel Margin="0,8,0,0">
+                        <TextBlock FontSize="10" Foreground="#F44336" Margin="0,0,12,2">&#x2716; UCM Quick</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#F44336" Margin="0,0,12,2">&#x2716; Fine Tune</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#4CAF50" Margin="0,0,12,2">&#x2714; God Mode</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#F44336" Margin="0,0,12,2">&#x2716; Steadycam</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#F44336" Margin="0,0,12,2">&#x2716; Global FoV</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#F44336" Margin="0,0,12,2">&#x2716; Mount Camera</TextBlock>
+                        <TextBlock FontSize="10" Foreground="#F44336" Margin="0,0,12,2">&#x2716; Lock-on Zoom</TextBlock>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </RadioButton>
+
+        <TextBlock Text="Name" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+        <TextBox x:Name="NameBox" FontSize="13" Height="32" Padding="8,4"
+                 Background="{DynamicResource BgInputBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                 BorderBrush="{DynamicResource BorderBrush}"/>
+
+        <TextBlock Text="Author" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,12,0,4"/>
+        <TextBox x:Name="AuthorBox" FontSize="13" Height="32" Padding="8,4"
+                 Background="{DynamicResource BgInputBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                 BorderBrush="{DynamicResource BorderBrush}"/>
+
+        <TextBlock Text="Description" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,12,0,4"/>
+        <TextBox x:Name="DescriptionBox" FontSize="12" Height="48" Padding="8,6"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 Background="{DynamicResource BgInputBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                 BorderBrush="{DynamicResource BorderBrush}"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,4">
+            <Button Content="Cancel" Classes="subtle"
+                    Width="90" Height="34" Click="OnCancel"/>
+            <Button Content="Create" Classes="accent"
+                    Width="90" Height="34" Click="OnCreate" Margin="8,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+    </ScrollViewer>
+</UserControl>

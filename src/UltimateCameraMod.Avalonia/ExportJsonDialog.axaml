@@ -1,0 +1,220 @@
+<UserControl x:Class="UltimateCameraMod.Avalonia.ExportJsonDialog"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="680" MaxHeight="750">
+    <UserControl.Styles>
+        <!-- TextBox style for all input fields in this dialog -->
+        <Style Selector="TextBox.export-field">
+            <Setter Property="Background" Value="#303030"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <!-- Segmented format choice radio button style -->
+        <Style Selector="RadioButton.export-format">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Match MainWindow title strip -->
+        <Border Grid.Row="0" Background="{DynamicResource BgPanelBrush}" Padding="22,14,22,12">
+            <StackPanel>
+                <TextBlock Text="EXPORT FOR SHARING" FontSize="14" FontWeight="Bold"
+                           Foreground="{DynamicResource AccentBrush}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Background="{DynamicResource BorderBrush}"/>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                      Padding="0,4,0,0">
+            <StackPanel Margin="22,18,22,22" MaxWidth="760">
+
+                <!-- Format + help -->
+                <Border Background="{DynamicResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Format" FontSize="11" FontWeight="Bold"
+                                   Foreground="{DynamicResource TextDimBrush}" Margin="0,0,0,10"/>
+                        <WrapPanel Margin="0,0,0,14">
+                            <RadioButton x:Name="FormatJsonRadio" GroupName="ExportFormat"
+                                         Content="JSON - mod managers" Classes="export-format"
+                                         IsChecked="True"/>
+                            <RadioButton x:Name="FormatXmlRadio" GroupName="ExportFormat"
+                                         Content="XML" Classes="export-format"/>
+                            <RadioButton x:Name="FormatPazRadio" GroupName="ExportFormat"
+                                         Content="0.paz" Classes="export-format"/>
+                            <RadioButton x:Name="FormatPresetRadio" GroupName="ExportFormat"
+                                         Content="UCM Preset (.ucmpreset)" Classes="export-format"/>
+                        </WrapPanel>
+                        <Border Background="{DynamicResource BgInputBrush}" CornerRadius="6" Padding="12,10"
+                                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                            <TextBlock x:Name="HelpDetailText" TextWrapping="Wrap" FontSize="12"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" LineHeight="20"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 1 -->
+                <TextBlock Text="Mod info &amp; file name" FontSize="11" FontWeight="Bold"
+                           Foreground="{DynamicResource AccentBrush}" Margin="2,2,0,8"/>
+                <Border Background="{DynamicResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                   Margin="0,0,0,14" LineHeight="18"
+                                   Text="JSON uses these fields in modinfo. XML uses Title as the default save name. 0.paz defaults to 0.paz so you can drop it into 0010 without renaming."/>
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Title" Classes="field-label"
+                                       Width="96" Margin="0,0,14,0" VerticalAlignment="Center"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" x:Name="JsonTitleBox" Text="UCM Camera Config"
+                                     Classes="export-field" VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Version" Classes="field-label"
+                                       Width="96" Margin="0,10,14,0" VerticalAlignment="Center"/>
+                            <Grid Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" x:Name="JsonVersionBox" Classes="export-field" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Author" VerticalAlignment="Center"
+                                           FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"
+                                           Margin="14,0,14,0"/>
+                                <TextBox Grid.Column="2" x:Name="JsonAuthorBox" Classes="export-field" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Nexus URL" Classes="field-label"
+                                       Width="96" Margin="0,10,14,0" VerticalAlignment="Center"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" x:Name="JsonNexusBox" Margin="0,10,0,0"
+                                     Text="https://www.nexusmods.com/crimsondesert/mods/438"
+                                     Classes="export-field" VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Description" Classes="field-label"
+                                       Width="96" VerticalAlignment="Top" Margin="0,18,14,0"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" x:Name="JsonDescBox" Height="76" Margin="0,10,0,0"
+                                     TextWrapping="Wrap" AcceptsReturn="True"
+                                     Classes="export-field"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 2 -->
+                <TextBlock x:Name="Step2Header" Text="Prepare export" FontSize="11" FontWeight="Bold"
+                           Foreground="{DynamicResource AccentBrush}" Margin="2,2,0,8"/>
+                <Border Background="{DynamicResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock x:Name="Step2Body" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                   Margin="0,0,0,14" LineHeight="18"/>
+                        <Button Content="Prepare export" Classes="accent"
+                                Click="OnPrepareFromCurrent" MinHeight="36" Padding="18,8" FontSize="12"
+                                HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Step 3 -->
+                <Border x:Name="ExportPreviewPanel" IsVisible="False"
+                        Background="{DynamicResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
+                        BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Save" FontSize="11" FontWeight="Bold"
+                                   Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,12"/>
+
+                        <StackPanel x:Name="JsonStatsPanel" IsVisible="False" Margin="0,0,0,12">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Background="{DynamicResource BgInputBrush}" CornerRadius="6"
+                                        Margin="0,0,10,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="4"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Background="{DynamicResource AccentBrush}"
+                                                CornerRadius="6,0,0,6"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,10,14,10">
+                                            <TextBlock x:Name="JsonPatchCountLabel" Text="0" FontSize="22" FontWeight="Bold"
+                                                       Foreground="{DynamicResource AccentBrush}"/>
+                                            <TextBlock Text=" regions" FontSize="11"
+                                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Bottom" Margin="6,0,0,4"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <Border Background="{DynamicResource BgInputBrush}" CornerRadius="6"
+                                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="4"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Background="{DynamicResource AccentBrush}"
+                                                CornerRadius="6,0,0,6"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,10,14,10">
+                                            <TextBlock x:Name="JsonBytesChangedLabel" Text="0" FontSize="22" FontWeight="Bold"
+                                                       Foreground="{DynamicResource AccentBrush}"/>
+                                            <TextBlock Text=" bytes changed" FontSize="11"
+                                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Bottom" Margin="6,0,0,4"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"
+                                       LineHeight="18" Margin="0,0,0,4"
+                                       Text="Save the .json, then import it in JSON Mod Manager (Nexus mod 113) or Crimson Desert Ultimate Mods Manager (follow that tool's import / Mods folder instructions)."/>
+                        </StackPanel>
+
+                        <TextBlock x:Name="XmlSaveHint" IsVisible="False" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" LineHeight="18" Margin="0,0,0,12"/>
+
+                        <TextBlock x:Name="PazSaveHint" IsVisible="False" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" LineHeight="18" Margin="0,0,0,12"/>
+
+                        <Border Background="{DynamicResource BgInputBrush}" CornerRadius="6" Padding="10,8"
+                                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Margin="0,0,0,14">
+                            <TextBlock x:Name="FingerprintLabel" TextWrapping="Wrap" FontSize="10"
+                                       Foreground="{DynamicResource TextDimBrush}" FontFamily="Consolas"
+                                       LineHeight="15"/>
+                        </Border>
+
+                        <Button x:Name="SaveExportButton" Content="Save export..." Classes="accent"
+                                Click="OnSaveExport" MinHeight="36" Padding="18,8" FontSize="12"
+                                HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock x:Name="StatusLabel" FontSize="11" Foreground="{DynamicResource TextDimBrush}"
+                           TextWrapping="Wrap" Margin="2,4,2,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
