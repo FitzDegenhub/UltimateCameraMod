@@ -15,6 +15,7 @@ public partial class ExportJsonDialog : UserControl
 
     private readonly string _gameDir;
     private readonly Func<string?> _getSessionXml;
+    private readonly Func<Dictionary<string, object>>? _getSettingsPayload;
     private readonly bool _isRawImport;
 
     private List<JsonModExporter.PatchChange>? _jsonLastPatches;
@@ -24,10 +25,12 @@ public partial class ExportJsonDialog : UserControl
     public ExportJsonDialog(string gameDir, Func<string?> getSessionXmlForExport,
         string? presetName = null, string? presetAuthor = null,
         string? presetDescription = null, string? presetUrl = null,
-        bool isRawImport = false)
+        bool isRawImport = false,
+        Func<Dictionary<string, object>>? getSettingsPayload = null)
     {
         _gameDir = gameDir;
         _getSessionXml = getSessionXmlForExport;
+        _getSettingsPayload = getSettingsPayload;
         _isRawImport = isRawImport;
         InitializeComponent();
         // Pre-fill from active preset metadata
@@ -514,17 +517,22 @@ public partial class ExportJsonDialog : UserControl
             if (!string.IsNullOrWhiteSpace(url))
                 preset["url"] = url;
             preset["preset_mode"] = _isRawImport ? "godmode" : "ucm";
-            preset["settings"] = new Dictionary<string, object>
-            {
-                ["distance"] = 5.0,
-                ["height"] = 0.0,
-                ["right_offset"] = 0.0,
-                ["fov"] = 0,
-                ["combat"] = "default",
-                ["centered"] = false,
-                ["mount_height"] = false,
-                ["steadycam"] = true
-            };
+            preset["settings"] = _getSettingsPayload != null
+                ? _getSettingsPayload()
+                : new Dictionary<string, object>
+                {
+                    ["distance"] = 5.0,
+                    ["height"] = 0.0,
+                    ["right_offset"] = 0.0,
+                    ["fov"] = 0,
+                    ["combat_pullback"] = 0.0,
+                    ["centered"] = false,
+                    ["mount_height"] = false,
+                    ["steadycam"] = true,
+                    ["lock_on_auto_rotate_disabled"] = false,
+                    ["center_hud"] = false,
+                    ["hud_width"] = 1920
+                };
             preset["session_xml"] = _preparedXml;
 
             string json = System.Text.Json.JsonSerializer.Serialize(preset,

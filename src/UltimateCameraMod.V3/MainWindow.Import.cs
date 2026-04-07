@@ -859,7 +859,8 @@ public partial class MainWindow : Window
         }
 
         // Use rebuilt XML directly — CaptureSessionXml() would rebuild from God Mode UI and can diverge.
-        var ctrl = new ExportJsonDialog(_gameDir, () => rebuiltXml);
+        var ctrl = new ExportJsonDialog(_gameDir, () => rebuiltXml,
+            getSettingsPayload: () => BuildCurrentPresetSettingsPayload());
         ctrl.OnCloseRequested = () => CloseOverlay();
         _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }

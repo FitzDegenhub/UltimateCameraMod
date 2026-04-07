@@ -82,7 +82,8 @@ public partial class MainWindow : Window
         presetAuthor: expAuthor,
         presetDescription: expDesc,
         presetUrl: expUrl,
-        isRawImport: _sessionIsRawImport);
+        isRawImport: _sessionIsRawImport,
+        getSettingsPayload: () => BuildCurrentPresetSettingsPayload());
         ctrl.OnCloseRequested = () => CloseOverlay();
         _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }

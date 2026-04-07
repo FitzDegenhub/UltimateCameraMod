@@ -15,6 +15,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
 - **Center HUD mode switching had no effect** - Reinstalling with a different safe area (16:9 vs 21:9) was detected as "already installed" and skipped. Now restores vanilla first before reinstalling with the new mode.
 - **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.
+- **Exported .ucmpreset files had hardcoded default settings** - `SaveUcmPresetExport` wrote hardcoded defaults (distance=5, height=0, shift=0, all checkboxes off) instead of the actual Quick slider and Global Settings values. Exported presets now include the real distance, height, horizontal shift, FoV, lock-on zoom, lock-on auto-rotate, centered camera, mount sync, steadycam, center HUD, and HUD width. Import is now 1:1 with the exporter's configuration.
 
 ---
 
