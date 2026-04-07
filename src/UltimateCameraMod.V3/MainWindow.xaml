@@ -458,7 +458,7 @@
                                     <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
                                                FontSize="9" Foreground="{StaticResource TextDimBrush}"
                                                TextWrapping="Wrap" LineHeight="14" Margin="0,4,0,0"
-                                               Text="Centers gameplay HUD elements within the specified max width (pixels). Useful for ultrawide displays where HUD elements are spread too far apart. Only affects gameplay HUD, not menus. Credits to SRes from WSGF Discord."/>
+                                               Text="Centers gameplay HUD elements within the specified max width (pixels). Useful for ultrawide displays where HUD elements are spread too far apart. Only affects gameplay HUD, not menus. Credits to wsres."/>
                                 </Grid>
                             </Border>
                         </DockPanel>

@@ -9,7 +9,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ## [Unreleased]
 
 ### Features
-- **Center HUD** - New checkbox + dropdown in UCM Quick to center gameplay HUD elements for ultrawide displays. Choose between 16:9 (1920px) or 21:9 (2520px) safe areas. Modifies HTML/CSS in PAZ archive 0012 independently from camera. Switching modes or unchecking restores vanilla automatically. Credits to SRes from WSGF Discord for the technique.
+- **Center HUD** - New checkbox + dropdown in UCM Quick to center gameplay HUD elements for ultrawide displays. Choose between 16:9 (1920px) or 21:9 (2520px) safe areas. Modifies HTML/CSS in PAZ archive 0012 independently from camera. Switching modes or unchecking restores vanilla automatically. Credits to wsres for the technique.
 
 ### Bug Fixes
 - **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
