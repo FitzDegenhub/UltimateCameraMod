@@ -6,6 +6,29 @@ UltimateCameraMod (UCM) is a WPF/.NET 6 Windows app that modifies Crimson Desert
 
 **Recommended approach:** Avalonia UI migration (single cross-platform codebase replacing WPF).
 
+> **Status:** Implementation in progress. Core library extracted, Linux game detector built, Avalonia project scaffolded with all dialogs, controls, and MainWindow ported. See `src/UltimateCameraMod.Core/` and `src/UltimateCameraMod.Avalonia/`.
+
+---
+
+## Deep Research: All Approaches Evaluated
+
+Before choosing Avalonia, we researched **12 alternative approaches**:
+
+| Rank | Approach | Viable? | Why Eliminated |
+|------|----------|---------|----------------|
+| **1** | **Avalonia UI** | **Yes - chosen** | Best fit: XAML-compatible, native feel, proven in modding (Nexus Mods App) |
+| 2 | Wine/Proton | Partial | Game detection fails (Linux Steam doesn't use Wine registry). WPF rendering fragile |
+| 3 | Blazor Server | Yes | Feels like a web page, not a desktop app. No native file dialogs |
+| 4 | Photino + Blazor | Yes | Best web-based UX, but project health is concerning (understaffed) |
+| 5 | Uno Platform | Yes | UWP XAML (not WPF) — more translation work, smaller Linux community |
+| 6 | Tauri + .NET | Yes | Complete UI rewrite in JavaScript. Steepest learning curve |
+| 7 | Eto.Forms | Marginal | Smaller ecosystem, no advantage over Avalonia |
+| 8 | GTK# | Marginal | No XAML, limited DataGrid, different paradigm |
+| 9 | .NET MAUI | **No** | No official Linux desktop support |
+| 10 | Blazor WASM | **No** | Browser sandbox can't access filesystem |
+| 11 | ImGui.NET | Marginal | Wrong paradigm for forms-based app |
+| 12 | CLI/TUI only | Supplement | Can't replicate visual previews; viable as quick-win add-on |
+
 ---
 
 ## Current Architecture Audit
