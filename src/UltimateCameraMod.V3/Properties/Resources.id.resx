@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Pengaturan Kamera Lanjutan</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Impor String Pengaturan Lanjutan</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Ekspor String Preset</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Impor String Preset</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Impor Preset</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Input</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Error</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>EKSPOR UNTUK BERBAGI</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>PRESET KOMUNITAS</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>PRESET UCM</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Detail preset</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>Pilih jenis preset</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Impor Raw XML</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Folder Game Belum Diatur</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>Error God Mode</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Error Fine Tune</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Pembaruan Preset</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Pembaruan Game Terdeteksi</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>File Game Telah Diubah</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM Fatal</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>Impor PAZ Gagal</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>Impor Override God Mode</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>Override God Mode</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Terapkan ke Game</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Simpan</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Hapus</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Ekspor</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Impor</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Instal</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Instal ke Game</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Kembalikan Vanilla</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Kembalikan</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Tutup</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>Tutup UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Batal</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Ya</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Tidak</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Dapatkan pembaruan</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Salin ke clipboard</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Tersalin!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Ekspor String</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Impor String</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Simpan preset</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Hapus preset</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Ekspor XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Impor XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Atur Ulang ke Default</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Atur Ulang ke Vanilla</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Muat dari Simple</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Perluas Semua</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Tutup Semua</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Buat dari Pengaturan Saat Ini</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Buat dari File XML...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Simpan .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Impor &amp; Simpan</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Ekspor string</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Impor string</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Buy me a coffee</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Atur Ulang Default</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Baru</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Duplikat</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Ubah Nama</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>Buka</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Batalkan</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Coba Lagi</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Segarkan</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>Unduh</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>Terunduh</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>Mengunduh...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Buat</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Timpa</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Siapkan ekspor</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Simpan ekspor...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>Simpan .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>Simpan .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>Simpan 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>Simpan .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Jelajah</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Mengerti</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>Tunda 7 hari</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>Tunda 7h</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Abaikan</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>Buka Hanya-Baca</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Ya, backup dulu</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Tidak, langsung perbarui</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Hapus 0.paz yang dimodifikasi</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Dihapus</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Bersihkan</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Atur Ulang</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>Lanjut</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Mulai</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Lewati tutorial</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Lihat di Nexus</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>Preset</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Kustom</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Quick</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Fine Tune</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Sederhana</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Lanjutan</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Ahli</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>Jarak</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Tinggi</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Geser horizontal</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Bidang pandang</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Kamera pertarungan</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Kamera terpusat</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Kamera tunggangan</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Gaya kamera</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Preset tersimpan</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Preset</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Judul</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Versi</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Pembuat</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Pembuat (opsional)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>URL Nexus</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Deskripsi</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Deskripsi (opsional)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / dll. (opsional)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Folder game:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> region patch</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> byte diubah</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> region</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>AKTIF</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Draf</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Salinan kerja Anda sampai Anda menyimpan preset bernama.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Format</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Info mod &amp; nama file</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Siapkan ekspor</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Simpan</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Nama</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Nama *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>Cari</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Zoom lock-on</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Rotasi otomatis lock-on</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>HUD Tengah</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Area aman</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Memproses...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Tersimpan</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Terinstal</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Dikembalikan</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Dibatalkan</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>ATAU</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>GAYA KAMERA</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>PENGATURAN GLOBAL</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>BERBAGI</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>PRATINJAU KAMERA</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>BIDANG PANDANG</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>KONTROL LANJUTAN</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>PENGATURAN KAMERA LANJUTAN</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>CARA KERJA</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>LANGKAH 1  —  BERI NAMA MOD ANDA</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>LANGKAH 2  —  BUAT PATCH</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>LANGKAH 3  —  SIMPAN FILE</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>PRESET</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM QUICK</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>OFFSET KUSTOM</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>HUD TENGAH</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>BAGIAN</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>SUB-ELEMEN</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ATRIBUT</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>NILAI</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>VANILLA</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  Level Zoom Berjalan Kaki</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  Level Zoom Kuda / Tunggangan</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  Pertarungan / Lock-On</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  Penghalusan Kamera / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  Bidikan / Posisi Crosshair</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Level Zoom Berjalan Kaki</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - Level Zoom Kuda / Tunggangan</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Global / Cakupan FoV</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Tunggangan Khusus / Traversal</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Pertarungan / Lock-On</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Penghalusan Kamera / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Bidikan / Posisi Crosshair</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Pusatkan karakter di layar (kunci Geser Horizontal ke 0)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Pusatkan karakter di layar</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Samakan tinggi kamera tunggangan/kuda dengan tinggi kamera pemain</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Transisi kamera halus (menghilangkan jitter zoom antar state)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Nonaktifkan snap kamera ke target saat lock on  --  Kredit @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Pusatkan HUD gameplay dalam lebar maksimum</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - mod manager</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Paket Mod Manager (folder)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>File XML Kamera (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>Arsip PAZ (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>Patch JSON dari JSON Mod Manager atau CDUMM</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>File playercamerapreset.xml</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>File .paz game dengan data kamera</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>File preset UCM dari pengguna lain</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>Dikelola oleh UCM</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Direkomendasikan)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Kontrol Manual Penuh</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>Preset UCM</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>Preset komunitas</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Preset saya</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>Diimpor</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>Default</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>Gaya UCM</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>Komunitas</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Preset saya</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>XML Diimpor</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>0.paz Diimpor</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Paket mod</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Putih = vanilla</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Emas = dimodifikasi oleh UCM Quick/Fine Tune</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Hijau = sacred (edit God Mode Anda, terlindungi dari rebuild)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>Siap</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>memeriksa...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>terbaru</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>offline</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Menginstal...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Terinstal! Jalankan game.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Mengembalikan vanilla...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Vanilla dikembalikan.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Menerapkan...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>Menerapkan {0} perubahan ke file game.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Preset '{0}' dimuat.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Preset '{0}' disimpan.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Preset '{0}' dihapus.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Preset '{0}' diekspor.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>Preset '{0}' diperbarui.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>Mengimpor '{0}' dan disimpan — tekan Instal untuk menerapkan.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>Mengekspor {0} nilai yang dimodifikasi.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>Mengimpor {0} nilai.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Diekspor ke {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>Menginstal {0} ke game.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>Mengimpor {0} nilai dari {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Dimuat — edit nilai dan klik Terapkan ke Game.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Diatur ulang ke default (preset Anda + vanilla).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>Diatur ulang ke default UCM Quick ditambah vanilla.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Tidak ada perubahan untuk diterapkan.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Tidak ada nilai yang dimodifikasi untuk diekspor.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Tidak ada nilai yang dimodifikasi untuk disimpan.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Pilih preset tersimpan terlebih dahulu.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>Pilih preset yang diimpor terlebih dahulu.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Folder game belum diatur.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Tidak ada folder game yang dipilih.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Instalasi gagal. Apakah game sedang berjalan?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Instalasi gagal: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Backup tidak ditemukan. Kamera mungkin sudah vanilla.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Backup dari versi lama. Verifikasi file game.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Pemulihan gagal. Verifikasi file game.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Pemulihan gagal: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Kamera vanilla dipulihkan dari backup.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Backup tidak ditemukan. Kamera game mungkin sudah vanilla.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Game telah diperbarui sejak instalasi terakhir — backup telah disegarkan. Verifikasi file game di Steam, lalu instal lagi.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} tersedia</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Kontrol Lanjutan — penyesuaian kamera per-parameter dengan panduan.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Mode ahli — edit nilai XML mentah dan klik Terapkan ke Game.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager — buat file patch Crimson Desert Mod Manager v8.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Membuat patch...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>Membuat {0} region patch. Klik Simpan .json untuk mengekspor.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>Tersimpan {0} ({1} patch).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Buat patch terlebih dahulu.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>Ekspor JSON membutuhkan file kamera vanilla terlebih dahulu.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Memuat nilai dari mode Simple.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Mengatur ulang semua Kontrol Lanjutan ke vanilla.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Preset '{0}' dimuat ({1} override).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Preset lanjutan '{0}' disimpan ({1} override).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Preset lanjutan '{0}' dihapus.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>Menerapkan {0} perubahan Kontrol Lanjutan ke game.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Data lama v{0} dibersihkan. Silakan klik Instal untuk menerapkan pengaturan Anda.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Folder game belum diatur. Klik Instal dan Anda akan diminta untuk menjelajah.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: folder game hanya-baca. Pindahkan game atau perbaiki izin folder.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} baris ditampilkan  |  {1} dimodifikasi</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} baris  |  {1} dimodifikasi</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} baris  |  {1} dimodifikasi  |  {2} sacred</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} perubahan{1}</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — pembentukan kamera luas dengan pratinjau dan kontrol umum.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — penyesuaian mendalam terkurasi di atas UCM Quick.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — edit nilai XML mentah dan ekspor sebagai JSON.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Edit sacred: nilai ini sekarang terlindungi dari rebuild Quick/Fine Tune.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>Buka kunci preset ini di sidebar untuk mengatur ulang nilai God Mode.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Sesi saat ini terinstal ke game. Payload kamera diperbarui — {0} byte ({1} terkompresi dalam PAZ).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Instalasi selesai; entri kamera di PAZ tidak berubah ({0} byte payload, {1} terkompresi).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Menginstal kamera ke game...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Menyiapkan XML sesi saat ini...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>Menginstal pemusatan HUD...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Mengembalikan HUD vanilla...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Mengembalikan kamera vanilla...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>Unduhan gagal: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Pembaruan gagal: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>Impor gagal: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Ekspor gagal: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Penghapusan gagal: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Pemuatan gagal: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Pengaturan ulang gagal: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Persiapan gagal: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Penyimpanan gagal: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>Instalasi HUD gagal: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>Pemulihan HUD gagal: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>Impor XML gagal: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>Impor 0.paz gagal: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>Tidak ditemukan manifest.json di folder tersebut.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Tidak ditemukan playercamerapreset.xml dalam paket mod.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>File ini tampaknya bukan preset UCM (session_xml tidak ditemukan).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Mengambil katalog...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Mengambil katalog komunitas...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} preset tersedia, {1} terunduh</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>Belum ada preset komunitas yang tersedia.
+
+Periksa lagi nanti atau kontribusikan milik Anda sendiri!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Siap disimpan. Klik Simpan saat siap.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Siapkan ekspor terlebih dahulu.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>Tidak ada XML sesi yang tersedia. Edit pengaturan atau muat preset terlebih dahulu.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>XML sesi kosong.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Memvalidasi encoding untuk game ini...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Menulis arsip (salin + patch)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>Mendekripsi 0.paz...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Mengekspor XML kamera...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Menginstal XML kamera...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>Tersimpan {0}.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>Tersimpan {0} ({1} patch).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>Preset yang diimpor '{0}' disimpan dengan {1} nilai.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Paket mod diimpor sebagai '{0}'.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>Mengimpor '{0}' dengan {1} nilai.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>Mengimpor 0.paz sebagai '{0}'.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>Mengimpor preset UCM '{0}'.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Preset yang diimpor '{0}' dihapus.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Preset yang diimpor '{0}' dimuat ke God Mode.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Backup kamera disegarkan dari file game Anda saat ini. Gunakan Instal saat Anda siap menerapkan ulang preset Anda.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Tidak dapat menyegarkan backup kamera secara otomatis. Jika kamera masih dimodifikasi, verifikasi file game di Steam dan mulai ulang UCM.</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Hanya diimpor - belum dibangun ulang untuk game ini.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Preset tersimpan siap - atur folder game untuk memeriksa status rebuild.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Siap - sudah dibangun ulang untuk versi game ini.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Perlu dibangun ulang - versi game saat ini berbeda dari build terakhir.</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Folder tersebut tidak berisi 0010\0.paz.
+Pastikan Anda memilih direktori Crimson Desert yang benar.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Folder Salah</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Atur folder game terlebih dahulu (klik Instal untuk menjelajah).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Timpa preset '{0}' dengan nilai slider saat ini?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Timpa Preset</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Timpa preset lanjutan '{0}' dengan nilai saat ini?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Folder game Xbox / Game Pass tampaknya hanya-baca.
+
+Untuk memperbaiki ini, coba salah satu:
+  1. Xbox App → Crimson Desert → Kelola → Pindahkan ke drive lain
+  2. Klik kanan folder game → Properti → hapus centang "Hanya-baca" → Terapkan ke semua subfolder</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Izin Tulis Diperlukan</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Instal '{0}' langsung ke game?
+
+Ini akan menimpa pengaturan kamera Anda saat ini.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Impor XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Data kamera di folder game Anda tidak cocok dengan backup vanilla UCM.
+
+Patch JSON untuk mod manager eksternal harus menggunakan byte "original" vanilla. Verifikasi game di Steam (atau kembalikan perubahan kamera di mod manager Anda), lalu coba lagi.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>Tidak dapat mengekspor JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Error tidak tertangani:
+
+{0}
+
+Detail lengkap disimpan ke crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Error startup:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Crash startup:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Gagal memuat XML kamera:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Editor Lanjutan</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Editor Ahli</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Kontrol Lanjutan</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Error dialog folder: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Error</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>Preset dengan nama ini sudah ada. Timpa?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Apakah Anda yakin? Ini tidak dapat dibatalkan.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>Pembaruan tersedia untuk '{0}'.
+
+Apakah Anda ingin menyimpan salinan versi saat ini ke Preset Saya sebelum memperbarui?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>Preset ini diimpor sebagai XML mentah dan tidak dikelola oleh UCM.
+
+UCM Quick dan Fine Tune menggunakan sistem aturan kamera UCM yang akan menimpa nilai dari mod yang diimpor. Untuk melindungi impor Anda, hanya pengeditan God Mode yang tersedia.
+
+Untuk menggunakan fitur UCM seperti Steadycam dan kontrol FoV, buat preset UCM baru dari sidebar.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune dan God Mode membutuhkan folder game Anda untuk membaca data kamera. Atur folder game Anda terlebih dahulu.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>Preset UCM dilindungi. {0} perubahan dapat merusak nilai yang telah disetel dengan cermat.
+
+Duplikat preset ini terlebih dahulu untuk membuat salinan yang dapat diedit, lalu gunakan Fine Tune atau God Mode dengan bebas.
+
+Buka {0} dalam mode hanya-baca? (Anda dapat melihat nilai tetapi perubahan tidak akan disimpan.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>File kamera game Anda telah dimodifikasi oleh UCM v2.x, mod kamera lain, atau mod manager. UCM membutuhkan file vanilla asli untuk membuat backup yang bersih.
+
+Klik tombol di bawah untuk menghapus file yang dimodifikasi, lalu verifikasi di Steam untuk mengunduh ulang file asli.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz dihapus. Sekarang:
+1. Tutup UCM
+2. Steam → Crimson Desert → Properties → Installed Files → "Verify integrity of game files"
+3. Buka ulang UCM setelah verifikasi selesai</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Tidak dapat menghapus: {0}
+Hapus secara manual: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Tidak ditemukan 0.pamt yang cocok di samping 0.paz yang dipilih. Atur folder game Anda agar v3 dapat menggunakan 0010\0.pamt saat ini sebagai indeks arsip.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Folder game belum diatur. v3 membutuhkan game saat ini untuk membangun ulang preset ini dengan aman.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Gagal menduplikat: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>Ekspor JSON membutuhkan file kamera vanilla (verifikasi game, lalu coba lagi).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Instalasi selesai tetapi menghasilkan hasil yang tidak terduga. Kamera mungkin belum diterapkan dengan benar — coba jalankan game untuk memverifikasi.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Pemulihan selesai tetapi hasilnya tidak dapat dikonfirmasi. Jalankan game untuk memeriksa apakah kamera sudah kembali ke vanilla.</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Buka folder game (atau jelajah untuk mengaturnya secara manual)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Menghaluskan blending, damping, dan offset kecepatan antar state gerakan. Nonaktifkan untuk mengembalikan transisi kamera vanilla.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Buka Ko-fi — tips membantu UCM tetap berjalan</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Simpan XML kamera langsung saat ini ke file</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Instal file XML kamera langsung ke game</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Isi semua slider dari pengaturan mode Simple Anda saat ini</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Atur ulang semua slider ke nilai vanilla XML</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Muat nilai dari file playercamerapreset.xml</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Menggunakan apa pun yang saat ini dikonfigurasi di mode Simple</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Pilih file playercamerapreset.xml untuk dibandingkan dengan vanilla</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Impor XML kamera atau arsip PAZ sebagai preset</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>Bagikan sebagai JSON (Mod Manager), XML sesi, atau 0.paz yang di-patch — menggunakan sesi UCM Anda saat ini.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>Kembalikan chunk kamera asli dari backup UCM.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Terapkan sesi UCM saat ini langsung ke file game.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Batalkan perubahan slider terakhir</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>Pilih folder yang berisi manifest.json — mengimpor nama, pembuat, dan XML kamera secara otomatis</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>Pilih file playercamerapreset.xml secara langsung</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>Pilih file 0.paz — UCM akan mengekstrak XML kamera darinya</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Impor file .ucmpreset yang dibagikan oleh pengguna UCM lain</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Sembunyikan pengingat ini selama satu minggu</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Sembunyikan sampai peluncuran berikutnya</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Pembaruan tersedia — klik untuk mengunduh versi terbaru</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Jelajahi dan unduh preset</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Menambahkan derajat ini ke setiap Fov dan InDoorFov di file kamera. Baris indoor dan outdoor dimulai dari angka vanilla yang berbeda, jadi God Mode akan menampilkan banyak nilai akhir yang berbeda—bukan satu sudut di mana-mana.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Terpisah dari Geser Horizontal ~0.5: nilai tersebut sering merupakan bias lateral vanilla di XML. Opsi ini memaksa shift ke 0 dan menerapkan aturan pemusatan yang lebih kuat (RightOffset menuju 0 jika didukung).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>Saat dicentang, kamera tetap di tempat alih-alih snap menghadap target yang di-lock.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Atur ulang ke vanilla ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Vanilla: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>Buka halaman pembuat di browser</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Seberapa jauh kiri/kanan kamera dari karakter. Kamera terpusat mengunci ini ke 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Kamera Terpusat memaksa karakter ke tengah layar — hapus centang untuk menyesuaikan</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = vanilla (karakter sedikit ke kiri). Tengah adalah ~0.5. Negatif = lebih kiri, positif = lebih kanan.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>Pembingkaian kiri/kanan sebagai delta pada RightOffset (berjalan kaki, tunggangan, bidikan, dan baris terkait). 0 cocok dengan bias sisi vanilla. Naikkan menuju ~0.5 untuk menarik ke pusat geometris di file; nilai negatif bias lebih ke kiri. Cocok dengan pratinjau FoV dari atas. Kamera terpusat di bawah terpisah: ini mengunci slider ke 0 dan menerapkan pemusatan yang lebih kuat.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Batas: Dist 1.5-12.0  |  Height -1.6 ke 0.5  |  Shift -3.0 ke 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Shift 0 = vanilla (karakter kiri)  |  0.5 = tengah  |  negatif = lebih kiri  |  positif = lebih kanan</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Pembaruan game akan menimpa file yang dimodifikasi. Setelah setiap pembaruan Crimson Desert, jalankan ulang UCM Instal untuk mengembalikan pengaturan kamera Anda.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Catatan:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Setiap slider menampilkan nilai saat ini dan default vanilla (redup). Klik ↺ pada baris mana pun untuk mengatur ulang parameter tersebut ke vanilla. Tekan Terapkan untuk menulis semua perubahan ke game.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Perubahan diterapkan di atas XML vanilla — tidak berinteraksi dengan preset mode Simple. Gunakan "Muat dari Simple" untuk memulai dari preset Anda saat ini.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Game ini memiliki 3 level zoom roda scroll saat berjalan kaki. ZL2 adalah terdekat (tampilan default), ZL3 adalah jarak menengah, ZL4 adalah terjauh. Setiap level mengontrol jarak kamera, tinggi, dan posisi horizontal secara independen. Ini berlaku untuk semua state berjalan kaki: diam, berjalan, berlari, sprint, dan gerakan pertarungan.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Kamera kuda menggunakan 2 level zoom vanilla (ZL2-ZL3). Semua 8 state kuda disinkronkan agar kamera tidak tersentak saat perubahan kecepatan sambil mempertahankan tangga zoom game yang sebenarnya.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>Saat Anda lock on ke musuh, kamera beralih ke mode pelacakan pertarungan. TargetRate mengontrol seberapa agresif kamera mengikuti musuh — nilai lebih rendah memberi Anda lebih banyak kontrol manual. ScreenClampRate mengontrol seberapa terpusat musuh di layar.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Ini mengontrol bagaimana kamera bertransisi antar state gerakan. BlendInTime adalah berapa detik kamera untuk masuk ke state dengan mulus. OffsetLength mengontrol ayunan kamera — mengaturnya ke 0 memberikan nuansa steadycam tanpa gerakan menyamping.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>Saat Anda membidik dengan lentera, busur, atau zoom senjata, kamera bergeser untuk memposisikan crosshair. Nilai RightOffset ini diskalakan secara proporsional dari geser horizontal Anda sehingga kamera tidak snap menyamping saat mengaktifkan kemampuan.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Tab ini menghasilkan file patch .json yang kompatibel dengan Crimson Desert JSON Mod Manager v8. Letakkan file ke folder Mods/ mod manager dan pengaturan kamera Anda akan muncul sebagai mod yang dapat di-toggle — tanpa perlu UCM.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Patch bekerja dengan membandingkan file kamera yang dimodifikasi terhadap file vanilla byte per byte dan hanya merekam perbedaannya. Ini berarti spesifik versi game — jika game diperbarui, buat ulang patch.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Info ini muncul di dalam mod manager agar orang tahu mod ini tentang apa.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Pilih pengaturan apa yang akan di-patch. Pengaturan Saat Ini menggunakan apa pun yang aktif di mode Simple sekarang. Dari File XML memungkinkan Anda memilih playercamerapreset.xml yang diekspor untuk di-patch.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Simpan file .json, lalu letakkan ke folder Mods/ di dalam instalasi Crimson Desert JSON Mod Manager Anda. Ini akan muncul sebagai mod yang dapat di-toggle.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Cari atribut...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>Ini adalah layer UCM yang cepat dan terkurasi: pembentukan kamera luas, pratinjau, dan pilihan kamera paling umum.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune adalah layer penyesuaian mendalam terkurasi. Dimulai dari pengaturan UCM Quick Anda dan memungkinkan Anda memperhalus field yang sengaja diekspos UCM.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode mencantumkan setiap baris di file. Slider di sini mengedit atribut tertentu—angka-angka tersebut harus cocok dengan atribut yang sama di God Mode. Baris lain masih berubah dari Quick (peningkatan FoV, gaya, pertarungan, steadycam, dll.) atau vanilla, jadi jangan berharap satu slider menjelaskan seluruh grid.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode mengekspos baris kamera mentah. Gunakan saat UCM Quick tidak cukup dan Anda ingin langsung ke kontrol penuh langsung, atau setelah UCM Fine Tune jika Anda ingin lebih mendalam.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>Nilai di sini adalah sesi yang digabungkan: Quick + Fine Tune + edit apa pun di grid ini. FoV di Quick adalah delta yang ditambahkan per baris (Fov dan InDoorFov), jadi sudut berbeda menurut state. Fine Tune cocok di sini baris per baris hanya untuk atribut yang dikontrol slider tersebut.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Baris-baris ini mencakup normalisasi FoV yang lebih luas dan sistem kamera bersama yang berlaku di luar grup berjalan kaki dan kuda dasar. Gunakan saat Anda ingin UCM Fine Tune mencerminkan seluruh permukaan mod, termasuk keluarga lock-on, state warmachine, dan kamera renang.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Gajah, wyvern, kano, warmachine, sapu, dan keluarga kamera terkait traversal semuanya memiliki perilaku zoom sendiri. Kontrol ini mengekspos nilai tunggangan ekstra yang sudah diubah mod di belakang layar.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Menyesuaikan jarak kamera saat lock on atau menjaga target, relatif terhadap jarak berjalan kaki Anda. 0% mulus dengan Steadycam. Nilai negatif zoom in untuk efek fokus sinematik; nilai positif menarik mundur untuk kesadaran medan tempur lebih baik.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Memusatkan elemen HUD gameplay dalam lebar maksimum yang ditentukan (piksel). Berguna untuk layar ultrawide di mana elemen HUD terlalu tersebar. Hanya memengaruhi HUD gameplay, bukan menu. Kredit ke wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>Jelajahi preset kamera yang dibagikan oleh komunitas UCM. Preset yang diunduh muncul di sidebar Anda.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Jelajahi dan unduh preset kamera UCM resmi. Preset yang diunduh muncul di sidebar Anda.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM mengelola lebih dari 150 state kamera di belakang layar — konsistensi FoV di seluruh pertarungan, penjagaan, tunggangan, dan lock-on; transisi mulus antar setiap state; penskalaan jarak agar lock-on tidak snap ke dalam. Slider Quick dan Fine Tune dibangun di atas aturan ini dengan aman. God Mode memungkinkan Anda menimpa nilai individual saat diperlukan.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>Dimulai dari XML kamera vanilla game tanpa aturan UCM yang diterapkan. UCM Quick dan Fine Tune dinonaktifkan karena slider mereka akan menimpa edit manual Anda — UCM memodifikasi ratusan nilai di seluruh pertarungan, tunggangan, lock-on, dan state smoothing, yang akan bertentangan dengan nilai yang disetel manual. Hanya God Mode yang tersedia untuk pengeditan XML langsung. Gunakan ini saat mengimpor dari mod kamera lain atau saat Anda membutuhkan kontrol penuh atas setiap nilai.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>Impor disimpan di folder import_presets di samping aplikasi ini dan terdaftar di bawah Diimpor di sidebar.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>Pilih jenis file yang ingin Anda impor.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Tempel string UCM_ADV: untuk mengimpor pengaturan lanjutan.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>Mulai dari UCM Quick, muat sesuatu dari Pengelola Preset, atau impor preset kreator.</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Salin dan tempel di NexusMods, Discord, dll.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Tempel string preset di bawah:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>Dari komentar NexusMods, Discord, dll.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Tempel string pengaturan lanjutan di bawah:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Harus dimulai dengan UCM_ADV: (dari Ekspor Lanjutan)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Bagikan string ini untuk "{0}":</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} pengaturan lanjutan ditemukan</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Bukan string pengaturan lanjutan (harus dimulai dengan UCM_ADV:)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>Harus dimulai dengan UCM_ADV:</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Payload tidak valid</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Simpan Preset Kustom</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Simpan Preset Lanjutan</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Masukkan nama untuk preset ini:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>Masukkan nama untuk preset yang diimpor ini:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Ekspor String Preset</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Beri nama preset ini untuk dibagikan:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Pilih folder Crimson Desert (berisi folder '0010')</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Pilih folder mod (berisi manifest.json)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Ekspor XML Kamera</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Impor XML Kamera — instal langsung ke game</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Impor playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>Impor 0.paz — ekstrak XML kamera</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Impor UCM Preset</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Pilih XML kamera untuk di-patch</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Simpan Patch JSON</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Simpan XML kamera</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Simpan 0.paz yang di-patch</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>Simpan UCM Preset</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>Simpan Preset yang Diimpor</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(baru — sesuaikan slider)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(edit saat ini)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(saat ini)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>Pilih sumber impor</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>Hapus Preset yang Diimpor</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>Timpa Preset yang Diimpor</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Mengimpor paket mod: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>Mengimpor XML: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>Mengimpor PAZ: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Preset yang Diekspor</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>Kamera yang Diimpor</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>Preset UCM - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>Semua</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Hanya yang dimodifikasi</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Hanya yang sacred</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Folder game:  BELUM DIATUR  (klik Instal untuk menjelajah)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Folder game:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>Tutup dialog</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Langkah {0} dari {1}</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>Mengekspor file .json byte-patch yang dapat Anda impor ke JSON Mod Manager atau Crimson Desert Ultimate Mods Manager. Gunakan mod manager mana pun yang Anda suka — penerima tidak memerlukan UCM.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>Mengekspor playercamerapreset.xml dengan normalisasi yang sama yang digunakan UCM saat menginstal (UTF-8 BOM, komentar dihapus). Bagus untuk unggahan teks Nexus, pengeditan manual, atau impor ulang di UCM. Siapa pun yang menginstalnya masih membutuhkan ukuran entri terkompresi yang cocok untuk build game mereka.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Arsip drop-in gaya Nexus: salinan 0010/0.paz game Anda dengan hanya data kamera yang diperbarui agar sesuai dengan sesi UCM Anda saat ini — pemain yang tidak menggunakan JSON mod manager dapat mengganti satu file. Ini hanya berfungsi untuk patch game yang sama dengan instalasi Anda (tata letak arsip sama); sebutkan itu di halaman mod. Beri tahu pengunduh untuk mem-backup vanilla 0010/0.paz sebelum menukar.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Mengekspor sesi Anda saat ini sebagai file .ucmpreset yang dapat diletakkan pengguna UCM lain ke folder preset mereka atau dibagikan melalui katalog komunitas. Berisi konfigurasi kamera lengkap Anda termasuk semua pengaturan Quick, Fine Tune, dan God Mode.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Menggunakan sesi UCM langsung Anda (Quick, Fine Tune, atau God Mode). Pilih preset di sidebar atau gunakan Impor jika Anda memulai dari XML atau PAZ di disk.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Persiapan memeriksa bahwa sesi Anda ter-encode untuk folder game ini, lalu Anda simpan file XML.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Persiapan memverifikasi encoding terhadap folder game Anda. Simpan menulis 0.paz yang di-patch sepenuhnya (file besar). Sumber sesi sama dengan format lainnya — preset sidebar atau Impor terlebih dahulu jika diperlukan.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Tidak perlu encoding — menyimpan sesi Anda secara langsung. Isi field info di atas agar orang lain tahu apa yang mereka dapatkan.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>Encoding XML cocok dengan entri kamera instalasi ini. Simpan sebagai playercamerapreset.xml untuk dibagikan atau diedit.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Ukuran unggahan akan sama dengan 0.paz penuh. Penerima mengganti ...\0010\0.paz setelah mem-backup vanilla. Hanya bagikan dengan pemain pada versi game yang sama dengan ekspor ini.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON menggunakan field ini di modinfo. XML menggunakan Judul sebagai nama simpan default. 0.paz default ke 0.paz agar Anda bisa meletakkannya ke 0010 tanpa mengubah nama.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>Membuat {0} region patch. Simpan saat siap.</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>Ini biasanya berarti file PAZ berasal dari versi game yang berbeda dari instalasi Anda saat ini. Indeks arsip (0.pamt) tidak cocok dengan struktur file PAZ.
+
+UNTUK MEMPERBAIKI:
+Letakkan file 0.pamt yang cocok di folder yang sama dengan 0.paz yang Anda impor. Kedua file harus dari versi game yang sama.</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Sesi belum disimpan</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Sesi Saat Ini</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Sesi langsung</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Belum ada preset yang dimuat.</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroic  -  OTS setinggi bahu, framing bagus</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panoramic  -  Pullback lebar setinggi kepala, sinematik</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Kamera game tanpa modifikasi (gunakan Steadycam untuk smoothing UCM)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Close-Up  -  OTS bahu, lebih rapat (nuansa 16:9)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Setinggi pinggang, seluruh badan + horizon</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Setinggi lutut, sudut rendah dramatis</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Setinggi tanah, sudut rendah ekstrem</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  OTS ketat ala game horor (nuansa 16:9)</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>Tanpa peningkatan FoV (0°)  -  vanilla bervariasi per state (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Minimal, bagus untuk 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Peningkatan halus</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  Titik ideal untuk 21:9</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  Bagus untuk 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  Sempurna untuk 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Ekstrem, sedikit fisheye</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Selamat Datang di Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Sebelum memulai, UCM membutuhkan file game Anda dalam kondisi belum dimodifikasi (vanilla) agar dapat membuat backup baseline yang bersih.
+
+Jika Anda sebelumnya menggunakan UCM v2.x, mod kamera lain, atau mod manager yang memodifikasi file game, silakan verifikasi terlebih dahulu:
+
+Steam → Crimson Desert → Properties → Installed Files → "Verify integrity of game files"
+
+Sudahkah Anda memverifikasi file game Anda?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Ya, lanjutkan</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Tidak, tutup UCM</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Preset Anda</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>Ini adalah sidebar preset Anda. Klik Jelajah untuk mengunduh preset UCM resmi dan preset komunitas. Preset dan impor Anda sendiri juga muncul di sini. Klik preset apa pun untuk memuatnya.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Tiga Tingkat Pengeditan</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick untuk perubahan cepat, Fine Tune untuk kontrol mendalam atas setiap state kamera, dan God Mode untuk pengeditan XML mentah. Perubahan disinkronkan di ketiga tingkat secara otomatis.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Pengaturan Kamera</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Sesuaikan jarak kamera, tinggi, geser horizontal, bidang pandang, zoom lock-on, dan perilaku kamera. Pratinjau langsung diperbarui saat Anda menyetel.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Pratinjau Langsung</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Pratinjau kamera menampilkan pembingkaian dan jarak karakter. Diagram bidang pandang menampilkan kerucut FoV dari atas. Keduanya diperbarui secara real time saat Anda menyesuaikan pengaturan.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Ekspor &amp; Instal</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Ekspor pengaturan Anda sebagai JSON untuk mod manager, XML, 0.paz, atau .ucmpreset untuk dibagikan dengan orang lain. Atau klik Instal ke Game untuk menerapkan langsung ke file game Anda.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>Satu Hal Lagi...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Saya sudah menghabiskan terlalu banyak waktu untuk proyek ini. Jika UCM menghemat waktu Anda dari frustrasi kamera, pertimbangkan untuk membelikan saya kopi. Atau tidak. Saya tetap akan membuatnya. Tapi kopi membantu.</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Diperbarui ke v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Selamat datang kembali! UCM telah diperbarui.
+
+Yang baru:
+- Sacred God Mode: edit Anda dilindungi secara permanen dari rebuild Quick/Fine Tune
+- Toggle Lock-on Auto-Rotate (kredit @sillib1980)
+- Indikator hijau untuk nilai sacred di God Mode
+- Perbaikan: nilai sacred sekarang benar-benar disertakan di Instal dan semua ekspor
+
+Preset dan pengaturan Anda telah dipertahankan.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Selamat datang kembali! UCM telah diperbarui dari v{0}.
+
+Yang baru:
+- Sacred God Mode: edit Anda dilindungi secara permanen dari rebuild Quick/Fine Tune
+- Toggle Lock-on Auto-Rotate (kredit @sillib1980)
+- Indikator hijau untuk nilai sacred di God Mode
+- Perbaikan: nilai sacred sekarang benar-benar disertakan di Instal dan semua ekspor
+
+Preset dan pengaturan Anda telah dipertahankan.</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Preset dimuat</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Preset diubah namanya</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Preset diduplikat</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Preset dibangun ulang</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Preset '{0}' dibuat</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Preset yang diimpor dimuat</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>Preset bernama '{0}' sudah ada.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Preset '{0}' diubah namanya menjadi '{1}'.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Preset '{0}' diduplikat sebagai '{1}'.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Preset yang diimpor '{0}' dibangun ulang untuk game saat ini.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Folder game belum diatur. Tidak dapat membuat preset manual tanpa data kamera vanilla.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Hanya preset XML / 0.paz yang diimpor yang memerlukan dukungan rebuild.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Muat preset ini ke sesi saat ini terlebih dahulu, lalu buat dari Ekspor JSON.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Gagal membuat preset bawaan.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>File preset tidak ditemukan: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Tidak dapat mengaktifkan preset: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Preset '{0}' terkunci — buka kunci gembok untuk mengedit.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Preset '{0}' tidak terkunci.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Rebuild gagal: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Gagal Membuat Preset</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Gagal Membuat Preset</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Preset yang diimpor '{0}' tidak memiliki XML tertanam; dibangun ulang dari pengaturan yang disimpan.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Gagal memuat preset yang diimpor '{0}'.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Impor playercamerapreset.xml sebagai preset tersimpan</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>FoV Bersama</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Pembingkaian dua target</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>FoV Traversal</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Gajah</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Kano / Warmachine / Sapu</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Pelacakan Lock-On</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>Titik Sentuh FoV</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Penghalusan berjalan kaki dan pertarungan</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Transisi gerakan</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Transisi lock-on dan pertarungan lanjutan</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>Perilaku mengikuti berjalan kaki</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Sinkronisasi state kuda</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Pembingkaian traversal</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Lentera / Lampu Sorot</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Blinding Flash</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Bidik Senjata / Zoom</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Busur</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Meluncur / Jatuh Bebas</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>FoV berjalan kaki</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>FoV pertarungan</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>FoV Force/Titan/Cinematic</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>FoV Warmachine/Sapu</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>FoV Gajah</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>FoV Wyvern</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>FoV Renang</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaksi ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaksi ZL4 Max</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>FoV Renang</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>FoV Panjat</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>FoV Meluncur</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>FoV Jatuh Bebas</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Level Zoom {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Gajah ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Tinggi Gajah ZL{0}</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Kano ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Sapu ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>FoV LockOn Senjata</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>FoV TwoTarget Senjata</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>FoV TwoTarget Interaksi</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>FoV LockOn Bos</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>FoV Sistem LockOn</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>FoV LockOn Kebangkitan</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>FoV LockOn Non-Rotasi</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>FoV LockOn Gulat</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>FoV StartAggro</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>FoV Wanted</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Blend-in berlari</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Blend-out berlari</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Blend-in bertahan</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Blend-out bertahan</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Blend-in menerjang</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Blend-out menerjang</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Ayunan berlari</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Ayunan berlari pertarungan</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Ayunan sprint pertarungan</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Ayunan sprint mengikuti</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Blend-in diam hewan</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Blend-in berlari hewan</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Ayunan berlari hewan</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Blend-in sprint hewan</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Ayunan sprint hewan</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Peredam sprint hewan</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>Blend-in Sistem LockOn</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>Blend-out Sistem LockOn</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Bos</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Bos</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Blend-in masuk jatuh bebas</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Blend-out masuk jatuh bebas</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Blend-in jatuh bebas</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Blend-out jatuh bebas</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Blend-in lompat super</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Blend-out lompat super</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Blend-in tarik tali</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Blend-out tarik tali</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Blend-in ayun tali</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Blend-out ayun tali</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Blend-in terkena/terlempar</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Blend-out terkena/terlempar</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn tunggangan</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn tunggangan</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn kebangkitan</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn kebangkitan</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Force</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Force</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Titan</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Titan</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn non-rotasi</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn non-rotasi</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn gulat</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn gulat</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Blend-in aggro</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Blend-out aggro</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Blend-in wanted</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Blend-out wanted</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Blend-in bidik warmachine</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Blend-out bidik warmachine</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Blend-in dash warmachine</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Blend-out dash warmachine</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Ikut yaw berjalan kaki</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Ikut pitch berjalan kaki</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Delay ikut berjalan kaki</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Peredam pivot berjalan kaki</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Ikut yaw kuda</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Ikut pitch kuda</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Delay ikut kuda</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Pitch default kuda</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Blend-in kuda</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Blend-out kuda</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Peredam pivot kuda</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Ayunan kuda</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Peredam ayunan kuda</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Jarak</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Tinggi</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Geser</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Jarak ZL2 Renang</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Tinggi ZL2 Renang</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Jarak ZL2 Panjat</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Tinggi ZL2 Panjat</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Jarak ZL2 Meluncur</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Tinggi ZL2 Meluncur</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Jarak ZL2 Jatuh Bebas</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Tinggi ZL2 Jatuh Bebas</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Atur Ulang</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Terapkan ke game telah dihapus dari v3. Gunakan Ekspor JSON untuk mengemas override ini.</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Tidak dapat membaca file kamera game: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Pemindaian folder game gagal: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>Terlalu besar</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Tidak valid</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Gagal</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Tidak dapat memverifikasi file kamera: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Peringatan: tidak dapat sepenuhnya menerapkan preset ke editor: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>Preset UCM — duplikat untuk menggunakan Fine Tune atau God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>Preset UCM — duplikat untuk menyesuaikan jarak dan tinggi</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>Preset UCM — duplikat untuk membuat salinan yang dapat diedit</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Preset terkunci — buka kunci gembok untuk mengedit</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Dikontrol oleh Steadycam — hapus centang Steadycam untuk menyesuaikan secara manual</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- dikontrol oleh God Mode</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Jarak Zoom</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Default Game</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>Preset UCM</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>Preset komunitas</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>Preset saya</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>Diimpor</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Lainnya</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>Preset UCM — duplikat untuk membuat salinan yang dapat diedit</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>Terkunci — klik untuk mengizinkan pengeditan preset ini</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Tidak terkunci — klik untuk mengunci dan mencegah perubahan</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Buy me a coffee</value></data>
+
+</root>

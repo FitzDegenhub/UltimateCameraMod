@@ -859,5 +859,19 @@ Vos presets et paramètres ont été préservés.</value></data>
   <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Contrôlé par Steadycam -- décochez Steadycam pour ajuster manuellement</value></data>
   <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- contrôlé par God Mode</value></data>
   <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Distances de zoom</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Par défaut du jeu</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>Presets UCM</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>Presets communautaires</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>Mes presets</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>Importés</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Autre</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>Preset UCM — dupliquer pour créer une copie modifiable</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>Verrouillé — cliquez pour autoriser la modification de ce preset</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Déverrouillé — cliquez pour verrouiller et empêcher les modifications</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Offrez-moi un café</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+
+  <!-- ═══ New v3.1 Keys ═══ -->
 
 </root>

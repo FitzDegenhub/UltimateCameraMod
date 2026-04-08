@@ -918,4 +918,20 @@ Your presets and settings have been preserved.</value></data>
   <!-- ═══ Combat Lock-On Section Zoom Distances Label Pattern ═══ -->
   <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Zoom Distances</value></data>
 
+  <!-- ═══ Sidebar Group Labels ═══ -->
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Game Default</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM presets</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>Community presets</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>My presets</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>Imported</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Other</value></data>
+
+  <!-- ═══ Lock/Unlock Tooltips ═══ -->
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM preset — duplicate to create an editable copy</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>Locked — click to allow editing this preset</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Unlocked — click to lock and prevent changes</value></data>
+
+  <!-- ═══ Buy Me a Coffee (with emoji prefix) ═══ -->
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Buy me a coffee</value></data>
+
 </root>

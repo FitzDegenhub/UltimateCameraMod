@@ -859,5 +859,19 @@ Steam → Crimson Desert → 속성 → 설치된 파일 → &quot;게임 파일
   <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Steadycam에 의해 제어됨 -- 수동 조정하려면 Steadycam을 해제하세요</value></data>
   <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- God Mode에 의해 제어됨</value></data>
   <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - 줌 거리</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>게임 기본값</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM 프리셋</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>커뮤니티 프리셋</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>내 프리셋</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>가져온 항목</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>기타</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM 프리셋 — 편집 가능한 사본을 만들려면 복제하세요</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>잠김 — 클릭하여 이 프리셋 편집을 허용합니다</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>잠금 해제됨 — 클릭하여 변경을 방지합니다</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ 커피 한 잔 사주기</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+
+  <!-- ═══ New v3.1 Keys ═══ -->
 
 </root>

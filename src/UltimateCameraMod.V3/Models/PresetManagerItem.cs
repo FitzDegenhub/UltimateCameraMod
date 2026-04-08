@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3.Models;
 
@@ -56,26 +57,39 @@ public sealed class PresetManagerItem : INotifyPropertyChanged
     /// <summary>Sidebar padlock icon (closed = locked).</summary>
     public string LockGlyph => IsLocked ? "\uD83D\uDD12" : "\uD83D\uDD13";
 
+    private static string L(string key) => TranslationSource.Instance[key];
+
     public string LockToolTip =>
         IsUcmPreset
-            ? "UCM preset — duplicate to create an editable copy"
+            ? L("Tip_UcmPresetDuplicate")
             : IsLocked
-                ? "Locked — click to allow editing this preset"
-                : "Unlocked — click to lock and prevent changes";
+                ? L("Tip_LockedPreset")
+                : L("Tip_UnlockedPreset");
 
     public string DisplayName => Name;
 
     public string SecondaryLine => StatusText;
 
-    /// <summary>Group label for sidebar display (ucm_presets, community_presets, my_presets, import_presets).</summary>
+    /// <summary>Internal group ID for DataTrigger matching (never localized).</summary>
+    public string GroupId => KindId switch
+    {
+        "default" => "ucm_presets",
+        "style" => "ucm_presets",
+        "community" => "community_presets",
+        "user" => "my_presets",
+        "imported" => "imported",
+        _ => "other"
+    };
+
+    /// <summary>Localized group label for sidebar display.</summary>
     public string GroupLabel => KindId switch
     {
-        "default" => "Game Default",
-        "style" => "UCM presets",
-        "community" => "Community presets",
-        "user" => "My presets",
-        "imported" => "Imported",
-        _ => "Other"
+        "default" => L("Label_GroupGameDefault"),
+        "style" => L("Label_GroupUcmPresets"),
+        "community" => L("Label_GroupCommunityPresets"),
+        "user" => L("Label_GroupMyPresets"),
+        "imported" => L("Label_GroupImported"),
+        _ => L("Label_GroupOther")
     };
 
     public event PropertyChangedEventHandler? PropertyChanged;

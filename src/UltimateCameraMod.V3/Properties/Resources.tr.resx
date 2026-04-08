@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Gelişmiş Kamera Ayarları</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Gelişmiş Ayar Dizesi İçeri Aktar</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Hazır Ayar Dizesini Dışa Aktar</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Hazır Ayar Dizesini İçeri Aktar</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Hazır Ayar İçeri Aktar</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Girdi</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Hata</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>PAYLAŞIM İÇİN DIŞA AKTAR</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>TOPLULUK HAZIR AYARLARI</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM HAZIR AYARLARI</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Hazır ayar detayları</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>Hazır ayar türünü seçin</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Ham XML İçeri Aktarma</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Oyun Klasörü Ayarlanmadı</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode Hatası</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune Hatası</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Hazır Ayar Güncellemesi</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Oyun Güncellemesi Algılandı</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>Oyun Dosyaları Değiştirildi</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM Kritik Hata</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ İçeri Aktarma Başarısız</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>God Mode Geçersiz Kılmalarını İçeri Aktar</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode Geçersiz Kılmaları</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Oyuna Uygula</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Kaydet</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Sil</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Dışa Aktar</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>İçeri Aktar</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Yükle</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Oyuna Yükle</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Orijinale Dön</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Geri Yükle</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Kapat</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>UCM Kapat</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>İptal</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>Tamam</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Evet</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Hayır</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Güncellemeyi al</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Panoya kopyala</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Kopyalandı!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Dizeyi Dışa Aktar</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Dizeyi İçeri Aktar</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Hazır ayarı kaydet</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Hazır ayarı sil</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>XML Dışa Aktar</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>XML İçeri Aktar</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Varsayılanlara Sıfırla</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Orijinale Sıfırla</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Basit Moddan Yükle</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Tümünü Genişlet</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Tümünü Daralt</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Mevcut Ayarlardan Oluştur</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>XML Dosyasından Oluştur...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>.json Kaydet...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>İçeri Aktar &amp; Kaydet</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Dizeyi dışa aktar</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Dizeyi içeri aktar</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Bana bir kahve ısmarla</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Varsayılanlara Sıfırla</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Yeni</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Kopyala</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Yeniden Adlandır</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>Aç</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Geri Al</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Tekrar Dene</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Yenile</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>İndir</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>İndirildi</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>İndiriliyor...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Oluştur</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Üstüne Yaz</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Dışa aktarmayı hazırla</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Dışa aktarmayı kaydet...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>.json Kaydet...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>.xml Kaydet...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>0.paz Kaydet...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>.ucmpreset Kaydet...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Göz At</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Anladım</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>7 gün ertele</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>7g ertele</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Kapat</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>Salt Okunur Aç</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Evet, önce yedekle</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Hayır, sadece güncelle</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Değiştirilmiş 0.paz dosyasını kaldır</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Kaldırıldı</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Temizle</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Sıfırla</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>İleri</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Başla</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Rehberi atla</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Nexus'ta görüntüle</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+  <data name="Tab_Presets" xml:space="preserve"><value>Hazır Ayarlar</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Özel</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Quick</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Fine Tune</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Basit</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Gelişmiş</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Uzman</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+  <data name="Label_Distance" xml:space="preserve"><value>Mesafe</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Yükseklik</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Yatay kayma</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Görüş alanı</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Savaş kamerası</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Ortalı kamera</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Binek kamerası</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Kamera stili</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Kaydedilmiş hazır ayar</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Hazır Ayar</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Başlık</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Sürüm</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Yapımcı</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Yapımcı (isteğe bağlı)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Açıklama</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Açıklama (isteğe bağlı)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / vb. (isteğe bağlı)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Oyun klasörü:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> yama bölgesi</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> bayt değiştirildi</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> bölge</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>AKTİF</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Taslak</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Adlandırılmış bir hazır ayar kaydedene kadar çalışma kopyanız.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Biçim</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Mod bilgisi &amp; dosya adı</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Dışa aktarmayı hazırla</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Kaydet</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Ad</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Ad *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>Ara</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Kilitlenme yakınlaşması</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Kilitlenmede otomatik dönme</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>HUD Ortala</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Güvenli alan</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Çalışıyor...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Kaydedildi</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Yüklendi</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Geri yüklendi</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Geri alındı</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>VEYA</value></data>
+  <data name="Section_CameraStyle" xml:space="preserve"><value>KAMERA STİLİ</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>GENEL AYARLAR</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>PAYLAŞ</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>KAMERA ÖNİZLEME</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>GÖRÜŞ ALANI</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>GELİŞMİŞ KONTROLLER</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>GELİŞMİŞ KAMERA AYARLARI</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>NASIL ÇALIŞIR</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>ADIM 1  —  MODUNUZU ADLANDIRIN</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>ADIM 2  —  YAMAYI OLUŞTURUN</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>ADIM 3  —  DOSYAYI KAYDEDİN</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>HAZIR AYARLAR</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM QUICK</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>ÖZEL OFSETLER</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>HUD ORTALA</value></data>
+  <data name="Header_Section" xml:space="preserve"><value>BÖLÜM</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>ALT ELEMAN</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ÖZELLİK</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>DEĞER</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>ORİJİNAL</value></data>
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  Yaya Yakınlaştırma Seviyeleri</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  At / Binek Yakınlaştırma Seviyeleri</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  Savaş / Kilitlenme</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  Kamera Yumuşatma / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  Nişancılık / Nişangah Konumu</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Yaya Yakınlaştırma Seviyeleri</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - At / Binek Yakınlaştırma Seviyeleri</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Genel / FoV Kapsamı</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Özel Binekler / Gezinme</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Savaş / Kilitlenme</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Kamera Yumuşatma / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Nişancılık / Nişangah Konumu</value></data>
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Karakteri ekranda ortala (Yatay Kaymayı 0'a kilitler)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Karakteri ekranda ortala</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Binek/at kamera yüksekliğini oyuncu kamera yüksekliğine eşle</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Yumuşak kamera geçişleri (durumlar arasındaki yakınlaştırma titremesini ortadan kaldırır)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Kilitlenmede kameranın hedefe dönmesini kapat  --  Teşekkürler @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Oyun HUD öğelerini maksimum genişlikte ortala</value></data>
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - mod yöneticileri</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Mod Yöneticisi Paketi (klasör)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>Kamera XML Dosyası (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ Arşivi (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON Mod Manager veya CDUMM'den JSON yaması</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml dosyası</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>Kamera verileri içeren oyun .paz dosyası</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>Başka bir kullanıcıdan UCM hazır ayar dosyası</value></data>
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>UCM Tarafından Yönetilen</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Önerilen)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Tam Manuel Kontrol</value></data>
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM hazır ayarları</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>Topluluk hazır ayarları</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Hazır ayarlarım</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>İçeri aktarılmış</value></data>
+  <data name="Label_KindDefault" xml:space="preserve"><value>Varsayılan</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM stili</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>Topluluk</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Hazır ayarım</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>İçeri aktarılmış XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>İçeri aktarılmış 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Mod paketi</value></data>
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Beyaz = orijinal</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Altın = UCM Quick/Fine Tune tarafından değiştirildi</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Yeşil = kutsal (God Mode düzenlemeleriniz, yeniden oluşmalardan korunur)</value></data>
+  <data name="Status_Ready" xml:space="preserve"><value>Hazır</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>kontrol ediliyor...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>güncel</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>çevrimdışı</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Yükleniyor...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Yüklendi! Oyunu başlatabilirsiniz.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Orijinal geri yükleniyor...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Orijinal geri yüklendi.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Uygulanıyor...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>Oyun dosyalarına {0} değişiklik uygulandı.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>'{0}' hazır ayarı yüklendi.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>'{0}' hazır ayarı kaydedildi.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>'{0}' hazır ayarı silindi.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>'{0}' hazır ayarı dışa aktarıldı.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>'{0}' hazır ayarı güncellendi.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>'{0}' içeri aktarıldı ve kaydedildi — uygulamak için Yükle'ye basın.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>{0} değiştirilmiş değer dışa aktarıldı.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>{0} değer içeri aktarıldı.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>{0} konumuna dışa aktarıldı.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>{0} oyuna yüklendi.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>{1} konumundan {0} değer içeri aktarıldı.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Yüklendi — değerleri düzenleyin ve Oyuna Uygula'ya basın.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Varsayılanlara sıfırlandı (hazır ayarınız + orijinal).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>UCM Quick varsayılanlarına ve orijinale sıfırlandı.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Uygulanacak değişiklik yok.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Dışa aktarılacak değiştirilmiş değer yok.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Kaydedilecek değiştirilmiş değer yok.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Önce kaydedilmiş bir hazır ayar seçin.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>Önce içeri aktarılmış bir hazır ayar seçin.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Oyun klasörü ayarlanmadı.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Oyun klasörü seçilmedi.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Yükleme başarısız. Oyun çalışıyor mu?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Yükleme başarısız: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Yedek bulunamadı. Kamera zaten orijinal olabilir.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Yedek eski sürümden. Oyun dosyalarını doğrulayın.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Geri yükleme başarısız. Oyun dosyalarını doğrulayın.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Geri yükleme başarısız: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Orijinal kamera yedekten geri yüklendi.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Yedek bulunamadı. Oyun kamerası zaten orijinal olabilir.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Son yüklemeden bu yana oyun güncellendi — yedek yenilendi. Steam'de oyun dosyalarını doğrulayın, sonra tekrar yükleyin.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} mevcut</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Gelişmiş Kontroller — parametre bazlı rehberli kamera ayarı.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Uzman modu — ham XML değerlerini düzenleyin ve Oyuna Uygula'ya basın.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager — Crimson Desert Mod Manager v8 yama dosyaları oluşturun.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Yamalar oluşturuluyor...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>{0} yama bölgesi oluşturuldu. Dışa aktarmak için .json Kaydet'e basın.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>{0} kaydedildi ({1} yama).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Önce bir yama oluşturun.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON dışa aktarma önce orijinal kamera dosyalarına ihtiyaç duyar.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Basit moddan değerler yüklendi.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Tüm Gelişmiş Kontroller orijinale sıfırlandı.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>'{0}' hazır ayarı yüklendi ({1} geçersiz kılma).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Gelişmiş hazır ayar '{0}' kaydedildi ({1} geçersiz kılma).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Gelişmiş hazır ayar '{0}' silindi.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0} Gelişmiş Kontrol değişikliği oyuna uygulandı.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Eski v{0} verileri temizlendi. Ayarlarınızı uygulamak için lütfen Yükle'ye basın.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Oyun klasörü ayarlanmadı. Yükle'ye basın, göz atmanız istenecek.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: oyun klasörü salt okunur. Oyunu taşıyın veya klasör izinlerini düzeltin.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} satır gösteriliyor  |  {1} değiştirilmiş</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} satır  |  {1} değiştirilmiş</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} satır  |  {1} değiştirilmiş  |  {2} kutsal</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} değişiklik{1}</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — önizlemeler ve yaygın kontrollerle geniş kamera şekillendirme.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — UCM Quick üzerine katmanlı küratöryel derinlemesine ayarlama.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — ham XML değerlerini düzenleyin ve JSON olarak dışa aktarın.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Kutsal düzenleme: bu değer artık Quick/Fine Tune yeniden oluşturmalarına karşı korunuyor.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>God Mode değerlerini sıfırlamak için bu hazır ayarın kilidini kenar çubuğunda açın.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Mevcut oturum oyuna yüklendi. Kamera verisi güncellendi — {0} bayt ({1} PAZ içinde sıkıştırılmış).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Yükleme tamamlandı; PAZ içindeki kamera girişi değişmedi ({0} bayt veri, {1} sıkıştırılmış).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Kamera oyuna yükleniyor...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Mevcut oturum XML hazırlanıyor...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>HUD ortalama yükleniyor...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Orijinal HUD geri yükleniyor...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Orijinal kamera geri yükleniyor...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>İndirme başarısız: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Güncelleme başarısız: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>İçeri aktarma başarısız: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Dışa aktarma başarısız: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Silme başarısız: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Yükleme başarısız: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Sıfırlama başarısız: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Hazırlama başarısız: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Kaydetme başarısız: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD yükleme başarısız: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD geri yükleme başarısız: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML içeri aktarma başarısız: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz içeri aktarma başarısız: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>Bu klasörde manifest.json bulunamadı.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Mod paketinde playercamerapreset.xml bulunamadı.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>Bu dosya UCM hazır ayarı değil gibi görünüyor (session_xml bulunamadı).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Katalog getiriliyor...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Topluluk kataloğu getiriliyor...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} hazır ayar mevcut, {1} indirildi</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>Henüz topluluk hazır ayarı yok.
+
+Daha sonra tekrar kontrol edin veya kendinizinkini paylaşın!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Kaydetmeye hazır. Hazır olduğunuzda Kaydet'e basın.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Önce dışa aktarmayı hazırlayın.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>Oturum XML mevcut değil. Önce ayarları düzenleyin veya bir hazır ayar yükleyin.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>Oturum XML boş.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Bu oyun için kodlama doğrulanıyor...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Arşiv yazılıyor (kopyalama + yama)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>0.paz şifre çözülüyor...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Kamera XML dışa aktarılıyor...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Kamera XML yükleniyor...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>{0} kaydedildi.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>{0} kaydedildi ({1} yama).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>İçeri aktarılan hazır ayar '{0}' {1} değerle kaydedildi.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Mod paketi '{0}' olarak içeri aktarıldı.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>'{0}' {1} değerle içeri aktarıldı.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>0.paz '{0}' olarak içeri aktarıldı.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>UCM hazır ayarı '{0}' içeri aktarıldı.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>İçeri aktarılan hazır ayar '{0}' silindi.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>İçeri aktarılan hazır ayar '{0}' God Mode'a yüklendi.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Kamera yedeği mevcut oyun dosyalarınızdan yenilendi. Hazır ayarınızı tekrar uygulamaya hazır olduğunuzda Yükle'yi kullanın.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Kamera yedeği otomatik olarak yenilenemedi. Kamera hâlâ modluysa, Steam'de oyun dosyalarını doğrulayın ve UCM'yi yeniden başlatın.</value></data>
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Yalnızca içeri aktarıldı - bu oyun için henüz yeniden oluşturulmadı.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Kaydedilmiş hazır ayar hazır - yeniden oluşturma durumunu kontrol etmek için oyun klasörü ayarlayın.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Hazır - bu oyun sürümü için zaten yeniden oluşturuldu.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Yeniden oluşturma gerekli - mevcut oyun sürümü son oluşturmadan farklı.</value></data>
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Bu klasör 0010\0.paz içermiyor.
+Doğru Crimson Desert dizinini seçtiğinizden emin olun.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Yanlış Klasör</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Önce bir oyun klasörü ayarlayın (göz atmak için Yükle'ye basın).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>'{0}' hazır ayarının üstüne mevcut kaydırıcı değerleriyle yazılsın mı?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Hazır Ayarın Üstüne Yaz</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Gelişmiş hazır ayar '{0}' mevcut değerlerle üstüne yazılsın mı?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass oyun klasörü salt okunur görünüyor.
+
+Bunu düzeltmek için şu yöntemlerden birini deneyin:
+  1. Xbox Uygulaması → Crimson Desert → Yönet → Farklı bir sürücüye taşı
+  2. Oyun klasörüne sağ tıkla → Özellikler → "Salt okunur" işaretini kaldır → Tüm alt klasörlere uygula</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Yazma İzni Gerekli</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>'{0}' doğrudan oyuna yüklensin mi?
+
+Bu işlem mevcut kamera ayarlarınızın üstüne yazacak.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>XML İçeri Aktar</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Oyun klasörünüzdeki kamera verileri UCM'nin orijinal yedeği ile eşleşmiyor.
+
+Harici mod yöneticileri için JSON yamaları orijinal baytları kullanmalıdır. Oyunu Steam'de doğrulayın (veya mod yöneticinizde kamera değişikliklerini geri alın), sonra tekrar deneyin.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>JSON dışa aktarılamıyor</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>İşlenmemiş hata:
+
+{0}
+
+Tam detaylar crash.log dosyasına kaydedildi</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Başlangıç hatası:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Başlangıç çökmesi:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Kamera XML yüklenemedi:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Gelişmiş Düzenleyici</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Uzman Düzenleyici</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Gelişmiş Kontroller</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Klasör iletişim kutusu hatası: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Hata</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>Bu isimde bir hazır ayar zaten mevcut. Üstüne yazılsın mı?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Emin misiniz? Bu işlem geri alınamaz.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>'{0}' için bir güncelleme mevcut.
+
+Güncellemeden önce mevcut sürümün bir kopyasını Hazır Ayarlarım'a kaydetmek ister misiniz?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>Bu hazır ayar ham XML olarak içeri aktarıldı ve UCM tarafından yönetilmiyor.
+
+UCM Quick ve Fine Tune, içeri aktarılan modun değerlerini geçersiz kılacak UCM kamera kural sistemini kullanır. İçeriğinizi korumak için yalnızca God Mode düzenleme mevcuttur.
+
+Steadycam ve FoV kontrolü gibi UCM özelliklerini kullanmak için bunun yerine kenar çubuğundan yeni bir UCM hazır ayarı oluşturun.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune ve God Mode kamera verilerini okumak için oyun klasörünüze ihtiyaç duyar. Önce oyun klasörünüzü ayarlayın.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM hazır ayarları korunmaktadır. {0} değişiklikleri hazır ayarın özenle ayarlanmış değerlerini bozabilir.
+
+Kendi düzenlenebilir kopyanızı oluşturmak için önce bu hazır ayarı kopyalayın, ardından Fine Tune veya God Mode'u özgürce kullanın.
+
+{0} salt okunur modda açılsın mı? (Değerlere göz atabilirsiniz ancak değişiklikler kaydedilmez.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>Oyun kamera dosyalarınız UCM v2.x, başka bir kamera modu veya bir mod yöneticisi tarafından değiştirilmiş. UCM temiz bir yedek oluşturmak için orijinal dosyalara ihtiyaç duyar.
+
+Değiştirilmiş dosyayı kaldırmak için aşağıdaki düğmeye basın, ardından orijinali yeniden indirmek için Steam'de doğrulayın.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz silindi. Şimdi:
+1. UCM'yi kapatın
+2. Steam → Crimson Desert → Özellikler → Yüklü Dosyalar → "Oyun dosyalarının bütünlüğünü doğrula"
+3. Doğrulama tamamlandıktan sonra UCM'yi yeniden başlatın</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Silinemedi: {0}
+Manuel olarak silin: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Seçilen 0.paz yanında eşleşen 0.pamt bulunamadı. v3'ün mevcut 0010\0.pamt'i arşiv dizini olarak kullanabilmesi için oyun klasörünüzü ayarlayın.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Oyun klasörü ayarlanmadı. v3 bu hazır ayarı güvenli bir şekilde yeniden oluşturmak için mevcut oyuna ihtiyaç duyar.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Kopyalama başarısız: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON dışa aktarma orijinal kamera dosyalarına ihtiyaç duyar (oyunu doğrulayın, sonra tekrar deneyin).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Yükleme tamamlandı ancak beklenmeyen bir sonuç döndürdü. Kamera doğru uygulanmamış olabilir — doğrulamak için oyunu başlatın.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Geri yükleme tamamlandı ancak sonuç doğrulanamadı. Kameranın orijinale dönüp dönmediğini kontrol etmek için oyunu başlatın.</value></data>
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Oyun klasörünü aç (veya manuel olarak ayarlamak için göz at)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Hareket durumları arasındaki karıştırma, sönümleme ve hız ofsetlerini yumuşatır. Orijinal kamera geçişlerini geri yüklemek için kapatın.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Ko-fi'yi açar — bahşişler UCM'nin devam etmesine yardımcı olur</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Mevcut canlı kamera XML'ini bir dosyaya kaydedin</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Bir kamera XML dosyasını doğrudan oyuna yükleyin</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Mevcut Basit mod ayarlarınızdan tüm kaydırıcıları doldurun</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Tüm kaydırıcıları orijinal XML değerlerine sıfırla</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Bir playercamerapreset.xml dosyasından değerler yükle</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Basit modda şu anda yapılandırılmış olanı kullanır</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Orijinale karşı karşılaştırmak için bir playercamerapreset.xml dosyası seçin</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Bir kamera XML veya PAZ arşivini hazır ayar olarak içeri aktarın</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>JSON (Mod Yöneticisi), oturum XML veya yamalı 0.paz olarak paylaşın — mevcut UCM oturumunuzu kullanır.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>UCM yedeğinden orijinal kamera parçasını geri yükle.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Mevcut UCM oturumunu doğrudan oyun dosyalarına uygula.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Son kaydırıcı değişikliğini geri al</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>manifest.json içeren bir klasör seçin — ad, yapımcı ve kamera XML otomatik olarak içeri aktarılır</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>Doğrudan bir playercamerapreset.xml dosyası seçin</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>Bir 0.paz dosyası seçin — UCM kamera XML'ini çıkaracak</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Başka bir UCM kullanıcısı tarafından paylaşılan bir .ucmpreset dosyasını içeri aktarın</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Bu hatırlatıcıyı bir hafta boyunca gizle</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Bir sonraki başlatmaya kadar gizle</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Güncelleme mevcut — en son sürümü indirmek için tıklayın</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Hazır ayarlara göz at ve indir</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Kamera dosyasındaki her Fov ve InDoorFov'a bu kadar derece ekler. İç mekan ve dış mekan satırları farklı orijinal sayılarla başlar, bu yüzden God Mode birbirinden farklı birçok son değer gösterir — her yerde tek bir açı değil.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Yatay kayma ~0.5'ten ayrı: bu değer genellikle XML'deki orijinal yanal sapmadır. Bu seçenek kaymayı 0'a zorlar ve daha güçlü ortalama kuralları uygular (desteklendiğinde RightOffset 0'a doğru).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>İşaretlendiğinde, kamera kilitlenen hedefe doğru dönüş yapmak yerine yerinde kalır.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Orijinale sıfırla ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Orijinal: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>Yapımcı sayfasını tarayıcıda aç</value></data>
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Kameranın karakterden ne kadar sola/sağa oturduğu. Ortalı kamera bunu 0'a kilitler.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Ortalı Kamera karakteri ekran merkezine zorlar — ayarlamak için işareti kaldırın</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = orijinal (karakter hafifçe solda). Merkez ~0.5. Negatif = daha fazla sol, pozitif = daha fazla sağ.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>RightOffset üzerinde delta olarak sol/sağ çerçeveleme (yaya, binek, nişancılık ve ilgili satırlar). 0, orijinal yan sapmayla eşleşir. Dosyadaki geometrik merkeze doğru çekmek için ~0.5'e kadar artırın; negatif değerler daha fazla sola saptırır. Üstten FoV önizlemesiyle eşleşir. Aşağıdaki ortalı kamera ayrıdır: bu kaydırıcısını 0'a kilitler ve daha güçlü ortalama uygular.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Sınırlar: Mesafe 1.5-12.0  |  Yükseklik -1.6 ile 0.5  |  Kayma -3.0 ile 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Kayma 0 = orijinal (karakter sol)  |  0.5 = merkez  |  negatif = daha fazla sol  |  pozitif = daha fazla sağ</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Oyun güncellemeleri modlanmış dosyaların üstüne yazar. Her Crimson Desert güncellemesinden sonra, kamera ayarlarınızı geri yüklemek için UCM Yükle'yi yeniden çalıştırın.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Not:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Her kaydırıcı mevcut değeri ve orijinal varsayılanı (soluk) gösterir. Herhangi bir satırda ↺ işaretine tıklayarak o parametreyi orijinale sıfırlayın. Tüm değişiklikleri oyuna yazmak için Uygula'ya basın.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Değişiklikler orijinal XML üzerine uygulanır — Basit mod hazır ayarlarıyla etkileşime girmez. Mevcut hazır ayarınızdan başlamak için "Basit Moddan Yükle"yi kullanın.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Oyun yayada 3 fare tekerleği yakınlaştırma seviyesine sahiptir. ZL2 en yakın (varsayılan görünüm), ZL3 orta mesafe, ZL4 en uzaktır. Her seviye kamera mesafesini, yüksekliğini ve yatay konumu bağımsız olarak kontrol eder. Bunlar tüm yaya durumlarında geçerlidir: bekleme, yürüme, koşma, sprint ve savaş hareketi.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>At kameraları 2 orijinal yakınlaştırma seviyesini kullanır (ZL2-ZL3). 8 at durumunun tamamı, gerçek oyun yakınlaştırma merdivenini korurken hız değişiklikleri sırasında kameranın sarsılmamasını sağlayacak şekilde senkronize edilmiştir.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>Bir düşmana kilitlendiğinizde kamera savaş takip moduna geçer. TargetRate kameranın düşmanı ne kadar agresif takip ettiğini kontrol eder — düşük değerler size daha fazla manuel kontrol verir. ScreenClampRate düşmanın ekranda ne kadar merkezde kaldığını kontrol eder.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Bunlar kameranın hareket durumları arasında nasıl geçiş yaptığını kontrol eder. BlendInTime kameranın bir duruma ne kadar sürede girdiğini belirler. OffsetLength kamera sallanmasını kontrol eder — 0'a ayarlamak yanlara hareket olmadan Steadycam hissi verir.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>Fener, yay veya silah yakınlaştırma ile nişanlandığınızda kamera nişangahı konumlandırmak için kayar. Bu RightOffset değerleri, yetenekler etkinleştirildiğinde kameranın yana sıçramaması için yatay kaymanızdan orantılı olarak ölçeklenir.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Bu sekme, Crimson Desert JSON Mod Manager v8 ile uyumlu bir .json yama dosyası oluşturur. Dosyayı mod yöneticisinin Mods/ klasörüne bırakın ve kamera ayarlarınız açılıp kapatılabilir bir mod olarak görünecektir — UCM gerekli değildir.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Yama, değiştirilmiş kamera dosyanızı orijinal dosyayla bayt bayt karşılaştırarak ve yalnızca farklılıkları kaydederek çalışır. Bu, oyun sürümüne özel olduğu anlamına gelir — oyun güncellenirse yamayı yeniden oluşturun.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Bu bilgi mod yöneticisi içinde görünür, böylece insanlar modun ne olduğunu bilir.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Yama için hangi ayarların kullanılacağını seçin. Mevcut Ayarlar, Basit modda şu anda etkin olanı kullanır. XML Dosyasından, bunun yerine dışa aktarılmış herhangi bir playercamerapreset.xml dosyasını yama için seçmenize olanak tanır.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>.json dosyasını kaydedin, sonra Crimson Desert JSON Mod Manager yüklemenizin Mods/ klasörüne bırakın. Açılıp kapatılabilir bir mod olarak görünecektir.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Özellikleri ara...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>Bu, hızlı ve küratöryel UCM katmanıdır: geniş kamera şekillendirme, önizlemeler ve en yaygın kamera seçenekleri.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune, küratöryel derinlemesine ayarlama katmanıdır. UCM Quick kurulumunuzdan başlar ve UCM'nin kasıtlı olarak açığa çıkardığı alanları ince ayar yapmanıza olanak tanır.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode dosyadaki her satırı listeler. Buradaki kaydırıcılar belirli özellikleri düzenler — bu sayılar God Mode'daki aynı özellikle eşleşmelidir. Diğer satırlar yine de Quick (FoV artışı, stil, savaş, Steadycam vb.) veya orijinalden değişir, bu nedenle tek bir kaydırıcının tüm ızgarayı açıklamasını beklemeyin.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode ham kamera satırlarını açığa çıkarır. UCM Quick yeterli olmadığında ve tam doğrudan kontrole atlamak istediğinizde veya daha derine inmek istiyorsanız UCM Fine Tune'dan sonra kullanın.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>Buradaki değerler birleşmiş oturumdur: Quick + Fine Tune + bu ızgaradaki tüm düzenlemeler. Quick'teki FoV satır başına eklenen bir deltadır (Fov ve InDoorFov), bu nedenle açılar duruma göre farklılık gösterir. Fine Tune burada satır satır yalnızca bu kaydırıcıların kontrol ettiği özellikler için eşleşir.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Bu satırlar temel yaya ve at grupları dışında uygulanan daha geniş FoV normalizasyonunu ve paylaşılan kamera sistemlerini kapsar. Kilitlenme aileleri, savaş makinesi durumları ve yüzme kameraları dahil olmak üzere UCM Fine Tune'un tam mod yüzeyini yansıtmasını istediğinizde kullanın.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Fil, wyvern, kano, savaş makinesi, süpürge ve gezinmeyle ilişkili kamera ailelerinin tümü kendi yakınlaştırma davranışına sahiptir. Bu kontroller, modun arka planda zaten değiştirdiği ek binek değerlerini açığa çıkarır.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Bir hedefe kilitlenirken veya savunurken kamera mesafesini yaya mesafenize göre ayarlar. %0 Steadycam ile kesintisizdir. Negatif değerler sinematik odak efekti için yakınlaştırır; pozitif değerler daha fazla savaş alanı farkındalığı için geri çekilir.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Oyun HUD öğelerini belirtilen maksimum genişlikte (piksel) ortalar. HUD öğelerinin çok fazla ayrıldığı geniş ekranlar için kullanışlıdır. Yalnızca oyun HUD'unu etkiler, menüleri değil. Teşekkürler wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>UCM topluluğu tarafından paylaşılan kamera hazır ayarlarına göz atın. İndirilen hazır ayarlar kenar çubuğunuzda görünür.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Resmi UCM kamera hazır ayarlarına göz atın ve indirin. İndirilen hazır ayarlar kenar çubuğunuzda görünür.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM arka planda 150'den fazla kamera durumunu yönetir — savaş, koruma, binek ve kilitlenme genelinde FoV tutarlılığı; her durum arasında yumuşak geçişler; kilitlenmenin içeri sıçramaması için mesafe ölçeklemesi. Quick kaydırıcıları ve Fine Tune bu kuralların üstüne güvenli bir şekilde inşa eder. God Mode, ihtiyacınız olduğunda tek tek değerleri geçersiz kılmanızı sağlar.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>UCM kuralları uygulanmadan oyunun orijinal kamera XML'inden başlar. UCM Quick ve Fine Tune kapatılmıştır çünkü kaydırıcıları manuel düzenlemelerinizin üstüne yazardı — UCM savaş, binek, kilitlenme ve yumuşatma durumları genelinde yüzlerce değeri değiştirir, bu da elle ayarlanmış değerlerle çelişir. Yalnızca doğrudan XML düzenleme için God Mode mevcuttur. Başka bir kamera modundan içeri aktarırken veya her değer üzerinde tam kontrol ihtiyacınız olduğunda kullanın.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>İçeri aktarmalar bu uygulamanın yanındaki import_presets klasörüne kaydedilir ve kenar çubuğunda İçeri Aktarılmış altında listelenir.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>Hangi dosya türünü içeri aktarmak istediğinizi seçin.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Gelişmiş ayarları içeri aktarmak için UCM_ADV: dizesini yapıştırın.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>UCM Quick'ten başlayın, Hazır Ayar Yöneticisinden bir şey yükleyin veya bir yapımcı hazır ayarı içeri aktarın.</value></data>
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>NexusMods, Discord vb. üzerinde kopyalayıp yapıştırın.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Aşağıya bir hazır ayar dizesi yapıştırın:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>NexusMods yorumları, Discord vb.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Aşağıya bir gelişmiş ayar dizesi yapıştırın:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>UCM_ADV: ile başlamalıdır (Gelişmiş Dışa Aktarmadan)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>"{0}" için bu dizeyi paylaşın:</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} gelişmiş ayar bulundu</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Gelişmiş ayar dizesi değil (UCM_ADV: ile başlamalıdır)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>UCM_ADV: ile başlamalıdır</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Geçersiz veri</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Özel Hazır Ayar Kaydet</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Gelişmiş Hazır Ayar Kaydet</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Bu hazır ayar için bir ad girin:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>İçeri aktarılan bu hazır ayar için bir ad girin:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Hazır Ayar Dizesini Dışa Aktar</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Bu hazır ayarı paylaşım için adlandırın:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Crimson Desert klasörünü seçin ('0010' klasörünü içerir)</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Mod klasörünü seçin (manifest.json içerir)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Kamera XML Dışa Aktar</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Kamera XML İçeri Aktar — doğrudan oyuna yükler</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>playercamerapreset.xml İçeri Aktar</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>0.paz İçeri Aktar — kamera XML çıkar</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>UCM Preset İçeri Aktar</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Yamalanacak kamera XML seçin</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>JSON Yama Kaydet</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Kamera XML Kaydet</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Yamalı 0.paz Kaydet</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>UCM Preset Kaydet</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>İçeri Aktarılan Hazır Ayar Kaydet</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(yeni — kaydırıcıları ayarla)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(mevcut düzenlemeler)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(mevcut)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>Bir içeri aktarma kaynağı seçin</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>İçeri Aktarılan Hazır Ayarı Sil</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>İçeri Aktarılan Hazır Ayarın Üstüne Yaz</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Mod paketi içeri aktarılıyor: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>XML içeri aktarılıyor: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>PAZ içeri aktarılıyor: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Dışa Aktarılan Hazır Ayar</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>İçeri Aktarılan Kamera</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM Hazır Ayarı - {0}</value></data>
+  <data name="Filter_All" xml:space="preserve"><value>Tümü</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Yalnızca değiştirilenler</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Yalnızca kutsallar</value></data>
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Oyun klasörü:  AYARLANMADI  (göz atmak için Yükle'ye basın)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Oyun klasörü:  {0}{1}</value></data>
+  <data name="Overlay_CloseX" xml:space="preserve"><value>İletişim kutusunu kapat</value></data>
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Adım {0} / {1}</value></data>
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>JSON Mod Manager veya Crimson Desert Ultimate Mods Manager'a aktarabileceğiniz bir bayt-yama .json dosyası dışa aktarır. Tercih ettiğiniz mod yöneticisini kullanın — alıcılar UCM'ye ihtiyaç duymaz.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>UCM'nin yüklerken kullandığı aynı normalizasyonla playercamerapreset.xml dışa aktarır (UTF-8 BOM, yorumlar çıkarılmış). Nexus metin yüklemeleri, elle düzenleme veya UCM'de yeniden içeri aktarma için harika. Yükleyen kişinin oyun sürümü için eşleşen sıkıştırılmış giriş boyutlarına ihtiyacı vardır.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Nexus tarzı bırakın-ve-yerine arşivi: oyununuzun 0010/0.paz kopyası, yalnızca mevcut UCM oturumunuzla eşleşen kamera verileri güncellenmiştir — JSON mod yöneticisi kullanmayan oyuncular tek bir dosyayı değiştirebilir. Yalnızca kurulumunuzla aynı oyun yamasında çalışır (aynı arşiv düzeni); bunu mod sayfasında belirtin. İndirenlere değiştirmeden önce orijinal 0010/0.paz dosyasını yedeklemelerini söyleyin.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Mevcut oturumunuzu diğer UCM kullanıcılarının hazır ayarlar klasörlerine bırakabilecekleri veya topluluk kataloğu aracılığıyla paylaşabilecekleri bir .ucmpreset dosyası olarak dışa aktarır. Tüm Quick, Fine Tune ve God Mode ayarları dahil tam kamera yapılandırmanızı içerir.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Canlı UCM oturumunuzu kullanır (Quick, Fine Tune veya God Mode). Kenar çubuğunda bir hazır ayar seçin veya diskten XML veya PAZ ile başlıyorsanız İçeri Aktar'ı kullanın.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Hazırla, oturumunuzun bu oyun klasörü için kodlandığını kontrol eder, sonra XML dosyasını kaydedersiniz.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Hazırla, oyun klasörünüze karşı kodlamayı doğrular. Kaydet tam yamalı bir 0.paz yazar (büyük dosya). Oturum kaynağı diğer biçimlerle aynıdır — gerekirse önce kenar çubuğu hazır ayarı veya İçeri Aktar.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Kodlama gerekli değil — oturumunuzu doğrudan kaydeder. Başkalarının ne alacağını bilmesi için yukarıdaki bilgi alanlarını doldurun.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML kodlaması bu yüklemedeki kamera girişine uyuyor. Paylaşma veya düzenleme için playercamerapreset.xml olarak kaydedin.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Yükleme boyutu tam bir 0.paz ile eşleşecektir. Alıcılar orijinali yedekledikten sonra ...\0010\0.paz dosyasını değiştirir. Yalnızca bu dışa aktarmayla aynı oyun sürümündeki oyuncularla paylaşın.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON bu alanları modinfo'da kullanır. XML, Başlığı varsayılan kaydetme adı olarak kullanır. 0.paz varsayılan olarak 0.paz'dır, böylece yeniden adlandırmadan 0010'a bırakabilirsiniz.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>{0} yama bölgesi oluşturuldu. Hazır olduğunuzda kaydedin.</value></data>
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>Bu genellikle PAZ dosyasının mevcut yüklemenizdekinden farklı bir oyun sürümünden olduğu anlamına gelir. Arşiv dizini (0.pamt) PAZ dosya yapısıyla eşleşmiyor.
+
+DÜZELTMELİK:
+Eşleşen 0.pamt dosyasını içeri aktardığınız 0.paz ile aynı klasöre yerleştirin. Her iki dosya da aynı oyun sürümünden olmalıdır.</value></data>
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Kaydedilmemiş oturum</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Mevcut Oturum</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Canlı oturum</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Henüz hazır ayar yüklenmedi.</value></data>
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroic  -  Omuz seviyesi OTS, harika çerçeveleme</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panoramic  -  Baş yüksekliği geniş geri çekilme, sinematik</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Değiştirilmemiş oyun kamerası (UCM yumuşatma için Steadycam kullanın)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Close-Up  -  Omuz OTS, daha dar (16:9 hissi)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Kalça seviyesi, tam vücut + ufuk</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Diz seviyesi dramatik alçak açı</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Yer seviyesi, aşırı alçak</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  Dar korku oyunu OTS (16:9 hissi)</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>FoV artışı yok (0°)  -  orijinal duruma göre değişir (40°, 45°, 53°...)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Minimum, 16:9 için iyi</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Hafif iyileştirme</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  21:9 için ideal nokta</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  21:9 + 32:9 için harika</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  32:9 için mükemmel</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Aşırı, hafif balıkgözü</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Ultimate Camera Mod'a Hoş Geldiniz</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Başlamadan önce, UCM'nin temiz bir başlangıç yedeği oluşturabilmesi için oyun dosyalarınızın değiştirilmemiş (orijinal) olması gerekir.
+
+Daha önce UCM v2.x, başka bir kamera modu veya oyun dosyalarını değiştiren bir mod yöneticisi kullandıysanız, lütfen önce doğrulayın:
+
+Steam → Crimson Desert → Özellikler → Yüklü Dosyalar → "Oyun dosyalarının bütünlüğünü doğrula"
+
+Oyun dosyalarınızı doğruladınız mı?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Evet, devam et</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Hayır, UCM'yi kapat</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Hazır Ayarlarınız</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>Bu sizin hazır ayar kenar çubuğunuzdur. Resmi UCM hazır ayarlarını ve topluluk hazır ayarlarını indirmek için Göz At'a tıklayın. Kendi hazır ayarlarınız ve içeri aktarmalarınız da burada görünür. Yüklemek için herhangi bir hazır ayara tıklayın.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Üç Düzenleme Katmanı</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>Hızlı değişiklikler için UCM Quick, her kamera durumu üzerinde derin kontrol için Fine Tune ve ham XML düzenleme için God Mode. Değişiklikler üç katman arasında otomatik olarak senkronize olur.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Kamera Ayarları</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Kamera mesafesini, yüksekliğini, yatay kaymayı, görüş alanını, kilitlenme yakınlaşması ve kamera davranışını ayarlayın. Siz ayarları değiştirdikçe canlı önizleme güncellenir.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Canlı Önizleme</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Kamera önizlemesi karakter çerçevelemesini ve mesafeyi gösterir. Görüş alanı diyagramı FoV konisini üstten gösterir. Her ikisi de ayarları değiştirdikçe gerçek zamanlı güncellenir.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Dışa Aktar &amp; Yükle</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Ayarlarınızı mod yöneticileri için JSON, XML, 0.paz veya başkalarıyla paylaşım için .ucmpreset olarak dışa aktarın. Veya doğrudan oyun dosyalarınıza uygulamak için Oyuna Yükle'ye tıklayın.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>Bir Şey Daha...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Bu projeye gereğinden fazla zaman harcadım. UCM saatlerce kamera hayal kırıklığından kurtardıysa, bana bir kahve ısmarlayın. Ya da ısmarlamayın. Yine de yapmaya devam edeceğim. Ama kahve yardımcı oluyor.</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>v{0} sürümüne güncellendi</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Tekrar hoş geldiniz! UCM güncellendi.
+
+Yenilikler:
+- Sacred God Mode: düzenlemeleriniz Quick/Fine Tune yeniden oluşturmalarından kalıcı olarak korunur
+- Kilitlenmede Otomatik Dönme açma/kapama (teşekkürler @sillib1980)
+- God Mode'da kutsal değerler için yeşil göstergeler
+- Düzeltme: kutsal değerler artık Yükleme ve tüm dışa aktarmalarda doğru olarak dahil ediliyor
+
+Hazır ayarlarınız ve ayarlarınız korunmuştur.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Tekrar hoş geldiniz! UCM v{0} sürümünden güncellendi.
+
+Yenilikler:
+- Sacred God Mode: düzenlemeleriniz Quick/Fine Tune yeniden oluşturmalarından kalıcı olarak korunur
+- Kilitlenmede Otomatik Dönme açma/kapama (teşekkürler @sillib1980)
+- God Mode'da kutsal değerler için yeşil göstergeler
+- Düzeltme: kutsal değerler artık Yükleme ve tüm dışa aktarmalarda doğru olarak dahil ediliyor
+
+Hazır ayarlarınız ve ayarlarınız korunmuştur.</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Hazır ayar yüklendi</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Hazır ayar yeniden adlandırıldı</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Hazır ayar kopyalandı</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Hazır ayar yeniden oluşturuldu</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>'{0}' hazır ayarı oluşturuldu</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>İçeri aktarılan hazır ayar yüklendi</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>'{0}' adında bir hazır ayar zaten mevcut.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Hazır ayar '{0}' '{1}' olarak yeniden adlandırıldı.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Hazır ayar '{0}' '{1}' olarak kopyalandı.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>İçeri aktarılan hazır ayar '{0}' mevcut oyun için yeniden oluşturuldu.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Oyun klasörü ayarlanmadı. Orijinal kamera verileri olmadan manuel hazır ayar oluşturulamaz.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Yalnızca içeri aktarılan XML / 0.paz hazır ayarları yeniden oluşturma desteğine ihtiyaç duyar.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Önce bu hazır ayarı mevcut oturuma yükleyin, sonra JSON Dışa Aktar'dan oluşturun.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Yerleşik hazır ayarlar oluşturulamadı.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Hazır ayar dosyası bulunamadı: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Hazır ayar etkinleştirilemedi: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Hazır ayar '{0}' kilitli — düzenlemek için kilit simgesini açın.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Hazır ayar '{0}' kilidi açıldı.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Yeniden oluşturma başarısız: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Hazır Ayar Oluşturma Başarısız</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Hazır Ayar Oluşturma Başarısız</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>İçeri aktarılan hazır ayar '{0}' gömülü XML içermiyordu; kaydedilen ayarlardan yeniden oluşturuldu.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>İçeri aktarılan hazır ayar '{0}' yüklenemedi.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>playercamerapreset.xml'i kaydedilmiş hazır ayar olarak içeri aktar</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Paylaşılan FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Çift hedef çerçeveleme</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>Gezinme FoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Fil</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Kano / Savaş Makinesi / Süpürge</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Kilitlenme Takibi</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoV Temas Noktaları</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Yaya ve savaş yumuşatma</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Hareket geçişleri</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Genişletilmiş kilitlenme ve savaş geçişleri</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>Yaya takip davranışı</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>At durumu senkronizasyonu</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Gezinme çerçeveleme</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Fener / Spot Işık</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Kör Edici Işık</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Silah Nişancılık / Yakınlaştırma</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Yay</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Süzülme / Serbest Düşüş</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>Yaya FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>Savaş FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>Savaş Makinesi/Süpürge FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>Fil FoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>Wyvern FoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>Yüzme FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Maks</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Maks</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>Yüzme FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>Tırmanma FoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>Süzülme FoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>Serbest Düşüş FoV</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Yakınlaştırma Seviyesi {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Fil ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Fil ZL{0} Yükseklik</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Kano ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Savaş Makinesi ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Süpürge ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} Yakınlaştırma Mesafesi</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Silah Kilitlenme FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Silah Çift Hedef FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction Çift Hedef FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss Kilitlenme FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>Kilitlenme Sistemi FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Canlandırma Kilitlenme FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Dönmesiz Kilitlenme FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Güreş Kilitlenme FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>Agresyon Başlatma FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Aranan FoV</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Koşma blend-in</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Koşma blend-out</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Savunma blend-in</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Savunma blend-out</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Atılma blend-in</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Atılma blend-out</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Koşma sallanımı</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Savaş koşma sallanımı</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Savaş sprint sallanımı</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Takip sprint sallanımı</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Hayvan bekleme blend-in</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Hayvan koşma blend-in</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Hayvan koşma sallanımı</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Hayvan sprint blend-in</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Hayvan sprint sallanımı</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Hayvan sprint sönümleme</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>Kilitlenme blend-in</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>Kilitlenme blend-out</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>Kilitlenme Sistemi blend-in</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>Kilitlenme Sistemi blend-out</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss Kilitlenme blend-in</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss Kilitlenme blend-out</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Serbest düşüş girişi blend-in</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Serbest düşüş girişi blend-out</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Serbest düşüş blend-in</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Serbest düşüş blend-out</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Süper zıplama blend-in</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Süper zıplama blend-out</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>İp çekme blend-in</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>İp çekme blend-out</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>İp sallanma blend-in</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>İp sallanma blend-out</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Vuruş/fırlatılma blend-in</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Vuruş/fırlatılma blend-out</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Binek Kilitlenme blend-in</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Binek Kilitlenme blend-out</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Canlandırma Kilitlenme blend-in</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Canlandırma Kilitlenme blend-out</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force Kilitlenme blend-in</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force Kilitlenme blend-out</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan Kilitlenme blend-in</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan Kilitlenme blend-out</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Dönmesiz Kilitlenme blend-in</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Dönmesiz Kilitlenme blend-out</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Güreş Kilitlenme blend-in</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Güreş Kilitlenme blend-out</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Agresyon blend-in</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Agresyon blend-out</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Aranan blend-in</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Aranan blend-out</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Savaş Makinesi nişancılık blend-in</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Savaş Makinesi nişancılık blend-out</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Savaş Makinesi atılma blend-in</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Savaş Makinesi atılma blend-out</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Yaya sapma takibi</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Yaya yunusleme takibi</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Yaya takip gecikmesi</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Yaya dönüş sönümleme</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>At sapma takibi</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>At yunusleme takibi</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>At takip gecikmesi</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>At varsayılan yunusleme</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>At blend-in</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>At blend-out</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>At dönüş sönümleme</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>At sallanımı</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>At sallanım sönümleme</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Mesafe</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Yükseklik</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Kayma</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Yüzme ZL2 Mesafe</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Yüzme ZL2 Yükseklik</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Tırmanma ZL2 Mesafe</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Tırmanma ZL2 Yükseklik</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Süzülme ZL2 Mesafe</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Süzülme ZL2 Yükseklik</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Serbest Düşüş ZL2 Mesafe</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Serbest Düşüş ZL2 Yükseklik</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Sıfırla</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Oyuna uygula v3'ten kaldırıldı. Bu geçersiz kılmaları paketlemek için JSON Dışa Aktar'ı kullanın.</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Oyun kamera dosyaları okunamadı: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Oyun klasörü taraması başarısız: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>Çok büyük</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Geçersiz</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Başarısız</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Kamera dosyaları doğrulanamadı: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Uyarı: hazır ayar düzenleyicilere tam olarak uygulanamadı: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCM hazır ayarı — Fine Tune veya God Mode kullanmak için kopyalayın</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCM hazır ayarı — mesafe ve yükseklik ayarlamak için kopyalayın</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCM hazır ayarı — düzenlenebilir bir kopya oluşturmak için kopyalayın</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Hazır ayar kilitli — düzenlemek için kilit simgesini açın</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Steadycam tarafından kontrol ediliyor — manuel ayarlamak için Steadycam işaretini kaldırın</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Kutsal -- God Mode tarafından kontrol ediliyor</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Yakınlaştırma Mesafeleri</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Oyun Varsayılanı</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM hazır ayarları</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>Topluluk hazır ayarları</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>Hazır ayarlarım</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>İçeri aktarılmış</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Diğer</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM hazır ayarı — düzenlenebilir bir kopya oluşturmak için kopyalayın</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>Kilitli — bu hazır ayarı düzenlemeye izin vermek için tıklayın</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Kilidi açık — değişiklikleri önlemek için kilitlemek için tıklayın</value></data>
+
+</root>

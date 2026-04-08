@@ -45,7 +45,7 @@
                             BorderThickness="0" FontSize="10" Padding="8,4"/>
                     <Button Content="GitHub" Style="{StaticResource SubtleButton}"
                             Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4" Margin="0,0,4,0"/>
-                    <Button x:Name="KofiBtn" Content="☕ Buy me a coffee" Style="{StaticResource SubtleButton}"
+                    <Button x:Name="KofiBtn" Content="{loc:Loc Btn_BuyCoffee}" Style="{StaticResource SubtleButton}"
                             Click="OnKofiClick" BorderThickness="0" FontSize="10" Padding="8,4"
                             ToolTip="{loc:Loc Tip_Kofi}"
                             Foreground="#FF5E5B"/>
@@ -185,10 +185,10 @@
                                                                         <Style TargetType="Button" BasedOn="{StaticResource AccentButton}">
                                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding Name}" Value="Community presets">
+                                                                                <DataTrigger Binding="{Binding Items[0].GroupId}" Value="community_presets">
                                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding Name}" Value="UCM presets">
+                                                                                <DataTrigger Binding="{Binding Items[0].GroupId}" Value="ucm_presets">
                                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                                 </DataTrigger>
                                                                             </Style.Triggers>

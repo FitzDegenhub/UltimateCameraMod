@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>高階相機設定</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>匯入高階設定字串</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>匯出預設字串</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>匯入預設字串</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>匯入預設</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>輸入</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - 錯誤</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>匯出分享</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>社群預設</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM 預設</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>預設詳情</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>選擇預設型別</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Raw XML 匯入</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>遊戲資料夾未設定</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode 錯誤</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune 錯誤</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>預設更新</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>檢測到遊戲更新</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>遊戲檔案已被修改</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM 致命錯誤</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ 匯入失敗</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>匯入 God Mode 覆蓋</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode 覆蓋</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>應用到遊戲</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>匯出</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>匯入</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>安裝</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>安裝到遊戲</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>恢復原版</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>恢復</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>關閉 UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>確定</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>是</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>否</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>獲取更新</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>複製到剪貼簿</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>已複製!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>匯出字串</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>匯入字串</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>儲存預設</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>刪除預設</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>匯出 XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>匯入 XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>恢復預設值</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>恢復原版</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>從簡單模式載入</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>全部展開</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>全部摺疊</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>從當前設定生成</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>從 XML 檔案生成...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>儲存 .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>匯入 &amp; 儲存</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>匯出字串</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>匯入字串</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>請我喝杯咖啡</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>恢復預設</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>新建</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>複製</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>重新命名</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>開啟</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>撤銷</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>重試</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>重新整理</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>下載</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>已下載</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>下載中...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>建立</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>覆蓋</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>準備匯出</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>儲存匯出...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>儲存 .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>儲存 .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>儲存 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>儲存 .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>瀏覽</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>知道了</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>暫停提醒 7 天</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>7 天后提醒</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>關閉</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>以只讀模式開啟</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>是，先備份</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>否，直接更新</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>移除已修改的 0.paz</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>已移除</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>清除</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>重置</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>下一步</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>開始使用</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>跳過教程</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>在 Nexus 檢視</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>預設</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>自定義</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM 快速</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>微調</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>簡單</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>高階</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>專家</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod 管理器</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>距離</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>高度</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>水平偏移</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>視野角</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>戰鬥相機</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>居中相機</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>坐騎相機</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>穩定相機</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>相機風格</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>已儲存的預設</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>預設</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>標題</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>版本</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>作者</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>作者（可選）</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>描述</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>描述（可選）</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / 其他（可選）</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>遊戲資料夾：</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> 個補丁區域</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> 位元組已更改</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> 個區域</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>已啟用</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>草稿</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>這是您在儲存命名預設之前的工作副本。</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>格式</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Mod 資訊 &amp; 檔名</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>準備匯出</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>儲存</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>名稱</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>名稱 *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>搜尋</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>鎖定縮放</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>鎖定自動旋轉</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>HUD 居中</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>安全區域</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>處理中...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>已儲存</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>已安裝</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>已恢復</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>已撤銷</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>或</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>相機風格</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>全域性設定</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>分享</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>相機預覽</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>視野角</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>高階控制</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>高階相機設定</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>使用方法</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>第 1 步  —  命名你的 Mod</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>第 2 步  —  生成補丁</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>第 3 步  —  儲存檔案</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>預設</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM 快速</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>自定義偏移</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>HUD 居中</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>區段</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>子元素</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>屬性</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>值</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>原版</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  步行縮放級別</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  馬 / 坐騎縮放級別</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  戰鬥 / 鎖定</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  相機平滑 / 穩定相機</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  瞄準 / 準星位置</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - 步行縮放級別</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - 馬 / 坐騎縮放級別</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - 全域性 / FOV 範圍</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - 特殊坐騎 / 移動</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - 戰鬥 / 鎖定</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - 相機平滑 / 穩定相機</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - 瞄準 / 準星位置</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>將角色置於螢幕中央（水平偏移鎖定為 0）</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>將角色置於螢幕中央</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>將坐騎/馬匹高度匹配至玩家相機高度</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>平滑相機過渡（消除狀態間縮放抖動）</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>鎖定時禁止相機自動旋轉至目標  --  感謝 @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>在最大寬度內居中游戲 HUD</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - Mod 管理器</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM 預設 (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Mod 管理器包（資料夾）</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>相機 XML 檔案 (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ 存檔 (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM 預設 (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>來自 JSON Mod Manager 或 CDUMM 的 JSON 補丁</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml 檔案</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>包含相機資料的遊戲 .paz 檔案</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>其他使用者的 UCM 預設檔案</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>UCM 管理</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>（推薦）</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>完全手動控制</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM 預設</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>社群預設</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>我的預設</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>已匯入</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>預設</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM 風格</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>社群</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>我的預設</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>匯入的 XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>匯入的 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Mod 包</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>白色 = 原版</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>金色 = 被 UCM Quick/Fine Tune 修改</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>綠色 = 鎖定值（God Mode 編輯值，重建時受保護）</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>就緒</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>檢查中...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>已是最新</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>離線</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>安裝中...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>安裝完成！請啟動遊戲。</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>正在恢復原版...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>原版已恢復。</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>應用中...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>已將 {0} 項更改應用到遊戲檔案。</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>預設 '{0}' 已載入。</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>預設 '{0}' 已儲存。</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>預設 '{0}' 已刪除。</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>預設 '{0}' 已匯出。</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>預設 '{0}' 已更新。</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>已匯入 '{0}' 並儲存 — 點選安裝以應用。</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>已匯出 {0} 個修改的值。</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>已匯入 {0} 個值。</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>已匯出到 {0}。</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>已將 {0} 安裝到遊戲。</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>從 {1} 匯入了 {0} 個值。</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>已載入 — 編輯值後點選應用到遊戲。</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>已恢復預設值（預設 + 原版）。</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>已恢復 UCM Quick 預設值和原版。</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>沒有要應用的更改。</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>沒有要匯出的修改值。</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>沒有要儲存的修改值。</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>請先選擇一個已儲存的預設。</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>請先選擇一個已匯入的預設。</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>遊戲資料夾未設定。</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>未選擇遊戲資料夾。</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>安裝失敗。遊戲是否正在執行？</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>安裝失敗：{0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>未找到備份。相機可能已是原版。</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>備份為舊版本。請驗證遊戲檔案。</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>恢復失敗。請驗證遊戲檔案。</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>恢復失敗：{0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>已從備份恢復原版相機。</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>未找到備份。遊戲相機可能已是原版。</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>上次安裝後遊戲已更新，備份已重新整理。請在 Steam 中驗證遊戲檔案，然後重新安裝。</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} 可用</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>高階控制 — 逐引數相機調整引導。</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>專家模式 — 編輯 XML 原始值後點選應用到遊戲。</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod 管理器 — 生成 Crimson Desert Mod Manager v8 補丁檔案。</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>正在生成補丁...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>已生成 {0} 個補丁區域。點選儲存 .json 進行匯出。</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>已儲存 {0}（{1} 個補丁）。</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>請先生成補丁。</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON 匯出需要原版相機檔案。</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>已從簡單模式載入值。</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>已將所有高階控制重置為原版。</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>預設 '{0}' 已載入（{1} 個覆蓋）。</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>高階預設 '{0}' 已儲存（{1} 個覆蓋）。</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>高階預設 '{0}' 已刪除。</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>已將 {0} 項高階控制更改應用到遊戲。</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>已清理舊 v{0} 資料。請點選安裝以應用設定。</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>遊戲資料夾未設定。點選安裝將提示瀏覽。</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass：遊戲資料夾為只讀。請移動遊戲或修改資料夾許可權。</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>顯示 {0} 行  |  {1} 已修改</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} 行  |  {1} 已修改</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} 行  |  {1} 已修改  |  {2} 鎖定值</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} 項更改</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — 透過預覽和常用控制進行整體相機調整。</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — 在 UCM Quick 基礎上疊加的深度微調層。</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — 編輯 XML 原始值並匯出為 JSON。</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>鎖定值編輯：此值受 Quick/Fine Tune 重建保護。</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>在側欄解鎖此預設以重置 God Mode 值。</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>已將當前會話安裝到遊戲。相機載荷已更新 — {0} 位元組（PAZ 中 {1} 壓縮）。</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>安裝完成；PAZ 中相機條目未變（{0} 位元組載荷，{1} 壓縮）。</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>正在將相機安裝到遊戲...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>正在準備當前會話 XML...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>正在安裝 HUD 居中...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>正在恢復原版 HUD...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>正在恢復原版相機...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>下載失敗：{0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>更新失敗：{0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>匯入失敗：{0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>匯出失敗：{0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>刪除失敗：{0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>載入失敗：{0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>重置失敗：{0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>準備失敗：{0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>儲存失敗：{0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD 安裝失敗：{0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD 恢復失敗：{0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML 匯入失敗：{0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz 匯入失敗：{0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>該資料夾中未找到 manifest.json。</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Mod 包中未找到 playercamerapreset.xml。</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>此檔案似乎不是 UCM 預設（未找到 session_xml）。</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>正在獲取目錄...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>正在獲取社群目錄...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} 個預設可用，{1} 個已下載</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>暫無社群預設。
+
+請稍後再來或貢獻您自己的預設！</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>準備就緒。準備好後點選儲存。</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>請先準備匯出。</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>沒有可用的會話 XML。請編輯設定或先載入預設。</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>會話 XML 為空。</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>正在驗證此遊戲的編碼...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>正在寫入存檔（複製 + 補丁）...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>正在解密 0.paz...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>正在匯出相機 XML...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>正在安裝相機 XML...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>已儲存 {0}。</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>已儲存 {0}（{1} 個補丁）。</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>已匯入預設 '{0}'，包含 {1} 個值。</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>已將 Mod 包匯入為 '{0}'。</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>已匯入 '{0}'，包含 {1} 個值。</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>已將 0.paz 匯入為 '{0}'。</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>已匯入 UCM 預設 '{0}'。</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>已刪除匯入的預設 '{0}'。</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>已將匯入的預設 '{0}' 載入到 God Mode。</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>相機備份已從當前遊戲檔案重新整理。準備好後使用安裝重新應用預設。</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>無法自動重新整理相機備份。如果相機仍處於 Mod 狀態，請在 Steam 中驗證遊戲檔案並重啟 UCM。</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>僅匯入 - 尚未為此遊戲重建。</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>已儲存的預設就緒 - 設定遊戲資料夾以檢查重建狀態。</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>就緒 - 已為此遊戲版本重建。</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>需要重建 - 當前遊戲版本與上次構建不同。</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>該資料夾不包含 0010\0.paz。
+請確認選擇了正確的 Crimson Desert 目錄。</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>資料夾錯誤</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>請先設定遊戲資料夾（點選安裝以瀏覽）。</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>是否用當前滑塊值覆蓋預設 '{0}'？</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>覆蓋預設</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>是否用當前值覆蓋高階預設 '{0}'？</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass 遊戲資料夾似乎為只讀。
+
+要修復此問題，請嘗試以下方法之一：
+  1. Xbox 應用 → Crimson Desert → 管理 → 移動到其他驅動器
+  2. 右鍵點選遊戲資料夾 → 屬性 → 取消勾選"只讀" → 應用到所有子資料夾</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>需要寫入許可權</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>是否將 '{0}' 直接安裝到遊戲？
+
+這將覆蓋當前的相機設定。</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>匯入 XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>遊戲資料夾中的相機資料與 UCM 的原版備份不匹配。
+
+外部 Mod 管理器的 JSON 補丁必須使用原版"原始"位元組。請在 Steam 中驗證遊戲（或在 Mod 管理器中撤銷相機更改），然後重試。</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>無法匯出 JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>未處理的錯誤：
+
+{0}
+
+完整詳情已儲存到 crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>啟動錯誤：
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>啟動崩潰：
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>載入相機 XML 失敗：
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>高階編輯器</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>專家編輯器</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>高階控制</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>資料夾對話方塊錯誤：{0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>錯誤</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>此名稱的預設已存在。是否覆蓋？</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>確定要刪除嗎？此操作無法撤銷。</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>'{0}' 有可用更新。
+
+更新前是否將當前版本複製到我的預設？</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>此預設以 Raw XML 形式匯入，不受 UCM 管理。
+
+UCM Quick 和 Fine Tune 使用 UCM 的相機規則系統，可能覆蓋匯入 Mod 的值。為保護匯入資料，僅可使用 God Mode 編輯。
+
+要使用穩定相機、FOV 控制等 UCM 功能，請從側欄建立新的 UCM 預設。</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune 和 God Mode 需要遊戲資料夾來讀取相機資料。請先設定遊戲資料夾。</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM 預設受到保護。{0} 的更改可能損壞預設精心調整的值。
+
+請先複製此預設以建立可編輯副本，然後自由使用 Fine Tune 或 God Mode。
+
+是否以只讀模式開啟 {0}？（可以瀏覽值但更改不會儲存。）</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>遊戲相機檔案已被 UCM v2.x、其他相機 Mod 或 Mod 管理器修改。UCM 需要原始原版檔案來建立乾淨的備份。
+
+點選下面的按鈕移除已修改的檔案，然後在 Steam 中驗證以重新下載原始檔案。</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz 已刪除。下一步：
+1. 關閉 UCM
+2. Steam → Crimson Desert → 屬性 → 已安裝的檔案 → "驗證遊戲檔案的完整性"
+3. 驗證完成後重新啟動 UCM</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>無法刪除：{0}
+請手動刪除：{1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>在選定的 0.paz 旁未找到匹配的 0.pamt。請設定遊戲資料夾以便 v3 使用當前 0010\0.pamt 作為存檔索引。</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>遊戲資料夾未設定。v3 需要當前遊戲來安全重建此預設。</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>複製失敗：{0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON 匯出需要原版相機檔案（驗證遊戲後重試）。</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>安裝已完成但返回了意外結果。相機可能未正確應用 — 請啟動遊戲驗證。</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>恢復已完成但無法確認結果。請啟動遊戲檢查相機是否已恢復原版。</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>開啟遊戲資料夾（或瀏覽以手動設定）</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>平滑移動狀態間的混合、衰減和速度偏移。禁用可恢復原版相機過渡。</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>開啟 Ko-fi — 打賞有助於 UCM 持續發展</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>將當前實時相機 XML 儲存到檔案</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>將相機 XML 檔案直接安裝到遊戲</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>從當前簡單模式設定填充所有滑塊</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>將所有滑塊重置為原版 XML 值</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>從 playercamerapreset.xml 檔案載入值</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>使用簡單模式中當前配置的設定</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>選擇一個 playercamerapreset.xml 檔案與原版進行對比</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>將相機 XML 或 PAZ 存檔作為預設匯入</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>以 JSON（Mod 管理器）、會話 XML 或已打補丁的 0.paz 進行分享 — 使用當前 UCM 會話。</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>從 UCM 備份恢復原始相機資料塊。</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>將當前 UCM 會話直接應用到遊戲檔案。</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>撤銷上次滑塊更改</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>選擇包含 manifest.json 的資料夾 — 自動匯入名稱、作者和相機 XML</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>直接選擇 playercamerapreset.xml 檔案</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>選擇 0.paz 檔案 — UCM 將從中提取相機 XML</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>匯入其他 UCM 使用者分享的 .ucmpreset 檔案</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>隱藏此提醒一週</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>隱藏直到下次啟動</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>有可用更新 — 點選下載最新版本</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>瀏覽和下載預設</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>為相機檔案中的每個 Fov 和 InDoorFov 新增此角度。室內和室外行從不同的原版數值開始，因此 God Mode 會顯示多種不同的最終值 — 並非所有地方都是同一角度。</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>與水平偏移 ~0.5 不同：該值通常是 XML 中的原版側向偏差。此選項強制偏移為 0 並應用更強的居中規則（在支援的位置將 RightOffset 設為 0）。</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>勾選後，相機鎖定目標時不會自動旋轉，而是保持原位。</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>重置為原版 ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>原版：{0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>在瀏覽器中開啟創作者頁面</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>相機與角色之間的左右距離。居中相機時鎖定為 0。</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>居中相機將角色固定在螢幕中心 — 取消勾選以調整</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = 原版（角色略偏左）。中央為 ~0.5。負值 = 更偏左，正值 = 更偏右。</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>RightOffset 的左右取景偏移量（步行、坐騎、瞄準及相關行）。0 匹配原版側向偏差。向 ~0.5 增加會拉向檔案中的幾何中心；負值向左偏。與俯視 FOV 預覽一致。下方的居中相機是獨立功能，它將此滑塊鎖定為 0 並應用更強的居中效果。</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>限制：距離 1.5-12.0  |  高度 -1.6 ~ 0.5  |  偏移 -3.0 ~ 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>偏移 0 = 原版（角色偏左）  |  0.5 = 居中  |  負值 = 更左  |  正值 = 更右</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>遊戲更新會覆蓋已修改的檔案。每次 Crimson Desert 更新後，請重新執行 UCM 安裝以恢復相機設定。</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>注意：</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>每個滑塊顯示當前值和原版預設值（灰顯）。點選行上的 ↺ 可將該引數重置為原版。點選應用將所有更改寫入遊戲。</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>更改應用於原版 XML 之上 — 不與簡單模式預設互動。使用"從簡單模式載入"從當前預設開始。</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>遊戲步行時有 3 個滾輪縮放級別。ZL2 最近（預設視角），ZL3 中距離，ZL4 最遠。每個級別獨立控制相機距離、高度和水平位置。適用於所有步行狀態：待機、行走、跑步、衝刺和戰鬥移動。</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>馬匹相機使用 2 個原版縮放級別 (ZL2-ZL3)。所有 8 種馬匹狀態同步，在保持真實遊戲縮放階梯的同時避免速度變化時相機抖動。</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>鎖定敵人後相機切換到戰鬥追蹤模式。TargetRate 控制相機跟蹤敵人的積極程度 — 值越低手動控制越多。ScreenClampRate 控制敵人保持在螢幕中央的程度。</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>控制移動狀態間的相機過渡方式。BlendInTime 是相機進入狀態所需的秒數。OffsetLength 控制相機搖擺 — 設為 0 可獲得無側向移動的穩定相機效果。</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>使用燈籠、弓箭或武器變焦瞄準時，相機會移至準星位置。這些 RightOffset 值隨水平偏移成比例縮放，使得啟用技能時相機不會突然橫向移動。</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>此選項卡生成與 Crimson Desert JSON Mod Manager v8 相容的 .json 補丁檔案。將檔案放入 Mod 管理器的 Mods/ 資料夾，相機設定將顯示為可切換的 Mod — 無需 UCM。</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>補丁透過逐位元組比較修改後的相機檔案和原版檔案，僅記錄差異。因此它特定於遊戲版本 — 遊戲更新後請重新生成補丁。</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>此資訊顯示在 Mod 管理器中，讓使用者瞭解此 Mod 的內容。</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>選擇要打補丁的設定。當前設定使用簡單模式中當前啟用的內容。從 XML 檔案可以選擇匯出的 playercamerapreset.xml 來打補丁。</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>儲存 .json 檔案，然後將其放入 Crimson Desert JSON Mod Manager 安裝資料夾中的 Mods/ 資料夾。它將顯示為可切換的 Mod。</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>搜尋屬性...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>這是快速、精選的 UCM 層：提供整體相機調整、預覽和最常見的相機選項。</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune 是精選的深度調整層。從 UCM Quick 設定開始，讓您微調 UCM 特意公開的欄位。</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode 列出檔案中的所有行。這裡的滑塊編輯特定屬性 — 這些數值應與 God Mode 中的同一屬性匹配。其他行仍受 Quick（FOV 增強、風格、戰鬥、穩定相機等）或原版影響，因此不要期望一個滑塊能解釋整個網格。</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode 公開原始相機行。當 UCM Quick 不夠用而需要完全直接控制時使用，或在 UCM Fine Tune 之後想更深入調整時使用。</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>這裡的值是合併的會話：Quick + Fine Tune + 此網格中的編輯。Quick 的 FOV 是逐行新增的增量（Fov 和 InDoorFov），因此角度因狀態而異。Fine Tune 僅對其滑塊控制的屬性逐行匹配。</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>這些行涵蓋基本步行和馬匹組之外的更廣泛 FOV 歸一化和共享相機系統。當您希望 UCM Fine Tune 反映完整的 Mod 範圍（包括鎖定系列、戰爭機器狀態和游泳相機）時使用。</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>大象、飛龍、獨木舟、戰爭機器、掃帚和移動相關的相機系列都有各自的縮放行為。這些控制公開了 Mod 已在內部更改的額外坐騎值。</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>調整鎖定或防禦目標時相對於步行距離的相機距離。0% 與穩定相機無縫銜接。負值縮放產生電影化聚焦效果；正值後拉以獲得更廣的戰場視野。</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>在指定最大寬度（畫素）內居中游戲 HUD 元素。適用於 HUD 元素分散過遠的超寬屏顯示器。僅影響遊戲 HUD，不影響選單。感謝 wsres。</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>瀏覽 UCM 社群分享的相機預設。下載的預設會顯示在側欄中。</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>瀏覽和下載官方 UCM 相機預設。下載的預設會顯示在側欄中。</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM 在內部管理 150 多種相機狀態 — 戰鬥、防禦、坐騎和鎖定全方位的 FOV 一致性；所有狀態間的平滑過渡；鎖定時不會向內跳躍的距離縮放。Quick 滑塊和 Fine Tune 在這些規則之上安全構建。God Mode 允許您在需要時覆蓋單個值。</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>從未應用 UCM 規則的遊戲原版相機 XML 開始。UCM Quick 和 Fine Tune 被禁用，因為其滑塊會覆蓋您的手動編輯 — UCM 在戰鬥、坐騎、鎖定和平滑狀態下修改數百個值，會與手工調整的值衝突。僅可使用 God Mode 進行直接 XML 編輯。從其他相機 Mod 匯入或需要完全控制每個值時使用。</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>匯入的預設儲存在此應用旁的 import_presets 資料夾中，並列在側欄的已匯入下。</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>選擇要匯入的檔案型別。</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>貼上 UCM_ADV: 字串以匯入高階設定。</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>從 UCM Quick 開始，從預設管理器載入，或匯入創作者預設。</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>複製貼上到 NexusMods、Discord 等。</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>在下方貼上預設字串：</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>從 NexusMods 評論、Discord 等處複製</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>在下方貼上高階設定字串：</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>必須以 UCM_ADV: 開頭（從高階匯出複製）</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>"{0}" 的分享字串：</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>找到 {0} 個高階設定</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>不是高階設定字串（必須以 UCM_ADV: 開頭）</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>必須以 UCM_ADV: 開頭</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>無效載荷</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>儲存自定義預設</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>儲存高階預設</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>輸入預設名稱：</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>輸入匯入預設的名稱：</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>匯出預設字串</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>為分享命名此預設：</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>選擇 Crimson Desert 資料夾（包含 '0010' 資料夾）</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>選擇 Mod 資料夾（包含 manifest.json）</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>匯出相機 XML</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>匯入相機 XML — 直接安裝到遊戲</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>匯入 playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>匯入 0.paz — 提取相機 XML</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>匯入 UCM 預設</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>選擇要打補丁的相機 XML</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>儲存 JSON 補丁</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>儲存相機 XML</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>儲存已打補丁的 0.paz</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>儲存 UCM 預設</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>儲存匯入的預設</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>（新建 — 調整滑塊）</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>（當前編輯）</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>（當前）</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>選擇匯入來源</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>刪除匯入的預設</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>覆蓋匯入的預設</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>正在匯入 Mod 包：{0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>正在匯入 XML：{0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>正在匯入 PAZ：{0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>已匯出預設</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>已匯入相機</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM 預設 - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>全部</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>僅已修改</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>僅鎖定值</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>遊戲資料夾：  未設定  （點選安裝以瀏覽）</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>遊戲資料夾：  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>關閉對話方塊</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>第 {0} 步，共 {1} 步</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>匯出可匯入 JSON Mod Manager 或 Crimson Desert Ultimate Mods Manager 的位元組補丁 .json。使用您偏好的 Mod 管理器 — 接收方無需 UCM。</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>以 UCM 安裝時相同的規範化方式（UTF-8 BOM，去除註釋）匯出 playercamerapreset.xml。適合 Nexus 文字上傳、手動編輯或 UCM 重新匯入。安裝者需要與其遊戲版本匹配的壓縮條目大小。</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Nexus 風格的直接替換存檔：僅更新相機資料以匹配當前 UCM 會話的遊戲 0010/0.paz 副本 — 不使用 JSON Mod 管理器的玩家可以替換一個檔案。僅適用於與您安裝相同的遊戲補丁（相同存檔佈局）。請在 Mod 頁面說明。告知下載者在替換前備份原版 0010/0.paz。</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>將當前會話匯出為 .ucmpreset 檔案，其他 UCM 使用者可將其放入預設資料夾或透過社群目錄分享。包含完整相機配置，包括所有 Quick、Fine Tune 和 God Mode 設定。</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>使用實時 UCM 會話（Quick、Fine Tune 或 God Mode）。在側欄選擇預設，或從磁碟上的 XML 或 PAZ 開始則使用匯入。</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>準備階段檢查會話是否針對此遊戲資料夾編碼，然後儲存 XML 檔案。</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>準備階段驗證遊戲資料夾的編碼。儲存時寫入完整的已補丁 0.paz（大檔案）。會話來源與其他格式相同 — 側欄預設或需要時先匯入。</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>無需編碼 — 直接儲存會話。填寫上方資訊欄位讓他人瞭解內容。</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML 編碼與此安裝的相機條目匹配。儲存為 playercamerapreset.xml 以供分享或編輯。</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>上傳大小與完整 0.paz 相同。接收方在備份原版後替換 ...\0010\0.paz。僅與此匯出相同遊戲版本的玩家分享。</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON 將這些欄位用於 modinfo。XML 使用標題作為預設儲存名。0.paz 預設為 0.paz，可直接放入 0010 無需重新命名。</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>已生成 {0} 個補丁區域。準備好後儲存。</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>這通常表示 PAZ 檔案來自與當前安裝不同的遊戲版本。存檔索引 (0.pamt) 與 PAZ 檔案結構不匹配。
+
+修復方法：
+將匹配的 0.pamt 檔案放在要匯入的 0.paz 旁邊。兩個檔案必須來自相同的遊戲版本。</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>未儲存的會話</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>當前會話</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>實時會話</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>尚未載入預設。</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>英雄  -  肩部OTS，出色的構圖</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>全景  -  頭部高度廣角後拉，電影感</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>原版  -  未修改的遊戲相機（使用Steadycam進行UCM平滑）</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>特寫  -  肩部OTS，更緊湊（16:9感覺）</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>低視角  -  臀部高度，全身 + 地平線</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>膝部攝像  -  膝蓋高度，戲劇性低角度</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>地面攝像  -  地面高度，極低角度</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>生存  -  緊湊恐怖遊戲OTS（16:9感覺）</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>無FoV增強 (0°)  -  原版按狀態變化 (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  最小，適合 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  微妙改善</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  21:9 的理想值</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  非常適合 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  完美適合 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  極端，輕微魚眼效果</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>歡迎使用 Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>在開始之前，UCM 需要您的遊戲檔案處於未修改（原版）狀態，以便建立乾淨的基線備份。
+
+如果您之前使用過 UCM v2.x、其他相機模組或修改過遊戲檔案的模組管理器，請先驗證：
+
+Steam → Crimson Desert → 屬性 → 已安裝的檔案 → &quot;驗證遊戲檔案的完整性&quot;
+
+您已驗證遊戲檔案了嗎？</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>是，繼續</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>否，關閉 UCM</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>您的預設</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>這是您的預設側欄。點選 Browse 下載官方 UCM 預設和社群預設。您自己的預設和匯入項也會顯示在這裡。點選任意預設即可載入。</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>三個編輯層級</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick 用於快速更改，Fine Tune 用於對每個相機狀態的深度控制，God Mode 用於原始 XML 編輯。更改會自動在所有三個層級之間同步。</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>相機設定</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>調整相機距離、高度、水平偏移、視野、鎖定縮放和相機行為。實時預覽會隨著您的調整實時更新。</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>實時預覽</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>相機預覽顯示角色構圖和距離。視野圖顯示從上方看的 FoV 錐體。兩者都會隨著您的調整實時更新。</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>匯出與安裝</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>將設定匯出為 JSON（用於模組管理器）、XML、0.paz 或 .ucmpreset 與他人分享。或點選 Install to Game 直接應用到遊戲檔案。</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>還有一件事...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>我在這個專案上花了太多時間。如果 UCM 為你省去了數小時的相機煩惱，請考慮請我喝杯咖啡。不請也沒關係。我會繼續做下去的。但咖啡有幫助。</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>已更新至 v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>歡迎回來！UCM 已更新。
+
+新功能：
+- Sacred God Mode：您的編輯現在永久受保護，不受 Quick/Fine Tune 重建影響
+- Lock-on Auto-Rotate 開關（感謝 @sillib1980）
+- God Mode 中 sacred 值的綠色指示器
+- 修復：sacred 值現在正確包含在安裝和所有匯出中
+
+您的預設和設定已保留。</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>歡迎回來！UCM 已從 v{0} 更新。
+
+新功能：
+- Sacred God Mode：您的編輯現在永久受保護，不受 Quick/Fine Tune 重建影響
+- Lock-on Auto-Rotate 開關（感謝 @sillib1980）
+- God Mode 中 sacred 值的綠色指示器
+- 修復：sacred 值現在正確包含在安裝和所有匯出中
+
+您的預設和設定已保留。</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>預設已載入</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>預設已重新命名</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>預設已複製</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>預設已重建</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>預設 '{0}' 已建立</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>已載入匯入的預設</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>名為 '{0}' 的預設已存在。</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>預設 '{0}' 已重新命名為 '{1}'。</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>預設 '{0}' 已複製為 '{1}'。</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>匯入的預設 '{0}' 已為當前遊戲重建。</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>遊戲資料夾未設定。沒有原版相機資料無法建立手動預設。</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>僅匯入的 XML / 0.paz 預設需要重建支援。</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>請先將此預設載入到當前會話中，然後從 Export JSON 生成。</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>生成內建預設失敗。</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>未找到預設檔案: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>無法啟用預設: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>預設 '{0}' 已鎖定 — 解鎖鎖頭以編輯。</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>預設 '{0}' 已解鎖。</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>重建失敗: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>建立預設失敗</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>生成預設失敗</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>匯入的預設 '{0}' 沒有嵌入的 XML；已從儲存的設定重建。</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>載入匯入的預設 '{0}' 失敗。</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>將 playercamerapreset.xml 匯入為儲存的預設</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>共享 FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>雙目標構圖</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>移動 FoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>大象</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>翼龍</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>獨木舟 / 戰爭機器 / 掃帚</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lock-On 追蹤</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoV 觸點</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>步行和戰鬥平滑</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>移動過渡</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>擴充套件 Lock-On 和戰鬥過渡</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>步行跟隨行為</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>馬匹狀態同步</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>移動構圖</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>燈籠 / 聚光燈</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>致盲閃光</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>武器瞄準 / 縮放</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>弓</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>滑翔 / 自由落體</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>步行 FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>戰鬥 FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>戰爭機器/掃帚 FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>大象 FoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>翼龍 FoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>游泳 FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>游泳 FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>攀爬 FoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>滑翔 FoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>自由落體 FoV</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>縮放級別 {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elephant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elephant ZL{0} Height</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Canoe ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Weapon LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Weapon TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Non-Rotate LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>跑步混入</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>跑步混出</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>防禦混入</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>防禦混出</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>衝刺混入</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>衝刺混出</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>跑步搖擺</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>戰鬥跑步搖擺</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>戰鬥衝刺搖擺</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>跟隨衝刺搖擺</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>動物待機混入</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>動物跑步混入</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>動物跑步搖擺</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>動物衝刺混入</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>動物衝刺搖擺</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>動物衝刺阻尼</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOn 混入</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOn 混出</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn System 混入</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn System 混出</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOn 混入</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOn 混出</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>自由落體進入混入</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>自由落體進入混出</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>自由落體混入</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>自由落體混出</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>超級跳躍混入</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>超級跳躍混出</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>繩索拉動混入</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>繩索拉動混出</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>繩索擺動混入</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>繩索擺動混出</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>受擊/投擲混入</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>受擊/投擲混出</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>坐騎 LockOn 混入</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>坐騎 LockOn 混出</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOn 混入</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOn 混出</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOn 混入</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOn 混出</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOn 混入</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOn 混出</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOn 混入</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOn 混出</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOn 混入</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOn 混出</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>仇恨混入</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>仇恨混出</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>通緝混入</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>通緝混出</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>戰爭機器瞄準混入</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>戰爭機器瞄準混出</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>戰爭機器衝刺混入</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>戰爭機器衝刺混出</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>步行偏航跟隨</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>步行俯仰跟隨</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>步行跟隨延遲</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>步行樞軸阻尼</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>馬匹偏航跟隨</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>馬匹俯仰跟隨</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>馬匹跟隨延遲</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>馬匹預設俯仰</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>馬匹混入</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>馬匹混出</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>馬匹樞軸阻尼</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>馬匹搖擺</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>馬匹搖擺阻尼</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Dist</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Height</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Shift</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Swim ZL2 Dist</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Swim ZL2 Height</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Climb ZL2 Dist</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Climb ZL2 Height</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glide ZL2 Dist</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glide ZL2 Height</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Freefall ZL2 Dist</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Freefall ZL2 Height</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>重置</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>v3 已移除 Apply to game。請使用 Export JSON 來打包這些覆蓋。</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>無法讀取遊戲相機檔案: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>遊戲資料夾掃描失敗: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>太大</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>無效</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>失敗</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>無法驗證相機檔案: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>警告: 無法完全將預設應用到編輯器: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCM 預設 -- 複製它以使用 Fine Tune 或 God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCM 預設 -- 複製以調整距離和高度</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCM 預設 -- 複製以建立可編輯的副本</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>預設已鎖定 -- 解鎖鎖頭以編輯</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>由 Steadycam 控制 -- 取消勾選 Steadycam 以手動調整</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- 由 God Mode 控制</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - 縮放距離</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>遊戲預設</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM 預設</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>社群預設</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>我的預設</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>已匯入</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>其他</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM 預設 — 複製以建立可編輯的副本</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>已鎖定 — 點選以允許編輯此預設</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>已解鎖 — 點選以鎖定並防止更改</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ 請我喝杯咖啡</value></data>
+
+</root>

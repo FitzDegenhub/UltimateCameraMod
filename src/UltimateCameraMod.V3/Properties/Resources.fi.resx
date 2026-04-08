@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Kameran lisäasetukset</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Tuo lisäasetusten merkkijono</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Vie preset-merkkijono</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Tuo preset-merkkijono</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Tuo preset</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Syöte</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Virhe</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>VIE JAKAMISTA VARTEN</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>YHTEISÖN PRESETIT</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM-PRESETIT</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Presetin tiedot</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>Valitse preset-tyyppi</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Raaka XML-tuonti</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Pelikansiota ei asetettu</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode -virhe</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune -virhe</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Preset-päivitys</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Pelipäivitys havaittu</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>Pelitiedostoja muokattu</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM kriittinen virhe</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ-tuonti epäonnistui</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>Tuo God Mode -ohitukset</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode -ohitukset</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Asenna peliin</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Tallenna</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Poista</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Vie</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Tuo</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Asenna</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Asenna peliin</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Palauta alkuperäinen</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Palauta</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Sulje</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>Sulje UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Peruuta</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Kyllä</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Ei</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Hae päivitys</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Kopioi leikepöydälle</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Kopioitu!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Vie merkkijono</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Tuo merkkijono</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Tallenna preset</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Poista preset</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Vie XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Tuo XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Palauta oletukset</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Palauta alkuperäiseksi</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Lataa yksinkertaisesta</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Laajenna kaikki</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Kutista kaikki</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Luo nykyisistä asetuksista</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Luo XML-tiedostosta...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Tallenna .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Tuo &amp; Tallenna</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Vie merkkijono</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Tuo merkkijono</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Osta kahvi</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Palauta oletukset</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Uusi</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Kopioi</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Nimeä uudelleen</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>Avaa</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Kumoa</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Yritä uudelleen</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Päivitä</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>Lataa</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>Ladattu</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>Ladataan...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Luo</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Korvaa</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Valmistele vienti</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Tallenna vienti...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>Tallenna .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>Tallenna .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>Tallenna 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>Tallenna .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Selaa</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Selvä</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>Muistuta 7 päivän päästä</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>Muistuta 7pv</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Ohita</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>Avaa vain luku -tilassa</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Kyllä, varmuuskopioi ensin</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Ei, vain päivitä</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Poista muokattu 0.paz</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Poistettu</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Tyhjennä</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Nollaa</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>Seuraava</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Aloita</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Ohita opastus</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Katso Nexuksessa</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>Presetit</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Mukautettu</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Quick</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Fine Tune</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Yksinkertainen</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Edistynyt</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Asiantuntija</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>Etäisyys</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Korkeus</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Vaakasiirto</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Näkökenttä</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Taistelukamera</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Keskitetty kamera</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Ratsukamera</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Kameratyyli</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Tallennettu preset</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Preset</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Otsikko</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Versio</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Tekijä</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Tekijä (valinnainen)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Kuvaus</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Kuvaus (valinnainen)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / jne. (valinnainen)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Pelikansio:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> patch-aluetta</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> tavua muutettu</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> aluetta</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>AKTIIVINEN</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Luonnos</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Työkopiosi kunnes tallennat nimetyn presetin.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Muoto</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Modin tiedot &amp; tiedostonimi</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Valmistele vienti</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Tallenna</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Nimi</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Nimi *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>Haku</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Lukituksen zoom</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Lukituksen automaattikierto</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>Keskitä HUD</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Turva-alue</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Työskentelee...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Tallennettu</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Asennettu</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Palautettu</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Kumottu</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>TAI</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>KAMERATYYLI</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>YLEISET ASETUKSET</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>JAA</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>KAMERAN ESIKATSELU</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>NÄKÖKENTTÄ</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>LISÄASETUKSET</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>KAMERAN LISÄASETUKSET</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>MITEN SE TOIMII</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>VAIHE 1  —  NIMEÄ MODISI</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>VAIHE 2  —  LUO PATCH</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>VAIHE 3  —  TALLENNA TIEDOSTO</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>PRESETIT</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM QUICK</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>MUKAUTETUT SIIRTYMÄT</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>KESKITÄ HUD</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>OSIO</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>ALIELEMENTTI</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ATTRIBUUTTI</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>ARVO</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>ALKUPERÄINEN</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  Jalkaisin zoom-tasot</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  Hevosen / ratsun zoom-tasot</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  Taistelu / lukitus</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  Kameran tasoitus / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  Tähtäimen sijainti</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Jalkaisin zoom-tasot</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - Hevosen / ratsun zoom-tasot</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Yleinen / FoV-kattavuus</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Erikoisratsut / liikkuminen</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Taistelu / lukitus</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Kameran tasoitus / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Tähtäimen sijainti</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Keskitä hahmo ruudulle (lukitsee vaakasiirron arvoon 0)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Keskitä hahmo ruudulle</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Sovita ratsun kamerakorkeus pelaajan kamerakorkeuteen</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Sulavat kamerasiirtymät (poistaa zoom-nykimisen tilojen välillä)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Poista kameran nappäytyminen kohteeseen lukittaessa  --  Credits to @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Keskitä peli-HUD enimmäisleveyteen</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - modin hallinta</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Mod Manager -paketti (kansio)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>Kamera-XML-tiedosto (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ-arkisto (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON-patch JSON Mod Managerista tai CDUMM:sta</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml-tiedosto</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>Pelin .paz-tiedosto kameradatalla</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>UCM-preset-tiedosto toiselta käyttäjältä</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>UCM:n hallinnoima</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Suositeltu)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Täysi manuaalinen hallinta</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM-presetit</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>Yhteisön presetit</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Omat presetit</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>Tuodut</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>Oletus</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM-tyyli</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>Yhteisö</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Oma preset</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>Tuotu XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>Tuotu 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Mod-paketti</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Valkoinen = alkuperäinen</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Kulta = UCM Quick/Fine Tune -muokattu</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Vihreä = pyhitetty (God Mode -muokkaukset, suojattu uudelleenrakennuksilta)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>Valmis</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>tarkistetaan...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>ajan tasalla</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>ei yhteyttä</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Asennetaan...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Asennettu! Käynnistä peli.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Palautetaan alkuperäistä...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Alkuperäinen palautettu.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Otetaan käyttöön...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>{0} muutosta otettu käyttöön pelitiedostoissa.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Preset '{0}' ladattu.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Preset '{0}' tallennettu.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Preset '{0}' poistettu.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Preset '{0}' viety.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>Preset '{0}' päivitetty.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>Tuotu '{0}' ja tallennettu — paina Asenna ottaaksesi käyttöön.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>{0} muokattua arvoa viety.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>{0} arvoa tuotu.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Viety kohteeseen {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>Asennettu {0} peliin.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>Tuotu {0} arvoa tiedostosta {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Ladattu — muokkaa arvoja ja paina Asenna peliin.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Palautettu oletuksiin (preset + alkuperäinen).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>Palautettu UCM Quick -oletuksiin ja alkuperäiseen.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Ei muutoksia otettavaksi käyttöön.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Ei muokattuja arvoja vietäväksi.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Ei muokattuja arvoja tallennettavaksi.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Valitse tallennettu preset ensin.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>Valitse tuotu preset ensin.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Pelikansiota ei asetettu.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Pelikansiota ei valittu.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Asennus epäonnistui. Onko peli käynnissä?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Asennus epäonnistui: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Varmuuskopiota ei löydy. Kamera saattaa olla jo alkuperäinen.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Varmuuskopio on vanhasta versiosta. Vahvista pelitiedostot.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Palautus epäonnistui. Vahvista pelitiedostot.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Palautus epäonnistui: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Alkuperäinen kamera palautettu varmuuskopiosta.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Varmuuskopiota ei löydy. Pelin kamera saattaa olla jo alkuperäinen.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Peli on päivitetty edellisen asennuksen jälkeen — varmuuskopio on päivitetty. Vahvista pelitiedostot Steamissa ja asenna sitten uudelleen.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} saatavilla</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Lisäasetukset — ohjattu parametrikohtainen kameran viritys.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Asiantuntijatila — muokkaa raakoja XML-arvoja ja paina Asenna peliin.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager — luo Crimson Desert Mod Manager v8 -patch-tiedostoja.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Luodaan patcheja...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>Luotu {0} patch-aluetta. Paina Tallenna .json viedäksesi.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>Tallennettu {0} ({1} patchia).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Luo patch ensin.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON-vienti vaatii alkuperäiset kameratiedostot ensin.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Arvot ladattu yksinkertaisesta tilasta.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Kaikki lisäasetukset nollattu alkuperäisiksi.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Preset '{0}' ladattu ({1} ohitusta).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Edistynyt preset '{0}' tallennettu ({1} ohitusta).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Edistynyt preset '{0}' poistettu.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0} lisäasetusmuutosta otettu käyttöön pelissä.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Vanha v{0}-data siivottu. Paina Asenna ottaaksesi asetukset käyttöön.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Pelikansiota ei asetettu. Paina Asenna ja sinua pyydetään selaamaan.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: pelikansio on vain luku -tilassa. Siirrä peli tai korjaa kansion oikeudet.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} riviä näytetään  |  {1} muokattu</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} riviä  |  {1} muokattu</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} riviä  |  {1} muokattu  |  {2} pyhitettyä</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} muutos{1}</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — laaja kameran muotoilu esikatseluilla ja yleisillä säädöillä.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — kuratoitu syvempi viritys UCM Quickin päälle.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — muokkaa raakoja XML-arvoja ja vie ne JSON-muodossa.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Pyhitetty muokkaus: tämä arvo on nyt suojattu Quick/Fine Tune -uudelleenrakennuksilta.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>Avaa tämän presetin lukitus sivupalkissa nollataksesi God Mode -arvot.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Nykyinen sessio asennettu peliin. Kamerapaketti päivitetty — {0} tavua ({1} pakattu PAZ:ssa).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Asennus valmis; kameratieto PAZ:ssa ei muuttunut ({0} tavua pakettia, {1} pakattu).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Asennetaan kameraa peliin...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Valmistellaan nykyisen session XML:ää...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>Asennetaan HUD-keskitystä...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Palautetaan alkuperäinen HUD...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Palautetaan alkuperäinen kamera...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>Lataus epäonnistui: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Päivitys epäonnistui: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>Tuonti epäonnistui: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Vienti epäonnistui: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Poisto epäonnistui: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Lataus epäonnistui: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Nollaus epäonnistui: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Valmistelu epäonnistui: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Tallennus epäonnistui: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD-asennus epäonnistui: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD-palautus epäonnistui: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML-tuonti epäonnistui: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz-tuonti epäonnistui: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>Kansiosta ei löytynyt manifest.json-tiedostoa.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Mod-paketista ei löytynyt playercamerapreset.xml-tiedostoa.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>Tämä tiedosto ei vaikuta olevan UCM-preset (session_xml ei löydy).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Haetaan luetteloa...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Haetaan yhteisön luetteloa...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} presetiä saatavilla, {1} ladattu</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>No community presets available yet.
+
+Check back later or contribute your own!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Valmis tallennettavaksi. Paina Tallenna kun valmis.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Valmistele vienti ensin.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>Session XML ei saatavilla. Muokkaa asetuksia tai lataa preset ensin.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>Session XML on tyhjä.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Validoidaan koodausta tälle pelille...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Kirjoitetaan arkistoa (kopiointi + patch)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>Puretaan 0.paz-salausta...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Viedään kamera-XML:ää...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Asennetaan kamera-XML:ää...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>Tallennettu {0}.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>Tallennettu {0} ({1} patchia).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>Tuotu preset '{0}' tallennettu {1} arvolla.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Mod-paketti tuotu nimellä '{0}'.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>Tuotu '{0}' ({1} arvoa).</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>0.paz tuotu nimellä '{0}'.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>UCM-preset '{0}' tuotu.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Tuotu preset '{0}' poistettu.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Tuotu preset '{0}' ladattu God Modeen.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Kameran varmuuskopio päivitettiin nykyisistä pelitiedostoista. Käytä Asenna kun olet valmis ottamaan presetin uudelleen käyttöön.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Kameran varmuuskopion automaattinen päivitys epäonnistui. Jos kamera on vielä modattu, vahvista pelitiedostot Steamissa ja käynnistä UCM uudelleen.</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Vain tuotu - ei vielä uudelleenrakennettu tälle pelille.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Tallennettu preset valmis - aseta pelikansio tarkistaaksesi uudelleenrakennuksen tilan.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Valmis - jo uudelleenrakennettu tälle peliversiolle.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Vaatii uudelleenrakennuksen - nykyinen peliversio eroaa viimeisestä rakennuksesta.</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>That folder doesn't contain 0010\0.paz.
+Make sure you selected the correct Crimson Desert directory.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Väärä kansio</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Aseta pelikansio ensin (paina Asenna selataksesi).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Korvataanko preset '{0}' nykyisillä liukusäätimien arvoilla?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Korvaa preset</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Korvataanko edistynyt preset '{0}' nykyisillä arvoilla?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass game folder appears to be read-only.
+
+To fix this, try one of:
+  1. Xbox App → Crimson Desert → Manage → Move to a different drive
+  2. Right-click the game folder → Properties → uncheck "Read-only" → Apply to all subfolders</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Kirjoitusoikeus vaaditaan</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Install '{0}' directly to the game?
+
+This will overwrite your current camera settings.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Tuo XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>The camera data in your game folder does not match UCM's vanilla backup.
+
+JSON patches for external mod managers must use vanilla "original" bytes. Verify the game in Steam (or revert camera changes in your mod manager), then try again.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>JSON-vienti ei onnistu</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Unhandled error:
+
+{0}
+
+Full details saved to crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Startup error:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Startup crash:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Failed to load camera XML:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Edistynyt editori</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Asiantuntijaeditori</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Lisäasetukset</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Kansion valintaikkunan virhe: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Virhe</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>Tämän niminen preset on jo olemassa. Korvataanko?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Oletko varma? Tätä ei voi peruuttaa.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>An update is available for '{0}'.
+
+Would you like to save a copy of the current version to My Presets before updating?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>This preset was imported as raw XML and is not managed by UCM.
+
+UCM Quick and Fine Tune use UCM's camera rule system which would override values from the imported mod. To protect your import, only God Mode editing is available.
+
+To use UCM features like Steadycam and FoV control, create a new UCM preset from the sidebar instead.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune ja God Mode tarvitsevat pelikansiosi kameradatan lukemiseen. Aseta pelikansio ensin.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM presets are protected. {0} changes could corrupt the preset's carefully tuned values.
+
+Duplicate this preset first to create your own editable copy, then use Fine Tune or God Mode freely.
+
+Open {0} in read-only mode anyway? (You can browse values but changes won't save.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>Your game camera files have been modified by UCM v2.x, another camera mod, or a mod manager. UCM needs the original vanilla files to create a clean backup.
+
+Click the button below to remove the modified file, then verify on Steam to re-download the original.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz deleted. Now:
+1. Close UCM
+2. Steam → Crimson Desert → Properties → Installed Files → "Verify integrity of game files"
+3. Relaunch UCM after verification completes</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Could not delete: {0}
+Manually delete: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Vastaavaa 0.pamt-tiedostoa ei löytynyt valitun 0.paz:n vierestä. Aseta pelikansio, jotta v3 voi käyttää nykyistä 0010\0.pamt-tiedostoa arkistoindeksinä.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Pelikansiota ei asetettu. v3 tarvitsee nykyisen pelin tämän presetin turvalliseen uudelleenrakennukseen.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Kopiointi epäonnistui: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON-vienti vaatii alkuperäiset kameratiedostot (vahvista peli ja yritä uudelleen).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Asennus valmis mutta palautti odottamattoman tuloksen. Kameraa ei ehkä otettu käyttöön oikein — kokeile käynnistää peli varmistaaksesi.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Palautus valmis mutta tulosta ei voitu vahvistaa. Käynnistä peli tarkistaaksesi onko kamera palautettu alkuperäiseksi.</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Avaa pelikansio (tai selaa asettaaksesi manuaalisesti)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Tasoittaa sekoitusta, vaimennusta ja nopeuspoikkeamia liiketilojen välillä. Poista käytöstä palauttaaksesi alkuperäiset kamerasiirtymät.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Avaa Ko-fi — tipit auttavat pitämään UCM:n toiminnassa</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Tallenna nykyinen live-kamera-XML tiedostoon</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Asenna kamera-XML-tiedosto suoraan peliin</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Täyttää kaikki liukusäätimet nykyisistä yksinkertaisen tilan asetuksista</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Nollaa kaikki liukusäätimet alkuperäisiin XML-arvoihin</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Lataa arvot playercamerapreset.xml-tiedostosta</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Käyttää mitä tahansa yksinkertaisessa tilassa on tällä hetkellä määritettynä</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Valitse playercamerapreset.xml-tiedosto vertailtavaksi alkuperäiseen</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Tuo kamera-XML tai PAZ-arkisto presetinä</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>Jaa JSON-muodossa (Mod Manager), session XML tai patchattu 0.paz — käyttää nykyistä UCM-sessiota.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>Palauta alkuperäinen kamerapala UCM:n varmuuskopiosta.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Ota nykyinen UCM-sessio käyttöön suoraan pelitiedostoissa.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Kumoa viimeisin liukusäätimen muutos</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>Valitse kansio joka sisältää manifest.json — tuo nimen, tekijän ja kamera-XML:n automaattisesti</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>Valitse playercamerapreset.xml-tiedosto suoraan</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>Valitse 0.paz-tiedosto — UCM purkaa siitä kamera-XML:n</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Tuo toisen UCM-käyttäjän jakama .ucmpreset-tiedosto</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Piilota tämä muistutus viikoksi</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Piilota seuraavaan käynnistykseen asti</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Päivitys saatavilla — lataa uusin versio napsauttamalla</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Selaa ja lataa presettejä</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Lisää tämän verran asteita jokaiseen Fov- ja InDoorFov-arvoon kameratiedostossa. Sisätila- ja ulkotilarivit alkavat eri alkuperäisistä arvoista, joten God Mode näyttää monia eri lopullisia arvoja — ei yhtä kulmaa kaikkialla.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Erillinen vaakasiirron ~0.5 arvosta: tuo arvo on usein alkuperäinen sivuttaispoikkeama XML:ssä. Tämä vaihtoehto pakottaa siirron arvoon 0 ja käyttää vahvempia keskityssääntöjä (RightOffset kohti 0:aa tuettaessa).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>Kun valittu, kamera pysyy paikallaan sen sijaan että nappäisi kohteen suuntaan lukituksen yhteydessä.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Nollaa alkuperäiseksi ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Alkuperäinen: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>Avaa tekijän sivu selaimessa</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Kuinka kauas vasemmalle/oikealle kamera on hahmosta. Keskitetty kamera lukitsee tämän arvoon 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Keskitetty kamera pakottaa hahmon ruudun keskelle — poista valinta säätääksesi</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = alkuperäinen (hahmo hieman vasemmalla). Keskikohta on ~0.5. Negatiivinen = enemmän vasemmalle, positiivinen = enemmän oikealle.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>Vasen/oikea-rajaus deltana RightOffset-arvossa (jalkaisin, ratsut, tähtäys ja liittyvät rivit). 0 vastaa alkuperäistä sivuttaispoikkeamaa. Lisää kohti ~0.5 vetääksesi kohti geometrista keskustaa tiedostossa; negatiiviset arvot kallistavat enemmän vasemmalle. Vastaa ylhäältäpäin näkymää FoV-esikatselussa. Keskitetty kamera alla on erillinen: se lukitsee tämän liukusäätimen arvoon 0 ja käyttää vahvempaa keskitystä.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Rajat: Etäisyys 1.5-12.0  |  Korkeus -1.6 - 0.5  |  Siirto -3.0 - 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Siirto 0 = alkuperäinen (hahmo vasemmalla)  |  0.5 = keskellä  |  negatiivinen = enemmän vasemmalle  |  positiivinen = enemmän oikealle</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Pelipäivitykset korvaavat modatut tiedostot. Jokaisen Crimson Desert -päivityksen jälkeen käynnistä UCM Asenna uudelleen palauttaaksesi kamera-asetukset.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Huom:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Jokainen liukusäädin näyttää nykyisen arvon ja alkuperäisen oletuksen (himmeänä). Napsauta rivin ↺-painiketta nollataksesi parametrin alkuperäiseksi. Paina Asenna kirjoittaaksesi kaikki muutokset peliin.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Muutokset otetaan käyttöön alkuperäisen XML:n päälle — ne eivät vaikuta yksinkertaisen tilan presetteihin. Käytä "Lataa yksinkertaisesta" aloittaaksesi nykyisestä presetistä.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Pelissä on 3 hiiren rullalla säädettävää zoom-tasoa jalkaisin. ZL2 on lähimpänä (oletusnäkymä), ZL3 on keskimatkalla, ZL4 on kauimpana. Kukin taso säätää itsenäisesti kameran etäisyyttä, korkeutta ja vaaka-asemaa. Nämä koskevat kaikkia jalkaisin-tiloja: paikallaan, kävely, juoksu, sprintti ja taisteluliikkuminen.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Hevoskamerat käyttävät 2 alkuperäistä zoom-tasoa (ZL2-ZL3). Kaikki 8 hevostilaa on synkronoitu, jotta kamera ei nyki nopeuden vaihtuessa säilyttäen samalla aidon pelin zoom-portaikon.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>Kun lukitset kohteen, kamera vaihtaa taisteluseurantatilaan. TargetRate säätää kuinka aggressiivisesti kamera seuraa vihollista — matalammat arvot antavat enemmän manuaalista hallintaa. ScreenClampRate säätää kuinka keskellä vihollinen pysyy ruudulla.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Nämä säätävät kuinka kamera siirtyy liiketilojen välillä. BlendInTime on kuinka monta sekuntia kamera käyttää tilaan liukumiseen. OffsetLength säätää kameran huojuntaa — arvon asettaminen 0:ksi antaa steadycam-tunteen ilman sivuttaisliikettä.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>Kun tähtäät lyhdyllä, jousella tai aseen zoomilla, kamera siirtyy asettaakseen tähtäimen. Nämä RightOffset-arvot skaalautuvat suhteessa vaakasiirtoosi, jotta kamera ei nappaa sivulle kykyjä aktivoidessa.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Tämä välilehti luo .json-patch-tiedoston joka on yhteensopiva Crimson Desert JSON Mod Manager v8:n kanssa. Pudota tiedosto mod managerin Mods/-kansioon ja kamera-asetuksesi näkyvät päälle kytkettävänä modina — UCM:ää ei tarvita.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Patch vertaa muokattua kameratiedostoasi alkuperäiseen tavu tavulta ja tallentaa vain erot. Tämä tarkoittaa että se on peliversiokohtainen — jos peli päivittyy, luo patch uudelleen.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Nämä tiedot näkyvät mod managerin sisällä, jotta käyttäjät tietävät mikä modi on.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Valitse mistä asetuksista patch luodaan. Nykyiset asetukset käyttää mitä tahansa yksinkertaisessa tilassa on aktiivisena. XML-tiedostosta antaa valita minkä tahansa viedyn playercamerapreset.xml:n sen sijaan.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Tallenna .json-tiedosto ja pudota se Mods/-kansioon Crimson Desert JSON Mod Manager -asennuksen sisällä. Se näkyy päälle kytkettävänä modina.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Hae attribuutteja...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>Tämä on nopea, kuratoitu UCM-kerros: laaja kameran muotoilu, esikatselut ja yleisimmät kameravalinnat.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune on kuratoitu syvävirityskerros. Se alkaa UCM Quick -asetuksistasi ja antaa hienosäätää UCM:n tarkoituksella paljastamia kenttiä.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode listaa jokaisen rivin tiedostossa. Liukusäätimet täällä muokkaavat tiettyjä attribuutteja — näiden lukujen pitäisi vastata samaa attribuuttia God Modessa. Muut rivit muuttuvat edelleen Quickistä (FoV-lisäys, tyyli, taistelu, steadycam jne.) tai alkuperäisestä, joten älä odota yhden liukusäätimen selittävän koko ruudukkoa.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode paljastaa raa'at kamerarivit. Käytä sitä kun UCM Quick ei riitä ja haluat hypätä suoraan täysiin suoraan hallintaan, tai UCM Fine Tunen jälkeen jos haluat mennä vielä syvemmälle.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>Arvot täällä ovat yhdistetty sessio: Quick + Fine Tune + mahdolliset muokkaukset tässä ruudukossa. FoV Quickissä on delta joka lisätään rivikohtaisesti (Fov ja InDoorFov), joten kulmat vaihtelevat tilan mukaan. Fine Tune vastaa täällä rivi riviltä vain niiden liukusäätimien hallitsemien attribuuttien osalta.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Nämä rivit kattavat laajemman FoV-normalisoinnin ja jaetut kamerajärjestelmät jotka soveltuvat perus jalkaisin- ja hevosryhmien ulkopuolella. Käytä näitä kun haluat UCM Fine Tunen heijastavan koko modin pintaa, mukaan lukien lukitusperheet, sotakone-tilat ja uintikamerat.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Norsu, lohikäärme, kanootti, sotakone, luuta ja liikkumiseen liittyvillä kameraperheillä on kaikilla oma zoom-käyttäytymisensä. Nämä säätimet paljastavat ylimääräiset ratsuarvot joita modi jo muuttaa taustalla.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Säätää kameran etäisyyttä kohteeseen lukittuessa tai suojautuessa, suhteessa jalkaisin-etäisyyteen. 0% on saumaton Steadycamin kanssa. Negatiiviset arvot zoomaavat lähemmäksi elokuvallista fokusta varten; positiiviset arvot vetäytyvät kauemmaksi parempaa taistelukentän tietoisuutta varten.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Keskittää peli-HUD-elementit määritettyyn enimmäisleveyteen (pikseleinä). Hyödyllinen ultrawide-näytöillä joilla HUD-elementit ovat liian kaukana toisistaan. Vaikuttaa vain peli-HUD:iin, ei valikoihin. Credits to wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>Selaa UCM-yhteisön jakamia kameran presettejä. Ladatut presetit näkyvät sivupalkissa.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Selaa ja lataa virallisia UCM-kameran presettejä. Ladatut presetit näkyvät sivupalkissa.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM hallinnoi yli 150 kameratilaa taustalla — FoV-johdonmukaisuus taistelun, suojauksen, ratsun ja lukituksen välillä; sulavat siirtymät jokaisen tilan välillä; etäisyysskaalaus ettei lukitus nappaa sisäänpäin. Quick-liukusäätimet ja Fine Tune rakentuvat näiden sääntöjen päälle turvallisesti. God Mode antaa ohittaa yksittäisiä arvoja tarvittaessa.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>Alkaa pelin alkuperäisestä kamera-XML:stä ilman UCM-sääntöjä. UCM Quick ja Fine Tune ovat poissa käytöstä koska niiden liukusäätimet korvaisivat manuaaliset muokkaukset — UCM muokkaa satoja arvoja taistelun, ratsun, lukituksen ja tasoituksen tiloissa, mikä olisi ristiriidassa käsin viritettyjen arvojen kanssa. Vain God Mode on käytettävissä suoraan XML-muokkaukseen. Käytä tätä kun tuot toisesta kameramodista tai kun tarvitset täyden hallinnan jokaiseen arvoon.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>Tuonnit tallennetaan import_presets-kansioon tämän sovelluksen viereen ja listataan sivupalkin Tuodut-kohtaan.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>Valitse minkä tyyppisen tiedoston haluat tuoda.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Liitä UCM_ADV:-merkkijono tuodaksesi lisäasetukset.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>Aloita UCM Quickistä, lataa jotain Preset Managerista tai tuo tekijän preset.</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Kopioi ja liitä NexusMods-, Discord- yms. sivustoille.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Liitä preset-merkkijono alle:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>NexusMods-kommenteista, Discordista jne.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Liitä lisäasetusten merkkijono alle:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Täytyy alkaa UCM_ADV: (edistyneen viennin tuotos)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Jaa tämä merkkijono presetille "{0}":</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} lisäasetusta löydetty</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Ei ole lisäasetusten merkkijono (täytyy alkaa UCM_ADV:)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>Täytyy alkaa UCM_ADV:</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Virheellinen sisältö</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Tallenna mukautettu preset</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Tallenna edistynyt preset</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Anna nimi tälle presetille:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>Anna nimi tälle tuodulle presetille:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Vie preset-merkkijono</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Nimeä tämä preset jakamista varten:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Valitse Crimson Desert -kansio (sisältää '0010'-kansion)</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Valitse mod-kansio (sisältää manifest.json)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Vie kamera-XML</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Tuo kamera-XML — asennetaan suoraan peliin</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Tuo playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>Tuo 0.paz — pura kamera-XML</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Tuo UCM-preset</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Valitse patchattava kamera-XML</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Tallenna JSON-patch</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Tallenna kamera-XML</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Tallenna patchattu 0.paz</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>Tallenna UCM-preset</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>Tallenna tuotu preset</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(uusi — säädä liukusäätimiä)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(nykyiset muokkaukset)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(nykyinen)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>Valitse tuontilähde</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>Poista tuotu preset</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>Korvaa tuotu preset</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Tuodaan mod-pakettia: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>Tuodaan XML:ää: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>Tuodaan PAZ:ia: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Viety preset</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>Tuotu kamera</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM-preset - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>Kaikki</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Vain muokatut</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Vain pyhitetyt</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Pelikansio:  EI ASETETTU  (paina Asenna selataksesi)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Pelikansio:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>Sulje ikkuna</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Vaihe {0} / {1}</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>Vie tavu-patch .json-tiedoston jonka voit tuoda JSON Mod Manageriin tai Crimson Desert Ultimate Mods Manageriin. Käytä kumpaa mod manageria haluat — vastaanottajat eivät tarvitse UCM:ää.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>Vie playercamerapreset.xml samalla normalisoinnilla jota UCM käyttää asennuksessa (UTF-8 BOM, kommentit poistettu). Loistava Nexus-tekstijulkaisuihin, käsimuokkaukseen tai uudelleentuontiin UCM:ssä. Asentajan täytyy silti vastata pakattujen merkintäkokojen pelin rakennusversioon.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Nexus-tyylinen drop-in-arkisto: kopio pelisi 0010/0.paz-tiedostosta jossa vain kameradata on päivitetty vastaamaan nykyistä UCM-sessiotasi — pelaajat jotka eivät käytä JSON mod manageria voivat korvata yhden tiedoston. Toimii vain samalla pelipäivityksellä kuin asennuksesi (sama arkistorakenne); kerro tämä mod-sivulla. Kehota lataajia varmuuskopioimaan alkuperäinen 0010/0.paz ennen vaihtoa.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Vie nykyinen sessiosi .ucmpreset-tiedostona jonka muut UCM-käyttäjät voivat pudottaa presets-kansioonsa tai jakaa yhteisöluettelon kautta. Sisältää täyden kameramäärityksesi mukaan lukien kaikki Quick, Fine Tune ja God Mode -asetukset.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Käyttää live UCM-sessiota (Quick, Fine Tune tai God Mode). Valitse preset sivupalkista tai käytä Tuo jos aloitat XML:stä tai PAZ:sta levyltä.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Valmistele tarkistaa että sessiosi koodaantuu tälle pelikansiolle, sitten tallennat XML-tiedoston.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Valmistele vahvistaa koodauksen pelikansiostasi. Tallenna kirjoittaa täyden patchatun 0.paz:n (suuri tiedosto). Session lähde on sama kuin muissa muodoissa — sivupalkin preset tai Tuo ensin tarvittaessa.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Koodausta ei tarvita — tallentaa sessiosi suoraan. Täytä yllä olevat tietokentät, jotta muut tietävät mitä saavat.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML-koodaus vastaa tämän asennuksen kameramerkintää. Tallenna nimellä playercamerapreset.xml jakamista tai muokkausta varten.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Lähetyksen koko vastaa täyttä 0.paz-tiedostoa. Vastaanottajat korvaavat ...\0010\0.paz alkuperäisen varmuuskopioinnin jälkeen. Jaa vain samaa peliversiota käyttävien pelaajien kanssa.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON käyttää näitä kenttiä modinfossa. XML käyttää Otsikkoa oletustallennusnimenä. 0.paz oletusarvo on 0.paz joten sen voi pudottaa 0010-kansioon nimeämättä uudelleen.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>Luotu {0} patch-aluetta. Tallenna kun valmis.</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>This usually means the PAZ file is from a different game version than your current install. The archive index (0.pamt) doesn't match the PAZ file structure.
+
+TO FIX:
+Place the matching 0.pamt file in the same folder as the 0.paz you're importing. Both files must be from the same game version.</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Tallentamaton sessio</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Nykyinen sessio</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Live-sessio</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Presetiä ei ole vielä ladattu.</value></data>
+
+  <!-- ═══ Camera Style Labels ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroic  -  Olkapäätason OTS, hieno rajaus</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panoramic  -  Päänkorkeudella leveä vetäytyminen, elokuvamainen</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Muokkaamaton pelikamera (käytä Steadycamia UCM-tasoitukseen)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Close-Up  -  Olka-OTS, tiukempi (16:9-tuntuma)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Lantiotasolla, koko keho + horisontti</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Polvenkorkeudelta, dramaattinen alakulma</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Maantasolla, äärimmäisen matala</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  Tiukka kauhu-OTS (16:9-tuntuma)</value></data>
+
+  <!-- ═══ FoV Option Labels ═══ -->
+  <data name="Fov_0" xml:space="preserve"><value>Ei FoV-lisäystä (0°)  -  alkuperäinen vaihtelee tilan mukaan (40°, 45°, 53°...)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Minimaalinen, hyvä 16:9-näytölle</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Hienovarainen parannus</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  Paras valinta 21:9-näytölle</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  Loistava 21:9 + 32:9 -näytöille</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  Täydellinen 32:9-näytölle</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Äärimmilleen, lievää kalansilmää</value></data>
+
+  <!-- ═══ Welcome Dialog ═══ -->
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Tervetuloa Ultimate Camera Modiin</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Before getting started, UCM needs your game files to be unmodified (vanilla) so it can create a clean baseline backup.
+
+If you previously used UCM v2.x, another camera mod, or a mod manager that modified game files, please verify first:
+
+Steam → Crimson Desert → Properties → Installed Files → "Verify integrity of game files"
+
+Have you verified your game files?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Kyllä, jatka</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Ei, sulje UCM</value></data>
+
+  <!-- ═══ Tutorial Step Titles and Descriptions ═══ -->
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Presettisi</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>Tämä on preset-sivupalkki. Paina Selaa ladataksesi virallisia UCM-presettejä ja yhteisön presettejä. Omat presetit ja tuonnit näkyvät myös täällä. Napsauta presetiä ladataksesi sen.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Kolme muokkaustasoa</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick nopeisiin muutoksiin, Fine Tune syvään hallintaan jokaisessa kameratilassa ja God Mode raakaan XML-muokkaukseen. Muutokset synkronoituvat kaikkien kolmen tason välillä automaattisesti.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Kamera-asetukset</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Säädä kameran etäisyyttä, korkeutta, vaakasiirtoa, näkökenttää, lukituksen zoomia ja kameran käyttäytymistä. Live-esikatselu päivittyy säätäessäsi.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Live-esikatselu</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Kameran esikatselu näyttää hahmon rajauksen ja etäisyyden. Näkökenttäkaavio näyttää FoV-kartion ylhäältä. Molemmat päivittyvät reaaliajassa asetuksia säätäessäsi.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Vienti &amp; asennus</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Vie asetuksesi JSON-muodossa mod managereille, XML:nä, 0.paz:na tai .ucmpresetinä jaettavaksi muille. Tai paina Asenna peliin ottaaksesi käyttöön suoraan pelitiedostoissa.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>Vielä yksi juttu...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Olen omistanut aivan liikaa aikaa tälle projektille. Jos UCM säästit sinulta tunteja kameraturhautumista, harkitse kahvin ostamista. Tai älä osta. Jatkan tekemistä joka tapauksessa. Mutta kahvi auttaa.</value></data>
+
+  <!-- ═══ Update Changelog Dialog ═══ -->
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Päivitetty versioon v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Welcome back! UCM has been updated.
+
+What's new:
+- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds
+- Lock-on Auto-Rotate toggle (credits to @sillib1980)
+- Green indicators for sacred values in God Mode
+- Fix: sacred values now correctly included in Install and all exports
+
+Your presets and settings have been preserved.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Welcome back! UCM has been updated from v{0}.
+
+What's new:
+- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds
+- Lock-on Auto-Rotate toggle (credits to @sillib1980)
+- Green indicators for sacred values in God Mode
+- Fix: sacred values now correctly included in Install and all exports
+
+Your presets and settings have been preserved.</value></data>
+
+  <!-- ═══ Preset Toast Messages ═══ -->
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Preset ladattu</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Preset nimetty uudelleen</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Preset kopioitu</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Preset uudelleenrakennettu</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Preset '{0}' luotu</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Tuotu preset ladattu</value></data>
+
+  <!-- ═══ Preset Status Messages (missed) ═══ -->
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>Nimellä '{0}' on jo olemassa preset.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Preset '{0}' nimetty uudelleen nimeksi '{1}'.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Preset '{0}' kopioitu nimellä '{1}'.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Tuotu preset '{0}' uudelleenrakennettu nykyiselle pelille.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Pelikansiota ei asetettu. Manuaalista presetiä ei voi luoda ilman alkuperäistä kameradataa.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Vain tuodut XML / 0.paz -presetit tarvitsevat uudelleenrakennustuen.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Lataa tämä preset nykyiseen sessioon ensin ja luo sitten Export JSON:sta.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Sisäänrakennettujen presettien luonti epäonnistui.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Preset-tiedostoa ei löydy: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Presetiä ei voitu aktivoida: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Preset '{0}' on lukittu — avaa lukko muokataksesi.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Preset '{0}' on avattu.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Uudelleenrakennus epäonnistui: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Presetin luonti epäonnistui</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Presettien luonti epäonnistui</value></data>
+
+  <!-- ═══ Import Missed Strings ═══ -->
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Tuodussa presetissä '{0}' ei ollut upotettua XML:ää; uudelleenrakennettu tallennetuista asetuksista.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Tuodun presetin '{0}' lataus epäonnistui.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Tuo playercamerapreset.xml tallennettuna presetinä</value></data>
+
+  <!-- ═══ Fine Tune Card Titles ═══ -->
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Jaettu FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Kahden kohteen rajaus</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>Liikkumisen FoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Norsu</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Kanootti / Sotakone / Luuta</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lukituksen seuranta</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoV-kosketuspisteet</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Jalkaisin- ja taistelutasoitus</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Liiketilasiirtymät</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Laajennetut lukitus- ja taistelusirtymät</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>Jalkaisin-seurantakäyttäytyminen</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Hevosen tilasynkronointi</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Liikkumisen rajaus</value></data>
+
+  <!-- ═══ Fine Tune Aim Group Titles ═══ -->
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Lyhty / kohdevalo</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Sokaiseva välähdys</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Aseen tähtäys / zoom</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Jousi</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Liito / vapaa pudotus</value></data>
+
+  <!-- ═══ Fine Tune Shared FoV Slider Labels ═══ -->
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>Jalkaisin FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>Taistelu FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>Warmachine/Broom FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>Norsu FoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>Wyvern FoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>Uinti FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+
+  <!-- ═══ Fine Tune Traversal FoV Slider Labels ═══ -->
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>Uinti FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>Kiipeily FoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>Liito FoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>Vapaapudotus FoV</value></data>
+
+  <!-- ═══ Fine Tune On-Foot Zoom Level Labels ═══ -->
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Zoom-taso {0}</value></data>
+
+  <!-- ═══ Fine Tune Mount Slider Labels ═══ -->
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Norsu ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Norsu ZL{0} korkeus</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Kanootti ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+
+  <!-- ═══ Fine Tune Combat Slider Labels ═══ -->
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Weapon LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Weapon TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Non-Rotate LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+
+  <!-- ═══ Fine Tune Smoothing Slider Labels ═══ -->
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Juoksu blend-in</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Juoksu blend-out</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Suojaus blend-in</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Suojaus blend-out</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Rynnäkkö blend-in</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Rynnäkkö blend-out</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Juoksuhuojunta</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Taistelujuoksuhuojunta</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Taistelusprinttihuojunta</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Seurantasprinttihuojunta</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Eläin lepotila blend-in</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Eläin juoksu blend-in</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Eläin juoksuhuojunta</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Eläin sprintti blend-in</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Eläin sprinttihuojunta</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Eläin sprinttivaimennus</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOn blend-in</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOn blend-out</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn System blend-in</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn System blend-out</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOn blend-in</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOn blend-out</value></data>
+
+  <!-- ═══ Fine Tune Movement Transition Slider Labels ═══ -->
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Vapaapudotus sisääntulo blend-in</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Vapaapudotus sisääntulo blend-out</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Vapaapudotus blend-in</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Vapaapudotus blend-out</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Superhyppy blend-in</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Superhyppy blend-out</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Köysiveto blend-in</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Köysiveto blend-out</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Köysikeinu blend-in</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Köysikeinu blend-out</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Isku/heitto blend-in</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Isku/heitto blend-out</value></data>
+
+  <!-- ═══ Fine Tune Extended Lock-On Slider Labels ═══ -->
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Ratsu LockOn blend-in</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Ratsu LockOn blend-out</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Elvytys LockOn blend-in</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Elvytys LockOn blend-out</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOn blend-in</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOn blend-out</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOn blend-in</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOn blend-out</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOn blend-in</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOn blend-out</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOn blend-in</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOn blend-out</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Aggro blend-in</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Aggro blend-out</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Wanted blend-in</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Wanted blend-out</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Warmachine tähtäys blend-in</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Warmachine tähtäys blend-out</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Warmachine dash blend-in</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Warmachine dash blend-out</value></data>
+
+  <!-- ═══ Fine Tune Follow Behavior Slider Labels ═══ -->
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Jalkaisin yaw-seuranta</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Jalkaisin pitch-seuranta</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Jalkaisin seurantaviive</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Jalkaisin pivot-vaimennus</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Hevonen yaw-seuranta</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Hevonen pitch-seuranta</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Hevonen seurantaviive</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Hevonen oletus-pitch</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Hevonen blend-in</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Hevonen blend-out</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Hevonen pivot-vaimennus</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Hevonen huojunta</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Hevonen huojuntavaimennus</value></data>
+
+  <!-- ═══ Fine Tune Aiming Slider Labels ═══ -->
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} etäisyys</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} korkeus</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} siirto</value></data>
+
+  <!-- ═══ Fine Tune Traversal Framing Slider Labels ═══ -->
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Uinti ZL2 etäisyys</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Uinti ZL2 korkeus</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Kiipeily ZL2 etäisyys</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Kiipeily ZL2 korkeus</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Liito ZL2 etäisyys</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Liito ZL2 korkeus</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Vapaapudotus ZL2 etäisyys</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Vapaapudotus ZL2 korkeus</value></data>
+
+  <!-- ═══ Fine Tune Reset Button ═══ -->
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Nollaa</value></data>
+
+  <!-- ═══ God Mode Apply Removed Warning ═══ -->
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Asenna peliin on poistettu v3:sta. Käytä Vie JSON paketoaksesi nämä ohitukset.</value></data>
+
+  <!-- ═══ Game Folder Scan Errors ═══ -->
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Pelin kameratiedostoja ei voitu lukea: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Pelikansion skannaus epäonnistui: {0}</value></data>
+
+  <!-- ═══ Community Browser Button States ═══ -->
+  <data name="Btn_TooLarge" xml:space="preserve"><value>Liian suuri</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Virheellinen</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Epäonnistui</value></data>
+
+  <!-- ═══ Export JSON Dialog ═══ -->
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Kameratiedostoja ei voitu vahvistaa: {0}</value></data>
+
+  <!-- ═══ Preset Warning Editors ═══ -->
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Varoitus: presetiä ei voitu täysin soveltaa editoreihin: {0}</value></data>
+
+  <!-- ═══ Lock Toast Messages ═══ -->
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCM-preset — kopioi se käyttääksesi Fine Tunea tai God Modea</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCM-preset — kopioi säätääksesi etäisyyttä ja korkeutta</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCM-preset — kopioi luodaksesi muokattavan kopion</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Preset on lukittu — avaa lukko muokataksesi</value></data>
+
+  <!-- ═══ Fine Tune Steadycam/Sacred Tooltips ═══ -->
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Steadycamin hallitsema — poista Steadycam käytöstä säätääksesi manuaalisesti</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Pyhitetty -- God Moden hallitsema</value></data>
+
+  <!-- ═══ Combat Lock-On Section Zoom Distances Label Pattern ═══ -->
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Zoom-etäisyydet</value></data>
+
+  <!-- ═══ Sidebar Group Labels ═══ -->
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Pelin oletus</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM-presetit</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>Yhteisön presetit</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>Omat presetit</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>Tuodut</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Muut</value></data>
+
+  <!-- ═══ Lock/Unlock Tooltips ═══ -->
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM-preset — kopioi luodaksesi muokattavan kopion</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>Lukittu — napsauta salliaksesi muokkauksen</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Avattu — napsauta lukitaksesi ja estääksesi muutokset</value></data>
+
+  <!-- ═══ Buy Me a Coffee (with emoji prefix) ═══ -->
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Osta kahvi</value></data>
+
+</root>
