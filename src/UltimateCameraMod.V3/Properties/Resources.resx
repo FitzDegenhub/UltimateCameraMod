@@ -634,4 +634,288 @@ Place the matching 0.pamt file in the same folder as the 0.paz you're importing.
   <data name="Label_LiveSession" xml:space="preserve"><value>Live session</value></data>
   <data name="Label_NoPresetLoaded" xml:space="preserve"><value>No preset loaded yet.</value></data>
 
+  <!-- ═══ Camera Style Labels ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroic  -  Shoulder-level OTS, great framing</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panoramic  -  Head-height wide pullback, filmic</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Unmodified game camera (use Steadycam for UCM smoothing)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Close-Up  -  Shoulder OTS, tighter (16:9 feel)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Hip-level, full body + horizon</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Knee-height dramatic low angle</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Ground-level, extreme low</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  Tight horror-game OTS (16:9 feel)</value></data>
+
+  <!-- ═══ FoV Option Labels ═══ -->
+  <data name="Fov_0" xml:space="preserve"><value>No FoV boost (0°)  -  vanilla varies by state (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Minimal, good for 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Subtle improvement</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  Sweet spot for 21:9</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  Great for 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  Perfect for 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Extreme, slight fisheye</value></data>
+
+  <!-- ═══ Welcome Dialog ═══ -->
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Welcome to Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Before getting started, UCM needs your game files to be unmodified (vanilla) so it can create a clean baseline backup.
+
+If you previously used UCM v2.x, another camera mod, or a mod manager that modified game files, please verify first:
+
+Steam → Crimson Desert → Properties → Installed Files → "Verify integrity of game files"
+
+Have you verified your game files?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Yes, continue</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>No, close UCM</value></data>
+
+  <!-- ═══ Tutorial Step Titles and Descriptions ═══ -->
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Your Presets</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>This is your preset sidebar. Click Browse to download official UCM presets and community presets. Your own presets and imports also appear here. Click any preset to load it.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Three Editing Tiers</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick for fast changes, Fine Tune for deep control over every camera state, and God Mode for raw XML editing. Changes sync across all three tiers automatically.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Camera Settings</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Adjust camera distance, height, horizontal shift, field of view, lock-on zoom, and camera behaviour. The live preview updates as you tweak.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Live Preview</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>The camera preview shows character framing and distance. The field of view diagram shows the FoV cone from above. Both update in real time as you adjust settings.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Export &amp; Install</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Export your settings as JSON for mod managers, XML, 0.paz, or .ucmpreset to share with others. Or click Install to Game to apply directly to your game files.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>One More Thing...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>I've dedicated way too much time to this project. If UCM saved you hours of camera frustration, consider buying me a coffee. Or don't. I'll keep making it anyway. But coffee helps.</value></data>
+
+  <!-- ═══ Update Changelog Dialog ═══ -->
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Updated to v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Welcome back! UCM has been updated.
+
+What's new:
+- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds
+- Lock-on Auto-Rotate toggle (credits to @sillib1980)
+- Green indicators for sacred values in God Mode
+- Fix: sacred values now correctly included in Install and all exports
+
+Your presets and settings have been preserved.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Welcome back! UCM has been updated from v{0}.
+
+What's new:
+- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds
+- Lock-on Auto-Rotate toggle (credits to @sillib1980)
+- Green indicators for sacred values in God Mode
+- Fix: sacred values now correctly included in Install and all exports
+
+Your presets and settings have been preserved.</value></data>
+
+  <!-- ═══ Preset Toast Messages ═══ -->
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Preset loaded</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Preset renamed</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Preset duplicated</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Preset rebuilt</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Preset '{0}' created</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Imported preset loaded</value></data>
+
+  <!-- ═══ Preset Status Messages (missed) ═══ -->
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>A preset named '{0}' already exists.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Preset '{0}' renamed to '{1}'.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Preset '{0}' duplicated as '{1}'.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Imported preset '{0}' rebuilt for the current game.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Game folder not set. Cannot create a manual preset without vanilla camera data.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Only imported XML / 0.paz presets need rebuild support.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Load this preset into the current session first, then generate from Export JSON.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Failed to generate built-in presets.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Preset file not found: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Could not activate preset: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Preset '{0}' is locked — unlock the padlock to edit.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Preset '{0}' is unlocked.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Rebuild failed: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Failed to Create Preset</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Failed to Generate Presets</value></data>
+
+  <!-- ═══ Import Missed Strings ═══ -->
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Imported preset '{0}' had no embedded XML; rebuilt from saved settings.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Failed to load imported preset '{0}'.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Import playercamerapreset.xml as saved preset</value></data>
+
+  <!-- ═══ Fine Tune Card Titles ═══ -->
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Shared FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Two-target framing</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>Traversal FoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Elephant</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Canoe / Warmachine / Broom</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lock-On Tracking</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoV Touch Points</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>On-foot and combat smoothing</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Movement transitions</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Extended lock-on and combat transitions</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>On-foot follow behavior</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Horse state synchronization</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Traversal framing</value></data>
+
+  <!-- ═══ Fine Tune Aim Group Titles ═══ -->
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Lantern / Spotlight</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Blinding Flash</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Weapon Aim / Zoom</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Bow</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Glide / FreeFall</value></data>
+
+  <!-- ═══ Fine Tune Shared FoV Slider Labels ═══ -->
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>On-foot FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>Combat FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>Warmachine/Broom FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>Elephant FoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>Wyvern FoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>Swim FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+
+  <!-- ═══ Fine Tune Traversal FoV Slider Labels ═══ -->
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>Swim FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>Climb FoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>Glide FoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>Freefall FoV</value></data>
+
+  <!-- ═══ Fine Tune On-Foot Zoom Level Labels ═══ -->
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Zoom Level {0}</value></data>
+
+  <!-- ═══ Fine Tune Mount Slider Labels ═══ -->
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elephant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elephant ZL{0} Height</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Canoe ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+
+  <!-- ═══ Fine Tune Combat Slider Labels ═══ -->
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Weapon LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Weapon TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Non-Rotate LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+
+  <!-- ═══ Fine Tune Smoothing Slider Labels ═══ -->
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Run blend-in</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Run blend-out</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Guard blend-in</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Guard blend-out</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Rush blend-in</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Rush blend-out</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Run sway</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Combat run sway</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Combat sprint sway</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Follow sprint sway</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Animal idle blend-in</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Animal run blend-in</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Animal run sway</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Animal sprint blend-in</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Animal sprint sway</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Animal sprint damp</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOn blend-in</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOn blend-out</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn System blend-in</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn System blend-out</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOn blend-in</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOn blend-out</value></data>
+
+  <!-- ═══ Fine Tune Movement Transition Slider Labels ═══ -->
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Freefall entry blend-in</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Freefall entry blend-out</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Freefall blend-in</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Freefall blend-out</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Super jump blend-in</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Super jump blend-out</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Rope pull blend-in</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Rope pull blend-out</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Rope swing blend-in</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Rope swing blend-out</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Hit/thrown blend-in</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Hit/thrown blend-out</value></data>
+
+  <!-- ═══ Fine Tune Extended Lock-On Slider Labels ═══ -->
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Mount LockOn blend-in</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Mount LockOn blend-out</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOn blend-in</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOn blend-out</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOn blend-in</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOn blend-out</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOn blend-in</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOn blend-out</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOn blend-in</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOn blend-out</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOn blend-in</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOn blend-out</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Aggro blend-in</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Aggro blend-out</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Wanted blend-in</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Wanted blend-out</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Warmachine aim blend-in</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Warmachine aim blend-out</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Warmachine dash blend-in</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Warmachine dash blend-out</value></data>
+
+  <!-- ═══ Fine Tune Follow Behavior Slider Labels ═══ -->
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>On-foot yaw follow</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>On-foot pitch follow</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>On-foot follow delay</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>On-foot pivot damping</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Horse yaw follow</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Horse pitch follow</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Horse follow delay</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Horse default pitch</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Horse blend-in</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Horse blend-out</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Horse pivot damping</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Horse sway</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Horse sway damp</value></data>
+
+  <!-- ═══ Fine Tune Aiming Slider Labels ═══ -->
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Dist</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Height</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Shift</value></data>
+
+  <!-- ═══ Fine Tune Traversal Framing Slider Labels ═══ -->
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Swim ZL2 Dist</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Swim ZL2 Height</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Climb ZL2 Dist</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Climb ZL2 Height</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glide ZL2 Dist</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glide ZL2 Height</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Freefall ZL2 Dist</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Freefall ZL2 Height</value></data>
+
+  <!-- ═══ Fine Tune Reset Button ═══ -->
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Reset</value></data>
+
+  <!-- ═══ God Mode Apply Removed Warning ═══ -->
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Apply to game has been removed from v3. Use Export JSON to package these overrides.</value></data>
+
+  <!-- ═══ Game Folder Scan Errors ═══ -->
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Could not read game camera files: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Game folder scan failed: {0}</value></data>
+
+  <!-- ═══ Community Browser Button States ═══ -->
+  <data name="Btn_TooLarge" xml:space="preserve"><value>Too large</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Invalid</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Failed</value></data>
+
+  <!-- ═══ Export JSON Dialog ═══ -->
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Could not verify camera files: {0}</value></data>
+
+  <!-- ═══ Preset Warning Editors ═══ -->
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Warning: could not fully apply preset to editors: {0}</value></data>
+
+  <!-- ═══ Lock Toast Messages ═══ -->
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCM preset — duplicate it to use Fine Tune or God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCM preset — duplicate to adjust distance and height</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCM preset — duplicate to create an editable copy</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Preset is locked — unlock the padlock to edit</value></data>
+
+  <!-- ═══ Fine Tune Steadycam/Sacred Tooltips ═══ -->
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Controlled by Steadycam — uncheck Steadycam to adjust manually</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- controlled by God Mode</value></data>
+
+  <!-- ═══ Combat Lock-On Section Zoom Distances Label Pattern ═══ -->
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Zoom Distances</value></data>
+
 </root>

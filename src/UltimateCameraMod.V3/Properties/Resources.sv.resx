@@ -634,4 +634,230 @@ Placera matchande 0.pamt-fil i samma mapp som 0.paz du importerar. Båda filerna
   <data name="Label_LiveSession" xml:space="preserve"><value>Aktiv session</value></data>
   <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Ingen preset laddad ännu.</value></data>
 
+  <!-- ═══ New v3.1 Keys ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroic  -  Axelhöjd OTS, utmärkt komposition</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panorama  -  Huvudhöjd bred pullback, filmisk</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Omodifierad spelkamera (använd Steadycam för UCM-utjämning)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Närbild  -  Axel-OTS, tätare (16:9-känsla)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Höfthöjd, helkropp + horisont</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Knähöjd dramatisk lågvinkel</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Marknivå, extremt låg</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  Tight skräckspels-OTS (16:9-känsla)</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>Ingen FoV-boost (0°)  -  vanilla varierar per tillstånd (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Minimal, bra för 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Subtil förbättring</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  Idealt för 21:9</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  Utmärkt för 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  Perfekt för 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Extremt, lätt fisköga</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Välkommen till Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Innan du börjar behöver UCM att dina spelfiler är omodifierade (vanilla) för att kunna skapa en ren baslinjebackup.
+
+Om du tidigare använde UCM v2.x, en annan kameramod eller en modhanterare som modifierade spelfiler, vänligen verifiera först:
+
+Steam → Crimson Desert → Egenskaper → Installerade filer → &quot;Verifiera spelfilernas integritet&quot;
+
+Har du verifierat dina spelfiler?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Ja, fortsätt</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Nej, stäng UCM</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Dina förinställningar</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>Detta är din förinställningssidofält. Klicka på Browse för att ladda ner officiella UCM-förinställningar och community-förinställningar. Dina egna förinställningar och importer visas också här. Klicka på en förinställning för att ladda den.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Tre redigeringsnivåer</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick för snabba ändringar, Fine Tune för djupkontroll av varje kameratillstånd, och God Mode för rå XML-redigering. Ändringar synkroniseras automatiskt mellan alla tre nivåer.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Kamerainställningar</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Justera kameraavstånd, höjd, horisontell förskjutning, synfält, lock-on zoom och kamerabeteende. Liveförhandsvisningen uppdateras i realtid när du justerar.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Liveförhandsvisning</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Kameraförhandsgranskningen visar karaktärskomposition och avstånd. Synfältsdiagrammet visar FoV-konen uppifrån. Båda uppdateras i realtid när du justerar.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Exportera &amp; installera</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Exportera dina inställningar som JSON för modhanterare, XML, 0.paz eller .ucmpreset för att dela med andra. Eller klicka på Install to Game för att applicera direkt på dina spelfiler.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>En sak till...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Jag har lagt alldeles för mycket tid på det här projektet. Om UCM sparade dig timmar av kamerafrustration, överväg att bjuda mig på en kaffe. Eller inte. Jag fortsätter ändå. Men kaffe hjälper.</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Uppdaterad till v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Välkommen tillbaka! UCM har uppdaterats.
+
+Nyheter:
+- Sacred God Mode: dina redigeringar är permanent skyddade från Quick/Fine Tune-ombyggnader
+- Lock-on Auto-Rotate-växling (tack till @sillib1980)
+- Gröna indikatorer för sacred-värden i God Mode
+- Fix: sacred-värden inkluderas nu korrekt i Install och alla exporter
+
+Dina förinställningar och inställningar har bevarats.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Välkommen tillbaka! UCM har uppdaterats från v{0}.
+
+Nyheter:
+- Sacred God Mode: dina redigeringar är permanent skyddade från Quick/Fine Tune-ombyggnader
+- Lock-on Auto-Rotate-växling (tack till @sillib1980)
+- Gröna indikatorer för sacred-värden i God Mode
+- Fix: sacred-värden inkluderas nu korrekt i Install och alla exporter
+
+Dina förinställningar och inställningar har bevarats.</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Förinställning laddad</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Förinställning omdöpt</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Förinställning duplicerad</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Förinställning ombyggd</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Förinställning '{0}' skapad</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Importerad förinställning laddad</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>En förinställning med namnet '{0}' finns redan.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Förinställning '{0}' omdöpt till '{1}'.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Förinställning '{0}' duplicerad som '{1}'.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Importerad förinställning '{0}' ombyggd för aktuellt spel.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Spelmapp inte inställd. Kan inte skapa manuell förinställning utan vanilla-kameradata.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Endast importerade XML / 0.paz-förinställningar behöver ombyggnadsstöd.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Ladda denna förinställning i den aktuella sessionen först, generera sedan från Export JSON.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Misslyckades med att generera inbyggda förinställningar.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Förinställningsfil hittades inte: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Kunde inte aktivera förinställning: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Förinställning '{0}' är låst — lås upp hänglåset för att redigera.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Förinställning '{0}' är upplåst.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Ombyggnad misslyckades: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Misslyckades med att skapa förinställning</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Misslyckades med att generera förinställningar</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Importerad förinställning '{0}' hade ingen inbäddad XML; ombyggd från sparade inställningar.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Misslyckades med att ladda importerad förinställning '{0}'.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Importera playercamerapreset.xml som sparad förinställning</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Delat FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Tvåmålskomposition</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>Traverserings-FoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Elefant</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Kanot / Krigsmaskin / Kvast</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lock-On-spårning</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoV-beröringspunkter</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Till fots- och stridutjämning</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Rörelseövergångar</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Utökade lock-on- och stridsövergångar</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>Till fots-följbeteende</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Hästtillståndssynkronisering</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Traverseringskomposition</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Lykta / Spotlight</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Bländande blixt</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Vapensikta / Zoom</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Båge</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Glid / Fritt fall</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>Till fots-FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>Strids-FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>Krigsmaskin/Kvast FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>Elefant-FoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>Wyvern-FoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>Sim-FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>Sim-FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>Klättrings-FoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>Glid-FoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>Fritt fall-FoV</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Zoomnivå {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elephant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elephant ZL{0} Height</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Canoe ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Weapon LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Weapon TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Non-Rotate LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Löpning blend-in</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Löpning blend-out</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Skydd blend-in</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Skydd blend-out</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Rusning blend-in</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Rusning blend-out</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Löpning svajning</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Stridsspring svajning</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Stridssprint svajning</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Följsprinting svajning</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Djur viloläge blend-in</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Djur spring blend-in</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Djur spring svajning</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Djur sprint blend-in</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Djur sprint svajning</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Djur sprint dämpning</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOn blend-in</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOn blend-out</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn System blend-in</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn System blend-out</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOn blend-in</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOn blend-out</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Fritt fall inträde blend-in</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Fritt fall inträde blend-out</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Fritt fall blend-in</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Fritt fall blend-out</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Superhopp blend-in</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Superhopp blend-out</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Repdrag blend-in</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Repdrag blend-out</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Repsvängning blend-in</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Repsvängning blend-out</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Träff/kastad blend-in</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Träff/kastad blend-out</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Mount LockOn blend-in</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Mount LockOn blend-out</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOn blend-in</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOn blend-out</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOn blend-in</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOn blend-out</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOn blend-in</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOn blend-out</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOn blend-in</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOn blend-out</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOn blend-in</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOn blend-out</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Aggro blend-in</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Aggro blend-out</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Wanted blend-in</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Wanted blend-out</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Krigsmaskin sikta blend-in</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Krigsmaskin sikta blend-out</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Krigsmaskin dash blend-in</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Krigsmaskin dash blend-out</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Till fots yaw-följning</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Till fots pitch-följning</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Till fots följfördröjning</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Till fots pivotdämpning</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Häst yaw-följning</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Häst pitch-följning</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Häst följfördröjning</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Häst standardpitch</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Häst blend-in</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Häst blend-out</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Häst pivotdämpning</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Häst svajning</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Häst svajdämpning</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Dist</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Height</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Shift</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Swim ZL2 Dist</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Swim ZL2 Height</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Climb ZL2 Dist</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Climb ZL2 Height</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glide ZL2 Dist</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glide ZL2 Height</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Freefall ZL2 Dist</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Freefall ZL2 Height</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Återställ</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Apply to game har tagits bort från v3. Använd Export JSON för att paketera dessa åsidosättningar.</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Kunde inte läsa spelkamerafiler: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Spelmappsskanning misslyckades: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>För stor</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Ogiltig</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Misslyckades</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Kunde inte verifiera kamerafiler: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Varning: kunde inte helt applicera förinställning på redigerare: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCM-förinställning -- duplicera den för att använda Fine Tune eller God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCM-förinställning -- duplicera för att justera avstånd och höjd</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCM-förinställning -- duplicera för att skapa en redigerbar kopia</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Förinställningen är låst -- lås upp hänglåset för att redigera</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Styrs av Steadycam -- avmarkera Steadycam för att justera manuellt</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- styrs av God Mode</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Zoomavstånd</value></data>
+
 </root>

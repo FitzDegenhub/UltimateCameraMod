@@ -73,7 +73,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync(L("Title_GodModeError"), $"Failed to load camera XML:\n{ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Title_GodModeError"), string.Format(L("Status_FailedLoadCameraXml"), ex.Message), isError: true);
             SwitchAppMode("simple");
         }
 
@@ -373,7 +373,7 @@ public partial class MainWindow : Window
 
     private void OnAdvApply(object sender, RoutedEventArgs e)
     {
-        SetStatus("Apply to game has been removed from v3. Use Export JSON to package these overrides.", "Warn");
+        SetStatus(L("Status_ApplyRemovedFromV3"), "Warn");
     }
 
     private void AdvSaveOverrides()

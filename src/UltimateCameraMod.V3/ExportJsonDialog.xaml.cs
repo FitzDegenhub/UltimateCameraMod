@@ -203,7 +203,7 @@ public partial class ExportJsonDialog : UserControl
                 }
                 catch (Exception ex)
                 {
-                    SetStatus($"Could not verify camera files: {ex.Message}", true);
+                    SetStatus(string.Format(L("Status_CouldNotVerifyFiles"), ex.Message), true);
                     return;
                 }
 
@@ -231,7 +231,7 @@ public partial class ExportJsonDialog : UserControl
                 JsonStatsPanel.Visibility = Visibility.Collapsed;
                 XmlSaveHint.Visibility = Visibility.Collapsed;
                 PazSaveHint.Visibility = Visibility.Collapsed;
-                FingerprintLabel.Text = $"Session XML: {xml.Length:N0} characters";
+                FingerprintLabel.Text = string.Format(L("Status_SessionXmlCharacters"), xml.Length);
                 SaveExportButton.Content = L("Btn_SaveUcmPreset");
                 SetStatus(L("Status_ReadyToSave"), false);
                 break;

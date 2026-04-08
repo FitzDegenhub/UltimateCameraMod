@@ -36,267 +36,828 @@
   <!-- ═══ Window Titles ═══ -->
   <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
   <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
-  <data name="Title_AdvancedEditor" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;&#1080;&#1088;&#1077;&#1085;&#1085;&#1099;&#1077; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099;</value></data>
-  <data name="Title_AdvancedImport" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080; &#1088;&#1072;&#1089;&#1096;&#1080;&#1088;&#1077;&#1085;&#1085;&#1099;&#1093; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082;</value></data>
-  <data name="Title_ExportPreset" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;</value></data>
-  <data name="Title_ImportPreset" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;</value></data>
-  <data name="Title_Input" xml:space="preserve"><value>&#1042;&#1074;&#1086;&#1076;</value></data>
-  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - &#1054;&#1096;&#1080;&#1073;&#1082;&#1072;</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Расширенные настройки камеры</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Импорт строки расширенных настроек</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Экспорт строки пресета</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Импорт строки пресета</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Импорт пресета</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Ввод</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Ошибка</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>ЭКСПОРТ ДЛЯ ПУБЛИКАЦИИ</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>ПРЕСЕТЫ СООБЩЕСТВА</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>ПРЕСЕТЫ UCM</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Детали пресета</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>Выбрать тип пресета</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Импорт необработанного XML</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Папка игры не задана</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>Ошибка God Mode</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Ошибка Fine Tune</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Обновление пресета</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Обнаружено обновление игры</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>Файлы игры изменены</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM Критическая ошибка</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>Ошибка импорта PAZ</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>Импорт переопределений God Mode</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>Переопределения God Mode</value></data>
 
   <!-- ═══ Buttons ═══ -->
-  <data name="Btn_Apply" xml:space="preserve"><value>&#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100; &#1082; &#1080;&#1075;&#1088;&#1077;</value></data>
-  <data name="Btn_Save" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100;</value></data>
-  <data name="Btn_Delete" xml:space="preserve"><value>&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;</value></data>
-  <data name="Btn_Export" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;</value></data>
-  <data name="Btn_Import" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090;</value></data>
-  <data name="Btn_Install" xml:space="preserve"><value>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100;</value></data>
-  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>&#1042;&#1086;&#1089;&#1089;&#1090;. &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;</value></data>
-  <data name="Btn_Close" xml:space="preserve"><value>&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;</value></data>
-  <data name="Btn_Cancel" xml:space="preserve"><value>&#1054;&#1090;&#1084;&#1077;&#1085;&#1072;</value></data>
-  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
-  <data name="Btn_GetUpdate" xml:space="preserve"><value>&#1054;&#1073;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100;</value></data>
-  <data name="Btn_CopyClipboard" xml:space="preserve"><value>&#1050;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;</value></data>
-  <data name="Btn_Copied" xml:space="preserve"><value>&#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1086;!</value></data>
-  <data name="Btn_ExportString" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080;</value></data>
-  <data name="Btn_ImportString" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080;</value></data>
-  <data name="Btn_SavePreset" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;</value></data>
-  <data name="Btn_DeletePreset" xml:space="preserve"><value>&#1059;&#1076;&#1072;&#1083;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;</value></data>
-  <data name="Btn_ExportXml" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090; XML</value></data>
-  <data name="Btn_ImportXml" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; XML</value></data>
-  <data name="Btn_ResetDefaults" xml:space="preserve"><value>&#1057;&#1073;&#1088;&#1086;&#1089; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082;</value></data>
-  <data name="Btn_ResetVanilla" xml:space="preserve"><value>&#1057;&#1073;&#1088;&#1086;&#1089; &#1082; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;&#1091;</value></data>
-  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>&#1048;&#1079; &#1088;&#1077;&#1078;. Simple</value></data>
-  <data name="Btn_ExpandAll" xml:space="preserve"><value>&#1056;&#1072;&#1079;&#1074;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100; &#1074;&#1089;&#1077;</value></data>
-  <data name="Btn_CollapseAll" xml:space="preserve"><value>&#1057;&#1074;&#1077;&#1088;&#1085;&#1091;&#1090;&#1100; &#1074;&#1089;&#1077;</value></data>
-  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>&#1048;&#1079; &#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1093; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082;</value></data>
-  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>&#1048;&#1079; &#1092;&#1072;&#1081;&#1083;&#1072; XML...</value></data>
-  <data name="Btn_SaveJson" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; .json...</value></data>
-  <data name="Btn_ImportSave" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; &amp; &#1057;&#1086;&#1093;&#1088;.</value></data>
-  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080;</value></data>
-  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080;</value></data>
+  <data name="Btn_Apply" xml:space="preserve"><value>Применить к игре</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Экспорт</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Импорт</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Установить</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Установить в игру</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Восстановить vanilla</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Восстановить</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Закрыть</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>Закрыть UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>ОК</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Да</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Нет</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Обновить</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Копировать в буфер</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Скопировано!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Экспорт строки</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Импорт строки</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Сохранить пресет</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Удалить пресет</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Экспорт XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Импорт XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Сбросить по умолчанию</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Сбросить к vanilla</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Загрузить из Simple</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Развернуть все</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Свернуть все</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Из текущих настроек</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Из файла XML...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Сохранить .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Импорт и сохранение</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Экспорт строки</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Импорт строки</value></data>
   <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
   <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
-  <data name="Btn_BuyCoffee" xml:space="preserve"><value>&#1059;&#1075;&#1086;&#1089;&#1090;&#1080;&#1090;&#1100; &#1082;&#1086;&#1092;&#1077;</value></data>
-  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>&#1057;&#1073;&#1088;&#1086;&#1089; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082;</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>Угостить кофе</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Новый</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Дублировать</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Переименовать</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>Открыть</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Отменить</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Повторить</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Обновить</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>Скачать</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>Скачано</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>Загрузка...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Создать</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Перезаписать</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Подготовить экспорт</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Сохранить экспорт...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>Сохранить .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>Сохранить .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>Сохранить 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>Сохранить .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Обзор</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Понятно</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>Отложить на 7 дней</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>Отложить 7д</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Скрыть</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>Только просмотр</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Да, сначала бэкап</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Нет, просто обновить</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Удалить измененный 0.paz</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Удалено</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Очистить</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>Далее</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Начать</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Пропустить обучение</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Открыть на Nexus</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
 
   <!-- ═══ Tabs / Modes ═══ -->
-  <data name="Tab_Presets" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090;&#1099;</value></data>
-  <data name="Tab_Custom" xml:space="preserve"><value>&#1055;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;.</value></data>
-  <data name="Mode_Simple" xml:space="preserve"><value>&#1055;&#1088;&#1086;&#1089;&#1090;&#1086;&#1081;</value></data>
-  <data name="Mode_Advanced" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;&#1080;&#1088;.</value></data>
-  <data name="Mode_Expert" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1077;&#1088;&#1090;</value></data>
+  <data name="Tab_Presets" xml:space="preserve"><value>Пресеты</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Пользовательский</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Быстрый</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Тонкая настройка</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Простой</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Расширенный</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Эксперт</value></data>
   <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
 
   <!-- ═══ Labels ═══ -->
-  <data name="Label_Distance" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1089;&#1090;&#1086;&#1103;&#1085;&#1080;&#1077;</value></data>
-  <data name="Label_Height" xml:space="preserve"><value>&#1042;&#1099;&#1089;&#1086;&#1090;&#1072;</value></data>
-  <data name="Label_HShift" xml:space="preserve"><value>&#1043;&#1086;&#1088;&#1080;&#1079;. &#1089;&#1084;&#1077;&#1097;&#1077;&#1085;&#1080;&#1077;</value></data>
-  <data name="Label_Fov" xml:space="preserve"><value>&#1059;&#1075;&#1086;&#1083; &#1086;&#1073;&#1079;&#1086;&#1088;&#1072;</value></data>
-  <data name="Label_CombatCamera" xml:space="preserve"><value>&#1041;&#1086;&#1077;&#1074;&#1072;&#1103; &#1082;&#1072;&#1084;&#1077;&#1088;&#1072;</value></data>
-  <data name="Label_CenteredCamera" xml:space="preserve"><value>&#1062;&#1077;&#1085;&#1090;&#1088;&#1080;&#1088;. &#1082;&#1072;&#1084;&#1077;&#1088;&#1072;</value></data>
-  <data name="Label_MountCamera" xml:space="preserve"><value>&#1050;&#1072;&#1084;&#1077;&#1088;&#1072; &#1074;&#1077;&#1088;&#1093;&#1086;&#1084;</value></data>
+  <data name="Label_Distance" xml:space="preserve"><value>Расстояние</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Высота</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Горизонтальный сдвиг</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Поле зрения</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Камера боя</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Центрированная камера</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Камера верхом</value></data>
   <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
-  <data name="Label_CameraStyle" xml:space="preserve"><value>&#1057;&#1090;&#1080;&#1083;&#1100; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099;</value></data>
-  <data name="Label_SavedPreset" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;</value></data>
-  <data name="Label_Preset" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090;</value></data>
-  <data name="Label_Title" xml:space="preserve"><value>&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077;</value></data>
-  <data name="Label_Version" xml:space="preserve"><value>&#1042;&#1077;&#1088;&#1089;&#1080;&#1103;</value></data>
-  <data name="Label_Author" xml:space="preserve"><value>&#1040;&#1074;&#1090;&#1086;&#1088;</value></data>
-  <data name="Label_NexusUrl" xml:space="preserve"><value>URL &#1085;&#1072; Nexus</value></data>
-  <data name="Label_Description" xml:space="preserve"><value>&#1054;&#1087;&#1080;&#1089;&#1072;&#1085;&#1080;&#1077;</value></data>
-  <data name="Label_GameFolder" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1080;&#1075;&#1088;&#1099;:</value></data>
-  <data name="Label_PatchRegions" xml:space="preserve"><value> &#1086;&#1073;&#1083;. &#1087;&#1072;&#1090;&#1095;&#1072;</value></data>
-  <data name="Label_BytesChanged" xml:space="preserve"><value> &#1073;&#1072;&#1081;&#1090; &#1080;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1086;</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Стиль камеры</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Сохраненный пресет</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Пресет</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Название</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Версия</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Автор</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Автор (необязательно)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>URL Nexus</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Описание</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Описание (необязательно)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / и др. (необязательно)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Папка игры:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> патч-регионов</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> байт изменено</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> регионов</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>АКТИВЕН</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Черновик</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Ваша рабочая копия, пока вы не сохраните именованный пресет.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Формат</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Информация о моде и имя файла</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Подготовить экспорт</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Имя</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Имя *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>Поиск</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Зум захвата</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Авто-поворот при захвате</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>Центрировать HUD</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Безопасная зона</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Обработка...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Сохранено</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Установлено</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Восстановлено</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Отменено</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>ИЛИ</value></data>
 
   <!-- ═══ Section Headers ═══ -->
-  <data name="Section_CameraStyle" xml:space="preserve"><value>&#1057;&#1058;&#1048;&#1051;&#1068; &#1050;&#1040;&#1052;&#1045;&#1056;&#1067;</value></data>
-  <data name="Section_GlobalSettings" xml:space="preserve"><value>&#1054;&#1041;&#1065;&#1048;&#1045; &#1053;&#1040;&#1057;&#1058;&#1056;&#1054;&#1049;&#1050;&#1048;</value></data>
-  <data name="Section_Share" xml:space="preserve"><value>&#1055;&#1054;&#1044;&#1045;&#1051;&#1048;&#1058;&#1068;&#1057;&#1071;</value></data>
-  <data name="Section_CameraPreview" xml:space="preserve"><value>&#1055;&#1056;&#1045;&#1044;&#1055;&#1056;&#1054;&#1057;&#1052;&#1054;&#1058;&#1056;</value></data>
-  <data name="Section_AdvancedControls" xml:space="preserve"><value>&#1056;&#1040;&#1057;&#1064;. &#1059;&#1055;&#1056;&#1040;&#1042;&#1051;&#1045;&#1053;&#1048;&#1045;</value></data>
-  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>&#1056;&#1040;&#1057;&#1064;. &#1053;&#1040;&#1057;&#1058;&#1056;&#1054;&#1049;&#1050;&#1048; &#1050;&#1040;&#1052;&#1045;&#1056;&#1067;</value></data>
-  <data name="Section_HowItWorks" xml:space="preserve"><value>&#1050;&#1040;&#1050; &#1069;&#1058;&#1054; &#1056;&#1040;&#1041;&#1054;&#1058;&#1040;&#1045;&#1058;</value></data>
-  <data name="Section_Step1" xml:space="preserve"><value>&#1064;&#1040;&#1043; 1  &#8212;  &#1053;&#1040;&#1047;&#1054;&#1042;&#1048;&#1058;&#1045; &#1052;&#1054;&#1044;</value></data>
-  <data name="Section_Step2" xml:space="preserve"><value>&#1064;&#1040;&#1043; 2  &#8212;  &#1057;&#1054;&#1047;&#1044;&#1040;&#1049;&#1058;&#1045; &#1055;&#1040;&#1058;&#1063;</value></data>
-  <data name="Section_Step3" xml:space="preserve"><value>&#1064;&#1040;&#1043; 3  &#8212;  &#1057;&#1054;&#1061;&#1056;&#1040;&#1053;&#1048;&#1058;&#1045; &#1060;&#1040;&#1049;&#1051;</value></data>
+  <data name="Section_CameraStyle" xml:space="preserve"><value>СТИЛЬ КАМЕРЫ</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>ГЛОБАЛЬНЫЕ НАСТРОЙКИ</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>ПОДЕЛИТЬСЯ</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>ПРЕДПРОСМОТР КАМЕРЫ</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>ПОЛЕ ЗРЕНИЯ</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>РАСШИРЕННЫЕ НАСТРОЙКИ</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>РАСШИРЕННЫЕ НАСТРОЙКИ КАМЕРЫ</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>КАК ЭТО РАБОТАЕТ</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>ШАГ 1  —  НАЗОВИТЕ МОД</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>ШАГ 2  —  СГЕНЕРИРОВАТЬ ПАТЧ</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>ШАГ 3  —  СОХРАНИТЬ ФАЙЛ</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>ПРЕСЕТЫ</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM БЫСТРЫЙ</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>ПОЛЬЗОВАТЕЛЬСКИЕ СМЕЩЕНИЯ</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>ЦЕНТРИРОВАТЬ HUD</value></data>
 
   <!-- ═══ DataGrid Headers ═══ -->
-  <data name="Header_Section" xml:space="preserve"><value>&#1056;&#1040;&#1047;&#1044;&#1045;&#1051;</value></data>
-  <data name="Header_SubElement" xml:space="preserve"><value>&#1055;&#1054;&#1044;&#1069;&#1051;&#1045;&#1052;&#1045;&#1053;&#1058;</value></data>
-  <data name="Header_Attribute" xml:space="preserve"><value>&#1040;&#1058;&#1056;&#1048;&#1041;&#1059;&#1058;</value></data>
-  <data name="Header_Value" xml:space="preserve"><value>&#1047;&#1053;&#1040;&#1063;&#1045;&#1053;&#1048;&#1045;</value></data>
-  <data name="Header_Vanilla" xml:space="preserve"><value>&#1054;&#1056;&#1048;&#1043;&#1048;&#1053;&#1040;&#1051;</value></data>
+  <data name="Header_Section" xml:space="preserve"><value>РАЗДЕЛ</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>ПОД-ЭЛЕМЕНТ</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>АТРИБУТ</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>ЗНАЧЕНИЕ</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>VANILLA</value></data>
 
-  <!-- ═══ Expander Headers ═══ -->
-  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  &#8212;  &#1059;&#1088;&#1086;&#1074;&#1085;&#1080; &#1079;&#1091;&#1084;&#1072; &#1087;&#1077;&#1096;&#1082;&#1086;&#1084;</value></data>
-  <data name="Section_HorseZoom" xml:space="preserve"><value>B  &#8212;  &#1059;&#1088;&#1086;&#1074;&#1085;&#1080; &#1079;&#1091;&#1084;&#1072; &#1074;&#1077;&#1088;&#1093;&#1086;&#1084;</value></data>
-  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  &#8212;  &#1041;&#1086;&#1081; / &#1047;&#1072;&#1093;&#1074;&#1072;&#1090; &#1094;&#1077;&#1083;&#1080;</value></data>
-  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  &#8212;  &#1057;&#1075;&#1083;&#1072;&#1078;&#1080;&#1074;&#1072;&#1085;&#1080;&#1077; / Steadycam</value></data>
-  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  &#8212;  &#1055;&#1088;&#1080;&#1094;&#1077;&#1083;&#1080;&#1074;&#1072;&#1085;&#1080;&#1077; / &#1055;&#1086;&#1079;. &#1087;&#1088;&#1080;&#1094;&#1077;&#1083;&#1072;</value></data>
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  Уровни зума пешком</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  Уровни зума верхом</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  Бой / Захват цели</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  Сглаживание камеры / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  Прицел / Положение перекрестия</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Уровни зума пешком</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - Уровни зума верхом</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Глобальные / Покрытие FOV</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Особые маунты / Передвижение</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Бой / Захват цели</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Сглаживание камеры / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Прицел / Положение перекрестия</value></data>
 
   <!-- ═══ Checkbox Content ═══ -->
-  <data name="Check_CenterCharacter" xml:space="preserve"><value>&#1062;&#1077;&#1085;&#1090;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1087;&#1077;&#1088;&#1089;&#1086;&#1085;&#1072;&#1078;&#1072; (&#1092;&#1080;&#1082;&#1089;&#1080;&#1088;&#1091;&#1077;&#1090; &#1075;&#1086;&#1088;&#1080;&#1079;. &#1089;&#1084;&#1077;&#1097;&#1077;&#1085;&#1080;&#1077; &#1085;&#1072; 0)</value></data>
-  <data name="Check_MountHeight" xml:space="preserve"><value>&#1057;&#1080;&#1085;&#1093;&#1088;. &#1074;&#1099;&#1089;&#1086;&#1090;&#1091; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1074;&#1077;&#1088;&#1093;&#1086;&#1084; &#1089; &#1082;&#1072;&#1084;&#1077;&#1088;&#1086;&#1081; &#1080;&#1075;&#1088;&#1086;&#1082;&#1072;</value></data>
-  <data name="Check_Steadycam" xml:space="preserve"><value>&#1055;&#1083;&#1072;&#1074;&#1085;&#1099;&#1077; &#1087;&#1077;&#1088;&#1077;&#1093;&#1086;&#1076;&#1099; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; (&#1091;&#1073;&#1080;&#1088;&#1072;&#1077;&#1090; &#1076;&#1105;&#1088;&#1075;&#1072;&#1085;&#1100;&#1077; &#1079;&#1091;&#1084;&#1072; &#1084;&#1077;&#1078;&#1076;&#1091; &#1089;&#1086;&#1089;&#1090;&#1086;&#1103;&#1085;&#1080;&#1103;&#1084;&#1080;)</value></data>
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Центрировать персонажа (блокирует горизонтальный сдвиг на 0)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Центрировать персонажа на экране</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Выровнять высоту камеры маунта по высоте камеры игрока</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Плавные переходы камеры (убирает рывки зума между состояниями)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Отключить авто-поворот камеры при захвате цели  --  Благодарность @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Центрировать игровой HUD в пределах макс. ширины</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - менеджеры модов</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>Пресет UCM (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Пакет менеджера модов (папка)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>XML-файл камеры (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>Архив PAZ (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>Пресет UCM (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON-патч от JSON Mod Manager или CDUMM</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>Файл playercamerapreset.xml</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>Файл .paz игры с данными камеры</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>Файл пресета UCM от другого пользователя</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>Управляется UCM</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Рекомендуется)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Полный ручной контроль</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>Пресеты UCM</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>Пресеты сообщества</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Мои пресеты</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>Импортированные</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>По умолчанию</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>Стиль UCM</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>Сообщество</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Мой пресет</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>Импортированный XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>Импортированный 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Пакет мода</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Белый = vanilla</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Золотой = изменен UCM Quick/Fine Tune</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Зеленый = священный (ваши правки God Mode, защищены от пересборки)</value></data>
 
   <!-- ═══ Status Messages ═══ -->
-  <data name="Status_Ready" xml:space="preserve"><value>&#1043;&#1086;&#1090;&#1086;&#1074;&#1086;</value></data>
-  <data name="Status_Checking" xml:space="preserve"><value>&#1087;&#1088;&#1086;&#1074;&#1077;&#1088;&#1082;&#1072;...</value></data>
-  <data name="Status_UpToDate" xml:space="preserve"><value>&#1072;&#1082;&#1090;&#1091;&#1072;&#1083;&#1100;&#1085;&#1072;&#1103; &#1074;&#1077;&#1088;&#1089;&#1080;&#1103;</value></data>
-  <data name="Status_Offline" xml:space="preserve"><value>&#1085;&#1077;&#1090; &#1089;&#1077;&#1090;&#1080;</value></data>
-  <data name="Status_Installing" xml:space="preserve"><value>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1072;...</value></data>
-  <data name="Status_Installed" xml:space="preserve"><value>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1086;! &#1047;&#1072;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1077; &#1080;&#1075;&#1088;&#1091;.</value></data>
-  <data name="Status_Restoring" xml:space="preserve"><value>&#1042;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;&#1072;...</value></data>
-  <data name="Status_Restored" xml:space="preserve"><value>&#1054;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083; &#1074;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;.</value></data>
-  <data name="Status_Applying" xml:space="preserve"><value>&#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1077;...</value></data>
-  <data name="Status_Applied" xml:space="preserve"><value>{0} &#1080;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1081; &#1074;&#1085;&#1077;&#1089;&#1077;&#1085;&#1086; &#1074; &#1092;&#1072;&#1081;&#1083;&#1099; &#1080;&#1075;&#1088;&#1099;.</value></data>
-  <data name="Status_PresetLoaded" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1079;&#1072;&#1075;&#1088;&#1091;&#1078;&#1077;&#1085;.</value></data>
-  <data name="Status_PresetSaved" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1105;&#1085;.</value></data>
-  <data name="Status_PresetDeleted" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1091;&#1076;&#1072;&#1083;&#1105;&#1085;.</value></data>
-  <data name="Status_PresetExported" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1101;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;.</value></data>
-  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>'{0}' &#1080;&#1084;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085; &#1080; &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1105;&#1085; &#8212; &#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100;.</value></data>
-  <data name="Status_ExportedValues" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1086; {0} &#1080;&#1079;&#1084;. &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1081;.</value></data>
-  <data name="Status_ImportedValues" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1086; {0} &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1081;.</value></data>
-  <data name="Status_ExportedToFile" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1086; &#1074; {0}.</value></data>
-  <data name="Status_InstalledXml" xml:space="preserve"><value>{0} &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085; &#1074; &#1080;&#1075;&#1088;&#1091;.</value></data>
-  <data name="Status_ImportedFromFile" xml:space="preserve"><value>{0} &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1081; &#1080;&#1084;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1086; &#1080;&#1079; {1}.</value></data>
-  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>&#1047;&#1072;&#1075;&#1088;&#1091;&#1078;&#1077;&#1085;&#1086; &#8212; &#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1091;&#1081;&#1090;&#1077; &#1080; &#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100; &#1082; &#1080;&#1075;&#1088;&#1077;.</value></data>
-  <data name="Status_ResetDefaults" xml:space="preserve"><value>&#1057;&#1073;&#1088;&#1086;&#1089; &#1082; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1103;&#1084; &#1087;&#1086; &#1091;&#1084;&#1086;&#1083;&#1095;. (&#1087;&#1088;&#1077;&#1089;&#1077;&#1090; + &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;).</value></data>
-  <data name="Status_NoChanges" xml:space="preserve"><value>&#1053;&#1077;&#1090; &#1080;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1081; &#1076;&#1083;&#1103; &#1087;&#1088;&#1080;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1103;.</value></data>
-  <data name="Status_NoModifiedExport" xml:space="preserve"><value>&#1053;&#1077;&#1090; &#1080;&#1079;&#1084;. &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1081; &#1076;&#1083;&#1103; &#1101;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1072;.</value></data>
-  <data name="Status_NoModifiedSave" xml:space="preserve"><value>&#1053;&#1077;&#1090; &#1080;&#1079;&#1084;. &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1081; &#1076;&#1083;&#1103; &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1077;&#1085;&#1080;&#1103;.</value></data>
-  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>&#1057;&#1085;&#1072;&#1095;&#1072;&#1083;&#1072; &#1074;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1089;&#1086;&#1093;&#1088;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;.</value></data>
-  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1080;&#1075;&#1088;&#1099; &#1085;&#1077; &#1091;&#1082;&#1072;&#1079;&#1072;&#1085;&#1072;.</value></data>
-  <data name="Status_NoGameFolder" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1080;&#1075;&#1088;&#1099; &#1085;&#1077; &#1074;&#1099;&#1073;&#1088;&#1072;&#1085;&#1072;.</value></data>
-  <data name="Status_InstallFailed" xml:space="preserve"><value>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1080;. &#1048;&#1075;&#1088;&#1072; &#1079;&#1072;&#1087;&#1091;&#1097;&#1077;&#1085;&#1072;?</value></data>
-  <data name="Status_NoBackup" xml:space="preserve"><value>&#1041;&#1101;&#1082;&#1072;&#1087; &#1085;&#1077; &#1085;&#1072;&#1081;&#1076;&#1077;&#1085;. &#1050;&#1072;&#1084;&#1077;&#1088;&#1072;, &#1074;&#1086;&#1079;&#1084;&#1086;&#1078;&#1085;&#1086;, &#1091;&#1078;&#1077; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;&#1100;&#1085;&#1072;&#1103;.</value></data>
-  <data name="Status_StaleBackup" xml:space="preserve"><value>&#1041;&#1101;&#1082;&#1072;&#1087; &#1086;&#1090; &#1089;&#1090;&#1072;&#1088;&#1086;&#1081; &#1074;&#1077;&#1088;&#1089;&#1080;&#1080;. &#1055;&#1088;&#1086;&#1074;&#1077;&#1088;&#1100;&#1090;&#1077; &#1092;&#1072;&#1081;&#1083;&#1099; &#1080;&#1075;&#1088;&#1099;.</value></data>
-  <data name="Status_RestoreFailed" xml:space="preserve"><value>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1074;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;. &#1055;&#1088;&#1086;&#1074;&#1077;&#1088;&#1100;&#1090;&#1077; &#1092;&#1072;&#1081;&#1083;&#1099; &#1080;&#1075;&#1088;&#1099;.</value></data>
-  <data name="Status_VersionAvailable" xml:space="preserve"><value>&#1044;&#1086;&#1089;&#1090;&#1091;&#1087;&#1085;&#1072; v{0}</value></data>
-  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;. &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; &#8212; &#1087;&#1086;&#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1086;&#1074;&#1072;&#1103; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1072;.</value></data>
-  <data name="Status_ExpertMode" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1077;&#1088;&#1090;&#1085;&#1099;&#1081; &#1088;&#1077;&#1078;&#1080;&#1084; &#8212; &#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;. XML &#1080; &#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100;.</value></data>
-  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager &#8212; &#1075;&#1077;&#1085;&#1077;&#1088;&#1072;&#1094;&#1080;&#1103; &#1087;&#1072;&#1090;&#1095;&#1077;&#1081; &#1076;&#1083;&#1103; Crimson Desert Mod Manager v8.</value></data>
-  <data name="Status_GeneratingPatches" xml:space="preserve"><value>&#1043;&#1077;&#1085;&#1077;&#1088;&#1072;&#1094;&#1080;&#1103; &#1087;&#1072;&#1090;&#1095;&#1077;&#1081;...</value></data>
-  <data name="Status_GeneratedPatches" xml:space="preserve"><value>&#1057;&#1086;&#1079;&#1076;&#1072;&#1085;&#1086; {0} &#1086;&#1073;&#1083;. &#1087;&#1072;&#1090;&#1095;&#1072;. &#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1057;&#1086;&#1093;&#1088;. .json &#1076;&#1083;&#1103; &#1101;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1072;.</value></data>
-  <data name="Status_SavedJsonFile" xml:space="preserve"><value>{0} &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1105;&#1085; ({1} &#1087;&#1072;&#1090;&#1095;&#1077;&#1081;).</value></data>
-  <data name="Status_GenerateFirst" xml:space="preserve"><value>&#1057;&#1085;&#1072;&#1095;&#1072;&#1083;&#1072; &#1089;&#1086;&#1079;&#1076;&#1072;&#1081;&#1090;&#1077; &#1087;&#1072;&#1090;&#1095;.</value></data>
-  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>&#1044;&#1083;&#1103; &#1101;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1072; JSON &#1085;&#1091;&#1078;&#1085;&#1099; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;. &#1092;&#1072;&#1081;&#1083;&#1099; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099;.</value></data>
-  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>&#1047;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1103; &#1079;&#1072;&#1075;&#1088;&#1091;&#1078;&#1077;&#1085;&#1099; &#1080;&#1079; &#1088;&#1077;&#1078;&#1080;&#1084;&#1072; Simple.</value></data>
-  <data name="Status_ResetVanilla" xml:space="preserve"><value>&#1042;&#1089;&#1077; &#1088;&#1072;&#1089;&#1096;. &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1089;&#1073;&#1088;&#1086;&#1096;&#1077;&#1085;&#1099; &#1082; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;&#1091;.</value></data>
-  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1079;&#1072;&#1075;&#1088;&#1091;&#1078;&#1077;&#1085; ({1} &#1080;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1081;).</value></data>
-  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1089;&#1086;&#1093;&#1088;. ({1} &#1080;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1081;).</value></data>
-  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1091;&#1076;&#1072;&#1083;&#1105;&#1085;.</value></data>
-  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0} &#1080;&#1079;&#1084;. &#1088;&#1072;&#1089;&#1096;. &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103; &#1087;&#1088;&#1080;&#1084;&#1077;&#1085;&#1077;&#1085;&#1086; &#1082; &#1080;&#1075;&#1088;&#1077;.</value></data>
-  <data name="Status_CleanedOldData" xml:space="preserve"><value>&#1057;&#1090;&#1072;&#1088;&#1099;&#1077; &#1076;&#1072;&#1085;&#1085;&#1099;&#1077; v{0} &#1091;&#1076;&#1072;&#1083;&#1077;&#1085;&#1099;. &#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100;.</value></data>
-  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1085;&#1077; &#1091;&#1082;&#1072;&#1079;&#1072;&#1085;&#1072;. &#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; &#1076;&#1083;&#1103; &#1074;&#1099;&#1073;&#1086;&#1088;&#1072;.</value></data>
-  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: &#1087;&#1072;&#1087;&#1082;&#1072; &#1090;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1095;&#1090;&#1077;&#1085;&#1080;&#1103;. &#1055;&#1077;&#1088;&#1077;&#1085;&#1077;&#1089;&#1080;&#1090;&#1077; &#1080;&#1075;&#1088;&#1091; &#1080;&#1083;&#1080; &#1080;&#1089;&#1087;&#1088;&#1072;&#1074;&#1100;&#1090;&#1077; &#1087;&#1088;&#1072;&#1074;&#1072;.</value></data>
-  <data name="Status_RowCount" xml:space="preserve"><value>{0} &#1089;&#1090;&#1088;&#1086;&#1082;  |  {1} &#1080;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1086;</value></data>
-  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} &#1089;&#1090;&#1088;&#1086;&#1082;  |  {1} &#1080;&#1079;&#1084;.</value></data>
-  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} &#1080;&#1079;&#1084;.{1}</value></data>
+  <data name="Status_Ready" xml:space="preserve"><value>Готово</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>проверка...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>актуально</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>нет сети</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Установка...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Установлено! Запустите игру.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Восстановление vanilla...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Vanilla восстановлен.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Применение...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>{0} изменений применено к файлам игры.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Пресет '{0}' загружен.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Пресет '{0}' сохранен.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Пресет '{0}' удален.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Пресет '{0}' экспортирован.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>Пресет '{0}' обновлен.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>'{0}' импортирован и сохранен. Нажмите Установить для применения.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>{0} измененных значений экспортировано.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>{0} значений импортировано.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Экспортировано в {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>{0} установлен в игру.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>{0} значений импортировано из {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Загружено. Измените значения и нажмите Применить к игре.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Сброшено к значениям по умолчанию (ваш пресет + vanilla).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>Сброшено к значениям UCM Quick по умолчанию плюс vanilla.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Нет изменений для применения.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Нет измененных значений для экспорта.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Нет измененных значений для сохранения.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Сначала выберите сохраненный пресет.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>Сначала выберите импортированный пресет.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Папка игры не задана.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Папка игры не выбрана.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Установка не удалась. Игра запущена?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Установка не удалась: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Бэкап не найден. Камера может уже быть vanilla.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Бэкап устарел. Проверьте файлы игры.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Восстановление не удалось. Проверьте файлы игры.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Восстановление не удалось: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Vanilla-камера восстановлена из бэкапа.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Бэкап не найден. Камера игры может уже быть vanilla.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Игра обновилась с последней установки. Бэкап обновлен. Проверьте файлы игры в Steam и установите снова.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} доступна</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Расширенные настройки: пошаговая настройка камеры по параметрам.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Режим эксперта: редактируйте XML-значения напрямую и нажмите Применить к игре.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager: генерация патч-файлов для Crimson Desert Mod Manager v8.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Генерация патчей...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>{0} патч-регионов сгенерировано. Нажмите Сохранить .json для экспорта.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>{0} сохранен ({1} патчей).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Сначала сгенерируйте патч.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>Для JSON-экспорта нужны vanilla-файлы камеры.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Значения загружены из режима Simple.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Все расширенные настройки сброшены к vanilla.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Пресет '{0}' загружен ({1} переопределений).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Расширенный пресет '{0}' сохранен ({1} переопределений).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Расширенный пресет '{0}' удален.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0} изменений расширенных настроек применено к игре.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Старые данные v{0} очищены. Нажмите Установить для применения настроек.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Папка игры не задана. Нажмите Установить для выбора.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: папка игры доступна только для чтения. Переместите игру или исправьте права доступа.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} строк показано  |  {1} изменено</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} строк  |  {1} изменено</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} строк  |  {1} изменено  |  {2} священных</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} изменени{1}</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick: общая настройка камеры с предпросмотром и основными элементами.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune: углубленная настройка поверх UCM Quick.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode: редактируйте XML-значения напрямую и экспортируйте как JSON.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Священная правка: это значение защищено от пересборки Quick/Fine Tune.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>Разблокируйте этот пресет в боковой панели для сброса значений God Mode.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Текущая сессия установлена в игру. Данные камеры обновлены: {0} байт ({1} сжато в PAZ).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Установка завершена; запись камеры в PAZ не изменилась ({0} байт, {1} сжато).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Установка камеры в игру...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Подготовка XML текущей сессии...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>Установка центрирования HUD...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Восстановление vanilla HUD...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Восстановление vanilla-камеры...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>Загрузка не удалась: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Обновление не удалось: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>Импорт не удался: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Экспорт не удался: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Удаление не удалось: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Загрузка не удалась: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Сброс не удался: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Подготовка не удалась: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Сохранение не удалось: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>Установка HUD не удалась: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>Восстановление HUD не удалось: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>Импорт XML не удался: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>Импорт 0.paz не удался: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>manifest.json не найден в этой папке.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>playercamerapreset.xml не найден в пакете мода.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>Этот файл не похож на пресет UCM (session_xml не найден).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Загрузка каталога...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Загрузка каталога сообщества...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} пресетов доступно, {1} скачано</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>Пресетов сообщества пока нет.
+
+Загляните позже или поделитесь своим!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Готово к сохранению. Нажмите Сохранить.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Сначала подготовьте экспорт.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>XML сессии отсутствует. Измените настройки или загрузите пресет.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>XML сессии пуст.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Проверка кодировки для этой игры...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Запись архива (копирование + патч)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>Расшифровка 0.paz...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Экспорт XML камеры...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Установка XML камеры...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>{0} сохранен.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>{0} сохранен ({1} патчей).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>Импортированный пресет '{0}' сохранен с {1} значениями.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Пакет мода импортирован как '{0}'.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>'{0}' импортирован с {1} значениями.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>0.paz импортирован как '{0}'.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>Пресет UCM '{0}' импортирован.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Импортированный пресет '{0}' удален.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Импортированный пресет '{0}' загружен в God Mode.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Бэкап камеры обновлен из текущих файлов игры. Нажмите Установить для повторного применения пресета.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Не удалось обновить бэкап камеры автоматически. Если камера все еще изменена, проверьте файлы игры в Steam и перезапустите UCM.</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Только импортирован, еще не пересобран для этой игры.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Пресет сохранен. Задайте папку игры для проверки статуса пересборки.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Готов, уже пересобран для этой версии игры.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Требуется пересборка: текущая версия игры отличается от последней сборки.</value></data>
 
   <!-- ═══ MessageBox Messages ═══ -->
-  <data name="Msg_WrongFolder" xml:space="preserve"><value>&#1042; &#1101;&#1090;&#1086;&#1081; &#1087;&#1072;&#1087;&#1082;&#1077; &#1085;&#1077;&#1090; 0010\0.paz.
-&#1059;&#1073;&#1077;&#1076;&#1080;&#1090;&#1077;&#1089;&#1100;, &#1095;&#1090;&#1086; &#1074;&#1099;&#1073;&#1088;&#1072;&#1083;&#1080; &#1087;&#1088;&#1072;&#1074;&#1080;&#1083;&#1100;&#1085;&#1091;&#1102; &#1087;&#1072;&#1087;&#1082;&#1091; Crimson Desert.</value></data>
-  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>&#1053;&#1077;&#1074;&#1077;&#1088;&#1085;&#1072;&#1103; &#1087;&#1072;&#1087;&#1082;&#1072;</value></data>
-  <data name="Msg_SetGameFolder" xml:space="preserve"><value>&#1057;&#1085;&#1072;&#1095;&#1072;&#1083;&#1072; &#1091;&#1082;&#1072;&#1078;&#1080;&#1090;&#1077; &#1087;&#1072;&#1087;&#1082;&#1091; &#1080;&#1075;&#1088;&#1099; (&#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100;).</value></data>
-  <data name="Msg_OverwritePreset" xml:space="preserve"><value>&#1055;&#1077;&#1088;&#1077;&#1079;&#1072;&#1087;&#1080;&#1089;&#1072;&#1090;&#1100; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1084;&#1080; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1103;&#1084;&#1080;?</value></data>
-  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>&#1055;&#1077;&#1088;&#1077;&#1079;&#1072;&#1087;&#1080;&#1089;&#1100; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;</value></data>
-  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>&#1055;&#1077;&#1088;&#1077;&#1079;&#1072;&#1087;&#1080;&#1089;&#1072;&#1090;&#1100; &#1088;&#1072;&#1089;&#1096;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090; '{0}' &#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1084;&#1080; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1103;&#1084;&#1080;?</value></data>
-  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1080;&#1075;&#1088;&#1099; Xbox / Game Pass, &#1087;&#1086;&#1093;&#1086;&#1078;&#1077;, &#1090;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1095;&#1090;&#1077;&#1085;&#1080;&#1103;.
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Эта папка не содержит 0010\0.paz.
+Убедитесь, что выбрана правильная директория Crimson Desert.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Неверная папка</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Сначала задайте папку игры (нажмите Установить для выбора).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Перезаписать пресет '{0}' текущими значениями?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Перезаписать пресет</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Перезаписать расширенный пресет '{0}' текущими значениями?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Папка игры Xbox / Game Pass доступна только для чтения.
 
-&#1063;&#1090;&#1086;&#1073;&#1099; &#1080;&#1089;&#1087;&#1088;&#1072;&#1074;&#1080;&#1090;&#1100;:
-  1. Xbox &#8594; Crimson Desert &#8594; &#1059;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; &#8594; &#1055;&#1077;&#1088;&#1077;&#1085;&#1077;&#1089;&#1090;&#1080; &#1085;&#1072; &#1076;&#1088;&#1091;&#1075;&#1086;&#1081; &#1076;&#1080;&#1089;&#1082;
-  2. &#1055;&#1050;&#1052; &#1087;&#1086; &#1087;&#1072;&#1087;&#1082;&#1077; &#8594; &#1057;&#1074;&#1086;&#1081;&#1089;&#1090;&#1074;&#1072; &#8594; &#1089;&#1085;&#1103;&#1090;&#1100; "&#1058;&#1086;&#1083;&#1100;&#1082;&#1086; &#1095;&#1090;&#1077;&#1085;&#1080;&#1077;" &#8594; &#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100; &#1082;&#1086; &#1074;&#1089;&#1077;&#1084; &#1087;&#1086;&#1076;&#1087;&#1072;&#1087;&#1082;&#1072;&#1084;</value></data>
-  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>&#1053;&#1091;&#1078;&#1085;&#1099; &#1087;&#1088;&#1072;&#1074;&#1072; &#1085;&#1072; &#1079;&#1072;&#1087;&#1080;&#1089;&#1100;</value></data>
-  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; '{0}' &#1085;&#1072;&#1087;&#1088;&#1103;&#1084;&#1091;&#1102; &#1074; &#1080;&#1075;&#1088;&#1091;?
+Для исправления попробуйте:
+  1. Приложение Xbox → Crimson Desert → Управление → Переместить на другой диск
+  2. ПКМ по папке игры → Свойства → снять «Только для чтения» → Применить ко всем подпапкам</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Требуется разрешение на запись</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Установить '{0}' прямо в игру?
 
-&#1058;&#1077;&#1082;&#1091;&#1097;&#1080;&#1077; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1073;&#1091;&#1076;&#1091;&#1090; &#1087;&#1077;&#1088;&#1077;&#1079;&#1072;&#1087;&#1080;&#1089;&#1072;&#1085;&#1099;.</value></data>
-  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; XML</value></data>
-  <data name="Msg_CannotExportJson" xml:space="preserve"><value>&#1044;&#1072;&#1085;&#1085;&#1099;&#1077; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1085;&#1077; &#1089;&#1086;&#1074;&#1087;&#1072;&#1076;&#1072;&#1102;&#1090; &#1089; &#1073;&#1101;&#1082;&#1072;&#1087;&#1086;&#1084; UCM.
+Это перезапишет текущие настройки камеры.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Импорт XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Данные камеры в папке игры не совпадают с vanilla-бэкапом UCM.
 
-JSON-&#1087;&#1072;&#1090;&#1095;&#1080; &#1076;&#1083;&#1103; &#1074;&#1085;&#1077;&#1096;&#1085;&#1080;&#1093; &#1084;&#1086;&#1076;-&#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1086;&#1074; &#1076;&#1086;&#1083;&#1078;&#1085;&#1099; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1100; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;. &#1073;&#1072;&#1081;&#1090;&#1099;. &#1055;&#1088;&#1086;&#1074;&#1077;&#1088;&#1100;&#1090;&#1077; &#1080;&#1075;&#1088;&#1091; &#1074; Steam (&#1080;&#1083;&#1080; &#1086;&#1090;&#1082;&#1072;&#1090;&#1080;&#1090;&#1077; &#1082;&#1072;&#1084;&#1077;&#1088;&#1091; &#1074; &#1084;&#1086;&#1076;-&#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1077;) &#1080; &#1087;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1077;.</value></data>
-  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>&#1053;&#1077;&#1074;&#1086;&#1079;&#1084;&#1086;&#1078;&#1085;&#1086; &#1101;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; JSON</value></data>
-  <data name="Msg_CrashError" xml:space="preserve"><value>&#1053;&#1077;&#1086;&#1073;&#1088;&#1072;&#1073;&#1086;&#1090;&#1072;&#1085;&#1085;&#1072;&#1103; &#1086;&#1096;&#1080;&#1073;&#1082;&#1072;:
+JSON-патчи для внешних менеджеров модов должны использовать оригинальные vanilla-байты. Проверьте игру в Steam (или откатите изменения камеры в менеджере модов) и попробуйте снова.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>Невозможно экспортировать JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Необработанная ошибка:
 
 {0}
 
-&#1055;&#1086;&#1076;&#1088;&#1086;&#1073;&#1085;&#1086;&#1089;&#1090;&#1080; &#1089;&#1086;&#1093;&#1088;&#1072;&#1085;&#1077;&#1085;&#1099; &#1074; crash.log</value></data>
-  <data name="Msg_StartupError" xml:space="preserve"><value>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1079;&#1072;&#1087;&#1091;&#1089;&#1082;&#1072;:
+Подробности сохранены в crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Ошибка запуска:
 {0}</value></data>
-  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1079;&#1072;&#1075;&#1088;&#1091;&#1079;&#1082;&#1080; XML &#1082;&#1072;&#1084;&#1077;&#1088;&#1099;:
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Сбой при запуске:
+
 {0}</value></data>
-  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;&#1080;&#1088;. &#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1086;&#1088;</value></data>
-  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1077;&#1088;&#1090;&#1085;&#1099;&#1081; &#1088;&#1077;&#1076;&#1072;&#1082;&#1090;&#1086;&#1088;</value></data>
-  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>&#1056;&#1072;&#1089;&#1096;. &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077;</value></data>
-  <data name="Msg_FolderDialogError" xml:space="preserve"><value>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072; &#1076;&#1080;&#1072;&#1083;&#1086;&#1075;&#1072; &#1087;&#1072;&#1087;&#1082;&#1080;: {0}</value></data>
-  <data name="Msg_ErrorTitle" xml:space="preserve"><value>&#1054;&#1096;&#1080;&#1073;&#1082;&#1072;</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Не удалось загрузить XML камеры:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Расширенный редактор</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Экспертный редактор</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Расширенные настройки</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Ошибка диалога выбора папки: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>Пресет с таким именем уже существует. Перезаписать?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Вы уверены? Это нельзя отменить.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>Доступно обновление для '{0}'.
+
+Сохранить копию текущей версии в Мои пресеты перед обновлением?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>Этот пресет импортирован как необработанный XML и не управляется UCM.
+
+UCM Quick и Fine Tune используют систему правил камеры UCM, которая перезапишет значения импортированного мода. Для защиты импорта доступно только редактирование в God Mode.
+
+Для использования функций UCM, таких как Steadycam и управление FOV, создайте новый пресет UCM через боковую панель.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune и God Mode требуют папку игры для чтения данных камеры. Сначала задайте папку игры.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>Пресеты UCM защищены. Изменения {0} могут повредить настроенные значения пресета.
+
+Сначала дублируйте этот пресет для создания собственной редактируемой копии, затем используйте Fine Tune или God Mode свободно.
+
+Открыть {0} в режиме просмотра? (Вы сможете просматривать значения, но изменения не сохранятся.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>Файлы камеры игры были изменены UCM v2.x, другим модом камеры или менеджером модов. UCM нужны оригинальные vanilla-файлы для создания чистого бэкапа.
+
+Нажмите кнопку ниже для удаления измененного файла, затем проверьте в Steam для повторной загрузки оригинала.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz удален. Теперь:
+1. Закройте UCM
+2. Steam → Crimson Desert → Свойства → Установленные файлы → «Проверить целостность игровых файлов»
+3. Перезапустите UCM после завершения проверки</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Не удалось удалить: {0}
+Удалите вручную: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Соответствующий 0.pamt не найден рядом с выбранным 0.paz. Задайте папку игры, чтобы v3 мог использовать текущий 0010\0.pamt как индекс архива.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Папка игры не задана. v3 нужна текущая игра для безопасной пересборки этого пресета.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Не удалось дублировать: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>Для JSON-экспорта нужны vanilla-файлы камеры (проверьте игру и попробуйте снова).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Установка завершена, но вернула неожиданный результат. Камера могла не примениться корректно. Запустите игру для проверки.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Восстановление завершено, но результат не подтвержден. Запустите игру для проверки возврата камеры к vanilla.</value></data>
 
   <!-- ═══ Tooltips ═══ -->
-  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>&#1054;&#1090;&#1082;&#1088;&#1099;&#1090;&#1100; &#1087;&#1072;&#1087;&#1082;&#1091; &#1080;&#1075;&#1088;&#1099;</value></data>
-  <data name="Tip_Steadycam" xml:space="preserve"><value>&#1057;&#1075;&#1083;&#1072;&#1078;&#1080;&#1074;&#1072;&#1077;&#1090; &#1089;&#1084;&#1077;&#1096;&#1080;&#1074;&#1072;&#1085;&#1080;&#1077;, &#1076;&#1077;&#1084;&#1087;&#1092;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1077; &#1080; &#1086;&#1092;&#1092;&#1089;&#1077;&#1090;&#1099; &#1089;&#1082;&#1086;&#1088;&#1086;&#1089;&#1090;&#1080;. &#1054;&#1090;&#1082;&#1083;&#1102;&#1095;&#1080;&#1090;&#1077; &#1076;&#1083;&#1103; &#1086;&#1088;&#1080;&#1075;. &#1087;&#1077;&#1088;&#1077;&#1093;&#1086;&#1076;&#1086;&#1074;.</value></data>
-  <data name="Tip_Kofi" xml:space="preserve"><value>&#1054;&#1090;&#1082;&#1088;&#1099;&#1074;&#1072;&#1077;&#1090; Ko-fi &#8212; &#1076;&#1086;&#1085;&#1072;&#1090;&#1099; &#1087;&#1086;&#1084;&#1086;&#1075;&#1072;&#1102;&#1090; &#1088;&#1072;&#1079;&#1074;&#1080;&#1074;&#1072;&#1090;&#1100; UCM</value></data>
-  <data name="Tip_ExportXml" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; &#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1081; XML &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1074; &#1092;&#1072;&#1081;&#1083;</value></data>
-  <data name="Tip_ImportXml" xml:space="preserve"><value>&#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; XML &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1085;&#1072;&#1087;&#1088;&#1103;&#1084;&#1091;&#1102; &#1074; &#1080;&#1075;&#1088;&#1091;</value></data>
-  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>&#1047;&#1072;&#1075;&#1088;&#1091;&#1079;&#1080;&#1090;&#1100; &#1074;&#1089;&#1077; &#1089;&#1083;&#1072;&#1081;&#1076;&#1077;&#1088;&#1099; &#1080;&#1079; &#1088;&#1077;&#1078;&#1080;&#1084;&#1072; Simple</value></data>
-  <data name="Tip_ResetVanilla" xml:space="preserve"><value>&#1057;&#1073;&#1088;&#1086;&#1089;&#1080;&#1090;&#1100; &#1074;&#1089;&#1077; &#1089;&#1083;&#1072;&#1081;&#1076;&#1077;&#1088;&#1099; &#1082; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;. XML-&#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1103;&#1084;</value></data>
-  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>&#1047;&#1072;&#1075;&#1088;&#1091;&#1079;&#1080;&#1090;&#1100; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1103; &#1080;&#1079; playercamerapreset.xml</value></data>
-  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>&#1048;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1091;&#1077;&#1090; &#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1077; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1088;&#1077;&#1078;&#1080;&#1084;&#1072; Simple</value></data>
-  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; playercamerapreset.xml &#1076;&#1083;&#1103; &#1089;&#1088;&#1072;&#1074;&#1085;&#1077;&#1085;&#1080;&#1103; &#1089; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;&#1086;&#1084;</value></data>
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Открыть папку игры (или выбрать вручную)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Сглаживает смешивание, затухание и смещения скорости между состояниями движения. Отключите для возврата vanilla-переходов камеры.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Открыть Ko-fi: донаты помогают поддерживать UCM</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Сохранить текущий XML камеры в файл</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Установить XML-файл камеры прямо в игру</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Заполнить все ползунки из текущих настроек Simple</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Сбросить все ползунки к vanilla-значениям XML</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Загрузить значения из файла playercamerapreset.xml</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Использует текущие настройки режима Simple</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Выберите playercamerapreset.xml для сравнения с vanilla</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Импортировать XML камеры или PAZ-архив как пресет</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>Поделиться как JSON (менеджер модов), XML сессии или пропатченный 0.paz. Использует текущую сессию UCM.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>Восстановить оригинальный фрагмент камеры из бэкапа UCM.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Применить текущую сессию UCM к файлам игры.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Отменить последнее изменение ползунка</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>Выберите папку с manifest.json — автоматически импортирует название, автора и XML камеры</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>Выберите файл playercamerapreset.xml напрямую</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>Выберите файл 0.paz — UCM извлечет XML камеры</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Импортировать файл .ucmpreset от другого пользователя UCM</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Скрыть напоминание на неделю</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Скрыть до следующего запуска</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Доступно обновление — нажмите для загрузки</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Просмотр и загрузка пресетов</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Добавляет указанные градусы к каждому Fov и InDoorFov в файле камеры. Строки для помещений и улицы начинаются с разных vanilla-значений, поэтому God Mode покажет много разных итоговых значений, а не один угол везде.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Отличается от горизонтального сдвига ~0.5: то значение обычно является vanilla-смещением в XML. Эта опция принудительно обнуляет сдвиг и применяет более строгие правила центрирования (RightOffset к 0 где возможно).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>Когда включено, камера остается на месте вместо поворота к захваченной цели.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Сбросить к vanilla ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Vanilla: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>Открыть страницу автора в браузере</value></data>
 
   <!-- ═══ Help / Info Text ═══ -->
-  <data name="Help_ShiftExplain" xml:space="preserve"><value>&#1053;&#1072;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086; &#1074;&#1083;&#1077;&#1074;&#1086;/&#1074;&#1087;&#1088;&#1072;&#1074;&#1086; &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1086;&#1090; &#1087;&#1077;&#1088;&#1089;&#1086;&#1085;&#1072;&#1078;&#1072;. &#1062;&#1077;&#1085;&#1090;&#1088;. &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1092;&#1080;&#1082;&#1089;&#1080;&#1088;&#1091;&#1077;&#1090; &#1085;&#1072; 0.</value></data>
-  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>&#9888; &#1062;&#1077;&#1085;&#1090;&#1088;. &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1089;&#1090;&#1072;&#1074;&#1080;&#1090; &#1087;&#1077;&#1088;&#1089;&#1086;&#1085;&#1072;&#1078;&#1072; &#1087;&#1086; &#1094;&#1077;&#1085;&#1090;&#1088;&#1091; &#8212; &#1089;&#1085;&#1080;&#1084;&#1080;&#1090;&#1077; &#1075;&#1072;&#1083;&#1086;&#1095;&#1082;&#1091; &#1076;&#1083;&#1103; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080;</value></data>
-  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = &#1086;&#1088;&#1080;&#1075;. (&#1087;&#1077;&#1088;&#1089;. &#1095;&#1091;&#1090;&#1100; &#1083;&#1077;&#1074;&#1077;&#1077;). &#1062;&#1077;&#1085;&#1090;&#1088; ~0.5. &#1054;&#1090;&#1088;&#1080;&#1094;. = &#1083;&#1077;&#1074;&#1077;&#1077;, &#1087;&#1086;&#1083;&#1086;&#1078;. = &#1087;&#1088;&#1072;&#1074;&#1077;&#1077;.</value></data>
-  <data name="Help_Limits" xml:space="preserve"><value>&#1055;&#1088;&#1077;&#1076;&#1077;&#1083;&#1099;: &#1044;&#1080;&#1089;&#1090; 1.5-12.0  |  &#1042;&#1099;&#1089;. -1.6 .. 0.5  |  &#1057;&#1084;&#1077;&#1097;. -3.0 .. 3.0</value></data>
-  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>&#1057;&#1084;&#1077;&#1097;. 0 = &#1086;&#1088;&#1080;&#1075;. (&#1087;&#1077;&#1088;&#1089;. &#1083;&#1077;&#1074;&#1086;)  |  0.5 = &#1094;&#1077;&#1085;&#1090;&#1088;  |  &#1086;&#1090;&#1088;&#1080;&#1094;. = &#1083;&#1077;&#1074;&#1077;&#1077;  |  &#1087;&#1086;&#1083;&#1086;&#1078;. = &#1087;&#1088;&#1072;&#1074;&#1077;&#1077;</value></data>
-  <data name="Help_GameUpdateNote" xml:space="preserve"><value>&#1054;&#1073;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103; &#1080;&#1075;&#1088;&#1099; &#1087;&#1077;&#1088;&#1077;&#1079;&#1072;&#1087;&#1080;&#1089;&#1099;&#1074;&#1072;&#1102;&#1090; &#1084;&#1086;&#1076;&#1080;&#1092;. &#1092;&#1072;&#1081;&#1083;&#1099;. &#1055;&#1086;&#1089;&#1083;&#1077; &#1082;&#1072;&#1078;&#1076;&#1086;&#1075;&#1086; &#1086;&#1073;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103; Crimson Desert &#1079;&#1072;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1077; UCM &#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; &#1089;&#1085;&#1086;&#1074;&#1072;.</value></data>
-  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>&#1055;&#1088;&#1080;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;:</value></data>
-  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>&#1050;&#1072;&#1078;&#1076;&#1099;&#1081; &#1089;&#1083;&#1072;&#1081;&#1076;&#1077;&#1088; &#1087;&#1086;&#1082;&#1072;&#1079;&#1099;&#1074;&#1072;&#1077;&#1090; &#1090;&#1077;&#1082;&#1091;&#1097;&#1077;&#1077; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1077; &#1080; &#1086;&#1088;&#1080;&#1075;. (&#1087;&#1088;&#1080;&#1075;&#1083;&#1091;&#1096;&#1105;&#1085;&#1085;&#1086;&#1077;). &#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#8634; &#1076;&#1083;&#1103; &#1089;&#1073;&#1088;&#1086;&#1089;&#1072; &#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1090;&#1088;&#1072;. &#1055;&#1088;&#1080;&#1084;&#1077;&#1085;&#1080;&#1090;&#1100; &#8212; &#1079;&#1072;&#1087;&#1080;&#1089;&#1100; &#1074; &#1080;&#1075;&#1088;&#1091;.</value></data>
-  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>&#1048;&#1079;&#1084;&#1077;&#1085;&#1077;&#1085;&#1080;&#1103; &#1085;&#1072;&#1082;&#1083;&#1072;&#1076;&#1099;&#1074;&#1072;&#1102;&#1090;&#1089;&#1103; &#1085;&#1072; &#1086;&#1088;&#1080;&#1075;. XML &#8212; &#1085;&#1077; &#1074;&#1079;&#1072;&#1080;&#1084;&#1086;&#1076;&#1077;&#1081;&#1089;&#1090;&#1074;&#1091;&#1102;&#1090; &#1089; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;&#1084;&#1080; Simple. &#1048;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1091;&#1081;&#1090;&#1077; "&#1048;&#1079; &#1088;&#1077;&#1078;. Simple" &#1076;&#1083;&#1103; &#1089;&#1090;&#1072;&#1088;&#1090;&#1072; &#1089; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;.</value></data>
-  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>&#1042; &#1080;&#1075;&#1088;&#1077; 3 &#1091;&#1088;&#1086;&#1074;&#1085;&#1103; &#1079;&#1091;&#1084;&#1072; &#1082;&#1086;&#1083;&#1077;&#1089;&#1086;&#1084; &#1084;&#1099;&#1096;&#1080; &#1087;&#1077;&#1096;&#1082;&#1086;&#1084;. ZL2 &#8212; &#1073;&#1083;&#1080;&#1078;&#1072;&#1081;&#1096;&#1080;&#1081; (&#1074;&#1080;&#1076; &#1087;&#1086; &#1091;&#1084;&#1086;&#1083;&#1095;.), ZL3 &#8212; &#1089;&#1088;&#1077;&#1076;&#1085;&#1080;&#1081;, ZL4 &#8212; &#1076;&#1072;&#1083;&#1100;&#1085;&#1080;&#1081;. &#1050;&#1072;&#1078;&#1076;&#1099;&#1081; &#1091;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1103;&#1077;&#1090; &#1076;&#1080;&#1089;&#1090;., &#1074;&#1099;&#1089;&#1086;&#1090;&#1086;&#1081; &#1080; &#1087;&#1086;&#1079;&#1080;&#1094;&#1080;&#1077;&#1081;. &#1044;&#1077;&#1081;&#1089;&#1090;&#1074;&#1091;&#1077;&#1090; &#1076;&#1083;&#1103; &#1074;&#1089;&#1077;&#1093; &#1089;&#1086;&#1089;&#1090;&#1086;&#1103;&#1085;&#1080;&#1081;: &#1087;&#1086;&#1082;&#1086;&#1081;, &#1093;&#1086;&#1076;&#1100;&#1073;&#1072;, &#1073;&#1077;&#1075;, &#1089;&#1087;&#1088;&#1080;&#1085;&#1090;, &#1073;&#1086;&#1081;.</value></data>
-  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>&#1050;&#1072;&#1084;&#1077;&#1088;&#1099; &#1074;&#1077;&#1088;&#1093;&#1086;&#1084; &#1080;&#1084;&#1077;&#1102;&#1090; 4 &#1091;&#1088;&#1086;&#1074;&#1085;&#1103; &#1079;&#1091;&#1084;&#1072; (ZL0&#8211;ZL3). 8 &#1089;&#1086;&#1089;&#1090;&#1086;&#1103;&#1085;&#1080;&#1081; &#1083;&#1086;&#1096;&#1072;&#1076;&#1080; &#1089;&#1080;&#1085;&#1093;&#1088;&#1086;&#1085;&#1080;&#1079;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1099;, &#1095;&#1090;&#1086;&#1073;&#1099; &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1085;&#1077; &#1076;&#1105;&#1088;&#1075;&#1072;&#1083;&#1072;&#1089;&#1100;. ZL0 &#8212; &#1073;&#1083;&#1080;&#1078;&#1072;&#1081;&#1096;&#1080;&#1081; (&#1080;&#1083;&#1080; 1-&#1077; &#1083;&#1080;&#1094;&#1086;).</value></data>
-  <data name="Help_CombatDesc" xml:space="preserve"><value>&#1055;&#1088;&#1080; &#1079;&#1072;&#1093;&#1074;&#1072;&#1090;&#1077; &#1094;&#1077;&#1083;&#1080; &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1087;&#1077;&#1088;&#1077;&#1093;&#1086;&#1076;&#1080;&#1090; &#1074; &#1073;&#1086;&#1077;&#1074;&#1086;&#1081; &#1088;&#1077;&#1078;&#1080;&#1084;. TargetRate &#8212; &#1085;&#1072;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086; &#1072;&#1075;&#1088;&#1077;&#1089;&#1089;&#1080;&#1074;&#1085;&#1086; &#1089;&#1083;&#1077;&#1076;&#1080;&#1090; &#1079;&#1072; &#1074;&#1088;&#1072;&#1075;&#1086;&#1084; (&#1084;&#1077;&#1085;&#1100;&#1096;&#1077; = &#1073;&#1086;&#1083;&#1100;&#1096;&#1077; &#1088;&#1091;&#1095;&#1085;&#1086;&#1075;&#1086; &#1091;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103;). ScreenClampRate &#8212; &#1094;&#1077;&#1085;&#1090;&#1088;&#1080;&#1088;&#1086;&#1074;&#1082;&#1072; &#1074;&#1088;&#1072;&#1075;&#1072;.</value></data>
-  <data name="Help_SmoothingDesc" xml:space="preserve"><value>&#1059;&#1087;&#1088;&#1072;&#1074;&#1083;&#1103;&#1102;&#1090; &#1087;&#1077;&#1088;&#1077;&#1093;&#1086;&#1076;&#1072;&#1084;&#1080; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1084;&#1077;&#1078;&#1076;&#1091; &#1089;&#1086;&#1089;&#1090;&#1086;&#1103;&#1085;&#1080;&#1103;&#1084;&#1080;. BlendInTime &#8212; &#1074;&#1088;&#1077;&#1084;&#1103; &#1087;&#1083;&#1072;&#1074;&#1085;&#1086;&#1075;&#1086; &#1074;&#1093;&#1086;&#1076;&#1072; &#1074; &#1089;&#1086;&#1089;&#1090;&#1086;&#1103;&#1085;&#1080;&#1077;. OffsetLength &#1082;&#1086;&#1085;&#1090;&#1088;. &#1088;&#1072;&#1089;&#1082;&#1072;&#1095;&#1082;&#1091; &#8212; 0 &#1076;&#1072;&#1105;&#1090; &#1101;&#1092;&#1092;&#1077;&#1082;&#1090; steadycam.</value></data>
-  <data name="Help_AimingDesc" xml:space="preserve"><value>&#1055;&#1088;&#1080; &#1087;&#1088;&#1080;&#1094;&#1077;&#1083;&#1080;&#1074;&#1072;&#1085;&#1080;&#1080; (&#1092;&#1086;&#1085;&#1072;&#1088;&#1100;, &#1083;&#1091;&#1082;, &#1079;&#1091;&#1084; &#1086;&#1088;&#1091;&#1078;&#1080;&#1103;) &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1089;&#1084;&#1077;&#1097;&#1072;&#1077;&#1090;&#1089;&#1103; &#1076;&#1083;&#1103; &#1087;&#1088;&#1080;&#1094;&#1077;&#1083;&#1072;. RightOffset &#1084;&#1072;&#1089;&#1096;&#1090;&#1072;&#1073;&#1080;&#1088;&#1091;&#1077;&#1090;&#1089;&#1103; &#1086;&#1090; &#1075;&#1086;&#1088;&#1080;&#1079;. &#1089;&#1084;&#1077;&#1097;&#1077;&#1085;&#1080;&#1103;, &#1095;&#1090;&#1086;&#1073;&#1099; &#1082;&#1072;&#1084;&#1077;&#1088;&#1072; &#1085;&#1077; &#1076;&#1105;&#1088;&#1075;&#1072;&#1083;&#1072;&#1089;&#1100; &#1087;&#1088;&#1080; &#1072;&#1082;&#1090;&#1080;&#1074;&#1072;&#1094;&#1080;&#1080; &#1089;&#1087;&#1086;&#1089;&#1086;&#1073;&#1085;&#1086;&#1089;&#1090;&#1077;&#1081;.</value></data>
-  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>&#1069;&#1090;&#1072; &#1074;&#1082;&#1083;&#1072;&#1076;&#1082;&#1072; &#1089;&#1086;&#1079;&#1076;&#1072;&#1105;&#1090; .json-&#1087;&#1072;&#1090;&#1095; &#1076;&#1083;&#1103; Crimson Desert JSON Mod Manager v8. &#1055;&#1086;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1077; &#1092;&#1072;&#1081;&#1083; &#1074; &#1087;&#1072;&#1087;&#1082;&#1091; Mods/ &#1084;&#1086;&#1076;-&#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1072; &#8212; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1089;&#1090;&#1072;&#1085;&#1091;&#1090; &#1087;&#1077;&#1088;&#1077;&#1082;&#1083;&#1102;&#1095;&#1072;&#1077;&#1084;&#1099;&#1084; &#1084;&#1086;&#1076;&#1086;&#1084; &#1073;&#1077;&#1079; UCM.</value></data>
-  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>&#1055;&#1072;&#1090;&#1095; &#1089;&#1088;&#1072;&#1074;&#1085;&#1080;&#1074;&#1072;&#1077;&#1090; &#1084;&#1086;&#1076;&#1080;&#1092;. &#1092;&#1072;&#1081;&#1083; &#1089; &#1086;&#1088;&#1080;&#1075;&#1080;&#1085;&#1072;&#1083;&#1086;&#1084; &#1087;&#1086;&#1073;&#1072;&#1081;&#1090;&#1086;&#1074;&#1086;. &#1055;&#1072;&#1090;&#1095; &#1087;&#1088;&#1080;&#1074;&#1103;&#1079;&#1072;&#1085; &#1082; &#1074;&#1077;&#1088;&#1089;&#1080;&#1080; &#1080;&#1075;&#1088;&#1099; &#8212; &#1087;&#1086;&#1089;&#1083;&#1077; &#1086;&#1073;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1080;&#1103; &#1087;&#1077;&#1088;&#1077;&#1089;&#1086;&#1079;&#1076;&#1072;&#1081;&#1090;&#1077; &#1077;&#1075;&#1086;.</value></data>
-  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>&#1069;&#1090;&#1072; &#1080;&#1085;&#1092;&#1086;&#1088;&#1084;&#1072;&#1094;&#1080;&#1103; &#1074;&#1080;&#1076;&#1085;&#1072; &#1074; &#1084;&#1086;&#1076;-&#1084;&#1077;&#1085;&#1077;&#1076;&#1078;&#1077;&#1088;&#1077;, &#1095;&#1090;&#1086;&#1073;&#1099; &#1073;&#1099;&#1083;&#1086; &#1087;&#1086;&#1085;&#1103;&#1090;&#1085;&#1086;, &#1095;&#1090;&#1086; &#1076;&#1077;&#1083;&#1072;&#1077;&#1090; &#1084;&#1086;&#1076;.</value></data>
-  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1080;&#1089;&#1090;&#1086;&#1095;&#1085;&#1080;&#1082;. &#1058;&#1077;&#1082;&#1091;&#1097;&#1080;&#1077; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080; &#8212; &#1072;&#1082;&#1090;&#1080;&#1074;&#1085;&#1099;&#1077; &#1074; &#1088;&#1077;&#1078;&#1080;&#1084;&#1077; Simple. &#1048;&#1079; XML-&#1092;&#1072;&#1081;&#1083;&#1072; &#8212; &#1083;&#1102;&#1073;&#1086;&#1081; &#1101;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1080;&#1088;. playercamerapreset.xml.</value></data>
-  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1077; .json &#1080; &#1087;&#1086;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1077; &#1074; Mods/ &#1074;&#1072;&#1096;&#1077;&#1075;&#1086; Crimson Desert JSON Mod Manager. &#1052;&#1086;&#1076; &#1087;&#1086;&#1103;&#1074;&#1080;&#1090;&#1089;&#1103; &#1082;&#1072;&#1082; &#1087;&#1077;&#1088;&#1077;&#1082;&#1083;&#1102;&#1095;&#1072;&#1077;&#1084;&#1099;&#1081;.</value></data>
-  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>&#1055;&#1086;&#1080;&#1089;&#1082; &#1072;&#1090;&#1088;&#1080;&#1073;&#1091;&#1090;&#1086;&#1074;...</value></data>
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Насколько влево/вправо камера расположена от персонажа. Центрированная камера блокирует значение на 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Центрированная камера размещает персонажа в центре экрана. Снимите галочку для настройки</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = vanilla (персонаж немного левее). Центр ~ 0.5. Отрицательное = левее, положительное = правее.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>Кадрирование влево/вправо как дельта к RightOffset (пешком, верхом, прицел и связанные строки). 0 совпадает с vanilla-смещением. Увеличение к ~0.5 приближает к геометрическому центру в файле; отрицательные значения смещают левее. Совпадает с видом сверху FOV. Центрированная камера ниже — независимая: блокирует ползунок на 0 и применяет более строгое центрирование.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Пределы: Расст 1.5-12.0  |  Высота -1.6 до 0.5  |  Сдвиг -3.0 до 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Сдвиг 0 = vanilla (перс лев)  |  0.5 = центр  |  отриц = левее  |  полож = правее</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Обновления игры перезапишут модифицированные файлы. После каждого обновления Crimson Desert повторно запустите UCM Установить для восстановления настроек камеры.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Примечание:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Каждый ползунок показывает текущее значение и vanilla по умолчанию (приглушенно). Нажмите ↺ в любой строке для сброса параметра к vanilla. Нажмите Применить для записи изменений в игру.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Изменения применяются поверх vanilla XML и не взаимодействуют с пресетами Simple. Используйте «Загрузить из Simple» для начала с текущего пресета.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>В игре 3 уровня зума колесом мыши пешком. ZL2 — ближайший (вид по умолчанию), ZL3 — средний, ZL4 — самый дальний. Каждый уровень независимо управляет расстоянием, высотой и горизонтальным положением камеры. Применяется ко всем пешим состояниям: покой, ходьба, бег, спринт и движение в бою.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Камеры лошади используют 2 vanilla-уровня зума (ZL2-ZL3). Все 8 состояний лошади синхронизированы, чтобы камера не дергалась при смене скорости, сохраняя реальную лестницу зума игры.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>При захвате врага камера переключается в режим боевого слежения. TargetRate управляет агрессивностью слежения за врагом — меньшие значения дают больше ручного контроля. ScreenClampRate управляет центрированием врага на экране.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Управляют переходами камеры между состояниями движения. BlendInTime — сколько секунд камера плавно входит в состояние. OffsetLength управляет раскачиванием камеры — значение 0 дает эффект steadycam без бокового движения.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>При прицеливании фонарем, луком или зумом оружия камера смещается для позиционирования перекрестия. Значения RightOffset масштабируются пропорционально горизонтальному сдвигу, чтобы камера не дергалась при активации способностей.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Эта вкладка генерирует .json патч-файл для Crimson Desert JSON Mod Manager v8. Поместите файл в папку Mods/ менеджера модов — настройки камеры появятся как переключаемый мод без UCM.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Патч работает путем побайтового сравнения измененного файла камеры с vanilla и записи только различий. Это значит, что он зависит от версии игры — при обновлении перегенерируйте патч.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Эта информация отображается в менеджере модов, чтобы люди знали, что это за мод.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Выберите источник патча. Текущие настройки использует активное в Simple. Из XML-файла позволяет выбрать экспортированный playercamerapreset.xml.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Сохраните .json файл и поместите его в папку Mods/ вашей установки Crimson Desert JSON Mod Manager. Он появится как переключаемый мод.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Поиск атрибутов...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>Это быстрый слой UCM: общая настройка камеры, предпросмотр и самые частые параметры.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune — слой углубленной настройки. Начинает с ваших настроек UCM Quick и позволяет уточнять поля, которые UCM намеренно открывает.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode показывает каждую строку файла. Ползунки здесь редактируют конкретные атрибуты — их числа должны совпадать с тем же атрибутом в God Mode. Остальные строки меняются через Quick (усиление FOV, стиль, бой, steadycam и т.д.) или vanilla, поэтому один ползунок не объясняет всю таблицу.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode открывает необработанные строки камеры. Используйте, когда UCM Quick недостаточно и нужен полный прямой контроль, или после UCM Fine Tune для еще более глубокой настройки.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>Значения здесь — объединенная сессия: Quick + Fine Tune + правки в этой таблице. FOV в Quick — это дельта по строкам (Fov и InDoorFov), поэтому углы различаются по состояниям. Fine Tune совпадает строка в строку только для атрибутов, которыми управляют эти ползунки.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Эти строки покрывают общую нормализацию FOV и общие системы камер вне базовых пеших и верховых групп. Используйте, когда хотите, чтобы UCM Fine Tune отражал всю поверхность мода, включая семейства захвата, состояния боевых машин и камеры плавания.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Слон, виверна, каноэ, боевая машина, метла и семейства камер передвижения имеют собственное поведение зума. Эти элементы управления открывают дополнительные значения маунтов, которые мод уже меняет за кулисами.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Регулирует расстояние камеры при захвате или защите цели относительно пешего расстояния. 0% плавно сочетается со Steadycam. Отрицательные значения приближают для кинематографического эффекта; положительные отдаляют для обзора поля боя.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Центрирует элементы игрового HUD в пределах указанной макс. ширины (пикселей). Полезно для сверхшироких мониторов, где элементы HUD слишком разнесены. Влияет только на игровой HUD, не на меню. Благодарность wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>Просмотр пресетов камеры от сообщества UCM. Скачанные пресеты появятся в боковой панели.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Просмотр и загрузка официальных пресетов камеры UCM. Скачанные пресеты появятся в боковой панели.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM управляет более 150 состояниями камеры: согласованность FOV в бою, защите, верхом и при захвате; плавные переходы между состояниями; масштабирование расстояния, чтобы захват не прыгал внутрь. Quick и Fine Tune безопасно строятся поверх этих правил. God Mode позволяет переопределять отдельные значения.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>Начинает с vanilla XML камеры без правил UCM. UCM Quick и Fine Tune отключены, т.к. их ползунки перезаписали бы ваши ручные правки — UCM меняет сотни значений в бою, верхом, захвате и сглаживании, что конфликтовало бы с ручными настройками. Доступен только God Mode для прямого редактирования XML. Используйте при импорте из другого мода камеры или когда нужен полный контроль.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>Импорты сохраняются в папке import_presets рядом с приложением и отображаются в разделе Импортированные на боковой панели.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>Выберите тип файла для импорта.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Вставьте строку UCM_ADV: для импорта расширенных настроек.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>Начните с UCM Quick, загрузите пресет из менеджера или импортируйте пресет автора.</value></data>
 
   <!-- ═══ Dialog Strings ═══ -->
-  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>&#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1091;&#1081;&#1090;&#1077; &#1080; &#1074;&#1089;&#1090;&#1072;&#1074;&#1100;&#1090;&#1077; &#1085;&#1072; NexusMods, Discord &#1080; &#1090;.&#1076;.</value></data>
-  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>&#1042;&#1089;&#1090;&#1072;&#1074;&#1100;&#1090;&#1077; &#1089;&#1090;&#1088;&#1086;&#1082;&#1091; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072; &#1085;&#1080;&#1078;&#1077;:</value></data>
-  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>&#1048;&#1079; &#1082;&#1086;&#1084;&#1084;&#1077;&#1085;&#1090;&#1072;&#1088;&#1080;&#1077;&#1074; NexusMods, Discord &#1080; &#1090;.&#1076;.</value></data>
-  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>&#1042;&#1089;&#1090;&#1072;&#1074;&#1100;&#1090;&#1077; &#1089;&#1090;&#1088;&#1086;&#1082;&#1091; &#1088;&#1072;&#1089;&#1096;. &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082; &#1085;&#1080;&#1078;&#1077;:</value></data>
-  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>&#1044;&#1086;&#1083;&#1078;&#1085;&#1072; &#1085;&#1072;&#1095;&#1080;&#1085;&#1072;&#1090;&#1100;&#1089;&#1103; &#1089; UCM_ADV: (&#1080;&#1079; &#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090;&#1072; &#1088;&#1072;&#1089;&#1096;.)</value></data>
-  <data name="Dlg_ShareString" xml:space="preserve"><value>&#1055;&#1086;&#1076;&#1077;&#1083;&#1080;&#1090;&#1077;&#1089;&#1100; &#1101;&#1090;&#1086;&#1081; &#1089;&#1090;&#1088;&#1086;&#1082;&#1086;&#1081; &#1076;&#1083;&#1103; "{0}":</value></data>
-  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>&#10004;  {0} &#1088;&#1072;&#1089;&#1096;. &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082; &#1085;&#1072;&#1081;&#1076;&#1077;&#1085;&#1086;</value></data>
-  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>&#10006;  {0}</value></data>
-  <data name="Dlg_NotAdvString" xml:space="preserve"><value>&#1053;&#1077; &#1103;&#1074;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; &#1089;&#1090;&#1088;&#1086;&#1082;&#1086;&#1081; &#1088;&#1072;&#1089;&#1096;. &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1077;&#1082; (&#1076;&#1086;&#1083;&#1078;&#1085;&#1072; &#1085;&#1072;&#1095;&#1080;&#1085;&#1072;&#1090;&#1100;&#1089;&#1103; &#1089; UCM_ADV:)</value></data>
-  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>&#1053;&#1077;&#1074;&#1077;&#1088;&#1085;&#1099;&#1077; &#1076;&#1072;&#1085;&#1085;&#1099;&#1077;</value></data>
-  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; &#1087;&#1086;&#1083;&#1100;&#1079;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;</value></data>
-  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; &#1088;&#1072;&#1089;&#1096;. &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;</value></data>
-  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>&#1042;&#1074;&#1077;&#1076;&#1080;&#1090;&#1077; &#1085;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;:</value></data>
-  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090; &#1089;&#1090;&#1088;&#1086;&#1082;&#1080; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072;</value></data>
-  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>&#1053;&#1072;&#1079;&#1074;&#1072;&#1085;&#1080;&#1077; &#1087;&#1088;&#1077;&#1089;&#1077;&#1090;&#1072; &#1076;&#1083;&#1103; &#1086;&#1073;&#1084;&#1077;&#1085;&#1072;:</value></data>
-  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1087;&#1072;&#1087;&#1082;&#1091; Crimson Desert (&#1089;&#1086;&#1076;&#1077;&#1088;&#1078;&#1080;&#1090; &#1087;&#1072;&#1087;&#1082;&#1091; '0010')</value></data>
-  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>&#1069;&#1082;&#1089;&#1087;&#1086;&#1088;&#1090; XML &#1082;&#1072;&#1084;&#1077;&#1088;&#1099;</value></data>
-  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; XML &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#8212; &#1091;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1072; &#1085;&#1072;&#1087;&#1088;&#1103;&#1084;&#1091;&#1102; &#1074; &#1080;&#1075;&#1088;&#1091;</value></data>
-  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>&#1048;&#1084;&#1087;&#1086;&#1088;&#1090; playercamerapreset.xml</value></data>
-  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; XML &#1082;&#1072;&#1084;&#1077;&#1088;&#1099; &#1076;&#1083;&#1103; &#1087;&#1072;&#1090;&#1095;&#1072;</value></data>
-  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100; JSON-&#1087;&#1072;&#1090;&#1095;</value></data>
-  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(&#1085;&#1086;&#1074;&#1099;&#1081; &#8212; &#1085;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1090;&#1077; &#1089;&#1083;&#1072;&#1081;&#1076;&#1077;&#1088;&#1099;)</value></data>
-  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(&#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1077; &#1087;&#1088;&#1072;&#1074;&#1082;&#1080;)</value></data>
-  <data name="Dlg_Current" xml:space="preserve"><value>(&#1090;&#1077;&#1082;&#1091;&#1097;&#1080;&#1081;)</value></data>
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Скопируйте и вставьте на NexusMods, Discord и т.д.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Вставьте строку пресета ниже:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>Из комментариев NexusMods, Discord и т.д.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Вставьте строку расширенных настроек ниже:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Должна начинаться с UCM_ADV: (из расширенного экспорта)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Поделитесь этой строкой для "{0}":</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} расширенных настроек найдено</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Это не строка расширенных настроек (должна начинаться с UCM_ADV:)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>Должна начинаться с UCM_ADV:</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Недопустимые данные</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Сохранить пользовательский пресет</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Сохранить расширенный пресет</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Введите имя пресета:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>Введите имя для импортированного пресета:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Экспорт строки пресета</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Назовите пресет для публикации:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Выберите папку Crimson Desert (содержит папку '0010')</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Выберите папку мода (содержащую manifest.json)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Экспорт XML камеры</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Импорт XML камеры: установка прямо в игру</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Импорт playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>Импорт 0.paz: извлечь XML камеры</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Импорт пресета UCM</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Выберите XML камеры для патча</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Сохранить JSON-патч</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Сохранить XML камеры</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Сохранить пропатченный 0.paz</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>Сохранить пресет UCM</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>Сохранить импортированный пресет</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(новый — настройте ползунки)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(текущие правки)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(текущий)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>Выберите источник импорта</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>Удалить импортированный пресет</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>Перезаписать импортированный пресет</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Импорт пакета мода: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>Импорт XML: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>Импорт PAZ: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Экспортированный пресет</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>Импортированная камера</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>Пресет UCM - {0}</value></data>
 
   <!-- ═══ Filter Items ═══ -->
-  <data name="Filter_All" xml:space="preserve"><value>&#1042;&#1089;&#1077;</value></data>
-  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>&#1058;&#1086;&#1083;&#1100;&#1082;&#1086; &#1080;&#1079;&#1084;&#1077;&#1085;&#1105;&#1085;&#1085;&#1099;&#1077;</value></data>
+  <data name="Filter_All" xml:space="preserve"><value>Все</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Только измененные</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Только священные</value></data>
 
   <!-- ═══ Game Path Display ═══ -->
-  <data name="GamePath_NotSet" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1080;&#1075;&#1088;&#1099;:  &#1053;&#1045; &#1059;&#1050;&#1040;&#1047;&#1040;&#1053;&#1040;  (&#1085;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1059;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100;)</value></data>
-  <data name="GamePath_Display" xml:space="preserve"><value>&#1055;&#1072;&#1087;&#1082;&#1072; &#1080;&#1075;&#1088;&#1099;:  {0}{1}</value></data>
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Папка игры:  НЕ ЗАДАНА  (нажмите Установить для выбора)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Папка игры:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>Закрыть диалог</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Шаг {0} из {1}</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>Экспортирует .json байт-патч для импорта в JSON Mod Manager или Crimson Desert Ultimate Mods Manager. Используйте любой менеджер модов — получателям UCM не нужен.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>Экспортирует playercamerapreset.xml с той же нормализацией, что UCM использует при установке (UTF-8 BOM, комментарии удалены). Подходит для текстовых загрузок на Nexus, ручного редактирования или реимпорта в UCM. Для установки нужны совпадающие размеры сжатых записей для версии игры.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Drop-in архив в стиле Nexus: копия вашего 0010/0.paz с обновленными данными камеры из текущей сессии UCM. Игроки без JSON-менеджера могут заменить один файл. Работает только для той же версии игры (одинаковая структура архива); укажите это на странице мода. Скажите скачавшим сделать бэкап vanilla 0010/0.paz перед заменой.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Экспортирует текущую сессию как .ucmpreset — другие пользователи UCM могут поместить его в папку пресетов или поделиться через каталог сообщества. Содержит полную конфигурацию камеры: Quick, Fine Tune и God Mode.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Использует вашу текущую сессию UCM (Quick, Fine Tune или God Mode). Выберите пресет в боковой панели или используйте Импорт, если начинаете с XML или PAZ на диске.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Подготовка проверяет кодировку сессии для папки игры, затем сохраняете XML.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Подготовка проверяет кодировку для папки игры. Сохранение записывает полный пропатченный 0.paz (большой файл). Источник сессии тот же, что и для других форматов: пресет из панели или сначала Импорт.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Кодировка не нужна — сохраняет сессию напрямую. Заполните поля информации выше, чтобы другие знали, что получают.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>Кодировка XML совпадает с записью камеры этой установки. Сохраните как playercamerapreset.xml для публикации или редактирования.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Размер загрузки будет соответствовать полному 0.paz. Получатели заменяют ...\0010\0.paz после бэкапа vanilla. Делитесь только с игроками на той же версии игры.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON использует эти поля в modinfo. XML использует Название как имя по умолчанию при сохранении. 0.paz по умолчанию называется 0.paz для размещения в 0010 без переименования.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>{0} патч-регионов сгенерировано. Сохраните, когда будете готовы.</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>Обычно это означает, что файл PAZ от другой версии игры. Индекс архива (0.pamt) не соответствует структуре PAZ-файла.
+
+ДЛЯ ИСПРАВЛЕНИЯ:
+Поместите соответствующий 0.pamt в ту же папку, что и импортируемый 0.paz. Оба файла должны быть от одной версии игры.</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Несохраненная сессия</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Текущая сессия</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Активная сессия</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Пресет еще не загружен.</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>Героический  -  OTS на уровне плеча, отличная композиция</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Панорамный  -  Широкий отвод на уровне головы, кинематографичный</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Ванильный  -  Немодифицированная камера игры (используйте Steadycam для сглаживания UCM)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Крупный план  -  OTS на уровне плеча, плотнее (ощущение 16:9)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Низкий угол  -  На уровне бёдер, полное тело + горизонт</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Камера на коленях  -  На уровне коленей, драматичный низкий угол</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Камера у земли  -  На уровне земли, экстремально низкий</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Выживание  -  Плотный OTS в стиле хоррора (ощущение 16:9)</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>Без увеличения FoV (0°)  -  ванильный меняется по состоянию (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Минимальный, хорошо для 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Тонкое улучшение</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  Оптимально для 21:9</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  Отлично для 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  Идеально для 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Экстремально, лёгкий эффект рыбьего глаза</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Добро пожаловать в Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Перед началом работы UCM необходимо, чтобы файлы игры были немодифицированными (ванильными) для создания чистой базовой резервной копии.
+
+Если вы ранее использовали UCM v2.x, другой мод камеры или менеджер модов, изменявший файлы игры, сначала проверьте:
+
+Steam → Crimson Desert → Свойства → Установленные файлы → &quot;Проверить целостность игровых файлов&quot;
+
+Вы проверили файлы игры?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Да, продолжить</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Нет, закрыть UCM</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Ваши пресеты</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>Это боковая панель пресетов. Нажмите Browse, чтобы загрузить официальные и пользовательские пресеты UCM. Ваши собственные пресеты и импорт также отображаются здесь. Нажмите на пресет, чтобы загрузить его.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Три уровня редактирования</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick для быстрых изменений, Fine Tune для детального контроля каждого состояния камеры и God Mode для редактирования XML напрямую. Изменения автоматически синхронизируются между всеми тремя уровнями.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Настройки камеры</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Настройте расстояние камеры, высоту, горизонтальный сдвиг, поле зрения, зум захвата и поведение камеры. Предварительный просмотр обновляется в реальном времени.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Живой предпросмотр</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Предпросмотр камеры показывает кадрирование персонажа и расстояние. Диаграмма поля зрения показывает конус FoV сверху. Оба обновляются в реальном времени.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Экспорт и установка</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Экспортируйте настройки в JSON для мод-менеджеров, XML, 0.paz или .ucmpreset для обмена. Или нажмите Install to Game для прямого применения к файлам игры.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>И ещё кое-что...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Я потратил слишком много времени на этот проект. Если UCM сэкономил вам часы мучений с камерой, угостите меня кофе. Или нет. Я всё равно продолжу. Но кофе помогает.</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Обновлено до v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>С возвращением! UCM был обновлён.
+
+Что нового:
+- Sacred God Mode: ваши правки теперь навсегда защищены от перестроений Quick/Fine Tune
+- Переключатель Lock-on Auto-Rotate (благодарность @sillib1980)
+- Зелёные индикаторы для sacred-значений в God Mode
+- Исправление: sacred-значения теперь корректно включаются в Install и все экспорты
+
+Ваши пресеты и настройки сохранены.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>С возвращением! UCM был обновлён с v{0}.
+
+Что нового:
+- Sacred God Mode: ваши правки теперь навсегда защищены от перестроений Quick/Fine Tune
+- Переключатель Lock-on Auto-Rotate (благодарность @sillib1980)
+- Зелёные индикаторы для sacred-значений в God Mode
+- Исправление: sacred-значения теперь корректно включаются в Install и все экспорты
+
+Ваши пресеты и настройки сохранены.</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Пресет загружен</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Пресет переименован</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Пресет дублирован</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Пресет перестроен</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Пресет '{0}' создан</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Импортированный пресет загружен</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>Пресет с именем '{0}' уже существует.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Пресет '{0}' переименован в '{1}'.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Пресет '{0}' дублирован как '{1}'.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Импортированный пресет '{0}' перестроен для текущей игры.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Папка игры не задана. Невозможно создать ручной пресет без ванильных данных камеры.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Только импортированные пресеты XML / 0.paz нуждаются в поддержке пересборки.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Сначала загрузите этот пресет в текущую сессию, затем сгенерируйте из Export JSON.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Не удалось сгенерировать встроенные пресеты.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Файл пресета не найден: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Не удалось активировать пресет: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Пресет '{0}' заблокирован — разблокируйте замок для редактирования.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Пресет '{0}' разблокирован.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Перестроение не удалось: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Не удалось создать пресет</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Не удалось сгенерировать пресеты</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Импортированный пресет '{0}' не содержал встроенного XML; перестроен из сохранённых настроек.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Не удалось загрузить импортированный пресет '{0}'.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Импортировать playercamerapreset.xml как сохранённый пресет</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Общий FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Кадрирование двух целей</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>FoV перемещения</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Слон</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Виверна</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Каноэ / Боевая машина / Метла</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Отслеживание Lock-On</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>Точки касания FoV</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Сглаживание пешком и в бою</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Переходы движения</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Расширенные переходы lock-on и боя</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>Поведение слежения пешком</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Синхронизация состояния лошади</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Кадрирование перемещения</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Фонарь / Прожектор</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Ослепляющая вспышка</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Прицеливание / Зум</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Лук</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Планирование / Свободное падение</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>FoV пешком</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>FoV боя</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>FoV Force/Titan/Cinematic</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>FoV Боевая машина/Метла</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>FoV Слон</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>FoV Виверна</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>FoV Плавание</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>FoV Плавание</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>FoV Лазание</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>FoV Планирование</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>FoV Свободное падение</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Уровень зума {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elephant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elephant ZL{0} Height</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Canoe ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>FoV Weapon LockOn</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>FoV Weapon TwoTarget</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>FoV Interaction TwoTarget</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>FoV Boss LockOn</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>FoV LockOn System</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>FoV Revive LockOn</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>FoV Non-Rotate LockOn</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>FoV Wrestle LockOn</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>FoV StartAggro</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>FoV Wanted</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Бег переход вход</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Бег переход выход</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Защита переход вход</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Защита переход выход</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Рывок переход вход</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Рывок переход выход</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Бег покачивание</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Бой бег покачивание</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Бой спринт покачивание</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Слежение спринт покачивание</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Животное покой переход вход</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Животное бег переход вход</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Животное бег покачивание</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Животное спринт переход вход</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Животное спринт покачивание</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Животное спринт затухание</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOn переход вход</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOn переход выход</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn System переход вход</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn System переход выход</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOn переход вход</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOn переход выход</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Свободное падение вход переход вход</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Свободное падение вход переход выход</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Свободное падение переход вход</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Свободное падение переход выход</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Суперпрыжок переход вход</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Суперпрыжок переход выход</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Натяжение верёвки переход вход</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Натяжение верёвки переход выход</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Раскачивание верёвки переход вход</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Раскачивание верёвки переход выход</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Удар/бросок переход вход</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Удар/бросок переход выход</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Маунт LockOn переход вход</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Маунт LockOn переход выход</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOn переход вход</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOn переход выход</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOn переход вход</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOn переход выход</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOn переход вход</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOn переход выход</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOn переход вход</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOn переход выход</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOn переход вход</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOn переход выход</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Агро переход вход</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Агро переход выход</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Розыск переход вход</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Розыск переход выход</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Боевая машина прицел переход вход</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Боевая машина прицел переход выход</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Боевая машина рывок переход вход</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Боевая машина рывок переход выход</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Пешком слежение рыскание</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Пешком слежение тангаж</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Пешком задержка слежения</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Пешком затухание поворота</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Лошадь слежение рыскание</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Лошадь слежение тангаж</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Лошадь задержка слежения</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Лошадь тангаж по умолчанию</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Лошадь переход вход</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Лошадь переход выход</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Лошадь затухание поворота</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Лошадь покачивание</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Лошадь покачивание затухание</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Dist</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Height</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Shift</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Swim ZL2 Dist</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Swim ZL2 Height</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Climb ZL2 Dist</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Climb ZL2 Height</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glide ZL2 Dist</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glide ZL2 Height</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Freefall ZL2 Dist</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Freefall ZL2 Height</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Apply to game удалено в v3. Используйте Export JSON для упаковки этих переопределений.</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Не удалось прочитать файлы камеры игры: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Сканирование папки игры не удалось: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>Слишком большой</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Недопустимый</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Не удалось</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Не удалось проверить файлы камеры: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Предупреждение: не удалось полностью применить пресет к редакторам: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>Пресет UCM -- дублируйте, чтобы использовать Fine Tune или God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>Пресет UCM -- дублируйте для настройки расстояния и высоты</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>Пресет UCM -- дублируйте для создания редактируемой копии</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Пресет заблокирован -- разблокируйте замок для редактирования</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Управляется Steadycam -- снимите флажок Steadycam для ручной настройки</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- управляется God Mode</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Расстояния зума</value></data>
 
 </root>

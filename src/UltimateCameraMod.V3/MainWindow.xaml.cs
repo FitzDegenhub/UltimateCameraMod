@@ -607,14 +607,8 @@ public partial class MainWindow : Window
                     try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        _ = ShowAlertOverlayAsync("Updated to v" + Ver,
-                            "Welcome back! UCM has been updated.\n\n" +
-                            "What's new:\n" +
-                            "- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds\n" +
-                            "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
-                            "- Green indicators for sacred values in God Mode\n" +
-                            "- Fix: sacred values now correctly included in Install and all exports\n\n" +
-                            "Your presets and settings have been preserved.");
+                        _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedToVersion"), Ver),
+                            L("Dlg_UpdateChangelog"));
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
                 else
@@ -631,15 +625,9 @@ public partial class MainWindow : Window
                 // Existing user upgrading between versions (e.g. v3.0.2 -> v3.1)
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string fromText = string.IsNullOrEmpty(savedVersion) ? "" : " from v" + savedVersion;
-                    _ = ShowAlertOverlayAsync("Updated to v" + Ver,
-                        "Welcome back! UCM has been updated" + fromText + ".\n\n" +
-                        "What's new:\n" +
-                        "- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds\n" +
-                        "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
-                        "- Green indicators for sacred values in God Mode\n" +
-                        "- Fix: sacred values now correctly included in Install and all exports\n\n" +
-                        "Your presets and settings have been preserved.");
+                    string fromText = string.IsNullOrEmpty(savedVersion) ? "" : string.Format(L("Dlg_UpdateFromVersion"), savedVersion);
+                    _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedToVersion"), Ver),
+                        string.Format(L("Dlg_UpdateChangelogFrom"), fromText));
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
             // Users can click Browse to download UCM presets when ready
@@ -670,7 +658,7 @@ public partial class MainWindow : Window
         // Title
         var titleBlock = new TextBlock
         {
-            Text = "Welcome to Ultimate Camera Mod",
+            Text = L("Dlg_WelcomeTitle"),
             FontSize = 20, FontWeight = FontWeights.Bold,
             Foreground = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
             Margin = new Thickness(0, 0, 0, 14)
@@ -679,12 +667,7 @@ public partial class MainWindow : Window
         // Description
         var descBlock = new TextBlock
         {
-            Text = "Before getting started, UCM needs your game files to be unmodified (vanilla) " +
-                   "so it can create a clean baseline backup.\n\n" +
-                   "If you previously used UCM v2.x, another camera mod, or a mod manager " +
-                   "that modified game files, please verify first:\n\n" +
-                   "Steam \u2192 Crimson Desert \u2192 Properties \u2192 Installed Files \u2192 \"Verify integrity of game files\"\n\n" +
-                   "Have you verified your game files?",
+            Text = L("Dlg_WelcomeBody"),
             FontSize = 13, TextWrapping = TextWrapping.Wrap,
             Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)),
             LineHeight = 20,
@@ -694,7 +677,7 @@ public partial class MainWindow : Window
         // Yes button (gold, matching tutorial Next button)
         var yesBtn = new Button
         {
-            Content = "Yes, continue",
+            Content = L("Btn_YesContinue"),
             Width = 130, Height = 36, FontSize = 13, FontWeight = FontWeights.SemiBold,
             Background = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
             Foreground = new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A)),
@@ -705,7 +688,7 @@ public partial class MainWindow : Window
         // No button (subtle, matching tutorial Skip button)
         var noBtn = new Button
         {
-            Content = "No, close UCM",
+            Content = L("Btn_NoCloseUcm"),
             Width = 120, Height = 36, FontSize = 12,
             Background = Brushes.Transparent,
             Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88)),
@@ -787,28 +770,28 @@ public partial class MainWindow : Window
     {
         var steps = new List<TutorialOverlay.TutorialStep>
         {
-            new("Your Presets",
-                "This is your preset sidebar. Click Browse to download official UCM presets and community presets. Your own presets and imports also appear here. Click any preset to load it.",
+            new(L("Tutorial_Step1Title"),
+                L("Tutorial_Step1Desc"),
                 () => PresetRailList),
 
-            new("Three Editing Tiers",
-                "UCM Quick for fast changes, Fine Tune for deep control over every camera state, and God Mode for raw XML editing. Changes sync across all three tiers automatically.",
+            new(L("Tutorial_Step2Title"),
+                L("Tutorial_Step2Desc"),
                 () => EditorTabBar),
 
-            new("Camera Settings",
-                "Adjust camera distance, height, horizontal shift, field of view, lock-on zoom, and camera behaviour. The live preview updates as you tweak.",
+            new(L("Tutorial_Step3Title"),
+                L("Tutorial_Step3Desc"),
                 () => SettingsPanel),
 
-            new("Live Preview",
-                "The camera preview shows character framing and distance. The field of view diagram shows the FoV cone from above. Both update in real time as you adjust settings.",
+            new(L("Tutorial_Step4Title"),
+                L("Tutorial_Step4Desc"),
                 () => PreviewsPanel),
 
-            new("Export & Install",
-                "Export your settings as JSON for mod managers, XML, 0.paz, or .ucmpreset to share with others. Or click Install to Game to apply directly to your game files.",
+            new(L("Tutorial_Step5Title"),
+                L("Tutorial_Step5Desc"),
                 () => SidebarActionButtons),
 
-            new("One More Thing...",
-                "I've dedicated way too much time to this project. If UCM saved you hours of camera frustration, consider buying me a coffee. Or don't. I'll keep making it anyway. But coffee helps.",
+            new(L("Tutorial_Step6Title"),
+                L("Tutorial_Step6Desc"),
                 () => KofiBtn)
         };
 
@@ -945,7 +928,7 @@ public partial class MainWindow : Window
             catch (Exception ex)
             {
                 await Dispatcher.InvokeAsync(() =>
-                    SetStatus($"Could not read game camera files: {ex.Message}", "Error"));
+                    SetStatus(string.Format(L("Status_CouldNotReadGameFiles"), ex.Message), "Error"));
                 return;
             }
 
@@ -966,7 +949,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             await Dispatcher.InvokeAsync(() =>
-                SetStatus($"Game folder scan failed: {ex.Message}", "Error"));
+                SetStatus(string.Format(L("Status_GameFolderScanFailed"), ex.Message), "Error"));
         }
         finally
         {

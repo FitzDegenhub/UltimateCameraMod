@@ -150,7 +150,7 @@ public partial class CommunityBrowserDialog : UserControl
 
         var authorBlock = new TextBlock
         {
-            Text = string.IsNullOrWhiteSpace(entry.Author) ? "" : $"by {entry.Author}",
+            Text = string.IsNullOrWhiteSpace(entry.Author) ? "" : string.Format(L("Label_ByAuthor"), entry.Author),
             FontSize = 10,
             Foreground = (Brush)FindResource("TextDimBrush"),
             Margin = new Thickness(0, 2, 0, 0)
@@ -282,8 +282,8 @@ public partial class CommunityBrowserDialog : UserControl
 
             if (rawBytes.Length > MaxPresetSize)
             {
-                btn.Content = "Too large";
-                StatusText.Text = $"Preset '{entry.Name}' exceeds 2MB limit.";
+                btn.Content = L("Btn_TooLarge");
+                StatusText.Text = string.Format(L("Status_PresetTooLarge"), entry.Name);
                 return;
             }
 
@@ -295,8 +295,8 @@ public partial class CommunityBrowserDialog : UserControl
             bool hasStyleId = root.TryGetProperty("style_id", out _);
             if (!hasSessionXml && !hasStyleId && !_needsSessionXmlBake)
             {
-                btn.Content = "Invalid";
-                StatusText.Text = $"Preset '{entry.Name}' doesn't contain camera data.";
+                btn.Content = L("Btn_Invalid");
+                StatusText.Text = string.Format(L("Status_PresetInvalid"), entry.Name);
                 return;
             }
 
@@ -338,7 +338,7 @@ public partial class CommunityBrowserDialog : UserControl
         }
         catch (Exception ex)
         {
-            btn.Content = "Failed";
+            btn.Content = L("Btn_Failed");
             btn.IsEnabled = true;
             StatusText.Text = string.Format(L("Status_DownloadFailed"), ex.Message);
         }

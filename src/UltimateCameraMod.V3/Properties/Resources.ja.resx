@@ -634,4 +634,230 @@ UCM Quick と Fine Tune は UCM のカメラルールシステムを使用する
   <data name="Label_LiveSession" xml:space="preserve"><value>ライブセッション</value></data>
   <data name="Label_NoPresetLoaded" xml:space="preserve"><value>まだプリセットが読み込まれていません。</value></data>
 
+  <!-- ═══ New v3.1 Keys ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>ヒロイック  -  肩レベルOTS、優れたフレーミング</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>パノラミック  -  頭の高さのワイドプルバック、映画的</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>バニラ  -  未変更のゲームカメラ（UCMスムージングにはSteadycamを使用）</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>クローズアップ  -  肩OTS、タイト（16:9風）</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>ローライダー  -  腰の高さ、全身＋地平線</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>ニーカム  -  膝の高さのドラマチックなローアングル</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>ダートカム  -  地面レベル、超ローアングル</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>サバイバル  -  タイトなホラーゲームOTS（16:9風）</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>FoVブーストなし (0°)  -  バニラは状態により変動 (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  最小限、16:9に最適</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  微妙な改善</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  21:9に最適</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  21:9 + 32:9に最適</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  32:9に最適</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  極端、わずかな魚眼効果</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Ultimate Camera Modへようこそ</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>始める前に、UCMがクリーンなベースラインバックアップを作成できるよう、ゲームファイルが未変更（バニラ）の状態である必要があります。
+
+以前にUCM v2.x、他のカメラMOD、またはゲームファイルを変更するMODマネージャーを使用した場合は、まず確認してください：
+
+Steam → Crimson Desert → プロパティ → インストール済みファイル → 「ゲームファイルの整合性を確認」
+
+ゲームファイルを確認しましたか？</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>はい、続行</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>いいえ、UCMを閉じる</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>プリセット一覧</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>プリセットサイドバーです。Browseをクリックして公式UCMプリセットやコミュニティプリセットをダウンロードできます。自分のプリセットやインポートしたものもここに表示されます。プリセットをクリックして読み込みます。</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>3つの編集ティア</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quickは素早い変更、Fine Tuneはすべてのカメラ状態の詳細制御、God ModeはRAW XML編集用です。変更は3つのティア全体に自動的に同期されます。</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>カメラ設定</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>カメラ距離、高さ、水平シフト、視野角、ロックオンズーム、カメラ動作を調整します。ライブプレビューが調整に応じてリアルタイムで更新されます。</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>ライブプレビュー</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>カメラプレビューはキャラクターのフレーミングと距離を表示します。視野角ダイアグラムは上から見たFoVコーンを表示します。設定を調整すると両方がリアルタイムで更新されます。</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>エクスポート＆インストール</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>設定をJSON（MODマネージャー用）、XML、0.paz、または.ucmpresetとしてエクスポートして共有できます。またはInstall to Gameをクリックしてゲームファイルに直接適用します。</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>もうひとつ...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>このプロジェクトにあまりにも多くの時間を費やしました。UCMがカメラのストレスを軽減したなら、コーヒーをおごってください。おごらなくても大丈夫です。どちらにしても作り続けます。でもコーヒーは助かります。</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>v{0}に更新されました</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>おかえりなさい！UCMが更新されました。
+
+新機能：
+- Sacred God Mode：編集内容がQuick/Fine Tuneの再ビルドから永久に保護されます
+- Lock-on Auto-Rotateトグル（@sillib1980氏提供）
+- God Modeでのsacred値の緑色インジケーター
+- 修正：sacred値がInstallとすべてのエクスポートに正しく含まれるようになりました
+
+プリセットと設定は保持されています。</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>おかえりなさい！UCMがv{0}から更新されました。
+
+新機能：
+- Sacred God Mode：編集内容がQuick/Fine Tuneの再ビルドから永久に保護されます
+- Lock-on Auto-Rotateトグル（@sillib1980氏提供）
+- God Modeでのsacred値の緑色インジケーター
+- 修正：sacred値がInstallとすべてのエクスポートに正しく含まれるようになりました
+
+プリセットと設定は保持されています。</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>プリセット読み込み完了</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>プリセット名変更完了</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>プリセット複製完了</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>プリセット再ビルド完了</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>プリセット '{0}' が作成されました</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>インポートしたプリセット読み込み完了</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>'{0}' という名前のプリセットは既に存在します。</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>プリセット '{0}' が '{1}' に名前変更されました。</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>プリセット '{0}' が '{1}' として複製されました。</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>インポートしたプリセット '{0}' が現在のゲーム用に再ビルドされました。</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>ゲームフォルダが設定されていません。バニラカメラデータなしではマニュアルプリセットを作成できません。</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>インポートされたXML / 0.pazプリセットのみ再ビルドが必要です。</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>まずこのプリセットを現在のセッションに読み込んでから、Export JSONから生成してください。</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>ビルトインプリセットの生成に失敗しました。</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>プリセットファイルが見つかりません: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>プリセットをアクティブにできません: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>プリセット '{0}' はロックされています — 編集するにはロックを解除してください。</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>プリセット '{0}' がロック解除されました。</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>再ビルド失敗: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>プリセット作成に失敗</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>プリセット生成に失敗</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>インポートしたプリセット '{0}' には埋め込みXMLがなかったため、保存された設定から再ビルドしました。</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>インポートしたプリセット '{0}' の読み込みに失敗しました。</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>playercamerapreset.xmlを保存済みプリセットとしてインポート</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>共有FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>2ターゲットフレーミング</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>トラバーサルFoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>エレファント</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>ワイバーン</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>カヌー / ウォーマシン / ブルーム</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lock-On トラッキング</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoVタッチポイント</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>徒歩・戦闘スムージング</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>移動トランジション</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>拡張Lock-Onおよび戦闘トランジション</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>徒歩フォロー動作</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>馬状態同期</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>トラバーサルフレーミング</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>ランタン / スポットライト</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>ブラインディングフラッシュ</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>武器エイム / ズーム</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>弓</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>グライド / フリーフォール</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>徒歩FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>戦闘FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>ウォーマシン/ブルーム FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>エレファントFoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>ワイバーンFoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>水泳FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>水泳FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>クライムFoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>グライドFoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>フリーフォールFoV</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>ズームレベル {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elephant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elephant ZL{0} Height</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Canoe ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Weapon LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Weapon TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Non-Rotate LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>走りブレンドイン</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>走りブレンドアウト</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>ガードブレンドイン</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>ガードブレンドアウト</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>ラッシュブレンドイン</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>ラッシュブレンドアウト</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>走りスウェイ</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>戦闘走りスウェイ</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>戦闘スプリントスウェイ</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>フォロースプリントスウェイ</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>動物アイドルブレンドイン</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>動物走りブレンドイン</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>動物走りスウェイ</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>動物スプリントブレンドイン</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>動物スプリントスウェイ</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>動物スプリントダンプ</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOnブレンドイン</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOnブレンドアウト</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn Systemブレンドイン</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn Systemブレンドアウト</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOnブレンドイン</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOnブレンドアウト</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>フリーフォール進入ブレンドイン</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>フリーフォール進入ブレンドアウト</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>フリーフォールブレンドイン</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>フリーフォールブレンドアウト</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>スーパージャンプブレンドイン</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>スーパージャンプブレンドアウト</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>ロープ引きブレンドイン</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>ロープ引きブレンドアウト</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>ロープスイングブレンドイン</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>ロープスイングブレンドアウト</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>ヒット/スローブレンドイン</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>ヒット/スローブレンドアウト</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>マウントLockOnブレンドイン</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>マウントLockOnブレンドアウト</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOnブレンドイン</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOnブレンドアウト</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOnブレンドイン</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOnブレンドアウト</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOnブレンドイン</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOnブレンドアウト</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOnブレンドイン</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOnブレンドアウト</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOnブレンドイン</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOnブレンドアウト</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>アグロブレンドイン</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>アグロブレンドアウト</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>ウォンテッドブレンドイン</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>ウォンテッドブレンドアウト</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>ウォーマシンエイムブレンドイン</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>ウォーマシンエイムブレンドアウト</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>ウォーマシンダッシュブレンドイン</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>ウォーマシンダッシュブレンドアウト</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>徒歩ヨーフォロー</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>徒歩ピッチフォロー</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>徒歩フォロー遅延</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>徒歩ピボットダンピング</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>馬ヨーフォロー</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>馬ピッチフォロー</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>馬フォロー遅延</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>馬デフォルトピッチ</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>馬ブレンドイン</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>馬ブレンドアウト</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>馬ピボットダンピング</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>馬スウェイ</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>馬スウェイダンプ</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Dist</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Height</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Shift</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Swim ZL2 Dist</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Swim ZL2 Height</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Climb ZL2 Dist</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Climb ZL2 Height</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glide ZL2 Dist</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glide ZL2 Height</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Freefall ZL2 Dist</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Freefall ZL2 Height</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>リセット</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Apply to gameはv3で削除されました。Export JSONを使用してこれらのオーバーライドをパッケージしてください。</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>ゲームカメラファイルを読み取れませんでした: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>ゲームフォルダスキャン失敗: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>大きすぎます</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>無効</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>失敗</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>カメラファイルを検証できませんでした: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>警告: プリセットをエディタに完全に適用できませんでした: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCMプリセット -- Fine TuneまたはGod Modeを使用するには複製してください</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCMプリセット -- 距離と高さを調整するには複製してください</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCMプリセット -- 編集可能なコピーを作成するには複製してください</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>プリセットはロックされています -- 編集するにはロックを解除してください</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Steadycamによって制御されています -- 手動調整するにはSteadycamのチェックを外してください</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- God Modeによって制御されています</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - ズーム距離</value></data>
+
 </root>

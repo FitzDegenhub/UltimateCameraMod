@@ -286,7 +286,7 @@ public partial class MainWindow : Window
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Import playercamerapreset.xml as saved preset",
+            Title = L("Dlg_ImportXmlAsSavedPreset"),
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = "playercamerapreset.xml"
         };
@@ -419,7 +419,7 @@ public partial class MainWindow : Window
         else
         {
             xml = BuildRebuiltXmlFromImportedPreset(preset);
-            SetStatus($"Imported preset '{preset.Name}' had no embedded XML; rebuilt from saved settings.", "Warn");
+            SetStatus(string.Format(L("Status_ImportedPresetNoXml"), preset.Name), "Warn");
         }
         RefreshUIFromSessionXml(xml);
         // Only sync Quick sliders for UCM-managed presets — raw imports disable Quick/Fine Tune
@@ -585,7 +585,7 @@ public partial class MainWindow : Window
         string name = _selectedPresetManagerItem.Name;
         _selectedImportedPreset = LoadImportedPreset(name);
         if (_selectedImportedPreset == null)
-            SetStatus($"Failed to load imported preset '{name}'.", "Error");
+            SetStatus(string.Format(L("Status_FailedLoadImported"), name), "Error");
         return _selectedImportedPreset;
     }
 
@@ -669,7 +669,7 @@ public partial class MainWindow : Window
             }
             else
             {
-                summary = $"Imported from {sourceType.ToUpperInvariant()} ({sourceDisplayName})";
+                summary = string.Format(L("Label_ImportedFromSource"), sourceType.ToUpperInvariant(), sourceDisplayName);
             }
 
             string sidebarSource = string.IsNullOrWhiteSpace(author)
@@ -751,7 +751,7 @@ public partial class MainWindow : Window
     {
         if (!string.IsNullOrWhiteSpace(preset.Description))
             return preset.Description.Replace("\n", " ").Trim();
-        return $"Imported from {preset.SourceType.ToUpperInvariant()} ({preset.SourceDisplayName})";
+        return string.Format(L("Label_ImportedFromSource"), preset.SourceType.ToUpperInvariant(), preset.SourceDisplayName);
     }
 
     private async void OnImportedPresetDelete(object sender, RoutedEventArgs e)
@@ -811,7 +811,7 @@ public partial class MainWindow : Window
             SwitchAppMode("expert", captureCurrent: false);
             MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
             ApplyPresetEditingLockUi();
-            QueueSavedToast("Imported preset loaded");
+            QueueSavedToast(L("Toast_ImportedPresetLoaded"));
             SetStatus(string.Format(L("Status_LoadedIntoGodMode"), preset.Name), "Success");
         }
         catch (Exception ex)
