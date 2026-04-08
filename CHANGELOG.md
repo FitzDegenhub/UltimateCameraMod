@@ -8,6 +8,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ## [Unreleased]
 
+### Project
+- **v2.5 source consolidated into V3** - Removed the legacy `src/UltimateCameraMod/` project folder. The 16 shared source files (Models, Services, Paz) that V3 was pulling via csproj linked compiles now live directly inside `src/UltimateCameraMod.V3/`. Single project, no more cross-folder dependencies.
+
 ### Features
 - **Multi-language support** - Full .resx-based localization for 10 languages: English, Korean, Japanese, Chinese Simplified, Swedish, German, French, Spanish, Portuguese Brazilian, and Russian. Language selector in the title bar with live UI switching and persistence across sessions. Covers all XAML and code-behind strings across V3's 10 XAML files and 18 code-behind files (507 resource keys, 170+ XAML bindings, 470+ code-behind lookups).
   - Hello! / 안녕하세요! / こんにちは! / 你好! / Hej! / Hallo! / Bonjour! / Hola! / Ola! / Привет!
