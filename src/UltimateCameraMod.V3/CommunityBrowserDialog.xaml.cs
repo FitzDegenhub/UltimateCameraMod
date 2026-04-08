@@ -3,11 +3,13 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class CommunityBrowserDialog : UserControl
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public Action? OnCloseRequested;
     private const long MaxPresetSize = 2 * 1024 * 1024; // 2MB
 
@@ -46,13 +48,13 @@ public partial class CommunityBrowserDialog : UserControl
         InitializeComponent();
         HeaderTitle.Text = title.ToUpperInvariant();
         if (needsSessionXmlBake)
-            HeaderSubtitle.Text = "Browse and download official UCM camera presets. Downloaded presets appear in your sidebar.";
+            HeaderSubtitle.Text = L("Help_UcmBrowserSubtitle");
         Loaded += async (_, _) => await FetchCatalogAsync();
     }
 
     private async Task FetchCatalogAsync()
     {
-        ShowLoading("Fetching community catalog...");
+        ShowLoading(L("Status_FetchingCommunityCatalog"));
         try
         {
             using var http = new HttpClient();
@@ -91,7 +93,7 @@ public partial class CommunityBrowserDialog : UserControl
         }
         catch (Exception ex)
         {
-            ShowError($"Could not fetch community catalog.\n\n{ex.Message}");
+            ShowError(string.Format(L("Status_DownloadFailed"), ex.Message));
         }
     }
 
@@ -99,7 +101,7 @@ public partial class CommunityBrowserDialog : UserControl
     {
         if (_catalog == null || _catalog.Count == 0)
         {
-            ShowError("No community presets available yet.\n\nCheck back later or contribute your own!");
+            ShowError(L("Status_NoCommunityPresets"));
             return;
         }
 
@@ -117,7 +119,7 @@ public partial class CommunityBrowserDialog : UserControl
         }
 
         ShowContent();
-        StatusText.Text = $"{_catalog.Count} presets available, {downloadedCount} downloaded";
+        StatusText.Text = string.Format(L("Status_PresetsAvailable"), _catalog.Count, downloadedCount);
     }
 
     private bool IsPresetDownloaded(CatalogEntry entry)
@@ -199,13 +201,13 @@ public partial class CommunityBrowserDialog : UserControl
 
         if (isDownloaded)
         {
-            actionBtn.Content = "Downloaded \u2714";
+            actionBtn.Content = L("Btn_Downloaded") + " \u2714";
             actionBtn.Style = (Style)FindResource("SubtleButton");
             actionBtn.IsEnabled = false;
         }
         else
         {
-            actionBtn.Content = "Download";
+            actionBtn.Content = L("Btn_Download");
             actionBtn.Style = (Style)FindResource("AccentButton");
             actionBtn.Click += OnDownloadClick;
         }
@@ -223,7 +225,7 @@ public partial class CommunityBrowserDialog : UserControl
         {
             var linkBtn = new Button
             {
-                Content = "\uD83D\uDD17 Nexus",
+                Content = "\uD83D\uDD17 " + L("Btn_NexusLink"),
                 Height = 28, FontSize = 10, Padding = new Thickness(10, 0, 10, 0),
                 MinWidth = 110,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -267,7 +269,7 @@ public partial class CommunityBrowserDialog : UserControl
         if (sender is not Button btn || btn.Tag is not CatalogEntry entry) return;
 
         btn.IsEnabled = false;
-        btn.Content = "Downloading...";
+        btn.Content = L("Btn_Downloading");
 
         try
         {
@@ -328,9 +330,9 @@ public partial class CommunityBrowserDialog : UserControl
                 catch { }
             }
 
-            btn.Content = "Downloaded \u2714";
+            btn.Content = L("Btn_Downloaded") + " \u2714";
             btn.Style = (Style)FindResource("SubtleButton");
-            StatusText.Text = $"Downloaded '{entry.Name}'";
+            StatusText.Text = $"{L("Btn_Downloaded")} '{entry.Name}'";
 
             _onPresetsChanged?.Invoke();
         }
@@ -338,7 +340,7 @@ public partial class CommunityBrowserDialog : UserControl
         {
             btn.Content = "Failed";
             btn.IsEnabled = true;
-            StatusText.Text = $"Download failed: {ex.Message}";
+            StatusText.Text = string.Format(L("Status_DownloadFailed"), ex.Message);
         }
     }
 

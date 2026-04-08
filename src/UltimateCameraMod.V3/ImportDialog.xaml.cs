@@ -2,11 +2,13 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using UltimateCameraMod.Models;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class ImportDialog : Window
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public (string Name, double Distance, double Height, double RightOffset)? Result { get; private set; }
 
     public ImportDialog()

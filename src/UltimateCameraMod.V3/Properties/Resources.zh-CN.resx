@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>高级相机设置</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>导入高级设置字符串</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>导出预设字符串</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>导入预设字符串</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>输入</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - 错误</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>应用到游戏</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>保存</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>删除</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>导出</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>导入</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>安装</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>恢复原版</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>关闭</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>确定</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>获取更新</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>复制到剪贴板</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>已复制！</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>导出字符串</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>导入字符串</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>保存预设</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>删除预设</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>导出 XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>导入 XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>恢复默认</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>恢复原版</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>从简易模式加载</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>全部展开</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>全部折叠</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>从当前设置生成</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>从 XML 文件生成...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>保存 .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>导入 &amp; 保存</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>导出字符串</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>导入字符串</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>请我喝杯咖啡</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>恢复默认</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>预设</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>自定义</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>简易</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>高级</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>专家</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod 管理器</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>距离</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>高度</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>水平偏移</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>视野范围</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>战斗视角</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>居中视角</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>骑乘视角</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>稳定镜头</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>视角风格</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>已保存预设</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>预设</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>标题</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>版本</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>作者</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus 链接</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>描述</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>游戏目录：</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> 个补丁区域</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> 字节已修改</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>视角风格</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>全局设置</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>分享</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>视角预览</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>高级控制</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>高级相机设置</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>使用说明</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>步骤 1  —  命名你的 Mod</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>步骤 2  —  生成补丁</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>步骤 3  —  保存文件</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>分区</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>子元素</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>属性</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>数值</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>原版</value></data>
+
+  <!-- ═══ Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  步行缩放级别</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  骑乘缩放级别</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  战斗 / 锁定</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  镜头平滑 / 稳定</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  瞄准 / 准心位置</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>角色居中显示（锁定水平偏移为 0）</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>骑乘高度与步行视角高度一致</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>平滑镜头过渡（消除状态切换时的缩放抖动）</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>就绪</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>检查中...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>已是最新</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>离线</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>安装中...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>安装完成！启动游戏即可。</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>正在恢复原版...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>已恢复原版。</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>应用中...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>已将 {0} 项更改应用到游戏文件。</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>预设 '{0}' 已加载。</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>预设 '{0}' 已保存。</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>预设 '{0}' 已删除。</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>预设 '{0}' 已导出。</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>已导入 '{0}' 并保存 — 点击安装以应用。</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>已导出 {0} 个修改值。</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>已导入 {0} 个值。</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>已导出到 {0}。</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>已将 {0} 安装到游戏。</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>从 {1} 导入了 {0} 个值。</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>已加载 — 编辑数值后点击"应用到游戏"。</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>已恢复默认（你的预设 + 原版）。</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>没有需要应用的更改。</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>没有修改值可导出。</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>没有修改值可保存。</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>请先选择一个已保存的预设。</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>游戏目录未设置。</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>未选择游戏目录。</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>安装失败。游戏是否正在运行？</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>未找到备份。视角可能已是原版。</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>备份来自旧版本。请验证游戏文件。</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>恢复失败。请验证游戏文件。</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} 可用</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>高级控制 — 逐参数引导式相机调整。</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>专家模式 — 编辑原始 XML 值后点击"应用到游戏"。</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod 管理器 — 生成 Crimson Desert Mod Manager v8 补丁文件。</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>正在生成补丁...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>已生成 {0} 个补丁区域。点击"保存 .json"导出。</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>已保存 {0}（{1} 个补丁）。</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>请先生成补丁。</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON 导出需要原版相机文件。</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>已从简易模式加载数值。</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>已将所有高级控制重置为原版。</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>已加载预设 '{0}'（{1} 项覆盖）。</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>高级预设 '{0}' 已保存（{1} 项覆盖）。</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>高级预设 '{0}' 已删除。</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>已将 {0} 项高级控制更改应用到游戏。</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>已清理旧版 v{0} 数据。请点击安装以应用你的设置。</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>游戏目录未设置。点击安装后会提示你浏览选择。</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass：游戏目录为只读。请移动游戏或修复文件夹权限。</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>显示 {0} 行  |  {1} 项已修改</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} 行  |  {1} 项已修改</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} 项更改</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>该文件夹不包含 0010\0.paz。
+请确认选择了正确的 Crimson Desert 目录。</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>文件夹错误</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>请先设置游戏目录（点击安装进行浏览）。</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>用当前滑块值覆盖预设 '{0}'？</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>覆盖预设</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>用当前值覆盖高级预设 '{0}'？</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass 游戏目录似乎是只读的。
+
+请尝试以下方法之一：
+  1. Xbox 应用 → Crimson Desert → 管理 → 移动到其他驱动器
+  2. 右键游戏文件夹 → 属性 → 取消勾选"只读" → 应用到所有子文件夹</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>需要写入权限</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>将 '{0}' 直接安装到游戏？
+
+这会覆盖你当前的相机设置。</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>导入 XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>游戏目录中的相机数据与 UCM 的原版备份不匹配。
+
+外部 Mod 管理器的 JSON 补丁必须使用原版的"原始"字节。请在 Steam 中验证游戏完整性（或在 Mod 管理器中还原相机更改），然后重试。</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>无法导出 JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>未处理的错误：
+
+{0}
+
+详细信息已保存到 crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>启动错误：
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>加载相机 XML 失败：
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>高级编辑器</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>专家编辑器</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>高级控制</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>文件夹对话框错误：{0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>错误</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>打开游戏目录</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>平滑运动状态间的混合、阻尼和速度偏移。禁用可恢复原版镜头过渡效果。</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>打开 Ko-fi — 打赏支持 UCM 持续开发</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>将当前实时相机 XML 保存到文件</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>将相机 XML 文件直接安装到游戏</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>从当前简易模式设置填充所有滑块</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>将所有滑块重置为原版 XML 数值</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>从 playercamerapreset.xml 文件加载数值</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>使用当前简易模式中已配置的设置</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>选择一个 playercamerapreset.xml 文件与原版进行差异对比</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>镜头在角色左右方向上的偏移距离。居中视角会将此值锁定为 0。</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>⚠ 居中视角会将角色强制居中 — 取消勾选可调整</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = 原版（角色略偏左）。居中约为 0.5。负值 = 更偏左，正值 = 更偏右。</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>范围：距离 1.5-12.0  |  高度 -1.6 到 0.5  |  偏移 -3.0 到 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>偏移 0 = 原版（角色偏左）  |  0.5 = 居中  |  负值 = 更偏左  |  正值 = 更偏右</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>游戏更新会覆盖已修改的文件。每次 Crimson Desert 更新后，请重新运行 UCM 安装以恢复你的相机设置。</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>注意：</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>每个滑块显示当前值和原版默认值（灰色）。点击任意行的 ↺ 可将该参数重置为原版。点击"应用"将所有更改写入游戏。</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>更改基于原版 XML 之上应用 — 不与简易模式预设互相影响。使用"从简易模式加载"可从当前预设开始。</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>游戏在步行时有 3 个滚轮缩放级别。ZL2 最近（默认视角），ZL3 中距离，ZL4 最远。每个级别独立控制相机距离、高度和水平位置。适用于所有步行状态：站立、行走、奔跑、冲刺和战斗移动。</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>骑乘视角有 4 个缩放级别（ZL0-ZL3）。所有 8 种骑马状态均已同步，确保变速时镜头不会跳动。ZL0 是最近的滚轮缩入级别（若已启用则为第一人称）。</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>锁定敌人时，镜头会切换到战斗追踪模式。TargetRate 控制镜头跟随敌人的灵敏度 — 数值越低，手动控制空间越大。ScreenClampRate 控制敌人在画面中的居中程度。</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>这些参数控制镜头在运动状态间的过渡方式。BlendInTime 是镜头进入某一状态所需的秒数。OffsetLength 控制镜头的横向摆动 — 设为 0 可实现稳定镜头效果，无横向移动。</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>使用灯笼、弓箭或武器瞄准时，镜头会偏移以定位准心。这些 RightOffset 值会按比例缩放自水平偏移，确保激活技能时镜头不会突然横移。</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>此页面生成与 Crimson Desert JSON Mod Manager v8 兼容的 .json 补丁文件。将文件放入 Mod 管理器的 Mods/ 文件夹，你的相机设置将作为可切换的 Mod 出现 — 无需 UCM。</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>补丁通过逐字节对比修改后的相机文件与原版文件，仅记录差异。这意味着补丁与游戏版本相关 — 游戏更新后需重新生成。</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>此信息会显示在 Mod 管理器中，方便其他人了解该 Mod 的用途。</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>选择补丁的数据来源。"当前设置"使用简易模式中正在使用的配置。"从 XML 文件"可选择任意已导出的 playercamerapreset.xml 作为补丁来源。</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>保存 .json 文件后，将其放入 Crimson Desert JSON Mod Manager 安装目录的 Mods/ 文件夹中。它将作为一个可切换的 Mod 出现。</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>搜索属性...</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>可复制粘贴到 NexusMods、Discord 等平台。</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>在下方粘贴预设字符串：</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>来自 NexusMods 评论、Discord 等。</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>在下方粘贴高级设置字符串：</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>必须以 UCM_ADV: 开头（来自高级导出）</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>分享 "{0}" 的字符串：</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>✔  找到 {0} 个高级设置</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>✖  {0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>不是高级设置字符串（必须以 UCM_ADV: 开头）</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>无效的数据内容</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>保存自定义预设</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>保存高级预设</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>为此预设输入一个名称：</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>导出预设字符串</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>为分享命名此预设：</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>选择 Crimson Desert 文件夹（包含 '0010' 文件夹）</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>导出相机 XML</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>导入相机 XML — 直接安装到游戏</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>导入 playercamerapreset.xml</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>选择要补丁的相机 XML</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>保存 JSON 补丁</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>（新建 — 调整滑块）</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>（当前编辑）</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>（当前）</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>全部</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>仅显示已修改</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>游戏目录：  未设置  （点击安装进行浏览）</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>游戏目录：  {0}{1}</value></data>
+
+</root>

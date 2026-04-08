@@ -2,11 +2,13 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Threading;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class App : Application
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
     private static extern int SetCurrentProcessExplicitAppUserModelID(string appID);
 
@@ -31,7 +33,7 @@ public partial class App : Application
         {
             string log = Path.Combine(AppContext.BaseDirectory, "crash.log");
             File.WriteAllText(log, $"{DateTime.Now}\nSTARTUP CRASH:\n{ex}");
-            MessageBox.Show($"Startup crash:\n\n{ex.Message}", "UCM Fatal", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(string.Format(L("Msg_StartupCrash"), ex.Message), L("Title_UcmFatal"), MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
@@ -39,8 +41,8 @@ public partial class App : Application
     {
         string log = Path.Combine(AppContext.BaseDirectory, "crash.log");
         File.WriteAllText(log, $"{DateTime.Now}\n{e.Exception}");
-        MessageBox.Show($"Unhandled error:\n\n{e.Exception.Message}\n\nFull details saved to crash.log",
-            "Ultimate Camera Mod - Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show(string.Format(L("Msg_CrashError"), e.Exception.Message),
+            L("Title_Error"), MessageBoxButton.OK, MessageBoxImage.Error);
         e.Handled = true;
     }
 

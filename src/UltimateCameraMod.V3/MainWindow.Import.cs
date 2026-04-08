@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -44,7 +45,7 @@ public partial class MainWindow : Window
     {
         using var folderDlg = new System.Windows.Forms.FolderBrowserDialog
         {
-            Description = "Select the mod folder (containing manifest.json)",
+            Description = L("Dlg_BrowseModFolder"),
             UseDescriptionForTitle = true
         };
         if (folderDlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
@@ -55,7 +56,7 @@ public partial class MainWindow : Window
             string manifestPath = Path.Combine(folder, "manifest.json");
             if (!File.Exists(manifestPath))
             {
-                SetStatus("No manifest.json found in that folder.", "Error");
+                SetStatus(L("Status_NoManifestFound"), "Error");
                 return;
             }
 
@@ -74,7 +75,7 @@ public partial class MainWindow : Window
 
             if (xmlPath == null)
             {
-                SetStatus("No playercamerapreset.xml found in the mod package.", "Error");
+                SetStatus(L("Status_NoCameraXmlInPackage"), "Error");
                 return;
             }
 
@@ -87,7 +88,7 @@ public partial class MainWindow : Window
             if (shortDesc.Length > 200) shortDesc = shortDesc[..197] + "...";
 
             var metaDlg = await ShowImportMetadataOverlayAsync(
-                $"Importing mod package: {Path.GetFileName(folder)}",
+                string.Format(L("Dlg_ImportingModPackage"), Path.GetFileName(folder)),
                 safeStem,
                 string.IsNullOrWhiteSpace(author) ? null : author,
                 string.IsNullOrWhiteSpace(shortDesc) ? null : shortDesc,
@@ -100,7 +101,7 @@ public partial class MainWindow : Window
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
             {
-                if (!await ShowConfirmOverlayAsync("Import Preset", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+                if (!await ShowConfirmOverlayAsync(L("Title_ImportPresetChooser"), L("Msg_OverwriteExists"), L("Btn_Overwrite"), L("Btn_Cancel")))
                     return;
             }
 
@@ -113,12 +114,12 @@ public partial class MainWindow : Window
             SaveImportedPreset(imported);
             RefreshPresetManagerLists(preserveSelection: false);
             SelectImportedPreset(SanitizeFileStem(imported.Name));
-            QueueSavedToast($"Imported '{imported.Name}'");
-            SetStatus($"Imported mod package as '{imported.Name}'.", "Success");
+            QueueSavedToast(string.Format(L("Status_ImportedModPackage"), imported.Name));
+            SetStatus(string.Format(L("Status_ImportedModPackage"), imported.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_ImportFailed"), ex.Message), "Error");
         }
     }
 
@@ -126,7 +127,7 @@ public partial class MainWindow : Window
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Import playercamerapreset.xml",
+            Title = L("Dlg_ImportXmlFile"),
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = "playercamerapreset.xml"
         };
@@ -140,7 +141,7 @@ public partial class MainWindow : Window
                 baseName = "Imported Camera";
 
             var metaDlg = await ShowImportMetadataOverlayAsync(
-                $"Importing XML: {Path.GetFileName(ofd.FileName)}",
+                string.Format(L("Dlg_ImportingXml"), Path.GetFileName(ofd.FileName)),
                 baseName);
             if (metaDlg == null) return;
 
@@ -150,7 +151,7 @@ public partial class MainWindow : Window
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
             {
-                if (!await ShowConfirmOverlayAsync("Import XML", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+                if (!await ShowConfirmOverlayAsync(L("Msg_ConfirmImportXmlTitle"), L("Msg_OverwriteExists"), L("Btn_Overwrite"), L("Btn_Cancel")))
                     return;
             }
 
@@ -159,12 +160,12 @@ public partial class MainWindow : Window
             SaveImportedPreset(preset);
             RefreshPresetManagerLists();
             SelectImportedPreset(preset.Name);
-            QueueSavedToast("Imported preset saved");
-            SetStatus($"Imported '{preset.Name}' with {preset.Values.Count} values.", "Success");
+            QueueSavedToast(string.Format(L("Status_ImportedXml"), preset.Name, preset.Values.Count));
+            SetStatus(string.Format(L("Status_ImportedXml"), preset.Name, preset.Values.Count), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"XML import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_XmlImportFailed"), ex.Message), "Error");
         }
     }
 
@@ -172,7 +173,7 @@ public partial class MainWindow : Window
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Import 0.paz — extract camera XML",
+            Title = L("Dlg_ImportPaz"),
             Filter = "PAZ files (*.paz)|*.paz|All files (*.*)|*.*",
             FileName = "0.paz"
         };
@@ -186,11 +187,11 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"0.paz import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_PazImportFailed"), ex.Message), "Error");
             return;
         }
 
-        SetGlobalBusy(true, "Decrypting 0.paz\u2026");
+        SetGlobalBusy(true, L("Status_DecryptingPaz"));
         try
         {
             string xml;
@@ -201,21 +202,16 @@ public partial class MainWindow : Window
             catch (Exception decEx)
             {
                 SetGlobalBusy(false);
-                _ = ShowAlertOverlayAsync("PAZ Import Failed",
-                    $"{decEx.Message}\n\n" +
-                    "This usually means the PAZ file is from a different game version than your current install. " +
-                    "The archive index (0.pamt) doesn't match the PAZ file structure.\n\n" +
-                    "TO FIX:\n" +
-                    "Place the matching 0.pamt file in the same folder as the 0.paz you're importing. " +
-                    "Both files must be from the same game version.",
+                _ = ShowAlertOverlayAsync(L("Title_PazImportFailed"),
+                    $"{decEx.Message}\n\n{L("Help_PazImportErrorDetail")}",
                     isError: true);
                 return;
             }
             SetGlobalBusy(false);
 
             var metaDlg = await ShowImportMetadataOverlayAsync(
-                $"Importing PAZ: {Path.GetFileName(pazPath)}",
-                "Imported Camera");
+                string.Format(L("Dlg_ImportingPaz"), Path.GetFileName(pazPath)),
+                L("Dlg_ImportedCamera"));
             if (metaDlg == null) return;
 
             string chosenName = SanitizeFileStem(metaDlg.PresetName);
@@ -224,7 +220,7 @@ public partial class MainWindow : Window
             string importPath = ImportedPresetPath(chosenName);
             if (File.Exists(importPath))
             {
-                if (!await ShowConfirmOverlayAsync("Import 0.paz", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+                if (!await ShowConfirmOverlayAsync(L("Title_ImportPresetChooser"), L("Msg_OverwriteExists"), L("Btn_Overwrite"), L("Btn_Cancel")))
                     return;
             }
 
@@ -233,13 +229,13 @@ public partial class MainWindow : Window
             SaveImportedPreset(imported);
             RefreshPresetManagerLists(preserveSelection: false);
             SelectImportedPreset(SanitizeFileStem(imported.Name));
-            QueueSavedToast($"Imported '{imported.Name}'");
-            SetStatus($"Imported 0.paz as '{imported.Name}'.", "Success");
+            QueueSavedToast(string.Format(L("Status_ImportedPaz"), imported.Name));
+            SetStatus(string.Format(L("Status_ImportedPaz"), imported.Name), "Success");
         }
         catch (Exception ex)
         {
             SetGlobalBusy(false);
-            SetStatus($"0.paz import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_PazImportFailed"), ex.Message), "Error");
         }
     }
 
@@ -247,7 +243,7 @@ public partial class MainWindow : Window
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Import UCM Preset",
+            Title = L("Dlg_ImportUcmPreset"),
             Filter = "UCM Preset (*.ucmpreset)|*.ucmpreset|JSON files (*.json)|*.json|All files (*.*)|*.*",
             FileName = ""
         };
@@ -261,7 +257,7 @@ public partial class MainWindow : Window
 
             if (!root.TryGetProperty("session_xml", out _) && !root.TryGetProperty("RawXml", out _))
             {
-                SetStatus("This file doesn't appear to be a UCM preset (no session_xml found).", "Error");
+                SetStatus(L("Status_NoSessionXmlInPreset"), "Error");
                 return;
             }
 
@@ -271,18 +267,18 @@ public partial class MainWindow : Window
 
             if (File.Exists(destPath))
             {
-                if (!await ShowConfirmOverlayAsync("Import UCM Preset", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+                if (!await ShowConfirmOverlayAsync(L("Dlg_ImportUcmPreset"), L("Msg_OverwriteExists"), L("Btn_Overwrite"), L("Btn_Cancel")))
                     return;
             }
 
             File.Copy(ofd.FileName, destPath, true);
             RefreshPresetManagerLists(preserveSelection: false);
-            QueueSavedToast($"Imported '{name}'");
-            SetStatus($"Imported UCM preset '{name}'.", "Success");
+            QueueSavedToast(string.Format(L("Status_ImportedUcmPreset"), name));
+            SetStatus(string.Format(L("Status_ImportedUcmPreset"), name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_ImportFailed"), ex.Message), "Error");
         }
     }
 
@@ -303,7 +299,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"XML import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_XmlImportFailed"), ex.Message), "Error");
         }
     }
 
@@ -553,7 +549,7 @@ public partial class MainWindow : Window
         string path = ImportedPresetPath(name);
         if (File.Exists(path))
         {
-            if (!await ShowConfirmOverlayAsync("Overwrite Imported Preset", "A preset with this name already exists. Overwrite?", "Overwrite", "Cancel"))
+            if (!await ShowConfirmOverlayAsync(L("Dlg_OverwriteImportedPreset"), L("Msg_OverwriteExists"), L("Btn_Overwrite"), L("Btn_Cancel")))
                     return;
         }
 
@@ -561,14 +557,14 @@ public partial class MainWindow : Window
         SaveImportedPreset(preset);
         RefreshPresetManagerLists();
         SelectImportedPreset(preset.Name);
-        QueueSavedToast("Imported preset saved");
-        SetStatus($"Imported preset '{preset.Name}' saved with {preset.Values.Count} values.", "Success");
+        QueueSavedToast(string.Format(L("Status_ImportedPresetSaved"), preset.Name, preset.Values.Count));
+        SetStatus(string.Format(L("Status_ImportedPresetSaved"), preset.Name, preset.Values.Count), "Success");
     }
 
     private async Task<string> PromptForImportedPresetNameAsync(string suggestedName)
     {
         string initial = SanitizeFileStem(Path.GetFileNameWithoutExtension(suggestedName));
-        string? response = await ShowInputOverlayAsync("Save Imported Preset", "Enter a name for this imported preset:", initial);
+        string? response = await ShowInputOverlayAsync(L("Dlg_SaveImportedPreset"), L("Dlg_EnterImportedPresetName"), initial);
         if (string.IsNullOrWhiteSpace(response))
             return "";
 
@@ -582,7 +578,7 @@ public partial class MainWindow : Window
     {
         if (_selectedPresetManagerItem == null || _selectedPresetManagerItem.KindId != "imported")
         {
-            SetStatus("Select an imported preset first.", "TextSecondary");
+            SetStatus(L("Status_SelectImportedFirst"), "TextSecondary");
             return null;
         }
 
@@ -604,10 +600,10 @@ public partial class MainWindow : Window
     private static string ImportedPresetKindLabel(string sourceType)
     {
         if (sourceType.Equals("paz", StringComparison.OrdinalIgnoreCase))
-            return "Imported 0.paz";
+            return L("Label_KindImportedPaz");
         if (sourceType.Equals("mod", StringComparison.OrdinalIgnoreCase))
-            return "Mod package";
-        return "Imported XML";
+            return L("Label_KindModPackage");
+        return L("Label_KindImportedXml");
     }
 
     private bool TryBuildImportedPresetManagerItem(string filePath, string fileStem,
@@ -706,12 +702,12 @@ public partial class MainWindow : Window
     private static string BuildImportedPresetStatusTextFromMetadata(
         ImportedPresetFingerprint? lastBuilt, ImportedPresetFingerprint? currentFingerprint) =>
         lastBuilt == null
-            ? "Imported only - not yet rebuilt for this game."
+            ? L("Status_ImportedNotRebuilt")
             : currentFingerprint == null
-                ? "Saved preset ready - set a game folder to check rebuild status."
+                ? L("Status_ImportedReadyNoGameFolder")
                 : FingerprintsMatch(lastBuilt, currentFingerprint)
-                    ? "Ready - already rebuilt for this game version."
-                    : "Needs rebuild - current game version differs from the last build.";
+                    ? L("Status_ImportedReadyRebuilt")
+                    : L("Status_ImportedNeedsRebuild");
 
     private static ImportedPresetFingerprint? ReadLastBuiltAgainstFromJson(JsonElement root)
     {
@@ -763,12 +759,12 @@ public partial class MainWindow : Window
         var item = RequireSelectedPresetManagerItem();
         if (item == null || item.KindId != "imported")
         {
-            SetStatus("Select an imported preset first.", "TextSecondary");
+            SetStatus(L("Status_SelectImportedFirst"), "TextSecondary");
             return;
         }
 
         string name = item.Name;
-        if (!await ShowConfirmOverlayAsync("Delete Imported Preset", "Are you sure? This cannot be undone.", "Yes", "Cancel"))
+        if (!await ShowConfirmOverlayAsync(L("Dlg_DeleteImportedPreset"), L("Msg_ConfirmDelete"), L("Btn_Yes"), L("Btn_Cancel")))
                     return;
 
         try
@@ -779,12 +775,12 @@ public partial class MainWindow : Window
 
             _selectedImportedPreset = null;
             RefreshPresetManagerLists(preserveSelection: false);
-            QueueSavedToast("Imported preset deleted");
-            SetStatus($"Imported preset '{name}' deleted.", "Success");
+            QueueSavedToast(string.Format(L("Status_ImportedPresetDeleted"), name));
+            SetStatus(string.Format(L("Status_ImportedPresetDeleted"), name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Delete failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_DeleteFailed"), ex.Message), "Error");
         }
     }
 
@@ -796,7 +792,7 @@ public partial class MainWindow : Window
 
         if (string.IsNullOrWhiteSpace(_gameDir))
         {
-            SetStatus("Game folder not set. v3 needs the current game to rebuild this preset safely.", "Warn");
+            SetStatus(L("Msg_GameFolderNotSetForImport"), "Warn");
             return;
         }
 
@@ -816,11 +812,11 @@ public partial class MainWindow : Window
             MarkImportedPresetAsBuilt(preset, refreshPresetSidebar: false);
             ApplyPresetEditingLockUi();
             QueueSavedToast("Imported preset loaded");
-            SetStatus($"Loaded imported preset '{preset.Name}' into God Mode.", "Success");
+            SetStatus(string.Format(L("Status_LoadedIntoGodMode"), preset.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Load failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -832,7 +828,7 @@ public partial class MainWindow : Window
 
         if (string.IsNullOrWhiteSpace(_gameDir))
         {
-            SetStatus("Game folder not set. v3 needs the current game to rebuild this preset safely.", "Warn");
+            SetStatus(L("Msg_GameFolderNotSetForImport"), "Warn");
             return;
         }
 
@@ -854,7 +850,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Rebuild failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
             return;
         }
 

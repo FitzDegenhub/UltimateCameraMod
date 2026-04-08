@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Paramètres avancés de caméra</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Importer chaîne de paramètres avancés</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Exporter chaîne de preset</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Importer chaîne de preset</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Saisie</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Erreur</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Appliquer au jeu</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Enregistrer</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Supprimer</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Exporter</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Importer</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Installer</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Restaurer l'original</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Fermer</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Annuler</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Obtenir la mise à jour</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Copier dans le presse-papier</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Copié !</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Exporter chaîne</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Importer chaîne</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Enregistrer preset</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Supprimer preset</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Exporter XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Importer XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Réinitialiser par défaut</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Réinitialiser à l'original</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Charger depuis Simple</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Tout développer</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Tout réduire</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Générer depuis les réglages</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Générer depuis fichier XML...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Enregistrer .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Importer &amp; Enregistrer</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Exporter chaîne</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Importer chaîne</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>Offrir un café</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Réinitialiser défauts</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>Presets</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Personnalisé</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Simple</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Avancé</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Expert</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>Distance</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Hauteur</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Décalage horizontal</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Champ de vision</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Caméra de combat</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Caméra centrée</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Caméra de monture</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Style de caméra</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Preset enregistré</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Preset</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Titre</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Version</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Auteur</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>URL Nexus</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Dossier du jeu :</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> régions de patch</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> octets modifiés</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>STYLE DE CAMÉRA</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>PARAMÈTRES GLOBAUX</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>PARTAGER</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>APERÇU CAMÉRA</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>CONTRÔLES AVANCÉS</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>PARAMÈTRES AVANCÉS DE CAMÉRA</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>COMMENT ÇA MARCHE</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>ÉTAPE 1  —  NOMMEZ VOTRE MOD</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>ÉTAPE 2  —  GÉNÉRER LE PATCH</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>ÉTAPE 3  —  ENREGISTRER LE FICHIER</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>SECTION</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>SOUS-ÉLÉMENT</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ATTRIBUT</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>VALEUR</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>ORIGINAL</value></data>
+
+  <!-- ═══ Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  Niveaux de zoom à pied</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  Niveaux de zoom cheval / monture</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  Combat / Verrouillage de cible</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  Lissage caméra / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  Visée / Position du réticule</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Centrer le personnage à l'écran (verrouille le décalage horizontal à 0)</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Aligner la hauteur de caméra de monture sur celle du joueur</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Transitions de caméra fluides (élimine les saccades de zoom entre les états)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>Prêt</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>vérification...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>à jour</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>hors ligne</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Installation...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Installé ! Lancez le jeu.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Restauration de l'original...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Original restauré.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Application...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>{0} modifications appliquées aux fichiers du jeu.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Preset '{0}' chargé.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Preset '{0}' enregistré.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Preset '{0}' supprimé.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Preset '{0}' exporté.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>'{0}' importé et enregistré — cliquez Installer pour appliquer.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>{0} valeurs modifiées exportées.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>{0} valeurs importées.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Exporté vers {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>{0} installé dans le jeu.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>{0} valeurs importées depuis {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Chargé — modifiez les valeurs et cliquez Appliquer au jeu.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Réinitialisé aux défauts (votre preset + original).</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Aucune modification à appliquer.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Aucune valeur modifiée à exporter.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Aucune valeur modifiée à enregistrer.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Sélectionnez d'abord un preset enregistré.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Dossier du jeu non défini.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Aucun dossier de jeu sélectionné.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Installation échouée. Le jeu est-il en cours ?</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Aucune sauvegarde trouvée. La caméra est peut-être déjà en original.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Sauvegarde d'une ancienne version. Vérifiez les fichiers du jeu.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Restauration échouée. Vérifiez les fichiers du jeu.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} disponible</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Contrôles avancés — réglage guidé par paramètre de caméra.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Mode expert — modifiez les valeurs XML brutes et cliquez Appliquer au jeu.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager — générez des fichiers patch pour Crimson Desert Mod Manager v8.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Génération des patches...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>{0} régions de patch générées. Cliquez Enregistrer .json pour exporter.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>{0} enregistré ({1} patches).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Générez d'abord un patch.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>L'export JSON nécessite d'abord les fichiers caméra originaux.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Valeurs chargées depuis le mode Simple.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Tous les contrôles avancés réinitialisés à l'original.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Preset '{0}' chargé ({1} remplacements).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Preset avancé '{0}' enregistré ({1} remplacements).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Preset avancé '{0}' supprimé.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0} modifications de contrôles avancés appliquées au jeu.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Anciennes données v{0} nettoyées. Cliquez Installer pour appliquer vos réglages.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Dossier du jeu non défini. Cliquez Installer pour parcourir.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass : le dossier du jeu est en lecture seule. Déplacez le jeu ou corrigez les permissions.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} lignes affichées  |  {1} modifiées</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} lignes  |  {1} modifiées</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} modification{1}</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Ce dossier ne contient pas 0010\0.paz.
+Vérifiez que vous avez sélectionné le bon dossier Crimson Desert.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Mauvais dossier</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Définissez d'abord un dossier de jeu (cliquez Installer pour parcourir).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Écraser le preset '{0}' avec les valeurs actuelles des curseurs ?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Écraser le preset</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Écraser le preset avancé '{0}' avec les valeurs actuelles ?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Le dossier Xbox / Game Pass du jeu semble être en lecture seule.
+
+Pour corriger, essayez :
+  1. Application Xbox → Crimson Desert → Gérer → Déplacer vers un autre lecteur
+  2. Clic droit sur le dossier du jeu → Propriétés → décocher "Lecture seule" → Appliquer à tous les sous-dossiers</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Permission d'écriture requise</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Installer '{0}' directement dans le jeu ?
+
+Ceci écrasera vos réglages de caméra actuels.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Importer XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Les données de caméra dans votre dossier de jeu ne correspondent pas à la sauvegarde originale de UCM.
+
+Les patches JSON pour les gestionnaires de mods externes doivent utiliser les octets "originaux". Vérifiez le jeu dans Steam (ou annulez les modifications de caméra dans votre gestionnaire de mods), puis réessayez.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>Export JSON impossible</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Erreur non gérée :
+
+{0}
+
+Détails complets enregistrés dans crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Erreur de démarrage :
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Impossible de charger le XML caméra :
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Éditeur avancé</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Éditeur expert</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Contrôles avancés</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Erreur de dialogue dossier : {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Erreur</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Ouvrir le dossier du jeu</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Lisse les transitions, l'amortissement et les décalages de vélocité entre les états de mouvement. Désactiver pour restaurer les transitions de caméra originales.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Ouvre Ko-fi — les pourboires aident à maintenir UCM</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Enregistrer le XML caméra actuel dans un fichier</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Installer un fichier XML caméra directement dans le jeu</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Remplir tous les curseurs depuis vos réglages du mode Simple</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Réinitialiser tous les curseurs aux valeurs XML originales</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Charger les valeurs depuis un fichier playercamerapreset.xml</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Utilise les réglages actuels du mode Simple</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Choisir un fichier playercamerapreset.xml à comparer avec l'original</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Distance gauche/droite de la caméra par rapport au personnage. La caméra centrée verrouille ceci à 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>⚠ La caméra centrée force le personnage au centre de l'écran — décocher pour ajuster</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = original (personnage légèrement à gauche). Le centre est ~0.5. Négatif = plus à gauche, positif = plus à droite.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Limites : Dist 1.5-12.0  |  Hauteur -1.6 à 0.5  |  Décalage -3.0 à 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Décalage 0 = original (perso à gauche)  |  0.5 = centre  |  négatif = plus à gauche  |  positif = plus à droite</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Les mises à jour du jeu écrasent les fichiers modés. Après chaque mise à jour de Crimson Desert, relancez UCM Installer pour restaurer vos réglages de caméra.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Note :</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Chaque curseur affiche la valeur actuelle et la valeur originale par défaut (grisée). Cliquez ↺ sur une ligne pour réinitialiser ce paramètre à l'original. Cliquez Appliquer pour écrire toutes les modifications dans le jeu.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Les modifications s'appliquent par-dessus le XML original — elles n'interagissent pas avec les presets du mode Simple. Utilisez "Charger depuis Simple" pour partir de votre preset actuel.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Le jeu a 3 niveaux de zoom à la molette à pied. ZL2 est le plus proche (vue par défaut), ZL3 moyenne distance, ZL4 le plus éloigné. Chaque niveau contrôle indépendamment la distance, la hauteur et la position horizontale de la caméra. Ceux-ci s'appliquent à tous les états à pied : repos, marche, course, sprint et mouvement de combat.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Les caméras de monture ont 4 niveaux de zoom (ZL0–ZL3). Les 8 états du cheval sont synchronisés pour que la caméra ne saccade pas lors des changements de vitesse. ZL0 est le niveau de zoom le plus proche (ou première personne si activé).</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>Quand vous verrouillez un ennemi, la caméra passe en mode de suivi de combat. TargetRate contrôle l'agressivité du suivi de l'ennemi — des valeurs basses donnent plus de contrôle manuel. ScreenClampRate contrôle le centrage de l'ennemi à l'écran.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Ces paramètres contrôlent les transitions de caméra entre les états de mouvement. BlendInTime est le nombre de secondes pour la transition en douceur vers un état. OffsetLength contrôle le balancement de la caméra — le mettre à 0 donne un effet steadycam sans mouvement latéral.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>Quand vous visez avec la lanterne, l'arc ou le zoom d'arme, la caméra se décale pour positionner le réticule. Ces valeurs RightOffset sont proportionnelles à votre décalage horizontal pour que la caméra ne saute pas latéralement lors de l'activation des capacités.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Cet onglet génère un fichier patch .json compatible avec Crimson Desert JSON Mod Manager v8. Déposez le fichier dans le dossier Mods/ du gestionnaire de mods et vos réglages de caméra apparaîtront comme un mod activable — pas besoin de UCM.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Le patch compare votre fichier caméra modifié avec le fichier original octet par octet et n'enregistre que les différences. Cela signifie qu'il est spécifique à la version du jeu — si le jeu est mis à jour, regénérez le patch.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Ces infos apparaissent dans le gestionnaire de mods pour indiquer ce que fait le mod.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Choisissez les réglages à patcher. Réglages actuels utilise ce qui est actif en mode Simple. Depuis fichier XML permet de choisir un playercamerapreset.xml exporté.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Enregistrez le fichier .json, puis déposez-le dans le dossier Mods/ de votre installation Crimson Desert JSON Mod Manager. Il apparaîtra comme un mod activable.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Rechercher attributs...</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Copiez et collez sur NexusMods, Discord, etc.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Collez une chaîne de preset ci-dessous :</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>Depuis les commentaires NexusMods, Discord, etc.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Collez une chaîne de paramètres avancés ci-dessous :</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Doit commencer par UCM_ADV: (depuis l'export avancé)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Partagez cette chaîne pour "{0}" :</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>✔  {0} paramètres avancés trouvés</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>✖  {0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Pas une chaîne de paramètres avancés (doit commencer par UCM_ADV:)</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Données invalides</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Enregistrer preset personnalisé</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Enregistrer preset avancé</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Entrez un nom pour ce preset :</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Exporter chaîne de preset</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Nommez ce preset pour le partage :</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Sélectionnez le dossier Crimson Desert (contient le dossier '0010')</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Exporter XML caméra</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Importer XML caméra — installé directement dans le jeu</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Importer playercamerapreset.xml</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Sélectionnez le XML caméra à patcher</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Enregistrer patch JSON</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(nouveau — ajustez les curseurs)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(modifications en cours)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(actuel)</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>Tout</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Modifiés uniquement</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Dossier du jeu :  NON DÉFINI  (cliquez Installer pour parcourir)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Dossier du jeu :  {0}{1}</value></data>
+
+</root>

@@ -1,10 +1,12 @@
 using System.Windows;
 using System.Windows.Media;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class InputDialog : Window
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public string ResponseText { get; private set; } = "";
     public string InitialText
     {

@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -33,7 +34,7 @@ public partial class MainWindow : Window
         if (sender is System.Windows.Controls.Button btn && btn.DataContext is CollectionViewGroup group)
             groupName = group.Name?.ToString() ?? "";
 
-        if (groupName == "UCM presets")
+        if (groupName == L("Label_UcmPresetsGroup"))
         {
             var ctrl = new CommunityBrowserDialog(UcmPresetsDir, () =>
             {
@@ -46,7 +47,7 @@ public partial class MainWindow : Window
             },
             catalogUrl: UcmPresetsCatalogUrl,
             rawBaseUrl: UcmPresetsRawBaseUrl,
-            title: "UCM Presets",
+            title: L("Title_UcmPresets"),
             needsSessionXmlBake: true);
             ctrl.OnCloseRequested = () => CloseOverlay();
             _ = ShowOverlayAsync(ctrl, width: 660, height: 700);
@@ -57,7 +58,7 @@ public partial class MainWindow : Window
             {
                 Dispatcher.Invoke(() => RefreshPresetManagerLists(preserveSelection: true));
             },
-            title: "Community Presets");
+            title: L("Title_CommunityPresets"));
             ctrl.OnCloseRequested = () => CloseOverlay();
             _ = ShowOverlayAsync(ctrl, width: 660, height: 700);
         }
@@ -93,14 +94,14 @@ public partial class MainWindow : Window
                 if (isOutdated)
                 {
                     VersionDot.Fill = new SolidColorBrush(Color.FromRgb(0xF4, 0x43, 0x36));
-                    VersionStatus.Text = $"v{latest} available";
+                    VersionStatus.Text = string.Format(L("Status_VersionAvailable"), latest);
                     VersionStatus.Foreground = new SolidColorBrush(Color.FromRgb(0xF4, 0x43, 0x36));
                     VersionUpdateBtn.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     VersionDot.Fill = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
-                    VersionStatus.Text = "up to date";
+                    VersionStatus.Text = L("Status_UpToDate");
                     VersionStatus.Foreground = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
                 }
             });
@@ -110,7 +111,7 @@ public partial class MainWindow : Window
             Dispatcher.Invoke(() =>
             {
                 VersionDot.Fill = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
-                VersionStatus.Text = "offline";
+                VersionStatus.Text = L("Status_Offline");
                 VersionStatus.Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
             });
         }
@@ -222,8 +223,7 @@ public partial class MainWindow : Window
                         CameraMod.RefreshVanillaBackupFromLivePaz(gameDir, _ => { });
                         Dispatcher.BeginInvoke(() =>
                         {
-                            _gameUpdatePostRefreshNote =
-                                "Camera backup was refreshed from your current game files. Use Install when you are ready to re-apply your preset.";
+                            _gameUpdatePostRefreshNote = L("Status_BackupRefreshed");
                             RefreshGameUpdateNotice();
                         }, DispatcherPriority.Background);
                     }
@@ -231,8 +231,7 @@ public partial class MainWindow : Window
                     {
                         Dispatcher.BeginInvoke(() =>
                         {
-                            _gameUpdatePostRefreshNote =
-                                "Could not refresh camera backup automatically. If the camera is still modded, verify game files in Steam and restart UCM.";
+                            _gameUpdatePostRefreshNote = L("Status_BackupRefreshFailed");
                             RefreshGameUpdateNotice();
                         }, DispatcherPriority.Background);
                     }
@@ -388,9 +387,9 @@ public partial class MainWindow : Window
         if (!item.HasUpdate) return;
 
         // Ask if they want to duplicate first
-        var result = await ShowThreeChoiceOverlayAsync("Preset Update",
-            $"An update is available for '{item.Name}'.\n\nWould you like to save a copy of the current version to My Presets before updating?",
-            "Yes, backup first", "No, just update", "Cancel");
+        var result = await ShowThreeChoiceOverlayAsync(L("Title_PresetUpdate"),
+            string.Format(L("Msg_PresetUpdateAvailable"), item.Name),
+            L("Btn_YesBackupFirst"), L("Btn_NoJustUpdate"), L("Btn_Cancel"));
 
         if (result == MessageBoxResult.Cancel) return;
 
@@ -413,7 +412,7 @@ public partial class MainWindow : Window
             }
             catch (Exception ex)
             {
-                SetStatus($"Failed to duplicate: {ex.Message}", "Error");
+                SetStatus(string.Format(L("Msg_FailedToDuplicate"), ex.Message), "Error");
                 return;
             }
         }
@@ -464,11 +463,11 @@ public partial class MainWindow : Window
             });
 
             QueueSavedToast($"Updated '{item.Name}'");
-            SetStatus($"Preset '{item.Name}' updated.", "Success");
+            SetStatus(string.Format(L("Status_PresetUpdated"), item.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Update failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_UpdateFailed"), ex.Message), "Error");
         }
     }
 

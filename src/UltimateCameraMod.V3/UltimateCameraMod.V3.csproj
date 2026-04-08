@@ -13,7 +13,15 @@
     <Authors>0xFitz</Authors>
     <Description>Export-first camera workflow for Crimson Desert Mod Manager</Description>
     <ApplicationIcon>Assets\ucm.ico</ApplicationIcon>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\ucm.ico" />

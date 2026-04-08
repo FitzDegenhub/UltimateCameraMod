@@ -1,11 +1,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class NewPresetDialog : UserControl
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public string PresetName { get; private set; } = "";
     public string AuthorName { get; private set; } = "";
     public string Description { get; private set; } = "";
@@ -42,7 +44,7 @@ public partial class NewPresetDialog : UserControl
     {
         if (string.IsNullOrWhiteSpace(NameBox.Text))
         {
-            MessageBox.Show("Please enter a name.", "New Preset", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(L("Dlg_EnterPresetName"), L("Btn_New"), MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
         PresetName = NameBox.Text.Trim();

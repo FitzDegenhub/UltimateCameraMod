@@ -5,11 +5,13 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public class TutorialOverlay : Canvas
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     private readonly List<TutorialStep> _steps;
     private int _currentStep;
     private readonly Action _onComplete;
@@ -152,7 +154,7 @@ public class TutorialOverlay : Canvas
     {
         var stepCounter = new TextBlock
         {
-            Text = $"Step {stepIndex + 1} of {totalSteps}",
+            Text = string.Format(L("Tutorial_StepCounter"), stepIndex + 1, totalSteps),
             FontSize = 10,
             Foreground = new SolidColorBrush(Color.FromRgb(0x66, 0x66, 0x66)),
             Margin = new Thickness(0, 0, 0, 10)
@@ -177,7 +179,7 @@ public class TutorialOverlay : Canvas
 
         var nextBtn = new Button
         {
-            Content = stepIndex < totalSteps - 1 ? "Next" : "Get Started",
+            Content = stepIndex < totalSteps - 1 ? L("Btn_Next") : L("Btn_GetStarted"),
             Width = stepIndex < totalSteps - 1 ? 80 : 110,
             Height = 32, FontSize = 12, FontWeight = FontWeights.SemiBold,
             Background = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
@@ -189,7 +191,7 @@ public class TutorialOverlay : Canvas
 
         var skipBtn = new Button
         {
-            Content = "Skip tutorial",
+            Content = L("Btn_SkipTutorial"),
             Width = 90, Height = 32, FontSize = 11,
             Background = Brushes.Transparent,
             Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88)),

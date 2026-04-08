@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Avancerade kamerainställningar</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Importera avancerad inställningssträng</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Exportera preset-sträng</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Importera preset-sträng</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Importera preset</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Inmatning</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Fel</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>EXPORTERA FÖR DELNING</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>COMMUNITY-PRESETS</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM-PRESETS</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Preset-detaljer</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>Välj preset-typ</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Rå XML-import</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Spelmapp ej angiven</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode-fel</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune-fel</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Preset-uppdatering</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Speluppdatering upptäckt</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>Spelfiler ändrade</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM Kritiskt fel</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ-import misslyckades</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>Importera God Mode-åsidosättningar</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode-åsidosättningar</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Applicera på spelet</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Spara</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Radera</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Exportera</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Importera</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Installera</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Installera i spelet</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Återställ vanilla</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Återställ</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Stäng</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>Stäng UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Avbryt</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Ja</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Nej</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Hämta uppdatering</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Kopiera till urklipp</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Kopierat!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Exportera sträng</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Importera sträng</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Spara preset</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Radera preset</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Exportera XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Importera XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Återställ standard</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Återställ till vanilla</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Ladda från Enkel</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Expandera alla</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Fäll ihop alla</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Generera från nuvarande inställningar</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Generera från XML-fil...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Spara .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Importera &amp; Spara</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Exportera sträng</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Importera sträng</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>Bjud på en kaffe</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Återställ standard</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Ny</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Duplicera</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Byt namn</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>Öppna</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Ångra</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Försök igen</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Uppdatera</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>Ladda ner</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>Nedladdad</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>Laddar ner...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Skapa</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Skriv över</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Förbered export</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Spara export...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>Spara .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>Spara .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>Spara 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>Spara .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Bläddra</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Uppfattat</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>Snooze 7 dagar</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>Snooze 7d</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Avfärda</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>Öppna skrivskyddat</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Ja, säkerhetskopiera först</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Nej, bara uppdatera</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Ta bort modifierad 0.paz</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Borttagen</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Rensa</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Återställ</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>Nästa</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Kom igång</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Hoppa över guiden</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Visa på Nexus</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>Presets</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Anpassad</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Snabb</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Fine Tune</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Enkel</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Avancerat</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Expert</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>Avstånd</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Höjd</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Horisontell förskjutning</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Synfält</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Stridskamera</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Centrerad kamera</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Riddjurskamera</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Kamerastil</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Sparad preset</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Preset</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Titel</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Version</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Skapare</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Skapare (valfritt)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus-URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Beskrivning</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Beskrivning (valfritt)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL -- Nexus / GitHub / etc. (valfritt)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Spelmapp:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> patchregioner</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> byte ändrade</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> regioner</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>AKTIV</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Utkast</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Din arbetskopia tills du sparar en namngiven preset.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Format</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Modd-info &amp; filnamn</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Förbered export</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Spara</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Namn</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Namn *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>Sök</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Inlåsningszoom</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Auto-rotation vid inlåsning</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>Centrera HUD</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Säkert område</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Arbetar...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Sparat</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Installerat</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Återställt</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Ångrad</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>ELLER</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>KAMERASTIL</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>GLOBALA INSTÄLLNINGAR</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>DELA</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>KAMERAFÖRHANDSGRANSKNING</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>SYNFÄLT</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>AVANCERADE KONTROLLER</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>AVANCERADE KAMERAINSTÄLLNINGAR</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>SÅ FUNGERAR DET</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>STEG 1  --  NAMNGE DIN MODD</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>STEG 2  --  GENERERA PATCHEN</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>STEG 3  --  SPARA FILEN</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>PRESETS</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM SNABB</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>ANPASSADE FÖRSKJUTNINGAR</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>CENTRERA HUD</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>SEKTION</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>UNDERELEMENT</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ATTRIBUT</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>VÄRDE</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>VANILLA</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  --  Zoomnivåer till fots</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  --  Häst-/riddjurszoomnivåer</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  --  Strid / Inlåsning</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  --  Kamerautjämning / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  --  Siktning / Hårkorsets position</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Zoomnivåer till fots</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - Häst-/riddjurszoomnivåer</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Globalt / FOV-täckning</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Specialriddjur / Förflyttning</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Strid / Inlåsning</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Kamerautjämning / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Siktning / Hårkorsets position</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Centrera karaktär på skärmen (låser horisontell förskjutning till 0)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Centrera karaktär på skärmen</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Matcha riddjurs-/hästhöjd med spelarens kamerahöjd</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Mjuka kameraövergångar (eliminerar zoomryck mellan lägen)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Inaktivera kamerasnäpp mot mål vid inlåsning  --  Tack till @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Centrera spel-HUD inom maxbredd</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - moddhanterare</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Moddhanterarpaket (mapp)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>Kamera-XML-fil (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ-arkiv (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON-patch från JSON Mod Manager eller CDUMM</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml-fil</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>.paz-fil med kameradata</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>UCM-preset-fil från en annan användare</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>Hanteras av UCM</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Rekommenderat)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Full manuell kontroll</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM-presets</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>Community-presets</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Mina presets</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>Importerade</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>Standard</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM-stil</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>Community</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Min preset</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>Importerad XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>Importerad 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Moddpaket</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Vit = vanilla</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Guld = ändrad av UCM Quick/Fine Tune</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Grön = helig (dina God Mode-ändringar, skyddade från ombyggnader)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>Redo</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>kontrollerar...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>uppdaterad</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>offline</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Installerar...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Installerat! Starta spelet.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Återställer vanilla...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Vanilla återställd.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Applicerar...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>Applicerade {0} ändringar på spelfiler.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Preset '{0}' laddad.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Preset '{0}' sparad.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Preset '{0}' raderad.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Preset '{0}' exporterad.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>Preset '{0}' uppdaterad.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>Importerade '{0}' och sparade -- tryck Installera för att applicera.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>Exporterade {0} ändrade värden.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>Importerade {0} värden.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Exporterade till {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>Installerade {0} i spelet.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>Importerade {0} värden från {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Laddat -- redigera värden och klicka Applicera på spelet.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Återställt till standard (din preset + vanilla).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>Återställt till UCM Quick-standard plus vanilla.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Inga ändringar att applicera.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Inga ändrade värden att exportera.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Inga ändrade värden att spara.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Välj en sparad preset först.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>Välj en importerad preset först.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Spelmapp ej angiven.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Ingen spelmapp vald.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Installation misslyckades. Körs spelet?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Installation misslyckades: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Ingen säkerhetskopia hittad. Kameran kan redan vara vanilla.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Säkerhetskopia från gammal version. Verifiera spelfiler.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Återställning misslyckades. Verifiera spelfiler.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Återställning misslyckades: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Vanilla-kamera återställd från säkerhetskopia.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Ingen säkerhetskopia hittad. Spelkameran kan redan vara vanilla.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Spelet uppdaterades sedan senaste installationen -- säkerhetskopian har uppdaterats. Verifiera spelfiler på Steam och installera igen.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} tillgänglig</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Avancerade kontroller -- guidad per-parameter kamerajustering.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Expertläge -- redigera rå XML-värden och klicka Applicera på spelet.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager -- generera Crimson Desert Mod Manager v8-patchfiler.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Genererar patchar...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>Genererade {0} patchregioner. Klicka Spara .json för att exportera.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>Sparade {0} ({1} patchar).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Generera en patch först.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON-export behöver vanilla-kamerafiler först.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Laddade värden från Enkel-läge.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Alla avancerade kontroller återställda till vanilla.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Laddade preset '{0}' ({1} åsidosättningar).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Avancerad preset '{0}' sparad ({1} åsidosättningar).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Avancerad preset '{0}' raderad.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>Applicerade {0} avancerade kontroll-ändringar på spelet.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Rensade gammal v{0}-data. Klicka Installera för att applicera dina inställningar.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Spelmapp ej angiven. Klicka Installera så får du bläddra.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: spelmappen är skrivskyddad. Flytta spelet eller fixa mappbehörigheter.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} rader visas  |  {1} ändrade</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} rader  |  {1} ändrade</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} rader  |  {1} ändrade  |  {2} heliga</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} ändring{1}</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Snabb -- bred kameraformning med förhandsgranskningar och vanliga kontroller.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune -- kurerad djupjustering ovanpå UCM Snabb.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode -- redigera rå XML-värden och exportera som JSON.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Helig redigering: detta värde skyddas nu från Quick/Fine Tune-ombyggnader.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>Lås upp denna preset i sidofältet för att återställa God Mode-värden.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Installerade nuvarande session i spelet. Kameradata uppdaterad -- {0} byte ({1} komprimerat i PAZ).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Installation klar; kameraposten i PAZ var oförändrad ({0} byte data, {1} komprimerat).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Installerar kamera i spelet...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Förbereder nuvarande sessions-XML...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>Installerar HUD-centrering...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Återställer vanilla-HUD...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Återställer vanilla-kamera...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>Nedladdning misslyckades: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Uppdatering misslyckades: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>Import misslyckades: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Export misslyckades: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Radering misslyckades: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Laddning misslyckades: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Återställning misslyckades: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Förberedelse misslyckades: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Sparning misslyckades: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD-installation misslyckades: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD-återställning misslyckades: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML-import misslyckades: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz-import misslyckades: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>Ingen manifest.json hittades i den mappen.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Ingen playercamerapreset.xml hittades i moddpaketet.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>Filen verkar inte vara en UCM-preset (ingen session_xml hittad).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Hämtar katalog...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Hämtar community-katalog...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} presets tillgängliga, {1} nedladdade</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>Inga community-presets tillgängliga än.
+
+Kolla tillbaka senare eller bidra med din egen!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Redo att spara. Klicka Spara när du är redo.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Förbered exporten först.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>Ingen sessions-XML tillgänglig. Redigera inställningar eller ladda en preset först.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>Sessions-XML är tom.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Validerar kodning för detta spel...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Skriver arkiv (kopiering + patchning)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>Dekrypterar 0.paz...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Exporterar kamera-XML...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Installerar kamera-XML...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>Sparade {0}.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>Sparade {0} ({1} patchar).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>Importerad preset '{0}' sparad med {1} värden.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Importerade moddpaket som '{0}'.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>Importerade '{0}' med {1} värden.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>Importerade 0.paz som '{0}'.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>Importerade UCM-preset '{0}'.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Importerad preset '{0}' raderad.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Laddade importerad preset '{0}' i God Mode.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Kamerans säkerhetskopia uppdaterades från dina spelfiler. Använd Installera när du vill applicera din preset igen.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Kunde inte uppdatera kamerans säkerhetskopia automatiskt. Om kameran fortfarande är moddad, verifiera spelfiler på Steam och starta om UCM.</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Endast importerad - inte ännu ombyggd för detta spel.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Sparad preset redo - ange en spelmapp för att kontrollera ombyggnadsstatus.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Redo - redan ombyggd för denna spelversion.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Behöver ombyggnad - nuvarande spelversion skiljer sig från senaste bygget.</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Den mappen innehåller inte 0010\0.paz.
+Se till att du valde rätt Crimson Desert-katalog.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Fel mapp</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Ange en spelmapp först (klicka Installera för att bläddra).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Skriv över preset '{0}' med nuvarande reglagevärden?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Skriv över preset</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Skriv över avancerad preset '{0}' med nuvarande värden?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass-spelmappen verkar vara skrivskyddad.
+
+Prova något av följande:
+  1. Xbox-appen -> Crimson Desert -> Hantera -> Flytta till annan enhet
+  2. Högerklicka på spelmappen -> Egenskaper -> avmarkera "Skrivskyddad" -> Tillämpa på alla undermappar</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Skrivbehörighet krävs</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Installera '{0}' direkt i spelet?
+
+Detta skriver över dina nuvarande kamerainställningar.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Importera XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Kameradata i din spelmapp matchar inte UCM:s vanilla-säkerhetskopia.
+
+JSON-patchar för externa moddhanterare måste använda vanilla-"originalbyte". Verifiera spelet på Steam (eller återställ kameraändringar i din moddhanterare) och försök igen.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>Kan inte exportera JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Ohanterat fel:
+
+{0}
+
+Fullständig information sparad i crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Startfel:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Startkrasch:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Kunde inte ladda kamera-XML:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Avancerad redigerare</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Expert-redigerare</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Avancerade kontroller</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Mappdialogfel: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Fel</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>En preset med detta namn finns redan. Skriv över?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Är du säker? Detta kan inte ångras.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>En uppdatering finns för '{0}'.
+
+Vill du spara en kopia av nuvarande version till Mina presets innan uppdatering?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>Denna preset importerades som rå XML och hanteras inte av UCM.
+
+UCM Quick och Fine Tune använder UCM:s kameraregelsystem som skulle åsidosätta värden från den importerade modden. För att skydda din import är bara God Mode-redigering tillgänglig.
+
+För att använda UCM-funktioner som Steadycam och FOV-kontroll, skapa en ny UCM-preset från sidofältet istället.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune och God Mode behöver din spelmapp för att läsa kameradata. Ange din spelmapp först.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM-presets är skyddade. {0}-ändringar kan korrumpera presetens noggrant justerade värden.
+
+Duplicera denna preset först för att skapa din egen redigerbara kopia, sedan kan du använda Fine Tune eller God Mode fritt.
+
+Öppna {0} i skrivskyddat läge ändå? (Du kan bläddra bland värden men ändringar sparas inte.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>Dina spelkamerafiler har ändrats av UCM v2.x, en annan kameramodd eller en moddhanterare. UCM behöver de ursprungliga vanilla-filerna för att skapa en ren säkerhetskopia.
+
+Klicka på knappen nedan för att ta bort den ändrade filen, verifiera sedan på Steam för att ladda ner originalet.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz raderad. Nu:
+1. Stäng UCM
+2. Steam -> Crimson Desert -> Egenskaper -> Installerade filer -> "Verifiera spelfilernas integritet"
+3. Starta om UCM efter verifieringen</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Kunde inte radera: {0}
+Radera manuellt: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Ingen matchande 0.pamt hittades bredvid den valda 0.paz. Ange din spelmapp så att v3 kan använda nuvarande 0010\0.pamt som arkivindex.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Spelmapp ej angiven. v3 behöver det nuvarande spelet för att bygga om denna preset säkert.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Duplicering misslyckades: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON-export behöver vanilla-kamerafiler (verifiera spelet och försök igen).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Installation klar men gav oväntat resultat. Kameran kanske inte applicerades korrekt -- starta spelet för att verifiera.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Återställning klar men resultatet kunde inte bekräftas. Starta spelet för att kontrollera om kameran är vanilla igen.</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Öppna spelmapp (eller bläddra för att ange manuellt)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Jämnar ut blandning, dämpning och hastighetsförskjutningar mellan rörelselägen. Inaktivera för att återställa vanilla-kameraövergångar.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Öppnar Ko-fi -- dricks hjälper UCM att fortsätta</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Spara nuvarande live-kamera-XML till en fil</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Installera en kamera-XML-fil direkt i spelet</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Fyll alla reglage från dina nuvarande Enkel-inställningar</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Återställ alla reglage till vanilla XML-värden</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Ladda värden från en playercamerapreset.xml-fil</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Använder det som är konfigurerat i Enkel-läge just nu</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Välj en playercamerapreset.xml-fil att jämföra mot vanilla</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Importera en kamera-XML eller ett PAZ-arkiv som preset</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>Dela som JSON (moddhanterare), sessions-XML eller patchad 0.paz -- använder din nuvarande UCM-session.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>Återställ det ursprungliga kameradatat från UCM:s säkerhetskopia.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Applicera nuvarande UCM-session direkt på spelfilerna.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Ångra senaste reglageändringen</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>Välj en mapp med manifest.json -- importerar namn, skapare och kamera-XML automatiskt</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>Välj en playercamerapreset.xml-fil direkt</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>Välj en 0.paz-fil -- UCM extraherar kamera-XML från den</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Importera en .ucmpreset-fil delad av en annan UCM-användare</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Dölj denna påminnelse i en vecka</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Dölj tills nästa start</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Uppdatering tillgänglig -- klicka för att ladda ner senaste versionen</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Bläddra och ladda ner presets</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Lägger till detta antal grader till varje Fov och InDoorFov i kamerafilen. Inomhus- och utomhusrader startar från olika vanilla-värden, så God Mode visar många olika slutvärden -- inte en vinkel överallt.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Separat från horisontell förskjutning ~0.5: det värdet är ofta vanillans laterala förskjutning i XML:en. Det här alternativet tvingar förskjutning till 0 och tillämpar starkare centreringsregler (RightOffset mot 0 där det stöds).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>När ikryssad stannar kameran på plats istället för att snäppa runt för att möta det inlåsta målet.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Återställ till vanilla ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Vanilla: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>Öppna skaparsida i webbläsaren</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Hur långt vänster/höger kameran sitter från karaktären. Centrerad kamera låser detta till 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Centrerad kamera tvingar karaktären till skärmens mitt -- avmarkera för att justera</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = vanilla (karaktär något till vänster). Mitten är ~0.5. Negativt = mer åt vänster, positivt = mer åt höger.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>Vänster/höger-inramning som delta på RightOffset (till fots, riddjur, sikte och relaterade rader). 0 matchar vanillans sidförskjutning. Öka mot ~0.5 för att dra mot geometriskt centrum i filen; negativa värden förskjuter mer åt vänster. Matchar top-down FOV-förhandsgranskningen. Centrerad kamera nedan är separat: den låser detta reglage till 0 och tillämpar starkare centrering.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Gränser: Avstånd 1.5-12.0  |  Höjd -1.6 till 0.5  |  Förskjutning -3.0 till 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Förskjutning 0 = vanilla (karaktär vänster)  |  0.5 = centrum  |  negativt = mer vänster  |  positivt = mer höger</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Speluppdateringar skriver över moddade filer. Efter varje Crimson Desert-uppdatering, kör UCM Installera igen för att återställa dina kamerainställningar.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>OBS:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Varje reglage visar nuvarande värde och vanilla-standard (nedtonat). Klicka på varje rad för att återställa den parametern till vanilla. Tryck Applicera för att skriva alla ändringar till spelet.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Ändringar appliceras ovanpå vanilla-XML -- de interagerar inte med presets i Enkel-läge. Använd "Ladda från Enkel" för att starta från din nuvarande preset.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Spelet har 3 scroll-zoomnivåer till fots. ZL2 är närmast (standardvy), ZL3 mellanläge, ZL4 längst bort. Varje nivå kontrollerar kameraavstånd, höjd och horisontell position separat. Dessa gäller alla tillstånd till fots: stilla, gång, jogg, sprint och stridsrörelse.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Hästkameror använder de 2 vanilla-zoomnivåerna (ZL2-ZL3). Alla 8 häst-tillstånd synkroniseras så att kameran inte rycker vid hastighetsändringar, men behåller spelets riktiga zoomstege.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>När du låser på en fiende byter kameran till stridsföljningsläge. TargetRate styr hur aggressivt kameran följer fienden -- lägre värden ger mer manuell kontroll. ScreenClampRate styr hur centrerad fienden hålls på skärmen.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Dessa styr hur kameran övergår mellan rörelselägen. BlendInTime är antal sekunder kameran tar för att mjukt gå in i ett tillstånd. OffsetLength styr kamerasvaj -- att sätta det till 0 ger steadycam-känsla utan sidorörelse.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>När du siktar med lykta, båge eller vapenzoomen förskjuts kameran för att positionera hårkorset. Dessa RightOffset-värden skalas proportionellt från din horisontella förskjutning så att kameran inte snäpper i sidled vid aktivering av förmågor.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Denna flik genererar en .json-patchfil kompatibel med Crimson Desert JSON Mod Manager v8. Lägg filen i moddhanterarens Mods/-mapp så visas dina kamerainställningar som en växlingsbar modd -- utan UCM.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Patchen fungerar genom att jämföra din ändrade kamerafil mot vanilla-filen byte för byte och spara bara skillnaderna. Det betyder att den är spelversionsspecifik -- om spelet uppdateras, generera patchen igen.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Denna info visas i moddhanteraren så att folk vet vad modden är.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Välj vilka inställningar att patcha från. Nuvarande inställningar använder det som är aktivt i Enkel-läge just nu. Från XML-fil låter dig välja valfri exporterad playercamerapreset.xml att patcha från istället.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Spara .json-filen, lägg den sedan i Mods/-mappen i din Crimson Desert JSON Mod Manager-installation. Den visas som en växlingsbar modd.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Sök attribut...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>Detta är det snabba, kurerade UCM-lagret: bred kameraformning, förhandsgranskningar och de vanligaste kameravalen.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune är det kurerade djupjusteringslagret. Det utgår från din UCM Quick-uppsättning och låter dig förfina de fält UCM avsiktligt exponerar.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode listar varje rad i filen. Reglage här redigerar specifika attribut -- de siffrorna bör matcha samma attribut i God Mode. Andra rader ändras fortfarande av Quick (FOV-boost, stil, strid, steadycam osv.) eller vanilla, så förvänta dig inte att ett reglage förklarar hela rutnätet.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode exponerar de råa kameraraderna. Använd det när UCM Quick inte räcker och du vill hoppa direkt till full direktkontroll, eller efter UCM Fine Tune om du vill gå ännu djupare.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>Värden här är den sammanslagna sessionen: Quick + Fine Tune + eventuella ändringar i detta rutnät. FOV i Quick är ett delta som läggs till per rad (Fov och InDoorFov), så vinklar skiljer sig per tillstånd. Fine Tune matchar här rad för rad bara för de attribut dessa reglage kontrollerar.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Dessa rader täcker bredare FOV-normalisering och delade kamerasystem utanför de grundläggande till-fots- och hästgrupperna. Använd dem när du vill att UCM Fine Tune ska spegla hela moddytan, inklusive inlåsningsfamiljer, krigsmaskintillstånd och simkameror.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Elefant, wyvern, kanot, krigsmaskin, kvast och förflyttningsrelaterade kamerafamiljer har alla eget zoombeteende. Dessa kontroller exponerar de extra riddjursvärdena som modden redan ändrar bakom kulisserna.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Justerar kameraavståndet vid inlåsning eller försvar av ett mål, relativt till ditt avstånd till fots. 0% är sömlöst med Steadycam. Negativa värden zoomar in för en filmisk fokuseffekt; positiva värden drar ut för mer slagfältsöversikt.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Centrerar spel-HUD-element inom angiven maxbredd (pixlar). Användbart för ultrabred-skärmar där HUD-element är för utspridda. Påverkar bara spel-HUD, inte menyer. Tack till wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>Bläddra bland kamerapresets delade av UCM-communityt. Nedladdade presets visas i sidofältet.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Bläddra och ladda ner officiella UCM-kamerapresets. Nedladdade presets visas i sidofältet.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM hanterar över 150 kameratillstånd bakom kulisserna -- FOV-konsekvens genom strid, försvar, riddjur och inlåsning; mjuka övergångar mellan alla tillstånd; avståndsskalning så inlåsning inte snäpper inåt. Snabb-reglage och Fine Tune bygger tryggt ovanpå dessa regler. God Mode låter dig åsidosätta individuella värden vid behov.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>Startar från spelets vanilla-kamera-XML utan UCM-regler. UCM Quick och Fine Tune är inaktiverade eftersom deras reglage skulle skriva över dina manuella ändringar -- UCM ändrar hundratals värden i strid, riddjur, inlåsning och utjämning, vilket skulle krocka med handinstallda värden. Bara God Mode finns tillgängligt för direkt XML-redigering. Använd detta vid import från en annan kameramodd eller när du behöver full kontroll över varje värde.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>Importer sparas i mappen import_presets bredvid denna app och listas under Importerade i sidofältet.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>Välj vilken typ av fil du vill importera.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Klistra in UCM_ADV:-strängen för att importera avancerade inställningar.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>Börja från UCM Quick, ladda något från Preset-hanteraren eller importera en preset från en skapare.</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Kopiera och klistra in på NexusMods, Discord osv.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Klistra in en preset-sträng nedan:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>Från NexusMods-kommentarer, Discord osv.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Klistra in en avancerad inställningssträng nedan:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Måste börja med UCM_ADV: (från Avancerad export)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Dela denna sträng för "{0}":</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} avancerade inställningar hittade</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Inte en avancerad inställningssträng (måste börja med UCM_ADV:)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>Måste börja med UCM_ADV:</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Ogiltig payload</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Spara anpassad preset</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Spara avancerad preset</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Ange ett namn för denna preset:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>Ange ett namn för denna importerade preset:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Exportera preset-sträng</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Namnge denna preset för delning:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Välj Crimson Desert-mapp (innehåller mappen '0010')</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Välj moddmappen (innehåller manifest.json)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Exportera kamera-XML</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Importera kamera-XML -- installerar direkt i spelet</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Importera playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>Importera 0.paz -- extrahera kamera-XML</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Importera UCM Preset</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Välj kamera-XML att patcha</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Spara JSON-patch</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Spara kamera-XML</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Spara patchad 0.paz</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>Spara UCM Preset</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>Spara importerad preset</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(ny -- justera reglage)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(nuvarande ändringar)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(nuvarande)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>Välj en importkälla</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>Radera importerad preset</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>Skriv över importerad preset</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Importerar moddpaket: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>Importerar XML: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>Importerar PAZ: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Exporterad preset</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>Importerad kamera</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM Preset - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>Alla</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Bara ändrade</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Bara heliga</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Spelmapp:  EJ ANGIVEN  (klicka Installera för att bläddra)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Spelmapp:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>Stäng dialog</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Steg {0} av {1}</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>Exporterar en byte-patch .json som du kan importera i JSON Mod Manager eller Crimson Desert Ultimate Mods Manager. Använd vilken moddhanterare du föredrar -- mottagare behöver inte UCM.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>Exporterar playercamerapreset.xml med samma normalisering som UCM använder vid installation (UTF-8 BOM, kommentarer borttagna). Bra för Nexus-textuppladdningar, handredigering eller återimport i UCM. Den som installerar behöver fortfarande matchande komprimerade poststorlekar för sitt bygge av spelet.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Drop-in-arkiv i Nexus-stil: en kopia av ditt spels 0010/0.paz med bara kameradata uppdaterad till din nuvarande UCM-session -- spelare utan JSON-moddhanterare kan ersätta en fil. Det fungerar bara för samma spelversion som din installation (samma arkivlayout); nämn det på moddsidan. Berätta för nedladdare att säkerhetskopiera vanilla 0010/0.paz före byte.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Exporterar din nuvarande session som en .ucmpreset-fil som andra UCM-användare kan lägga i sin presets-mapp eller dela via community-katalogen. Innehåller hela din kamerakonfiguration inklusive alla Quick-, Fine Tune- och God Mode-inställningar.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Använder din aktiva UCM-session (Quick, Fine Tune eller God Mode). Välj en preset i sidofältet eller använd Importera om du utgår från XML eller en PAZ på disk.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Förbered kontrollerar att din session kodar för denna spelmapp, sedan sparar du XML-filen.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Förbered verifierar kodning mot din spelmapp. Spara skriver en fullständig patchad 0.paz (stor fil). Sessionskällan är samma som för andra format -- sidofälts-preset eller Importera först vid behov.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Ingen kodning behövs -- sparar din session direkt. Fyll i infofälten ovan så andra vet vad de får.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML-kodning matchar denna installations kamerapost. Spara som playercamerapreset.xml för delning eller redigering.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Uppladdningsstorlek matchar en fullständig 0.paz. Mottagare ersätter ...\0010\0.paz efter att ha säkerhetskopierat vanilla. Dela bara med spelare på samma spelversion som denna export.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON använder dessa fält i modinfo. XML använder Titel som standard-sparnamn. 0.paz standardiseras till 0.paz så att du kan lägga den i 0010 utan att byta namn.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>Genererade {0} patchregioner. Spara när du är redo.</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>Detta beror vanligtvis på att PAZ-filen är från en annan spelversion än din nuvarande installation. Arkivindexet (0.pamt) matchar inte PAZ-filens struktur.
+
+FÖR ATT LÖSA:
+Placera matchande 0.pamt-fil i samma mapp som 0.paz du importerar. Båda filerna måste vara från samma spelversion.</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Osparad session</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Nuvarande session</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Aktiv session</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Ingen preset laddad ännu.</value></data>
+
+</root>

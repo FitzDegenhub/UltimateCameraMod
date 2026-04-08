@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -28,9 +29,26 @@ public partial class MainWindow : Window
 {
     private const string Ver = "3.1.2";
 
+    private static string L(string key) => TranslationSource.Instance[key];
+
+    private static string LanguagePath => Path.Combine(ExeDir, "ucm_language.json");
+
+    private static readonly Dictionary<string, string> LangNativeNames = new()
+    {
+        ["en"] = "English",
+        ["ko"] = "\ud55c\uad6d\uc5b4",
+        ["ja"] = "\u65e5\u672c\u8a9e",
+        ["zh-CN"] = "\u4e2d\u6587",
+        ["sv"] = "Svenska",
+        ["de"] = "Deutsch",
+        ["fr"] = "Fran\u00e7ais",
+        ["es"] = "Espa\u00f1ol",
+        ["pt-BR"] = "Portugu\u00eas",
+        ["ru"] = "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+    };
+
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
-    private const string HShiftTipUnlocked =
-        "Left/right framing as a delta on RightOffset (on foot, mounts, aim, and related rows). 0 matches vanilla side bias. Increase toward ~0.5 to pull toward geometric center in the file; negative values bias further left. Matches the top-down FoV preview. Centered camera below is separate: it locks this slider to 0 and applies stronger centering.";
+    private static string HShiftTipUnlocked => L("Help_HShiftTipUnlocked");
     private const string LegacyPresetsDirName = "presets";
     private const string UcmPresetsDirName = "ucm_presets";
     private const string MyPresetsDirName = "my_presets";
@@ -86,7 +104,7 @@ public partial class MainWindow : Window
     private bool _taskbarIconActivatedDone;
     private bool _shellTaskbarPropertyStoreApplied;
 
-    // â”€â”€ Mode state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Mode state â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
     private string _activeMode = "simple";
     private bool _isExpertMode;
     private bool _advCtrlNeedsRefresh;
@@ -97,7 +115,7 @@ public partial class MainWindow : Window
     private List<AdvancedRow> _advAllRows = new();
     private bool _sacredToastShown;
 
-    // â”€â”€ JSON Mod Manager state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ JSON Mod Manager state â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
     private List<JsonModExporter.PatchChange>? _jsonLastPatches;
     private string? _jsonLastJson;
     private ImportedPreset? _selectedImportedPreset;
@@ -199,7 +217,7 @@ public partial class MainWindow : Window
 
     private static bool _legacyPresetFoldersMigrated;
     private static bool _importPresetsFolderMigrated;
-    // â”€â”€ Style/FoV/Combat data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Style/FoV/Combat data â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     private static readonly (string Id, string Label)[] Styles =
     {
@@ -237,9 +255,59 @@ public partial class MainWindow : Window
         ["survival"] = (3.0, 0.0, 0.7),
     };
 
-    // â”€â”€ Constructor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Constructor â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     private static string WindowStatePath => Path.Combine(ExeDir, "window_state.json");
+
+    private void LoadSavedLanguage()
+    {
+        try
+        {
+            if (!File.Exists(LanguagePath)) return;
+            string json = File.ReadAllText(LanguagePath);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("culture", out var cEl) && cEl.ValueKind == JsonValueKind.String)
+            {
+                string code = cEl.GetString() ?? "en";
+                TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(code);
+            }
+        }
+        catch { }
+    }
+
+    private void InitLanguageSelector()
+    {
+        if (LanguageCombo == null) return;
+        string currentCode = TranslationSource.Instance.CurrentCulture.Name;
+        if (string.IsNullOrEmpty(currentCode)) currentCode = "en";
+
+        LanguageCombo.Items.Clear();
+        int selectedIdx = 0;
+        int idx = 0;
+        foreach (var lang in TranslationSource.AvailableLanguages)
+        {
+            string code = lang.Name;
+            string native = LangNativeNames.TryGetValue(code, out string? n) ? n : code;
+            LanguageCombo.Items.Add(new ComboBoxItem { Content = native, Tag = code });
+            if (string.Equals(code, currentCode, StringComparison.OrdinalIgnoreCase))
+                selectedIdx = idx;
+            idx++;
+        }
+        LanguageCombo.SelectedIndex = selectedIdx;
+        LanguageCombo.SelectionChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (LanguageCombo.SelectedItem is not ComboBoxItem item || item.Tag is not string code) return;
+        TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(code);
+        try
+        {
+            string json = JsonSerializer.Serialize(new { culture = code });
+            File.WriteAllText(LanguagePath, json);
+        }
+        catch { }
+    }
 
     public MainWindow()
     {
@@ -247,7 +315,9 @@ public partial class MainWindow : Window
         System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
         System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
+        LoadSavedLanguage();
         InitializeComponent();
+        InitLanguageSelector();
 
         // WPF applies Window.Icon after HWND creation and can overwrite WM_SETICON; re-apply on later dispatcher phases.
         SourceInitialized += (_, _) =>
@@ -483,8 +553,8 @@ public partial class MainWindow : Window
 
             if (string.IsNullOrEmpty(_gameDir))
             {
-                GamePathLabel.Text = "Game folder:  not detected — click Open to set manually";
-                SetStatus("Game not detected. Click Open to browse for your game folder, or browse presets and edit settings.", "Warn");
+                GamePathLabel.Text = L("GamePath_NotSet");
+                SetStatus(L("Status_GameFolderNotSetBrowse"), "Warn");
             }
             else
             {
@@ -576,7 +646,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("Startup Error", $"{ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Title_Error"), $"{ex.Message}", isError: true);
         }
     }
     private void ShowWelcomeVerifyScreen()
@@ -774,7 +844,7 @@ public partial class MainWindow : Window
         {
             using var dlg = new System.Windows.Forms.FolderBrowserDialog
             {
-                Description = "Select Crimson Desert folder (contains the '0010' folder)",
+                Description = L("Dlg_BrowseGameFolder"),
                 UseDescriptionForTitle = true
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -783,13 +853,12 @@ public partial class MainWindow : Window
                 if (File.Exists(Path.Combine(folder, "0010", "0.paz")))
                     return folder;
 
-                _ = ShowAlertOverlayAsync("Wrong Folder",
-                    "That folder doesn't contain 0010\\0.paz.\nMake sure you selected the correct Crimson Desert directory.");
+                _ = ShowAlertOverlayAsync(L("Msg_WrongFolderTitle"), L("Msg_WrongFolder"));
             }
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("Error", $"Folder dialog error: {ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Msg_ErrorTitle"), string.Format(L("Msg_FolderDialogError"), ex.Message), isError: true);
         }
         return "";
     }
@@ -830,16 +899,12 @@ public partial class MainWindow : Window
         if (pt.Length > 55) pt = "..." + pt[^52..];
 
         string platformTag = _detectedPlatform != "Unknown" ? $" [{_detectedPlatform}]" : "";
-        GamePathLabel.Text = $"Game folder:  {pt}{platformTag}";
+        GamePathLabel.Text = string.Format(L("GamePath_Display"), pt, platformTag);
 
         if (_detectedPlatform == "Xbox/GamePass" && !GameDetector.CheckWritePermission(_gameDir))
         {
-            SetStatus("Xbox/Game Pass: game folder is read-only. Move the game or fix folder permissions.", "Warn");
-            _ = ShowAlertOverlayAsync("Write Permission Required",
-                "Xbox / Game Pass game folder appears to be read-only.\n\n" +
-                "To fix this, try one of:\n" +
-                "1. Xbox App \u2192 Crimson Desert \u2192 Manage \u2192 Move to a different drive\n" +
-                "2. Right-click the game folder \u2192 Properties \u2192 uncheck \"Read-only\" \u2192 Apply to all subfolders");
+            SetStatus(L("Status_XboxReadOnly"), "Warn");
+            _ = ShowAlertOverlayAsync(L("Msg_XboxReadOnlyTitle"), L("Msg_XboxReadOnly"));
         }
 
         CheckForUpdate();
@@ -1006,7 +1071,7 @@ public partial class MainWindow : Window
                 if (File.Exists(StatePath))
                     File.Delete(StatePath);
                 GameInstallBaselineTracker.Delete(ExeDir);
-                SetStatus($"Upgraded from v{savedVer}. Old backup cleared.", "Warn");
+                SetStatus(string.Format(L("Status_CleanedOldData"), savedVer), "Warn");
             }
         }
         catch { }
@@ -1038,7 +1103,7 @@ public partial class MainWindow : Window
             return je.ValueKind == JsonValueKind.String ? je.GetString() : null;
         return v.ToString();
     }
-    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Helpers â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     private void SetStatus(string text, string brushKey)
     {
@@ -1057,12 +1122,12 @@ public partial class MainWindow : Window
     {
         _ = enabled;
     }
-    private void QueueSavedToast(string text = "Saved", bool isError = false)
+    private void QueueSavedToast(string? text = null, bool isError = false)
     {
         if (!IsLoaded || _suppressEvents || _saveToastDelayTimer == null || _saveToastHideTimer == null)
             return;
 
-        _pendingSaveToastText = text;
+        _pendingSaveToastText = text ?? L("Label_Saved");
         _pendingSaveToastIsError = isError;
         _saveToastHideTimer.Stop();
         _saveToastDelayTimer.Stop();
@@ -1137,7 +1202,7 @@ public partial class MainWindow : Window
         MigrateJsonToUcmPreset(MyPresetsDir);
         GenerateBuiltInPresets();
         RefreshPresetManagerLists(preserveSelection: false);
-        SetStatus("Game folder set manually.", "OK");
+        SetStatus(L("Status_Ready"), "OK");
     }
     private static int GetInt(Dictionary<string, object>? dict, string key, int def = 0)
     {

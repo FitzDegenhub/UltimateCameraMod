@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>고급 카메라 설정</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>고급 설정 문자열 가져오기</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>프리셋 문자열 내보내기</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>프리셋 문자열 가져오기</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>프리셋 가져오기</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>입력</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - 오류</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>공유용 내보내기</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>커뮤니티 프리셋</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM 프리셋</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>프리셋 상세</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>프리셋 유형 선택</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Raw XML 가져오기</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>게임 폴더 미설정</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode 오류</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune 오류</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>프리셋 업데이트</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>게임 업데이트 감지</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>게임 파일 변경됨</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM 치명적 오류</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ 가져오기 실패</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>God Mode 오버라이드 가져오기</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode 오버라이드</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>게임에 적용</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>저장</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>삭제</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>내보내기</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>가져오기</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>설치</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>게임에 설치</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>바닐라 복원</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>복원</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>닫기</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>UCM 닫기</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>취소</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>확인</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>예</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>아니오</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>업데이트 받기</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>클립보드에 복사</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>복사됨!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>문자열 내보내기</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>문자열 가져오기</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>프리셋 저장</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>프리셋 삭제</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>XML 내보내기</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>XML 가져오기</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>기본값으로 초기화</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>바닐라로 초기화</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>간편 모드에서 불러오기</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>모두 펼치기</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>모두 접기</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>현재 설정으로 생성</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>XML 파일에서 생성...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>.json 저장...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>가져오기 &amp; 저장</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>문자열 내보내기</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>문자열 가져오기</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>커피 한 잔 사주기</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>기본값 초기화</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>새로 만들기</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>복제</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>이름 변경</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>열기</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>실행 취소</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>재시도</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>새로고침</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>다운로드</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>다운로드됨</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>다운로드 중...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>생성</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>덮어쓰기</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>내보내기 준비</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>내보내기 저장...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>.json 저장...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>.xml 저장...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>0.paz 저장...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>.ucmpreset 저장...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>찾아보기</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>확인</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>7일간 알림 끄기</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>7일 후에</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>닫기</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>읽기 전용으로 열기</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>예, 먼저 백업</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>아니오, 바로 업데이트</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>수정된 0.paz 제거</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>제거됨</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>초기화</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>리셋</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>다음</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>시작하기</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>튜토리얼 건너뛰기</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Nexus에서 보기</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>프리셋</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>커스텀</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM 빠른 설정</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>세부 조정</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>간편</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>고급</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>전문가</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON 모드 관리자</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>거리</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>높이</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>좌우 이동</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>시야각</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>전투 카메라</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>카메라 중앙 고정</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>탈것 카메라</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>스테디캠</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>카메라 스타일</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>저장된 프리셋</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>프리셋</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>제목</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>버전</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>제작자</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>제작자 (선택사항)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>설명</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>설명 (선택사항)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / 기타 (선택사항)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>게임 폴더:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> 패치 영역</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> 바이트 변경됨</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> 영역</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>적용 중</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>임시 저장</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>이름을 지정하여 프리셋을 저장할 때까지의 작업 사본입니다.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>형식</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>모드 정보 &amp; 파일명</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>내보내기 준비</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>저장</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>이름</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>이름 *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>검색</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>록온 줌</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>록온 자동 회전</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>HUD 중앙 정렬</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>안전 영역</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>작업 중...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>저장됨</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>설치됨</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>복원됨</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>취소됨</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>또는</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>카메라 스타일</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>전체 설정</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>공유</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>카메라 미리보기</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>시야각</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>고급 제어</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>고급 카메라 설정</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>사용 방법</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>1단계  —  모드 이름 지정</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>2단계  —  패치 생성</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>3단계  —  파일 저장</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>프리셋</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM 빠른 설정</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>커스텀 오프셋</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>HUD 중앙 정렬</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>섹션</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>하위 요소</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>속성</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>값</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>바닐라</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  도보 줌 레벨</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  말 / 탈것 줌 레벨</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  전투 / 록온</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  카메라 부드러움 / 스테디캠</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  조준 / 크로스헤어 위치</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - 도보 줌 레벨</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - 말 / 탈것 줌 레벨</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - 글로벌 / FOV 범위</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - 특수 탈것 / 이동</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - 전투 / 록온</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - 카메라 부드러움 / 스테디캠</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - 조준 / 크로스헤어 위치</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>캐릭터를 화면 중앙에 배치 (좌우 이동을 0으로 고정)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>캐릭터를 화면 중앙에 배치</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>탈것/말 높이를 플레이어 카메라 높이에 맞춤</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>부드러운 카메라 전환 (상태 간 줌 떨림 제거)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>록온 시 카메라가 대상을 향해 자동 회전하지 않음  --  @sillib1980 제공</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>최대 너비 내에서 게임플레이 HUD 중앙 정렬</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - 모드 관리자</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM 프리셋 (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>모드 관리자 패키지 (폴더)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>카메라 XML 파일 (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ 아카이브 (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM 프리셋 (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON Mod Manager 또는 CDUMM의 JSON 패치</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml 파일</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>카메라 데이터가 포함된 게임 .paz 파일</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>다른 사용자의 UCM 프리셋 파일</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>UCM 관리</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(권장)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>완전 수동 제어</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM 프리셋</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>커뮤니티 프리셋</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>내 프리셋</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>가져온 항목</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>기본값</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM 스타일</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>커뮤니티</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>내 프리셋</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>가져온 XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>가져온 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>모드 패키지</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>흰색 = 바닐라</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>금색 = UCM Quick/Fine Tune에서 수정됨</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>초록색 = 고정값 (God Mode 편집값, 리빌드 시 보호됨)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>준비 완료</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>확인 중...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>최신 버전</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>오프라인</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>설치 중...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>설치 완료! 게임을 실행하세요.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>바닐라 복원 중...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>바닐라 복원 완료.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>적용 중...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>{0}개의 변경사항을 게임 파일에 적용했습니다.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>프리셋 '{0}' 불러옴.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>프리셋 '{0}' 저장됨.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>프리셋 '{0}' 삭제됨.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>프리셋 '{0}' 내보내기 완료.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>프리셋 '{0}' 업데이트됨.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>'{0}' 가져오기 및 저장 완료 — 설치를 눌러 적용하세요.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>{0}개의 수정된 값 내보내기 완료.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>{0}개의 값 가져옴.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>{0}(으)로 내보냄.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>{0}을(를) 게임에 설치함.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>{1}에서 {0}개의 값을 가져옴.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>불러옴 — 값을 편집하고 게임에 적용을 클릭하세요.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>기본값으로 초기화 완료 (프리셋 + 바닐라).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>UCM Quick 기본값과 바닐라로 초기화 완료.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>적용할 변경사항이 없습니다.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>내보낼 수정된 값이 없습니다.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>저장할 수정된 값이 없습니다.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>저장된 프리셋을 먼저 선택하세요.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>가져온 프리셋을 먼저 선택하세요.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>게임 폴더가 설정되지 않았습니다.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>게임 폴더가 선택되지 않았습니다.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>설치 실패. 게임이 실행 중인가요?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>설치 실패: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>백업을 찾을 수 없습니다. 카메라가 이미 바닐라 상태일 수 있습니다.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>백업이 이전 버전입니다. 게임 파일을 검증하세요.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>복원 실패. 게임 파일을 검증하세요.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>복원 실패: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>백업에서 바닐라 카메라를 복원했습니다.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>백업을 찾을 수 없습니다. 게임 카메라가 이미 바닐라 상태일 수 있습니다.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>마지막 설치 이후 게임이 업데이트되어 백업이 갱신되었습니다. Steam에서 게임 파일을 검증한 후 다시 설치하세요.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} 사용 가능</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>고급 제어 — 매개변수별 카메라 조정 안내.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>전문가 모드 — XML 원본 값을 편집하고 게임에 적용을 클릭하세요.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON 모드 관리자 — Crimson Desert Mod Manager v8 패치 파일 생성.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>패치 생성 중...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>{0}개의 패치 영역 생성 완료. .json 저장을 클릭하여 내보내세요.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>{0} 저장됨 ({1}개 패치).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>먼저 패치를 생성하세요.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON 내보내기에는 바닐라 카메라 파일이 필요합니다.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>간편 모드에서 값을 불러왔습니다.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>모든 고급 제어를 바닐라로 초기화했습니다.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>프리셋 '{0}' 불러옴 ({1}개 오버라이드).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>고급 프리셋 '{0}' 저장됨 ({1}개 오버라이드).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>고급 프리셋 '{0}' 삭제됨.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0}개의 고급 제어 변경사항을 게임에 적용했습니다.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>이전 v{0} 데이터를 정리했습니다. 설치를 클릭하여 설정을 적용하세요.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>게임 폴더가 설정되지 않았습니다. 설치를 클릭하면 폴더 탐색이 표시됩니다.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: 게임 폴더가 읽기 전용입니다. 게임을 이동하거나 폴더 권한을 수정하세요.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0}개 행 표시  |  {1}개 수정됨</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0}개 행  |  {1}개 수정됨</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0}개 행  |  {1}개 수정됨  |  {2}개 고정값</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0}개 변경</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — 미리보기와 일반 제어를 통한 전반적 카메라 조정.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — UCM Quick 위에 레이어된 심층 세부 조정.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — XML 원본 값을 편집하고 JSON으로 내보내기.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>고정값 편집: 이 값은 Quick/Fine Tune 리빌드로부터 보호됩니다.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>사이드바에서 프리셋 잠금을 해제하여 God Mode 값을 초기화하세요.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>현재 세션을 게임에 설치했습니다. 카메라 페이로드 업데이트 — {0} 바이트 (PAZ 내 {1} 압축).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>설치 완료; PAZ 내 카메라 항목은 변경되지 않았습니다 ({0} 바이트 페이로드, {1} 압축).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>카메라를 게임에 설치하는 중...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>현재 세션 XML 준비 중...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>HUD 중앙 정렬 설치 중...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>바닐라 HUD 복원 중...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>바닐라 카메라 복원 중...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>다운로드 실패: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>업데이트 실패: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>가져오기 실패: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>내보내기 실패: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>삭제 실패: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>불러오기 실패: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>초기화 실패: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>준비 실패: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>저장 실패: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD 설치 실패: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD 복원 실패: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML 가져오기 실패: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz 가져오기 실패: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>해당 폴더에서 manifest.json을 찾을 수 없습니다.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>모드 패키지에서 playercamerapreset.xml을 찾을 수 없습니다.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>이 파일은 UCM 프리셋이 아닌 것 같습니다 (session_xml을 찾을 수 없음).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>카탈로그 가져오는 중...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>커뮤니티 카탈로그 가져오는 중...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0}개 프리셋 사용 가능, {1}개 다운로드됨</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>아직 커뮤니티 프리셋이 없습니다.
+
+나중에 다시 확인하거나 직접 기여해 주세요!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>저장 준비 완료. 준비되면 저장을 클릭하세요.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>먼저 내보내기를 준비하세요.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>세션 XML이 없습니다. 설정을 편집하거나 프리셋을 먼저 불러오세요.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>세션 XML이 비어 있습니다.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>이 게임에 대한 인코딩 검증 중...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>아카이브 작성 중 (복사 + 패치)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>0.paz 복호화 중...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>카메라 XML 내보내는 중...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>카메라 XML 설치 중...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>{0} 저장됨.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>{0} 저장됨 ({1}개 패치).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>가져온 프리셋 '{0}'이(가) {1}개의 값으로 저장됨.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>모드 패키지를 '{0}'(으)로 가져옴.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>'{0}'을(를) {1}개의 값으로 가져옴.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>0.paz를 '{0}'(으)로 가져옴.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>UCM 프리셋 '{0}' 가져옴.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>가져온 프리셋 '{0}' 삭제됨.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>가져온 프리셋 '{0}'을(를) God Mode에 불러왔습니다.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>현재 게임 파일에서 카메라 백업이 갱신되었습니다. 프리셋을 다시 적용하려면 설치를 사용하세요.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>카메라 백업을 자동으로 갱신할 수 없습니다. 카메라가 아직 모딩된 상태라면 Steam에서 게임 파일을 검증하고 UCM을 다시 시작하세요.</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>가져오기만 완료 - 이 게임용으로 아직 리빌드되지 않았습니다.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>저장된 프리셋 준비됨 - 게임 폴더를 설정하여 리빌드 상태를 확인하세요.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>준비됨 - 이 게임 버전용으로 이미 리빌드됨.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>리빌드 필요 - 현재 게임 버전이 마지막 빌드와 다릅니다.</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>해당 폴더에 0010\0.paz가 없습니다.
+올바른 Crimson Desert 디렉토리를 선택했는지 확인하세요.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>잘못된 폴더</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>먼저 게임 폴더를 설정하세요 (설치를 클릭하여 탐색).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>프리셋 '{0}'을(를) 현재 슬라이더 값으로 덮어쓰시겠습니까?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>프리셋 덮어쓰기</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>고급 프리셋 '{0}'을(를) 현재 값으로 덮어쓰시겠습니까?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass 게임 폴더가 읽기 전용인 것 같습니다.
+
+이 문제를 해결하려면 다음 중 하나를 시도하세요:
+  1. Xbox 앱 → Crimson Desert → 관리 → 다른 드라이브로 이동
+  2. 게임 폴더 우클릭 → 속성 → "읽기 전용" 체크 해제 → 모든 하위 폴더에 적용</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>쓰기 권한 필요</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>'{0}'을(를) 게임에 직접 설치하시겠습니까?
+
+현재 카메라 설정이 덮어쓰기됩니다.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>XML 가져오기</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>게임 폴더의 카메라 데이터가 UCM의 바닐라 백업과 일치하지 않습니다.
+
+외부 모드 관리자용 JSON 패치는 바닐라 "원본" 바이트를 사용해야 합니다. Steam에서 게임을 검증하거나 (모드 관리자에서 카메라 변경을 되돌린 후) 다시 시도하세요.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>JSON 내보내기 불가</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>처리되지 않은 오류:
+
+{0}
+
+전체 상세 정보가 crash.log에 저장되었습니다</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>시작 오류:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>시작 충돌:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>카메라 XML 불러오기 실패:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>고급 편집기</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>전문가 편집기</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>고급 제어</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>폴더 대화상자 오류: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>오류</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>이 이름의 프리셋이 이미 존재합니다. 덮어쓰시겠습니까?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>'{0}'의 업데이트가 있습니다.
+
+업데이트 전에 현재 버전을 내 프리셋에 복사하시겠습니까?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>이 프리셋은 Raw XML로 가져온 것으로 UCM이 관리하지 않습니다.
+
+UCM Quick과 Fine Tune은 UCM의 카메라 규칙 시스템을 사용하여 가져온 모드의 값을 덮어쓸 수 있습니다. 가져온 데이터를 보호하기 위해 God Mode 편집만 사용할 수 있습니다.
+
+스테디캠, FOV 제어 등 UCM 기능을 사용하려면 사이드바에서 새 UCM 프리셋을 만드세요.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune과 God Mode는 카메라 데이터를 읽기 위해 게임 폴더가 필요합니다. 먼저 게임 폴더를 설정하세요.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM 프리셋은 보호됩니다. {0} 변경은 프리셋의 세밀하게 조정된 값을 손상시킬 수 있습니다.
+
+먼저 이 프리셋을 복제하여 편집 가능한 사본을 만든 후 Fine Tune이나 God Mode를 자유롭게 사용하세요.
+
+{0}을(를) 읽기 전용 모드로 여시겠습니까? (값을 탐색할 수 있지만 변경사항은 저장되지 않습니다.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>게임 카메라 파일이 UCM v2.x, 다른 카메라 모드, 또는 모드 관리자에 의해 수정되었습니다. UCM은 깨끗한 백업을 만들기 위해 원본 바닐라 파일이 필요합니다.
+
+아래 버튼을 클릭하여 수정된 파일을 제거한 후 Steam에서 게임을 검증하여 원본을 다시 다운로드하세요.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz 삭제됨. 다음 단계:
+1. UCM 종료
+2. Steam → Crimson Desert → 속성 → 설치된 파일 → "게임 파일 무결성 검증"
+3. 검증 완료 후 UCM 다시 실행</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>삭제할 수 없음: {0}
+수동으로 삭제하세요: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>선택한 0.paz 옆에 일치하는 0.pamt를 찾을 수 없습니다. 게임 폴더를 설정하여 v3가 현재 0010\0.pamt를 아카이브 인덱스로 사용할 수 있게 하세요.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>게임 폴더가 설정되지 않았습니다. v3는 이 프리셋을 안전하게 리빌드하기 위해 현재 게임이 필요합니다.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>복제 실패: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON 내보내기에는 바닐라 카메라 파일이 필요합니다 (게임을 검증한 후 다시 시도하세요).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>설치가 완료되었지만 예상치 못한 결과가 반환되었습니다. 카메라가 올바르게 적용되지 않았을 수 있습니다 — 게임을 실행하여 확인하세요.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>복원이 완료되었지만 결과를 확인할 수 없습니다. 게임을 실행하여 카메라가 바닐라로 돌아갔는지 확인하세요.</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>게임 폴더 열기 (또는 수동으로 설정하려면 탐색)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>이동 상태 간의 블렌딩, 감쇠 및 속도 오프셋을 부드럽게 합니다. 비활성화하면 바닐라 카메라 전환이 복원됩니다.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Ko-fi 열기 — 후원은 UCM 유지에 도움이 됩니다</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>현재 라이브 카메라 XML을 파일로 저장</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>카메라 XML 파일을 게임에 직접 설치</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>현재 간편 모드 설정에서 모든 슬라이더 채우기</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>모든 슬라이더를 바닐라 XML 값으로 초기화</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>playercamerapreset.xml 파일에서 값 불러오기</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>간편 모드에서 현재 구성된 설정 사용</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>바닐라와 비교할 playercamerapreset.xml 파일 선택</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>카메라 XML 또는 PAZ 아카이브를 프리셋으로 가져오기</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>JSON (모드 관리자), 세션 XML, 또는 패치된 0.paz로 공유 — 현재 UCM 세션 사용.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>UCM 백업에서 원본 카메라 청크를 복원합니다.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>현재 UCM 세션을 게임 파일에 직접 적용합니다.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>마지막 슬라이더 변경 실행 취소</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>manifest.json이 포함된 폴더 선택 — 이름, 제작자, 카메라 XML을 자동으로 가져옵니다</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>playercamerapreset.xml 파일을 직접 선택</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>0.paz 파일 선택 — UCM이 카메라 XML을 추출합니다</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>다른 UCM 사용자가 공유한 .ucmpreset 파일 가져오기</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>이 알림을 일주일간 숨기기</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>다음 실행 시까지 숨기기</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>업데이트 사용 가능 — 클릭하여 최신 버전 다운로드</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>프리셋 탐색 및 다운로드</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>카메라 파일의 각 Fov 및 InDoorFov에 이만큼의 각도를 추가합니다. 실내와 실외 행은 서로 다른 바닐라 수치에서 시작하므로 God Mode에서는 다양한 최종 값이 표시됩니다 — 모든 곳에서 동일한 각도가 되는 것은 아닙니다.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>좌우 이동 ~0.5와는 별개입니다: 그 값은 종종 XML의 바닐라 측면 편향입니다. 이 옵션은 이동을 0으로 강제하고 더 강력한 센터링 규칙을 적용합니다 (지원되는 곳에서 RightOffset을 0으로).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>체크 시, 록온 대상을 향해 카메라가 자동으로 회전하는 대신 제자리에 유지됩니다.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>바닐라로 초기화 ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>바닐라: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>제작자 페이지를 브라우저에서 열기</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>캐릭터로부터 카메라가 좌/우로 얼마나 떨어져 있는지를 나타냅니다. 카메라 중앙 고정 시 0으로 잠깁니다.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>카메라 중앙 고정이 캐릭터를 화면 중심에 배치합니다 — 조정하려면 체크 해제하세요</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = 바닐라 (캐릭터 약간 왼쪽). 중앙은 ~0.5. 음수 = 더 왼쪽, 양수 = 더 오른쪽.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>RightOffset에 대한 좌우 프레이밍 델타 (도보, 탈것, 조준 및 관련 행). 0은 바닐라 측면 편향과 일치합니다. ~0.5를 향해 증가하면 파일 내 기하학적 중심으로 끌어당기고, 음수 값은 더 왼쪽으로 편향합니다. 탑다운 FOV 미리보기와 일치합니다. 아래의 카메라 중앙 고정은 별도로, 이 슬라이더를 0으로 잠그고 더 강력한 센터링을 적용합니다.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>제한: 거리 1.5-12.0  |  높이 -1.6 ~ 0.5  |  이동 -3.0 ~ 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>이동 0 = 바닐라 (캐릭터 왼쪽)  |  0.5 = 중앙  |  음수 = 더 왼쪽  |  양수 = 더 오른쪽</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>게임 업데이트는 모딩된 파일을 덮어씁니다. Crimson Desert 업데이트 후 UCM 설치를 다시 실행하여 카메라 설정을 복원하세요.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>참고:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>각 슬라이더는 현재 값과 바닐라 기본값 (흐리게 표시)을 보여줍니다. 행의 ↺를 클릭하면 해당 매개변수를 바닐라로 초기화합니다. 적용을 눌러 모든 변경사항을 게임에 기록하세요.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>변경사항은 바닐라 XML 위에 적용됩니다 — 간편 모드 프리셋과 상호작용하지 않습니다. "간편 모드에서 불러오기"를 사용하여 현재 프리셋에서 시작하세요.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>게임에는 도보 시 3단계 스크롤 휠 줌 레벨이 있습니다. ZL2는 가장 가까운 뷰 (기본), ZL3은 중간 거리, ZL4는 가장 먼 거리입니다. 각 레벨은 카메라 거리, 높이, 좌우 위치를 독립적으로 제어합니다. 대기, 걷기, 달리기, 전력질주, 전투 이동 등 모든 도보 상태에 적용됩니다.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>말 카메라는 2개의 바닐라 줌 레벨 (ZL2-ZL3)을 사용합니다. 8개의 모든 말 상태가 동기화되어 실제 게임 줌 단계를 유지하면서 속도 변경 시 카메라가 흔들리지 않습니다.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>적을 록온하면 카메라가 전투 추적 모드로 전환됩니다. TargetRate는 카메라가 적을 얼마나 적극적으로 따라가는지를 제어합니다 — 값이 낮으면 수동 제어가 더 많아집니다. ScreenClampRate는 적이 화면 중앙에 얼마나 가까이 유지되는지를 제어합니다.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>이동 상태 간의 카메라 전환 방식을 제어합니다. BlendInTime은 카메라가 상태에 진입하는 데 걸리는 시간(초)입니다. OffsetLength는 카메라 흔들림을 제어합니다 — 0으로 설정하면 좌우 이동 없이 스테디캠 느낌을 줍니다.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>랜턴, 활, 무기 줌으로 조준하면 카메라가 크로스헤어 위치로 이동합니다. 이 RightOffset 값은 좌우 이동에 비례하여 조정되므로 능력 활성화 시 카메라가 옆으로 갑자기 이동하지 않습니다.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>이 탭은 Crimson Desert JSON Mod Manager v8과 호환되는 .json 패치 파일을 생성합니다. 파일을 모드 관리자의 Mods/ 폴더에 넣으면 카메라 설정이 토글 가능한 모드로 표시됩니다 — UCM이 필요하지 않습니다.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>패치는 수정된 카메라 파일을 바닐라 파일과 바이트 단위로 비교하여 차이점만 기록합니다. 따라서 게임 버전에 특화되어 있습니다 — 게임이 업데이트되면 패치를 다시 생성하세요.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>이 정보는 모드 관리자 내에 표시되어 사람들이 모드가 무엇인지 알 수 있습니다.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>패치할 설정을 선택합니다. 현재 설정은 간편 모드에서 현재 활성화된 설정을 사용합니다. XML 파일에서는 내보낸 playercamerapreset.xml 파일을 선택하여 패치할 수 있습니다.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>.json 파일을 저장한 후 Crimson Desert JSON Mod Manager 설치 폴더 내의 Mods/ 폴더에 넣으세요. 토글 가능한 모드로 표시됩니다.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>속성 검색...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>빠르고 큐레이션된 UCM 레이어입니다: 전반적 카메라 조정, 미리보기, 가장 일반적인 카메라 선택을 제공합니다.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune은 큐레이션된 심층 조정 레이어입니다. UCM Quick 설정에서 시작하여 UCM이 의도적으로 노출한 필드를 세밀하게 조정할 수 있습니다.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode는 파일의 모든 행을 나열합니다. 여기의 슬라이더는 특정 속성을 편집합니다 — 해당 숫자는 God Mode의 동일 속성과 일치해야 합니다. 다른 행은 Quick (FOV 부스트, 스타일, 전투, 스테디캠 등) 또는 바닐라에서 변경되므로 하나의 슬라이더가 전체 그리드를 설명하지는 않습니다.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode는 원본 카메라 행을 노출합니다. UCM Quick만으로 충분하지 않아 완전한 직접 제어가 필요할 때, 또는 UCM Fine Tune 후 더 깊이 들어가고 싶을 때 사용하세요.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>여기 값은 병합된 세션입니다: Quick + Fine Tune + 이 그리드에서의 편집. Quick의 FOV는 행별로 추가되는 델타 (Fov 및 InDoorFov)이므로 각도는 상태에 따라 다릅니다. Fine Tune은 해당 슬라이더가 제어하는 속성에 대해서만 행별로 일치합니다.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>이 행은 기본 도보 및 말 그룹 외부에 적용되는 더 넓은 FOV 정규화 및 공유 카메라 시스템을 다룹니다. UCM Fine Tune이 록온 패밀리, 전쟁 기계 상태, 수영 카메라 등 전체 모드 범위를 반영하도록 하려면 사용하세요.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>코끼리, 와이번, 카누, 전쟁 기계, 빗자루, 이동 관련 카메라 패밀리는 모두 고유한 줌 동작을 가집니다. 이 제어는 모드가 이미 내부적으로 변경하는 추가 탈것 값을 노출합니다.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>대상을 록온하거나 방어할 때의 카메라 거리를 도보 거리 기준으로 조정합니다. 0%는 스테디캠과 매끄럽게 연결됩니다. 음수 값은 시네마틱 포커스 효과로 줌인하고, 양수 값은 전장을 더 넓게 보기 위해 뒤로 당깁니다.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>지정된 최대 너비 (픽셀) 내에서 게임플레이 HUD 요소를 중앙에 배치합니다. HUD 요소가 너무 멀리 퍼져 있는 울트라와이드 디스플레이에 유용합니다. 게임플레이 HUD에만 적용되며 메뉴에는 영향을 미치지 않습니다. wsres 제공.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>UCM 커뮤니티에서 공유한 카메라 프리셋을 탐색합니다. 다운로드한 프리셋은 사이드바에 표시됩니다.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>공식 UCM 카메라 프리셋을 탐색하고 다운로드합니다. 다운로드한 프리셋은 사이드바에 표시됩니다.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM은 150개 이상의 카메라 상태를 내부적으로 관리합니다 — 전투, 방어, 탈것, 록온 전반의 FOV 일관성; 모든 상태 간의 부드러운 전환; 록온 시 안쪽으로 스냅되지 않도록 거리 스케일링. Quick 슬라이더와 Fine Tune은 이 규칙 위에 안전하게 구축됩니다. God Mode를 사용하면 필요할 때 개별 값을 오버라이드할 수 있습니다.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>UCM 규칙이 적용되지 않은 게임의 바닐라 카메라 XML에서 시작합니다. UCM Quick과 Fine Tune은 비활성화됩니다. 해당 슬라이더가 수동 편집을 덮어쓰기 때문입니다 — UCM은 전투, 탈것, 록온, 부드러움 상태 전반에서 수백 개의 값을 수정하여 수동 조정된 값과 충돌합니다. 직접 XML 편집을 위해 God Mode만 사용할 수 있습니다. 다른 카메라 모드에서 가져오거나 모든 값을 완전히 제어해야 할 때 사용하세요.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>가져온 프리셋은 이 앱 옆의 import_presets 폴더에 저장되며 사이드바의 가져온 항목에 나열됩니다.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>가져올 파일 유형을 선택하세요.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>UCM_ADV: 문자열을 붙여넣어 고급 설정을 가져오세요.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>UCM Quick에서 시작하거나, 프리셋 관리자에서 불러오거나, 크리에이터 프리셋을 가져오세요.</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>NexusMods, Discord 등에서 복사하여 붙여넣기하세요.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>아래에 프리셋 문자열을 붙여넣으세요:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>NexusMods 댓글, Discord 등에서 복사한 것</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>아래에 고급 설정 문자열을 붙여넣으세요:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>UCM_ADV:로 시작해야 합니다 (고급 내보내기에서 복사)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>"{0}" 공유 문자열:</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0}개의 고급 설정 발견</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>고급 설정 문자열이 아닙니다 (UCM_ADV:로 시작해야 합니다)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>UCM_ADV:로 시작해야 합니다</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>잘못된 페이로드</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>커스텀 프리셋 저장</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>고급 프리셋 저장</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>프리셋 이름을 입력하세요:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>가져온 프리셋의 이름을 입력하세요:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>프리셋 문자열 내보내기</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>공유용 프리셋 이름 지정:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Crimson Desert 폴더 선택 ('0010' 폴더가 포함된 곳)</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>모드 폴더 선택 (manifest.json이 포함된 곳)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>카메라 XML 내보내기</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>카메라 XML 가져오기 — 게임에 직접 설치</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>playercamerapreset.xml 가져오기</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>0.paz 가져오기 — 카메라 XML 추출</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>UCM 프리셋 가져오기</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>패치할 카메라 XML 선택</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>JSON 패치 저장</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>카메라 XML 저장</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>패치된 0.paz 저장</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>UCM 프리셋 저장</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>가져온 프리셋 저장</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(새로 만들기 — 슬라이더 조정)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(현재 편집)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(현재)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>가져오기 소스 선택</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>가져온 프리셋 삭제</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>가져온 프리셋 덮어쓰기</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>모드 패키지 가져오기 중: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>XML 가져오기 중: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>PAZ 가져오기 중: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>내보낸 프리셋</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>가져온 카메라</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM 프리셋 - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>전체</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>수정된 항목만</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>고정값만</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>게임 폴더:  미설정  (설치를 클릭하여 탐색)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>게임 폴더:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>대화상자 닫기</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>{1}단계 중 {0}단계</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>JSON Mod Manager 또는 Crimson Desert Ultimate Mods Manager에 가져올 수 있는 바이트 패치 .json을 내보냅니다. 원하는 모드 관리자를 사용하세요 — 받는 사람은 UCM이 필요하지 않습니다.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>UCM이 설치 시 사용하는 것과 동일한 정규화 (UTF-8 BOM, 주석 제거)로 playercamerapreset.xml을 내보냅니다. Nexus 텍스트 업로드, 수동 편집, UCM 재가져오기에 적합합니다. 설치하는 사람은 해당 게임 빌드에 맞는 압축 항목 크기가 필요합니다.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Nexus 스타일 드롭인 아카이브: 현재 UCM 세션에 맞게 카메라 데이터만 업데이트된 게임의 0010/0.paz 사본입니다 — JSON 모드 관리자를 사용하지 않는 플레이어는 파일 하나만 교체할 수 있습니다. 설치와 동일한 게임 패치에서만 작동합니다 (동일한 아카이브 레이아웃). 모드 페이지에 이를 명시하세요. 다운로더에게 교체 전에 바닐라 0010/0.paz를 백업하라고 알려주세요.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>현재 세션을 .ucmpreset 파일로 내보냅니다. 다른 UCM 사용자가 프리셋 폴더에 넣거나 커뮤니티 카탈로그를 통해 공유할 수 있습니다. Quick, Fine Tune, God Mode 설정을 포함한 전체 카메라 구성을 포함합니다.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>라이브 UCM 세션 (Quick, Fine Tune 또는 God Mode)을 사용합니다. 사이드바에서 프리셋을 선택하거나 디스크의 XML 또는 PAZ에서 시작하려면 가져오기를 사용하세요.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>준비 과정에서 세션이 이 게임 폴더에 맞게 인코딩되는지 확인한 후 XML 파일을 저장합니다.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>준비 과정에서 게임 폴더에 대한 인코딩을 검증합니다. 저장 시 전체 패치된 0.paz를 작성합니다 (대용량 파일). 세션 소스는 다른 형식과 동일 — 필요 시 사이드바 프리셋 또는 먼저 가져오기.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>인코딩이 필요 없습니다 — 세션을 직접 저장합니다. 위의 정보 필드를 채워 다른 사람들이 내용을 알 수 있게 하세요.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML 인코딩이 이 설치의 카메라 항목과 일치합니다. 공유 또는 편집을 위해 playercamerapreset.xml로 저장하세요.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>업로드 크기는 전체 0.paz와 동일합니다. 받는 사람은 바닐라를 백업한 후 ...\0010\0.paz를 교체합니다. 이 내보내기와 동일한 게임 버전의 플레이어에게만 공유하세요.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON은 이 필드를 modinfo에 사용합니다. XML은 제목을 기본 저장 이름으로 사용합니다. 0.paz는 기본적으로 0.paz로 설정되어 이름 변경 없이 0010에 넣을 수 있습니다.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>{0}개의 패치 영역이 생성되었습니다. 준비되면 저장하세요.</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>이 문제는 보통 PAZ 파일이 현재 설치와 다른 게임 버전에서 생성되었기 때문입니다. 아카이브 인덱스 (0.pamt)가 PAZ 파일 구조와 일치하지 않습니다.
+
+해결 방법:
+가져오려는 0.paz와 동일한 폴더에 일치하는 0.pamt 파일을 놓으세요. 두 파일 모두 동일한 게임 버전이어야 합니다.</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>저장되지 않은 세션</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>현재 세션</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>라이브 세션</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>아직 프리셋이 불러와지지 않았습니다.</value></data>
+
+</root>

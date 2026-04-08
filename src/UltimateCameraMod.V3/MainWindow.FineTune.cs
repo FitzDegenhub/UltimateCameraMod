@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -26,7 +27,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    // â”€â”€ Advanced Controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Advanced Controls â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     // Stores all slider controls keyed by ModKey.Attribute (same as AdvancedRow.FullKey)
     private readonly Dictionary<string, Slider> _advCtrlSliders = new();
@@ -91,7 +92,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("Fine Tune Error", $"Failed to load camera XML:\n{ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Title_FineTuneError"), $"Failed to load camera XML:\n{ex.Message}", isError: true);
             SwitchAppMode("simple");
         }
 
@@ -164,7 +165,7 @@ public partial class MainWindow : Window
             VerticalAlignment = VerticalAlignment.Center,
             TextAlignment = TextAlignment.Right,
             Margin = new Thickness(0, 0, 2, 0),
-            ToolTip = $"Vanilla: {vanillaVal:F2}"
+            ToolTip = string.Format(L("Tip_Vanilla"), $"{vanillaVal:F2}")
         };
         Grid.SetColumn(vanillaLabel, 3);
 
@@ -177,7 +178,7 @@ public partial class MainWindow : Window
             Height = 22,
             Padding = new Thickness(6, 2, 6, 2),
             Margin = new Thickness(2, 0, 0, 0),
-            ToolTip = $"Reset to vanilla ({vanillaVal:F2})",
+            ToolTip = string.Format(L("Tip_ResetToVanilla"), $"{vanillaVal:F2}"),
             Style = _subtleButtonStyle,
             Tag = (slider, vanillaVal)
         };
@@ -955,12 +956,12 @@ public partial class MainWindow : Window
             _suppressEvents = false;
             AdvCtrlUpdateChangedLabel();
             SaveCurrentUiState(immediate: true);
-            SetStatus("Loaded values from UCM Quick.", "Success");
+            SetStatus(L("Status_LoadedFromSimple"), "Success");
         }
         catch (Exception ex)
         {
             _suppressEvents = false;
-            SetStatus($"Load failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -979,7 +980,7 @@ public partial class MainWindow : Window
         _suppressEvents = false;
         AdvCtrlUpdateChangedLabel();
         SaveCurrentUiState(immediate: true);
-        SetStatus("Reset all UCM Fine Tune controls to vanilla.", "Success");
+        SetStatus(L("Status_ResetVanilla"), "Success");
     }
 
     private void AdvCtrlRefreshPresetCombo()

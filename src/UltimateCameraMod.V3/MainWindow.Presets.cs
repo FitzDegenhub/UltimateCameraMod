@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -63,11 +64,11 @@ public partial class MainWindow : Window
                         KindId = kind,
                         KindLabel = kind switch
                         {
-                            "default" => "Default",
-                            "style" => "UCM style",
-                            "community" => "Community",
-                            "imported" => "Imported",
-                            _ => "My preset"
+                            "default" => L("Label_KindDefault"),
+                            "style" => L("Label_KindUcmStyle"),
+                            "community" => L("Label_KindCommunity"),
+                            "imported" => L("Label_KindImportedXml"),
+                            _ => L("Label_KindMyPreset")
                         },
                         SourceLabel = author,
                         StatusText = desc,
@@ -239,7 +240,7 @@ public partial class MainWindow : Window
         if (_selectedPresetManagerItem != null)
             return _selectedPresetManagerItem;
 
-        SetStatus("Select a preset first.", "TextSecondary");
+        SetStatus(L("Status_SelectPresetFirst"), "TextSecondary");
         return null;
     }
 
@@ -900,7 +901,7 @@ public partial class MainWindow : Window
             }
 
             QueueSavedToast($"Preset '{name}' created");
-            SetStatus($"Created preset '{name}'.", "Success");
+            SetStatus(string.Format(L("Status_PresetSaved"), name), "Success");
         }
         catch (Exception ex)
         {
@@ -923,11 +924,11 @@ public partial class MainWindow : Window
             ActivatePickerFromSelection(item, skipCapture: true);
 
             QueueSavedToast("Preset loaded");
-            SetStatus($"Preset '{item.Name}' loaded into the current session.", "Success");
+            SetStatus(string.Format(L("Status_PresetLoaded"), item.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Load failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -937,11 +938,9 @@ public partial class MainWindow : Window
         if (item == null)
             return;
 
-        if (!await ShowConfirmOverlayAsync("Delete Preset",
-            item.IsUcmPreset
-                ? $"Delete '{item.Name}'? You can re-download it from the catalog anytime."
-                : $"Delete preset '{item.Name}'? This cannot be undone.",
-            "Delete", "Cancel"))
+        if (!await ShowConfirmOverlayAsync(L("Btn_DeletePreset"),
+            L("Msg_ConfirmDelete"),
+            L("Btn_Delete"), L("Btn_Cancel")))
             return;
 
         try
@@ -953,12 +952,12 @@ public partial class MainWindow : Window
                 _selectedImportedPreset = null;
 
             RefreshPresetManagerLists(preserveSelection: false);
-            QueueSavedToast("Preset deleted");
-            SetStatus($"Preset '{item.Name}' deleted.", "Success");
+            QueueSavedToast(string.Format(L("Status_PresetDeleted"), item.Name));
+            SetStatus(string.Format(L("Status_PresetDeleted"), item.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Delete failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_DeleteFailed"), ex.Message), "Error");
         }
     }
 
@@ -970,11 +969,11 @@ public partial class MainWindow : Window
 
         if (item.IsUcmPreset)
         {
-            _ = ShowAlertOverlayAsync("Cannot Rename", "UCM presets cannot be renamed. Duplicate it first to create your own editable copy.");
+            _ = ShowAlertOverlayAsync(L("Btn_Rename"), L("Msg_OverwriteExists"));
             return;
         }
 
-        string? response = await ShowInputOverlayAsync("Rename Preset", "Enter the new preset name:", item.Name);
+        string? response = await ShowInputOverlayAsync(L("Btn_Rename"), L("Dlg_EnterPresetName"), item.Name);
         if (string.IsNullOrWhiteSpace(response))
             return;
 
@@ -1030,7 +1029,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Rename failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -1076,7 +1075,7 @@ public partial class MainWindow : Window
             convertToUcm = choice == MessageBoxResult.No;
         }
 
-        string? response = await ShowInputOverlayAsync("Duplicate Preset", "Enter a name for the duplicated preset:", $"{item.Name}_copy");
+        string? response = await ShowInputOverlayAsync(L("Btn_Duplicate"), L("Dlg_EnterPresetName"), $"{item.Name}_copy");
         if (string.IsNullOrWhiteSpace(response))
             return;
 
@@ -1145,7 +1144,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Duplicate failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_DeleteFailed"), ex.Message), "Error");
         }
     }
 

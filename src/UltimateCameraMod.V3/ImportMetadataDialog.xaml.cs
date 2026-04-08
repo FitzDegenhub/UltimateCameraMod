@@ -1,11 +1,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class ImportMetadataDialog : UserControl
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public string PresetName { get; private set; } = "";
     public string? PresetAuthor { get; private set; }
     public string? PresetDescription { get; private set; }
@@ -43,7 +45,7 @@ public partial class ImportMetadataDialog : UserControl
         string name = NameBox.Text.Trim();
         if (string.IsNullOrWhiteSpace(name))
         {
-            MessageBox.Show("Please enter a name for this preset.", "Name required",
+            MessageBox.Show(L("Dlg_EnterPresetName"), L("Label_NameRequired"),
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             NameBox.Focus();
             return;

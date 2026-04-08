@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:UltimateCameraMod.V3.Controls"
-        Title="Ultimate Camera Mod v3.1.2"
+        xmlns:loc="clr-namespace:UltimateCameraMod.V3.Localization"
+        Title="{loc:Loc Title_MainWindow}"
         Icon="pack://application:,,,/Assets/ucm.ico"
         Width="1060" Height="1000" ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
@@ -23,20 +24,22 @@
         <Border Grid.Row="0" Background="{StaticResource BgPanelBrush}">
             <DockPanel Margin="20,0">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
-                    <TextBlock Text="ULTIMATE CAMERA MOD" FontSize="15" FontWeight="Bold"
+                    <TextBlock Text="{loc:Loc Title_Brand}" FontSize="15" FontWeight="Bold"
                                Foreground="{StaticResource AccentBrush}"/>
                     <TextBlock Text="  v3.1.2  |  by 0xFitz" FontSize="10"
                                Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
                     <Ellipse x:Name="VersionDot" Width="7" Height="7" Fill="#555" Margin="12,0,0,0" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="VersionStatus" Text="checking..." FontSize="9"
+                    <TextBlock x:Name="VersionStatus" Text="{loc:Loc Status_Checking}" FontSize="9"
                                Foreground="#555" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     <Button x:Name="VersionUpdateBtn" Visibility="Collapsed"
                             Style="{StaticResource SubtleButton}" FontSize="9" Padding="6,2" Height="20"
                             Foreground="#4CAF50" BorderBrush="#4CAF50" Margin="8,0,0,0"
-                            Click="OnUpdateGitHubClick" Content="Get update"/>
+                            Click="OnUpdateGitHubClick" Content="{loc:Loc Btn_GetUpdate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center"
                             HorizontalAlignment="Right">
+                    <ComboBox x:Name="LanguageCombo" Width="110" Height="26" FontSize="11"
+                              SelectionChanged="OnLanguageChanged" VerticalAlignment="Center" Margin="0,0,12,0"/>
                     <Button Content="NexusMods" Style="{StaticResource SubtleButton}"
                             Foreground="#d98f40" Click="OnNexusClick" Margin="0,0,4,0"
                             BorderThickness="0" FontSize="10" Padding="8,4"/>
@@ -44,7 +47,7 @@
                             Click="OnGitHubClick" BorderThickness="0" FontSize="10" Padding="8,4" Margin="0,0,4,0"/>
                     <Button x:Name="KofiBtn" Content="☕ Buy me a coffee" Style="{StaticResource SubtleButton}"
                             Click="OnKofiClick" BorderThickness="0" FontSize="10" Padding="8,4"
-                            ToolTip="Opens Ko-fi — tips help keep UCM going"
+                            ToolTip="{loc:Loc Tip_Kofi}"
                             Foreground="#FF5E5B"/>
                 </StackPanel>
             </DockPanel>
@@ -54,9 +57,9 @@
         <StackPanel Grid.Row="1">
             <Border Background="{StaticResource BgPanelBrush}" Padding="20,4">
                 <DockPanel>
-                    <Button Content="Open" DockPanel.Dock="Right" Style="{StaticResource SubtleButton}"
+                    <Button Content="{loc:Loc Btn_Open}" DockPanel.Dock="Right" Style="{StaticResource SubtleButton}"
                             FontSize="12" Padding="6,2" Height="22" VerticalAlignment="Center"
-                            Click="OnOpenGameFolder" ToolTip="Open game folder (or browse to set it manually)"
+                            Click="OnOpenGameFolder" ToolTip="{loc:Loc Tip_OpenGameFolder}"
                             BorderThickness="0" Foreground="{StaticResource TextDimBrush}"/>
                     <TextBlock x:Name="GamePathLabel" FontFamily="Consolas" FontSize="9"
                                Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center"/>
@@ -81,41 +84,41 @@
             <Border Grid.Column="0" Background="{StaticResource BgDarkBrush}"
                     BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
                 <DockPanel Margin="10,14,10,12" LastChildFill="True">
-                    <TextBlock DockPanel.Dock="Top" Text="PRESETS" FontSize="11" FontWeight="Bold"
+                    <TextBlock DockPanel.Dock="Top" Text="{loc:Loc Section_Presets}" FontSize="11" FontWeight="Bold"
                                Foreground="{StaticResource AccentBrush}" Margin="2,0,0,8"/>
 
                     <!-- Bottom actions -->
                     <StackPanel DockPanel.Dock="Bottom" Margin="0,10,0,0">
                         <Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,0,0,8"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                            <Button Content="New" Style="{StaticResource SubtleButton}"
+                            <Button Content="{loc:Loc Btn_New}" Style="{StaticResource SubtleButton}"
                                     Click="OnPresetNew" Height="26" FontSize="10" Padding="10,0"/>
-                            <Button Content="Duplicate" Style="{StaticResource SubtleButton}"
+                            <Button Content="{loc:Loc Btn_Duplicate}" Style="{StaticResource SubtleButton}"
                                     Click="OnPresetManagerDuplicate" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                            <Button Content="Rename" Style="{StaticResource SubtleButton}"
+                            <Button Content="{loc:Loc Btn_Rename}" Style="{StaticResource SubtleButton}"
                                     Click="OnPresetManagerRename" Height="26" FontSize="10" Padding="10,0"/>
-                            <Button Content="Delete" Style="{StaticResource SubtleButton}"
+                            <Button Content="{loc:Loc Btn_Delete}" Style="{StaticResource SubtleButton}"
                                     Click="OnPresetManagerDelete" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
                                     Foreground="#aa6666"/>
                         </StackPanel>
                         <StackPanel x:Name="SidebarActionButtons">
                             <Border Height="1" Background="{StaticResource BorderBrush}" Margin="0,2,0,8"/>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                                <Button Content="Import" Style="{StaticResource SubtleButton}"
+                                <Button Content="{loc:Loc Btn_Import}" Style="{StaticResource SubtleButton}"
                                         Click="OnImportPreset" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
-                                        ToolTip="Import a camera XML or PAZ archive as a preset"/>
-                                <Button Content="Export" Style="{StaticResource SubtleButton}"
+                                        ToolTip="{loc:Loc Tip_ImportPreset}"/>
+                                <Button Content="{loc:Loc Btn_Export}" Style="{StaticResource SubtleButton}"
                                         Click="OnExportJson" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
-                                        ToolTip="Share as JSON (Mod Manager), session XML, or patched 0.paz — uses your current UCM session."/>
-                                <Button Content="Restore" Style="{StaticResource SubtleButton}"
+                                        ToolTip="{loc:Loc Tip_ExportPreset}"/>
+                                <Button Content="{loc:Loc Btn_Restore}" Style="{StaticResource SubtleButton}"
                                         Click="OnRestore" Height="26" FontSize="10" Padding="10,0" Margin="4,0,0,0"
-                                        ToolTip="Restore the original camera chunk from UCM's backup."/>
+                                        ToolTip="{loc:Loc Tip_RestorePreset}"/>
                             </StackPanel>
-                            <Button Content="Install to Game" Style="{StaticResource AccentButton}"
+                            <Button Content="{loc:Loc Btn_InstallToGame}" Style="{StaticResource AccentButton}"
                                     Click="OnInstall" Height="34" FontSize="11" Margin="0,6,0,0"
-                                    ToolTip="Apply the current UCM session directly to the game files."/>
+                                    ToolTip="{loc:Loc Tip_InstallToGame}"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -173,7 +176,7 @@
                                                             <DockPanel Width="{Binding RelativeSource={RelativeSource AncestorType=Expander}, Path=ActualWidth}">
                                                                 <Button DockPanel.Dock="Right" Content="&#x2B07; Browse"
                                                                         FontSize="9" Height="20" Padding="6,0"
-                                                                        ToolTip="Browse and download presets"
+                                                                        ToolTip="{loc:Loc Tip_BrowsePresets}"
                                                                         Click="OnBrowsePresetCatalog"
                                                                         VerticalAlignment="Center"
                                                                         Foreground="#1a1a1a" FontWeight="SemiBold"
@@ -246,7 +249,7 @@
                                             Background="Transparent" BorderThickness="0"
                                             Padding="2" Margin="0,0,2,0"
                                             VerticalAlignment="Center"
-                                            ToolTip="Update available — click to download latest version"
+                                            ToolTip="{loc:Loc Tip_UpdateAvailable}"
                                             Click="OnPresetUpdateClick"
                                             Cursor="Hand">
                                         <Button.Style>
@@ -296,7 +299,7 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" Background="{StaticResource AccentBrush}" CornerRadius="4"
                                 Padding="10,4" VerticalAlignment="Top" Margin="0,0,14,0">
-                            <TextBlock Text="ACTIVE" FontSize="10" FontWeight="Bold"
+                            <TextBlock Text="{loc:Loc Label_Active}" FontSize="10" FontWeight="Bold"
                                        Foreground="{StaticResource BgDarkBrush}"/>
                         </Border>
                         <DockPanel Grid.Column="1">
@@ -312,16 +315,16 @@
                                         HorizontalAlignment="Right"
                                         FontSize="11" Foreground="{StaticResource AccentBrush}"
                                         BorderBrush="{StaticResource AccentBrush}"
-                                        Content="&#x1F517; View on Nexus" ToolTip="Open creator page in browser"/>
+                                        Content="&#x1F517; View on Nexus" ToolTip="{loc:Loc Tip_OpenCreatorPage}"/>
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock x:Name="ActivePresetName" FontSize="16" FontWeight="Bold"
                                            Foreground="{StaticResource AccentBrush}"
-                                           Text="Draft"/>
+                                           Text="{loc:Loc Label_Draft}"/>
                                 <TextBlock x:Name="ActivePresetDetail" FontSize="12"
                                            Foreground="{StaticResource TextPrimaryBrush}"
                                            TextWrapping="Wrap" Margin="0,5,0,0"
-                                           Text="Your working copy until you save a named preset."/>
+                                           Text="{loc:Loc Label_DraftDetail}"/>
                             </StackPanel>
                         </DockPanel>
                     </Grid>
@@ -330,11 +333,11 @@
                 <!-- Editor tab bar -->
                 <Border x:Name="EditorTabBar" DockPanel.Dock="Top" Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="4" Margin="0,0,0,12">
                     <DockPanel LastChildFill="False">
-                        <Button x:Name="TabQuick" DockPanel.Dock="Left" Content="UCM Quick" Width="120" Height="34" FontSize="12"
+                        <Button x:Name="TabQuick" DockPanel.Dock="Left" Content="{loc:Loc Tab_UcmQuick}" Width="120" Height="34" FontSize="12"
                                 Style="{StaticResource AccentButton}" Click="OnTabQuick" FontWeight="SemiBold"/>
-                        <Button x:Name="TabFineTune" DockPanel.Dock="Left" Content="Fine Tune" Width="120" Height="34" FontSize="12"
+                        <Button x:Name="TabFineTune" DockPanel.Dock="Left" Content="{loc:Loc Tab_FineTune}" Width="120" Height="34" FontSize="12"
                                 Style="{StaticResource SubtleButton}" Click="OnTabFineTune" Margin="4,0,0,0" FontWeight="SemiBold"/>
-                        <Button x:Name="TabGodMode" DockPanel.Dock="Right" Content="God Mode" Width="120" Height="34" FontSize="12"
+                        <Button x:Name="TabGodMode" DockPanel.Dock="Right" Content="{loc:Loc Tab_GodMode}" Width="120" Height="34" FontSize="12"
                                 Style="{StaticResource SubtleButton}" Click="OnTabGodMode" FontWeight="SemiBold"/>
                     </DockPanel>
                 </Border>
@@ -348,14 +351,12 @@
                 <StackPanel>
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="16,14" Margin="0,0,0,14">
                         <DockPanel>
-                            <Button DockPanel.Dock="Right" Content="Undo" Style="{StaticResource SubtleButton}"
+                            <Button DockPanel.Dock="Right" Content="{loc:Loc Btn_Undo}" Style="{StaticResource SubtleButton}"
                                     Click="OnUndo" Height="24" FontSize="10" Padding="10,0"
-                                    VerticalAlignment="Top" ToolTip="Undo last slider change"/>
+                                    VerticalAlignment="Top" ToolTip="{loc:Loc Tip_UndoSlider}"/>
                             <StackPanel>
-                                <TextBlock Text="UCM QUICK" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18">
-                                    This is the fast, curated UCM layer: broad camera shaping, previews, and the most common camera choices.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Section_UcmQuick}" Style="{StaticResource SectionHeader}" Margin="0,0,0,8"/>
+                                <TextBlock Text="{loc:Loc Help_UcmQuickIntro}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18"/>
                             </StackPanel>
                         </DockPanel>
                     </Border>
@@ -373,7 +374,7 @@
 
                         <!-- CUSTOM OFFSETS -->
                         <DockPanel x:Name="QuickOffsetsPanel">
-                        <TextBlock DockPanel.Dock="Top" Text="CUSTOM OFFSETS" Style="{StaticResource SectionHeader}"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{loc:Loc Section_CustomOffsets}" Style="{StaticResource SectionHeader}"/>
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="16,14">
                         <StackPanel>
                             <Grid>
@@ -389,7 +390,7 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Text="Distance" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
+                                <TextBlock Text="{loc:Loc Label_Distance}" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
                                 <Slider x:Name="DistSlider" Grid.Row="0" Grid.Column="1"
                                         Minimum="1.5" Maximum="12" Value="5" TickFrequency="0.1"
                                         IsSnapToTickEnabled="True" ValueChanged="OnSliderChanged"/>
@@ -398,7 +399,7 @@
                                            Foreground="{StaticResource TextPrimaryBrush}"
                                            VerticalAlignment="Center" Text="5.0"/>
 
-                                <TextBlock Text="Height" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                                <TextBlock Text="{loc:Loc Label_Height}" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                                 <Slider x:Name="HeightSlider" Grid.Row="1" Grid.Column="1"
                                         Minimum="-1.6" Maximum="1.5" Value="0" TickFrequency="0.1"
                                         IsSnapToTickEnabled="True" ValueChanged="OnSliderChanged"/>
@@ -407,7 +408,7 @@
                                            Foreground="{StaticResource TextPrimaryBrush}"
                                            VerticalAlignment="Center" Text="0.0"/>
 
-                                <TextBlock Text="Horizontal shift" Style="{StaticResource FieldLabel}" Grid.Row="2"/>
+                                <TextBlock Text="{loc:Loc Label_HShift}" Style="{StaticResource FieldLabel}" Grid.Row="2"/>
                                 <Slider x:Name="HShiftSlider" Grid.Row="2" Grid.Column="1"
                                         Minimum="-3" Maximum="3" Value="0" TickFrequency="0.1"
                                         IsSnapToTickEnabled="True" ValueChanged="OnSliderChanged"/>
@@ -419,7 +420,7 @@
                                 <TextBlock x:Name="HShiftTip" Grid.Row="3" Grid.ColumnSpan="3"
                                            FontSize="9" Foreground="{StaticResource TextDimBrush}"
                                            TextWrapping="Wrap" LineHeight="14"
-                                           Text="Left/right framing as a delta on RightOffset (on foot, mounts, aim, and related rows). 0 matches vanilla side bias. Increase toward ~0.5 to pull toward geometric center in the file; negative values bias further left. Matches the top-down FoV preview. Centered camera below is separate: it locks this slider to 0 and applies stronger centering."
+                                           Text="{loc:Loc Help_HShiftTipUnlocked}"
                                            Margin="0,4,0,0"/>
                             </Grid>
                         </StackPanel>
@@ -428,7 +429,7 @@
 
                         <!-- CENTER HUD -->
                         <DockPanel x:Name="QuickHudPanel" Margin="0,6,0,0">
-                            <TextBlock DockPanel.Dock="Top" Text="CENTER HUD" Style="{StaticResource SectionHeader}"/>
+                            <TextBlock DockPanel.Dock="Top" Text="{loc:Loc Section_CenterHud}" Style="{StaticResource SectionHeader}"/>
                             <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="16,14">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -442,23 +443,23 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="Center HUD" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
+                                    <TextBlock Text="{loc:Loc Label_CenterHud}" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
                                     <CheckBox x:Name="CenterHudCheck" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                                              Content="Center gameplay HUD within max width"
+                                              Content="{loc:Loc Check_CenterHud}"
                                               Checked="OnCenterHudChanged" Unchecked="OnCenterHudChanged" Margin="0,0,0,8"/>
 
-                                    <TextBlock Text="Safe area" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                                    <TextBlock Text="{loc:Loc Label_SafeArea}" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                                     <ComboBox x:Name="HudModeCombo" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                                               Height="32" IsEnabled="False"
                                               SelectionChanged="OnHudModeChanged" Margin="0,0,0,8">
-                                        <ComboBoxItem Content="16:9 (1920px)" Tag="1920" IsSelected="True"/>
-                                        <ComboBoxItem Content="21:9 (2520px)" Tag="2520"/>
+                                        <ComboBoxItem Content="{loc:Loc Combo_Hud16x9}" Tag="1920" IsSelected="True"/>
+                                        <ComboBoxItem Content="{loc:Loc Combo_Hud21x9}" Tag="2520"/>
                                     </ComboBox>
 
                                     <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
                                                FontSize="9" Foreground="{StaticResource TextDimBrush}"
                                                TextWrapping="Wrap" LineHeight="14" Margin="0,4,0,0"
-                                               Text="Centers gameplay HUD elements within the specified max width (pixels). Useful for ultrawide displays where HUD elements are spread too far apart. Only affects gameplay HUD, not menus. Credits to wsres."/>
+                                               Text="{loc:Loc Help_CenterHudDesc}"/>
                                 </Grid>
                             </Border>
                         </DockPanel>
@@ -467,7 +468,7 @@
 
                         <!-- GLOBAL SETTINGS (right) -->
                         <DockPanel Grid.Column="2" x:Name="QuickGlobalPanel">
-                        <TextBlock DockPanel.Dock="Top" Text="GLOBAL SETTINGS" Style="{StaticResource SectionHeader}"/>
+                        <TextBlock DockPanel.Dock="Top" Text="{loc:Loc Section_GlobalSettings}" Style="{StaticResource SectionHeader}"/>
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="16,14">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -490,12 +491,12 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Field of view" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
+                            <TextBlock Text="{loc:Loc Label_Fov}" Style="{StaticResource FieldLabel}" Grid.Row="0"/>
                             <ComboBox x:Name="FovCombo" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                                       Height="32" SelectionChanged="OnSettingChanged" Margin="0,0,0,8"
-                                      ToolTip="Adds this many degrees to each Fov and InDoorFov in the camera file. Indoor and outdoor rows start from different vanilla numbers, so God Mode will show many different final values—not one angle everywhere."/>
+                                      ToolTip="{loc:Loc Tip_FovCombo}"/>
 
-                            <TextBlock Text="Lock-on zoom" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
+                            <TextBlock Text="{loc:Loc Label_LockOnZoom}" Style="{StaticResource FieldLabel}" Grid.Row="1"/>
                             <Slider x:Name="CombatPullbackSlider" Grid.Row="1" Grid.Column="1"
                                     Minimum="-0.6" Maximum="0.6" SmallChange="0.05" LargeChange="0.1"
                                     TickFrequency="0.05" IsSnapToTickEnabled="True"
@@ -510,30 +511,30 @@
                             <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
                                        FontSize="9" Foreground="{StaticResource TextDimBrush}"
                                        TextWrapping="Wrap" LineHeight="14" Margin="0,0,0,8"
-                                       Text="Adjusts camera distance when locking onto or guarding a target, relative to your on-foot distance. 0% is seamless with Steadycam. Negative values zoom in for a cinematic focus effect; positive values pull back for more battlefield awareness."/>
+                                       Text="{loc:Loc Help_LockOnZoomDesc}"/>
 
-                            <TextBlock Text="Lock-on auto-rotate" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
+                            <TextBlock Text="{loc:Loc Label_LockOnAutoRotate}" Style="{StaticResource FieldLabel}" Grid.Row="3"/>
                             <CheckBox x:Name="LockOnAutoRotateCheck" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Disable camera snap to target when locking on  --  Credits to @sillib1980"
+                                      Content="{loc:Loc Check_LockOnAutoRotate}"
                                       Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,8"
-                                      ToolTip="When checked, the camera stays in place instead of snapping around to face the locked-on target."/>
+                                      ToolTip="{loc:Loc Tip_LockOnAutoRotate}"/>
 
-                            <TextBlock Text="Centered camera" Style="{StaticResource FieldLabel}" Grid.Row="4"/>
+                            <TextBlock Text="{loc:Loc Label_CenteredCamera}" Style="{StaticResource FieldLabel}" Grid.Row="4"/>
                             <CheckBox x:Name="BaneCheck" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Center character on screen"
+                                      Content="{loc:Loc Check_CenterCharacterShort}"
                                       Checked="OnBaneChanged" Unchecked="OnBaneChanged" Margin="0,0,0,8"
-                                      ToolTip="Separate from Horizontal shift ~0.5: that value is often vanilla lateral bias in the XML. This option forces shift to 0 and applies stronger centering rules (RightOffset toward 0 where supported)."/>
+                                      ToolTip="{loc:Loc Tip_CenteredCamera}"/>
 
-                            <TextBlock Text="Mount camera" Style="{StaticResource FieldLabel}" Grid.Row="5"/>
+                            <TextBlock Text="{loc:Loc Label_MountCamera}" Style="{StaticResource FieldLabel}" Grid.Row="5"/>
                             <CheckBox x:Name="MountHeightCheck" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Match mount/horse height to player camera height"
+                                      Content="{loc:Loc Check_MountHeight}"
                                       Checked="OnSettingChanged" Unchecked="OnSettingChanged" Margin="0,0,0,8"/>
 
-                            <TextBlock Text="Steadycam" Style="{StaticResource FieldLabel}" Grid.Row="6"/>
+                            <TextBlock Text="{loc:Loc Label_Steadycam}" Style="{StaticResource FieldLabel}" Grid.Row="6"/>
                             <CheckBox x:Name="SteadycamCheck" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
-                                      Content="Smooth camera transitions (eliminates zoom jitter between states)"
+                                      Content="{loc:Loc Check_Steadycam}"
                                       IsChecked="True" Margin="0,0,0,8"
-                                      ToolTip="Smooths blending, damping and velocity offsets between movement states. Disable to restore vanilla camera transitions."/>
+                                      ToolTip="{loc:Loc Tip_Steadycam}"/>
 
                         </Grid>
                     </Border>
@@ -549,20 +550,20 @@
                         </Grid.ColumnDefinitions>
 
                         <DockPanel Grid.Column="0">
-                            <TextBlock DockPanel.Dock="Top" Text="CAMERA PREVIEW" Style="{StaticResource SectionHeader}"/>
+                            <TextBlock DockPanel.Dock="Top" Text="{loc:Loc Section_CameraPreview}" Style="{StaticResource SectionHeader}"/>
                             <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="6">
                                 <controls:CameraPreview x:Name="Preview"/>
                             </Border>
                         </DockPanel>
 
                         <DockPanel Grid.Column="2">
-                            <TextBlock DockPanel.Dock="Top" Text="FIELD OF VIEW" Style="{StaticResource SectionHeader}"/>
+                            <TextBlock DockPanel.Dock="Top" Text="{loc:Loc Section_FieldOfView}" Style="{StaticResource SectionHeader}"/>
                             <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="6">
                                 <StackPanel VerticalAlignment="Center">
                                     <controls:FovPreview x:Name="FovPreviewCtrl"/>
                                     <TextBlock FontSize="9" Foreground="{StaticResource TextDimBrush}" Margin="0,4,0,0"
                                                HorizontalAlignment="Center" TextWrapping="Wrap"
-                                               Text="Shift 0 = vanilla (char left)  |  0.5 = center  |  negative = more left  |  positive = more right"/>
+                                               Text="{loc:Loc Help_PreviewShiftExplain}"/>
                                 </StackPanel>
                             </Border>
                         </DockPanel>
@@ -579,19 +580,17 @@
                 <StackPanel x:Name="AdvCtrlPanel" HorizontalAlignment="Stretch">
 
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="12,10" Margin="0,0,0,10">
-                        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18">
-                            <Run FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">UCM Fine Tune</Run>
-                            <Run> is the curated deep-tuning layer. It starts from your UCM Quick setup and lets you refine the fields UCM intentionally exposes.</Run>
-                            <LineBreak/><LineBreak/>
-                            <Run>God Mode lists every row in the file. Sliders here edit specific attributes—those numbers should match the same attribute in God Mode. Other rows still change from Quick (FoV boost, style, combat, steadycam, etc.) or vanilla, so do not expect one slider to explain the whole grid.</Run>
-                        </TextBlock>
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Help_FineTuneIntro}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18"/>
+                            <TextBlock Text="{loc:Loc Help_FineTuneGodModeNote}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18" Margin="0,8,0,0"/>
+                        </StackPanel>
                     </Border>
 
                     <Border Background="{StaticResource BgPanelBrush}" CornerRadius="6" Padding="12,8" Margin="0,0,0,10">
                         <DockPanel>
-                            <Button Content="Clear" DockPanel.Dock="Right" Style="{StaticResource SubtleButton}"
+                            <Button Content="{loc:Loc Btn_Clear}" DockPanel.Dock="Right" Style="{StaticResource SubtleButton}"
                                     Click="OnAdvCtrlClearSearch" Height="26" FontSize="11" Padding="10,2"/>
-                            <TextBlock Text="Search" DockPanel.Dock="Left" FontSize="11"
+                            <TextBlock Text="{loc:Loc Label_Search}" DockPanel.Dock="Left" FontSize="11"
                                        Foreground="{StaticResource TextSecondaryBrush}"
                                        VerticalAlignment="Center" Margin="0,0,8,0"/>
                             <TextBox x:Name="AdvCtrlSearchBox" Height="26"
@@ -604,17 +603,13 @@
                     <!-- Section A: On-Foot Zoom Levels -->
                     <Expander x:Name="AdvSectionA" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="A - On-Foot Zoom Levels" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneOnFoot}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    The game has 3 scroll-wheel zoom levels on foot. ZL2 is closest (default view), ZL3 is mid-range, ZL4 is furthest out.
-                                    Each level independently controls camera distance, height, and horizontal position.
-                                    These apply to all on-foot states: idle, walking, running, sprinting, and combat movement.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_OnFootZoomDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlOnFootGrid"/>
                             </StackPanel>
                         </Border>
@@ -623,16 +618,13 @@
                     <!-- Section B: Horse / Mount Zoom Levels -->
                     <Expander x:Name="AdvSectionB" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="B - Horse / Mount Zoom Levels" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneMount}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    Horse cameras use the 2 vanilla zoom levels (ZL2-ZL3). All 8 horse states are synchronized so the camera
-                                    doesn't jolt during speed changes while keeping the real game zoom ladder.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_HorseZoomDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlMountGrid"/>
                             </StackPanel>
                         </Border>
@@ -641,16 +633,13 @@
                     <!-- Section C: Global / FoV -->
                     <Expander x:Name="AdvSectionC" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="C - Global / FoV Coverage" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneGlobalFov}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    These rows cover broader FoV normalization and shared camera systems that apply outside the basic on-foot and horse groups.
-                                    Use them when you want UCM Fine Tune to reflect the full mod surface, including lock-on families, warmachine states, and swim cameras.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_GlobalFovDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlGlobalGrid"/>
                             </StackPanel>
                         </Border>
@@ -659,16 +648,13 @@
                     <!-- Section D: Special Mounts / Traversal -->
                     <Expander x:Name="AdvSectionD" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="D - Special Mounts / Traversal" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneSpecialMounts}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    Elephant, wyvern, canoe, warmachine, broom, and traversal-adjacent camera families all have their own zoom behavior.
-                                    These controls expose the extra mount values the mod already changes behind the scenes.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_SpecialMountsDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlSpecialMountGrid"/>
                             </StackPanel>
                         </Border>
@@ -677,17 +663,13 @@
                     <!-- Section E: Combat / Lock-On -->
                     <Expander x:Name="AdvSectionE" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="E - Combat / Lock-On" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneCombat}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="12,12,8,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    When you lock onto an enemy the camera switches to combat tracking mode.
-                                    TargetRate controls how aggressively the camera follows the enemy - lower values give you more manual control.
-                                    ScreenClampRate controls how centered the enemy stays on screen.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_CombatDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlCombatGrid"/>
                             </StackPanel>
                         </Border>
@@ -696,17 +678,13 @@
                     <!-- Section F: Camera Smoothing / Steadycam -->
                     <Expander x:Name="AdvSectionF" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="F - Camera Smoothing / Steadycam" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneSmoothing}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="16,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    These control how the camera transitions between movement states.
-                                    BlendInTime is how many seconds the camera takes to ease into a state.
-                                    OffsetLength controls camera sway - setting it to 0 gives a steadycam feel with no sideways movement.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_SmoothingDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlSmoothGrid"/>
                             </StackPanel>
                         </Border>
@@ -715,16 +693,13 @@
                     <!-- Section G: Aiming / Crosshair Position -->
                     <Expander x:Name="AdvSectionG" IsExpanded="True" Margin="0,0,0,8">
                         <Expander.Header>
-                            <TextBlock Text="G - Aiming / Crosshair Position" FontSize="13" FontWeight="SemiBold"
+                            <TextBlock Text="{loc:Loc Section_FineTuneAiming}" FontSize="13" FontWeight="SemiBold"
                                        Foreground="{StaticResource AccentBrush}"/>
                         </Expander.Header>
                         <Border Background="{StaticResource BgPanelBrush}" CornerRadius="0,0,6,6" Padding="16,12">
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
-                                           Margin="0,0,0,12" LineHeight="18">
-                                    When you aim with the lantern, bow, or weapon zoom the camera shifts to position the crosshair.
-                                    These RightOffset values scale proportionally from your horizontal shift so the camera doesn't snap sideways when activating abilities.
-                                </TextBlock>
+                                <TextBlock Text="{loc:Loc Help_AimingDesc}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"
+                                           Margin="0,0,0,12" LineHeight="18"/>
                                 <Grid x:Name="AdvCtrlAimGrid"/>
                             </StackPanel>
                         </Border>
@@ -743,22 +718,23 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0" Background="{StaticResource BgPanelBrush}" Padding="16,10">
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18">
-                    <Run FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">God Mode</Run>
-                    <Run> exposes the raw camera rows. Use it when UCM Quick is not enough and you want to jump straight into full direct control, or after UCM Fine Tune if you want to go even deeper.</Run>
-                    <LineBreak/><LineBreak/>
-                    <Run>Values here are the merged session: Quick + Fine Tune + any edits in this grid. FoV in Quick is a delta added per row (Fov and InDoorFov), so angles differ by state. Fine Tune matches here row-for-row only for the attributes those sliders control.</Run>
-                    <LineBreak/><LineBreak/>
-                    <Run Foreground="{StaticResource TextPrimaryBrush}">White</Run><Run> = vanilla  |  </Run>
-                    <Run Foreground="{StaticResource AccentBrush}">Gold</Run><Run> = modified by UCM Quick/Fine Tune  |  </Run>
-                    <Run Foreground="{StaticResource SuccessBrush}">Green</Run><Run> = sacred (your God Mode edits, protected from rebuilds)</Run>
-                </TextBlock>
+                <StackPanel>
+                    <TextBlock Text="{loc:Loc Help_GodModeIntro}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18"/>
+                    <TextBlock Text="{loc:Loc Help_GodModeSessionNote}" TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18" Margin="0,8,0,0"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" LineHeight="18" Margin="0,8,0,0">
+                        <Run Foreground="{StaticResource TextPrimaryBrush}" Text="{loc:Loc Label_GodModeWhiteVanilla}"/>
+                        <Run>  |  </Run>
+                        <Run Foreground="{StaticResource AccentBrush}" Text="{loc:Loc Label_GodModeGoldModified}"/>
+                        <Run>  |  </Run>
+                        <Run Foreground="{StaticResource SuccessBrush}" Text="{loc:Loc Label_GodModeGreenSacred}"/>
+                    </TextBlock>
+                </StackPanel>
             </Border>
 
             <!-- Search & filter -->
             <Border x:Name="ExpertToolbarBorder" Grid.Row="1" Background="#1e1e1e">
                 <StackPanel Orientation="Horizontal" Margin="16,0" VerticalAlignment="Center">
-                    <Button Content="Expand All" Style="{StaticResource SubtleButton}"
+                    <Button Content="{loc:Loc Btn_ExpandAll}" Style="{StaticResource SubtleButton}"
                             Click="OnAdvExpandAll" Height="26" FontSize="11" Padding="10,2" Margin="0,0,8,0"/>
                     <TextBox x:Name="AdvSearchBox" Width="200" Height="26" FontSize="11"
                              Foreground="#e0e0e0" CaretBrush="#e0e0e0"
@@ -860,9 +836,9 @@
                     </GroupStyle>
                 </DataGrid.GroupStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="SECTION" Binding="{Binding Section, Mode=OneWay}" Width="200" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="SUB-ELEMENT" Binding="{Binding SubElement, Mode=OneWay}" Width="140" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="ATTRIBUTE" Binding="{Binding Attribute, Mode=OneWay}" Width="250" IsReadOnly="True">
+                    <DataGridTextColumn Header="{loc:Loc Header_Section}" Binding="{Binding Section, Mode=OneWay}" Width="200" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{loc:Loc Header_SubElement}" Binding="{Binding SubElement, Mode=OneWay}" Width="140" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{loc:Loc Header_Attribute}" Binding="{Binding Attribute, Mode=OneWay}" Width="250" IsReadOnly="True">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="ToolTip" Value="{Binding AttributeDoc}"/>
@@ -870,7 +846,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="VALUE" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120">
+                    <DataGridTextColumn Header="{loc:Loc Header_Value}" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120">
                         <DataGridTextColumn.EditingElementStyle>
                             <Style TargetType="TextBox">
                                 <Setter Property="Background" Value="{StaticResource BgInputBrush}"/>
@@ -881,7 +857,7 @@
                             </Style>
                         </DataGridTextColumn.EditingElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="VANILLA" Binding="{Binding VanillaValue, Mode=OneWay}" Width="120" IsReadOnly="True">
+                    <DataGridTextColumn Header="{loc:Loc Header_Vanilla}" Binding="{Binding VanillaValue, Mode=OneWay}" Width="120" IsReadOnly="True">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource TextDimBrush}"/>
@@ -909,14 +885,14 @@
                              Margin="0,0,6,0"/>
                     <TextBlock x:Name="GameUpdateText" FontSize="10" MaxWidth="420" TextWrapping="Wrap"
                                Foreground="{StaticResource WarnBrush}" VerticalAlignment="Center"/>
-                    <Button x:Name="GameUpdateSnoozeBtn" Content="Snooze 7d" Margin="10,0,0,0"
+                    <Button x:Name="GameUpdateSnoozeBtn" Content="{loc:Loc Btn_Snooze7d}" Margin="10,0,0,0"
                             Style="{StaticResource SubtleButton}" FontSize="9" Padding="8,2" Height="22"
-                            Click="OnGameUpdateSnoozeClick" ToolTip="Hide this reminder for one week"/>
-                    <Button x:Name="GameUpdateDismissBtn" Content="Dismiss" Margin="6,0,0,0"
+                            Click="OnGameUpdateSnoozeClick" ToolTip="{loc:Loc Tip_Snooze7d}"/>
+                    <Button x:Name="GameUpdateDismissBtn" Content="{loc:Loc Btn_Dismiss}" Margin="6,0,0,0"
                             Style="{StaticResource SubtleButton}" FontSize="9" Padding="8,2" Height="22"
-                            Click="OnGameUpdateDismissClick" ToolTip="Hide until next launch"/>
+                            Click="OnGameUpdateDismissClick" ToolTip="{loc:Loc Tip_DismissUntilRelaunch}"/>
                 </StackPanel>
-                <TextBlock x:Name="StatusLabel" Text="Ready" FontSize="11"
+                <TextBlock x:Name="StatusLabel" Text="{loc:Loc Status_Ready}" FontSize="11"
                            Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center"
                            TextTrimming="CharacterEllipsis"/>
             </DockPanel>
@@ -942,7 +918,7 @@
                            FontWeight="SemiBold"
                            Foreground="{StaticResource TextPrimaryBrush}"
                            VerticalAlignment="Center"
-                           Text="Saved"/>
+                           Text="{loc:Loc Label_Saved}"/>
             </StackPanel>
         </Border>
 
@@ -957,7 +933,7 @@
                              Foreground="{StaticResource AccentBrush}"/>
                 <TextBlock x:Name="GlobalBusyText"
                            Margin="0,14,0,0"
-                           Text="Working..."
+                           Text="{loc:Loc Label_Working}"
                            TextWrapping="Wrap"
                            TextAlignment="Center"
                            FontSize="12"

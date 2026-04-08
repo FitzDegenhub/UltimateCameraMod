@@ -1,9 +1,11 @@
 using System.Windows;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class ImportPresetDialog : Window
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public string SelectedMode { get; private set; } = "";
 
     public ImportPresetDialog()

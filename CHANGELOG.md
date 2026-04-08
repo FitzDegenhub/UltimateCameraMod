@@ -9,6 +9,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ## [Unreleased]
 
 ### Features
+- **Multi-language support** - Full .resx-based localization for 10 languages: English, Korean, Japanese, Chinese Simplified, Swedish, German, French, Spanish, Portuguese Brazilian, and Russian. Language selector in the title bar with live UI switching and persistence across sessions. Covers all XAML and code-behind strings across V3's 10 XAML files and 18 code-behind files (507 resource keys, 170+ XAML bindings, 470+ code-behind lookups).
+  - Hello! / 안녕하세요! / こんにちは! / 你好! / Hej! / Hallo! / Bonjour! / Hola! / Ola! / Привет!
 - **Center HUD** - New checkbox + dropdown in UCM Quick to center gameplay HUD elements for ultrawide displays. Choose between 16:9 (1920px) or 21:9 (2520px) safe areas. Modifies HTML/CSS in PAZ archive 0012 independently from camera. Switching modes or unchecking restores vanilla automatically. Credits to wsres for the technique.
 
 ### Bug Fixes
