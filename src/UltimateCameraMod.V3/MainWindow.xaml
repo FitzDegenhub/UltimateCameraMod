@@ -56,7 +56,7 @@
                 <DockPanel>
                     <Button Content="Open" DockPanel.Dock="Right" Style="{StaticResource SubtleButton}"
                             FontSize="12" Padding="6,2" Height="22" VerticalAlignment="Center"
-                            Click="OnOpenGameFolder" ToolTip="Open game folder"
+                            Click="OnOpenGameFolder" ToolTip="Open game folder (or browse to set it manually)"
                             BorderThickness="0" Foreground="{StaticResource TextDimBrush}"/>
                     <TextBlock x:Name="GamePathLabel" FontFamily="Consolas" FontSize="9"
                                Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center"/>

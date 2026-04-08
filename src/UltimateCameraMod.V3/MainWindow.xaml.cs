@@ -483,8 +483,8 @@ public partial class MainWindow : Window
 
             if (string.IsNullOrEmpty(_gameDir))
             {
-                GamePathLabel.Text = "Game folder:  not detected (optional for browsing presets)";
-                SetStatus("Game not detected. Browse presets and edit settings — set game folder to enable JSON export.", "Warn");
+                GamePathLabel.Text = "Game folder:  not detected — click Open to set manually";
+                SetStatus("Game not detected. Click Open to browse for your game folder, or browse presets and edit settings.", "Warn");
             }
             else
             {
@@ -1121,7 +1121,23 @@ public partial class MainWindow : Window
     private void OnOpenGameFolder(object s, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(_gameDir) && Directory.Exists(_gameDir))
+        {
             Process.Start(new ProcessStartInfo(_gameDir) { UseShellExecute = true });
+            return;
+        }
+
+        // Game not detected — let the user browse for it manually
+        string picked = BrowseForGameDir();
+        if (string.IsNullOrEmpty(picked)) return;
+
+        _gameDir = picked;
+        _detectedPlatform = "Manual";
+        OnGameDirResolved();
+        MigrateJsonToUcmPreset(UcmPresetsDir);
+        MigrateJsonToUcmPreset(MyPresetsDir);
+        GenerateBuiltInPresets();
+        RefreshPresetManagerLists(preserveSelection: false);
+        SetStatus("Game folder set manually.", "OK");
     }
     private static int GetInt(Dictionary<string, object>? dict, string key, int def = 0)
     {

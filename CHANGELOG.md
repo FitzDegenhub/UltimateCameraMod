@@ -15,6 +15,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
 - **Center HUD mode switching had no effect** - Reinstalling with a different safe area (16:9 vs 21:9) was detected as "already installed" and skipped. Now restores vanilla first before reinstalling with the new mode.
 - **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.
+- **Open button does nothing when game not auto-detected** - `OnOpenGameFolder` silently returned when `_gameDir` was empty. Now falls back to `BrowseForGameDir()` so users on non-standard install paths can manually set their game folder. Status message updated to tell users to click Open.
 - **Exported .ucmpreset files had hardcoded default settings** - `SaveUcmPresetExport` wrote hardcoded defaults (distance=5, height=0, shift=0, all checkboxes off) instead of the actual Quick slider and Global Settings values. Exported presets now include the real distance, height, horizontal shift, FoV, lock-on zoom, lock-on auto-rotate, centered camera, mount sync, steadycam, center HUD, and HUD width. Import is now 1:1 with the exporter's configuration.
 
 ---
@@ -113,7 +114,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ## [v3.0.1] - 2026-04-03
 
 ### Added
-- **UCM preset catalog browser** - UCM style presets downloaded on demand via Browse button. Official presets hosted on v3-dev branch with auto-generated `catalog.json`.
+- **UCM preset catalog browser** - UCM style presets downloaded on demand via Browse button. Official presets hosted on main branch with auto-generated `catalog.json`.
 - **Preset update detection** - Background catalog check compares revision numbers. Outdated presets show update icon in sidebar. Update prompt offers to duplicate old version before downloading.
 - **Game Default sidebar group** - Vanilla preset separated into its own group.
 - **Community and UCM update detection** - SHA256 comparison against GitHub catalogs with pulsating update icons.
