@@ -127,7 +127,7 @@ public partial class CommunityBrowserDialog : UserControl
         // UCM presets use the catalog filename; community presets use the entry id
         if (_needsSessionXmlBake && !string.IsNullOrEmpty(entry.File))
         {
-            string path = Path.Combine(_presetsDir, entry.File);
+            string path = Path.Combine(_presetsDir, Path.GetFileName(entry.File));
             return System.IO.File.Exists(path);
         }
         if (!string.IsNullOrEmpty(entry.File))
@@ -237,7 +237,9 @@ public partial class CommunityBrowserDialog : UserControl
             };
             linkBtn.Click += (_, _) =>
             {
-                try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(entry.Url) { UseShellExecute = true }); }
+                if (!Uri.TryCreate(entry.Url, UriKind.Absolute, out var uri)
+                    || (uri.Scheme != "https" && uri.Scheme != "http")) return;
+                try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(uri.AbsoluteUri) { UseShellExecute = true }); }
                 catch { }
             };
             rightStack.Children.Add(linkBtn);
@@ -277,7 +279,7 @@ public partial class CommunityBrowserDialog : UserControl
             http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/3.0");
             http.Timeout = TimeSpan.FromSeconds(15);
 
-            string downloadUrl = _rawBaseUrl + entry.File;
+            string downloadUrl = _rawBaseUrl + Uri.EscapeDataString(entry.File);
             byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
 
             if (rawBytes.Length > MaxPresetSize)
@@ -285,6 +287,20 @@ public partial class CommunityBrowserDialog : UserControl
                 btn.Content = L("Btn_TooLarge");
                 StatusText.Text = string.Format(L("Status_PresetTooLarge"), entry.Name);
                 return;
+            }
+
+            // Verify SHA-256 integrity if the catalog provides a hash
+            if (!string.IsNullOrEmpty(entry.Sha256))
+            {
+                string actualSha = Convert.ToHexString(
+                    System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
+                if (!string.Equals(actualSha, entry.Sha256, StringComparison.OrdinalIgnoreCase))
+                {
+                    btn.Content = L("Btn_Failed");
+                    btn.IsEnabled = true;
+                    StatusText.Text = string.Format(L("Status_DownloadFailed"), "SHA-256 mismatch");
+                    return;
+                }
             }
 
             // Validate
@@ -303,11 +319,9 @@ public partial class CommunityBrowserDialog : UserControl
             // Save raw bytes as-is to preserve SHA hash for update detection.
             // Preset files in the repo should already have metadata (name, author, url, description).
             Directory.CreateDirectory(_presetsDir);
-            string destFileName = _needsSessionXmlBake && !string.IsNullOrEmpty(entry.File)
-                ? entry.File
-                : !string.IsNullOrEmpty(entry.File)
-                    ? Path.GetFileName(entry.File)
-                    : $"{entry.Id}.ucmpreset";
+            string destFileName = !string.IsNullOrEmpty(entry.File)
+                ? Path.GetFileName(entry.File)
+                : $"{entry.Id}.ucmpreset";
             string destPath = Path.Combine(_presetsDir, destFileName);
             await System.IO.File.WriteAllBytesAsync(destPath, rawBytes);
 

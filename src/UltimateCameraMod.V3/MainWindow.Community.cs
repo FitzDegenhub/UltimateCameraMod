@@ -153,7 +153,10 @@ public partial class MainWindow : Window
                 string file = el.TryGetProperty("file", out var fEl) ? fEl.GetString() ?? "" : "";
                 if (string.IsNullOrEmpty(file)) continue;
 
-                string localPath = Path.Combine(UcmPresetsDir, file);
+                string safeFileName = Path.GetFileName(file);
+                if (string.IsNullOrEmpty(safeFileName)) continue;
+
+                string localPath = Path.Combine(UcmPresetsDir, safeFileName);
 
                 // Only download presets that don't exist locally.
                 // SHA mismatches on existing files are handled by CheckUcmPresetUpdatesAsync (⟳ icon).
@@ -164,13 +167,19 @@ public partial class MainWindow : Window
                     string downloadUrl = UcmPresetsRawBaseUrl + Uri.EscapeDataString(file);
                     byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
 
+                    // Verify SHA-256 integrity if the catalog provides a hash
+                    string catalogSha = el.TryGetProperty("sha256", out var shaEl) ? shaEl.GetString() ?? "" : "";
+                    string rawSha = Convert.ToHexString(
+                        System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
+                    if (!string.IsNullOrEmpty(catalogSha)
+                        && !string.Equals(rawSha, catalogSha, StringComparison.OrdinalIgnoreCase))
+                        continue; // skip — hash mismatch
+
                     // Write the complete preset file as-is
                     File.WriteAllBytes(localPath, rawBytes);
 
                     // Track the download hash in sidecar for update detection
-                    string rawSha = Convert.ToHexString(
-                        System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
-                    UpdateCatalogStateEntry(file, rawSha);
+                    UpdateCatalogStateEntry(safeFileName, rawSha);
                     anyNew = true;
                 }
                 catch { /* skip individual download failures */ }
