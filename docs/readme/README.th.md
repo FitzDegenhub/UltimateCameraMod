@@ -1,4 +1,4 @@
-[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | **ไทย** | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
+[English](../../README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | **ไทย** | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
 
 ---
 
@@ -9,7 +9,7 @@
 ชุดเครื่องมือกล้องแบบสแตนด์อโลนสำหรับ Crimson Desert GUI เต็มรูปแบบ, แสดงตัวอย่างกล้องแบบเรียลไทม์, ระบบแก้ไขสามระดับ, พรีเซ็ตแบบไฟล์, **ส่งออก JSON สำหรับ [JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** และ **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) รองรับ HUD สำหรับหน้าจอกว้างพิเศษ
 
 <p align="center">
-  <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
+  <img src="../../screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
 </p>
 
 <p align="center">
@@ -34,19 +34,19 @@
 <br>
 
 **UCM Quick** — ระยะทาง, ความสูง, การเลื่อน, FoV, ซูมล็อคเป้า, กล้องนิ่ง, แสดงตัวอย่างแบบเรียลไทม์
-![UCM Quick](screenshots/v3.x/ucm_quick.png)
+![UCM Quick](../../screenshots/v3.x/ucm_quick.png)
 
 **Fine Tune** — การปรับแต่งเชิงลึกที่คัดสรร พร้อมการ์ดมีกรอบที่ค้นหาได้
-![Fine Tune](screenshots/v3.x/finetune.png)
+![Fine Tune](../../screenshots/v3.x/finetune.png)
 
 **God Mode** — ตัวแก้ไข XML ดิบเต็มรูปแบบ พร้อมการเปรียบเทียบกับค่าเริ่มต้น
-![God Mode](screenshots/v3.x/godmode.png)
+![God Mode](../../screenshots/v3.x/godmode.png)
 
 **ส่งออก JSON** — ส่งออกสำหรับ JSON Mod Manager / CDUMM
-![Export JSON](screenshots/v3.x/exportjson_menu.png)
+![Export JSON](../../screenshots/v3.x/exportjson_menu.png)
 
 **นำเข้า** — นำเข้าจาก .ucmpreset, XML, PAZ หรือแพ็กเกจ Mod Manager
-![Import](screenshots/v3.x/import_screen.png)
+![Import](../../screenshots/v3.x/import_screen.png)
 
 </details>
 

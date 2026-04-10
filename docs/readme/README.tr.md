@@ -1,4 +1,4 @@
-[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | **Türkçe** | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
+[English](../../README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | **Türkçe** | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
 
 ---
 
@@ -9,7 +9,7 @@
 Crimson Desert icin bagimsiz kamera araci. Tam GUI, canli kamera onizleme, uc katmanli duzenleme, dosya tabanli preset'ler, **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** ve **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) icin **JSON disa aktarma** ve genis ekran HUD destegi.
 
 <p align="center">
-  <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
+  <img src="../../screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
 </p>
 
 <p align="center">
@@ -34,19 +34,19 @@ Crimson Desert icin bagimsiz kamera araci. Tam GUI, canli kamera onizleme, uc ka
 <br>
 
 **UCM Quick** -- mesafe, yukseklik, kaydirma, FoV, lock-on zoom, steadycam, canli onizlemeler
-![UCM Quick](screenshots/v3.x/ucm_quick.png)
+![UCM Quick](../../screenshots/v3.x/ucm_quick.png)
 
 **Fine Tune** -- aranabilir cerceveli kartlarla secilmis derin ayar
-![Fine Tune](screenshots/v3.x/finetune.png)
+![Fine Tune](../../screenshots/v3.x/finetune.png)
 
 **God Mode** -- vanilla karsilastirmali tam ham XML duzenleyici
-![God Mode](screenshots/v3.x/godmode.png)
+![God Mode](../../screenshots/v3.x/godmode.png)
 
 **JSON Disa Aktarma** -- JSON Mod Manager / CDUMM icin disa aktarma
-![Export JSON](screenshots/v3.x/exportjson_menu.png)
+![Export JSON](../../screenshots/v3.x/exportjson_menu.png)
 
 **Ice Aktarma** -- .ucmpreset, XML, PAZ veya Mod Manager paketlerinden ice aktarma
-![Import](screenshots/v3.x/import_screen.png)
+![Import](../../screenshots/v3.x/import_screen.png)
 
 </details>
 

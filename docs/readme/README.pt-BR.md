@@ -1,4 +1,4 @@
-[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | **Português (BR)** | [Русский](README.ru.md)
+[English](../../README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | **Português (BR)** | [Русский](README.ru.md)
 
 ---
 
@@ -9,7 +9,7 @@
 Kit de ferramentas de camera independente para Crimson Desert. Interface grafica completa, pre-visualizacao ao vivo, tres niveis de edicao, presets baseados em arquivos, **exportacao JSON para [JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** e **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM), e suporte de HUD para ultrawide.
 
 <p align="center">
-  <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
+  <img src="../../screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
 </p>
 
 <p align="center">
@@ -34,19 +34,19 @@ Kit de ferramentas de camera independente para Crimson Desert. Interface grafica
 <br>
 
 **UCM Quick** -- distancia, altura, deslocamento, FoV, zoom de lock-on, steadycam, pre-visualizacoes ao vivo
-![UCM Quick](screenshots/v3.x/ucm_quick.png)
+![UCM Quick](../../screenshots/v3.x/ucm_quick.png)
 
 **Fine Tune** -- ajuste fino com cartoes com bordas e busca
-![Fine Tune](screenshots/v3.x/finetune.png)
+![Fine Tune](../../screenshots/v3.x/finetune.png)
 
 **God Mode** -- editor XML completo com comparacao vanilla
-![God Mode](screenshots/v3.x/godmode.png)
+![God Mode](../../screenshots/v3.x/godmode.png)
 
 **Exportar JSON** -- exportacao para JSON Mod Manager / CDUMM
-![Export JSON](screenshots/v3.x/exportjson_menu.png)
+![Export JSON](../../screenshots/v3.x/exportjson_menu.png)
 
 **Importar** -- importar de .ucmpreset, XML, PAZ ou pacotes de gerenciadores de mods
-![Import](screenshots/v3.x/import_screen.png)
+![Import](../../screenshots/v3.x/import_screen.png)
 
 </details>
 

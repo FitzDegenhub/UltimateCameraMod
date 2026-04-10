@@ -1,4 +1,4 @@
-[English](README.md) | **한국어** | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
+[English](../../README.md) | **한국어** | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
 
 ---
 
@@ -9,7 +9,7 @@
 Crimson Desert용 독립형 카메라 툴킷입니다. 완전한 GUI, 실시간 카메라 미리보기, 3단계 편집 시스템, 파일 기반 프리셋, **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** 및 **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM)용 **JSON 내보내기**, 울트라와이드 HUD 지원을 제공합니다.
 
 <p align="center">
-  <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert 배너" width="100%" />
+  <img src="../../screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert 배너" width="100%" />
 </p>
 
 <p align="center">
@@ -34,19 +34,19 @@ Crimson Desert용 독립형 카메라 툴킷입니다. 완전한 GUI, 실시간 
 <br>
 
 **UCM Quick** -- 거리, 높이, 시프트, FoV, 락온 줌, 스테디캠, 실시간 미리보기
-![UCM Quick](screenshots/v3.x/ucm_quick.png)
+![UCM Quick](../../screenshots/v3.x/ucm_quick.png)
 
 **Fine Tune** -- 검색 가능한 테두리 카드로 구성된 정밀 조정
-![Fine Tune](screenshots/v3.x/finetune.png)
+![Fine Tune](../../screenshots/v3.x/finetune.png)
 
 **God Mode** -- 바닐라 비교 기능이 있는 전체 원본 XML 편집기
-![God Mode](screenshots/v3.x/godmode.png)
+![God Mode](../../screenshots/v3.x/godmode.png)
 
 **JSON 내보내기** -- JSON Mod Manager / CDUMM용 내보내기
-![Export JSON](screenshots/v3.x/exportjson_menu.png)
+![Export JSON](../../screenshots/v3.x/exportjson_menu.png)
 
 **가져오기** -- .ucmpreset, XML, PAZ 또는 모드 매니저 패키지에서 가져오기
-![Import](screenshots/v3.x/import_screen.png)
+![Import](../../screenshots/v3.x/import_screen.png)
 
 </details>
 

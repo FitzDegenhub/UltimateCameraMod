@@ -1,4 +1,4 @@
-[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | **Suomi** | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
+[English](../../README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | **Suomi** | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
 
 ---
 
@@ -9,7 +9,7 @@
 Itsenäinen kameratyökalupaketti Crimson Desertiin. Täysi graafinen käyttöliittymä, reaaliaikainen kameraesikatselu, kolme muokkaustasoa, tiedostopohjainen preset-järjestelmä, **JSON-vienti [JSON Mod Managerille](https://www.nexusmods.com/crimsondesert/mods/113)** ja **[Crimson Desert Ultimate Mods Managerille](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) sekä ultralaajakuva-HUD-tuki.
 
 <p align="center">
-  <img src="screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert -banneri" width="100%" />
+  <img src="../../screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert -banneri" width="100%" />
 </p>
 
 <p align="center">
@@ -34,19 +34,19 @@ Itsenäinen kameratyökalupaketti Crimson Desertiin. Täysi graafinen käyttöli
 <br>
 
 **UCM Quick** -- etaisyys, korkeus, siirto, FoV, lukituszoomi, steadycam, reaaliaikaiset esikatselut
-![UCM Quick](screenshots/v3.x/ucm_quick.png)
+![UCM Quick](../../screenshots/v3.x/ucm_quick.png)
 
 **Fine Tune** -- kuratoitu syvasaato haettavilla reunustetuilla korteilla
-![Fine Tune](screenshots/v3.x/finetune.png)
+![Fine Tune](../../screenshots/v3.x/finetune.png)
 
 **God Mode** -- taydellinen raaka-XML-editori vertailulla alkuperaisiin arvoihin
-![God Mode](screenshots/v3.x/godmode.png)
+![God Mode](../../screenshots/v3.x/godmode.png)
 
 **JSON-vienti** -- vienti JSON Mod Managerille / CDUMM:lle
-![Export JSON](screenshots/v3.x/exportjson_menu.png)
+![Export JSON](../../screenshots/v3.x/exportjson_menu.png)
 
 **Tuonti** -- tuonti .ucmpreset-, XML-, PAZ- tai Mod Manager -paketeista
-![Import](screenshots/v3.x/import_screen.png)
+![Import](../../screenshots/v3.x/import_screen.png)
 
 </details>
 
