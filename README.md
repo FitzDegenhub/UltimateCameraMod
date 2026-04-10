@@ -1,4 +1,8 @@
-﻿> **v3.1.2 is here!** Sacred God Mode overrides, Lock-on Auto-Rotate toggle, and all bug fixes. Download from **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** or **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+﻿**English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [ไทย](README.th.md) | [Bahasa Indonesia](README.id.md) | [Türkçe](README.tr.md) | [Polski](README.pl.md) | [Italiano](README.it.md) | [Svenska](README.sv.md) | [Norsk](README.nb.md) | [Dansk](README.da.md) | [Suomi](README.fi.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Español](README.es.md) | [Português (BR)](README.pt-BR.md) | [Русский](README.ru.md)
+
+---
+
+> **v3.1.2 is here!** Sacred God Mode overrides, Lock-on Auto-Rotate toggle, and all bug fixes. Download from **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** or **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
