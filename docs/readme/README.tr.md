@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 yayinlandi!** Sacred God Mode gecersiz kilma, Lock-on Auto-Rotate acma/kapama ve tum hata duzeltmeleri. **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** veya **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)** uzerinden indirin.
+> **v3.2 yayinlandi!** Sacred God Mode gecersiz kilma, Lock-on Auto-Rotate acma/kapama ve tum hata duzeltmeleri. **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** veya **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)** uzerinden indirin.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Crimson Desert icin bagimsiz kamera araci. Tam GUI, canli kamera onizleme, uc ka
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Crimson Desert icin bagimsiz kamera araci. Tam GUI, canli kamera onizleme, uc ka
 
 | Dal | Durum | Aciklama |
 |-----|-------|----------|
-| **`main`** | v3.1.2 Surum | Uc katmanli duzenleyici (UCM Quick / Fine Tune / God Mode), dosya tabanli preset'ler, topluluk katalogu, coklu format disa aktarma ve dogrudan PAZ kurulumu iceren bagimsiz kamera araci |
+| **`main`** | v3.2 Surum | Uc katmanli duzenleyici (UCM Quick / Fine Tune / God Mode), dosya tabanli preset'ler, topluluk katalogu, coklu format disa aktarma ve dogrudan PAZ kurulumu iceren bagimsiz kamera araci |
 | **`development`** | Gelistirme | Sonraki surum gelistirme dali |
 
 v3, v2'deki tum kamera ozelliklerini yeniden tasarlanmis bir arayuz, dosya tabanli preset'ler, uc katmanli duzenleyici ve coklu format disa aktarma ile birlikte icermektedir. Dogrudan PAZ kurulumu, v3'te ikincil bir secenek olarak hala mevcuttur.
@@ -245,7 +245,7 @@ UCM yalnizca cevrimdisi veri dosyalarini degistirir. Oyun bellegine dokunmaz, ko
 Normal -- oyun guncellemeleri modlanmis dosyalarin uzerine yazar. UCM'yi yeniden acin ve Kur'a tiklayin (veya JSON Mod Manager / CDUMM icin JSON'u yeniden disa aktarin). Ayarlariniz otomatik olarak kaydedilir.
 
 **Antivirusum exe'yi isaretledi.**
-Bagimsiz .NET uygulamalarinda bilinen yanlis pozitif. VirusTotal taramasi temiz: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Tam kaynak kodu burada incelenip kendiniz derlenebilir.
+Bagimsiz .NET uygulamalarinda bilinen yanlis pozitif. VirusTotal taramasi temiz: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Tam kaynak kodu burada incelenip kendiniz derlenebilir.
 
 **Yatay kaydirma 0 ne anlama geliyor?**
 0 = vanilla kamera konumu (karakter hafifce solda). 0.5 = karakter ekranda ortalanmis. Negatif degerler daha sola, pozitif degerler daha saga tasir.
@@ -257,7 +257,7 @@ v3.x kullancilari: sadece exe'yi degistirin, tum preset'ler ve ayarlar korunur. 
 
 ## Surum gecmisi
 
-- **v3.1.2** - God Mode sekmesinde Install/disa aktarmalarda eksik sacred degerleri duzeltildi. [Surum notlarina](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2) bakin.
+- **v3.2** - God Mode sekmesinde Install/disa aktarmalarda eksik sacred degerleri duzeltildi. [Surum notlarina](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2) bakin.
 - **v3.1.1** - Temiz oyun dosyalarinda yanlis-pozitif bozulmus yedek algilama duzeltildi.
 - **v3.1** - Sacred God Mode gecersiz kilmalari (kullanici duzenlemeleri yeniden olusturmalara karsi kalici olarak korunur). Lock-on Auto-Rotate acma/kapama ([sillib1980](https://github.com/sillib1980)'e tesekkurler). Yesil sacred gostergeleri. Tam Manuel Kontrol kurulum duzeltmesi. Surum farkindaligi yukseltme kaplama. [Surum notlarina](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) bakin.
 - **v3.0.2** - Tum diyaloglar uygulama ici kaplama sistemine donusturuldu. God Mode gecersiz kilmalari sekme gecisleri arasinda devam eder. Preset tur secimi (UCM Yonetimli veya Tam Manuel Kontrol). Topluluk preset katalogu ana depoya tasindi. 54 God Mode ozellik ipucu. Oyun cokme duzeltmeleri. Haziran 2026 oyun yamasi icin vanilla dogrulama guncellendi. 21 sayfalik Wiki.

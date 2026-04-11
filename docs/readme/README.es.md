@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 ya esta disponible!** Sobrecargas de Sacred God Mode, opcion para desactivar la rotacion automatica del lock-on y todas las correcciones de errores. Descarga desde **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** o **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 ya esta disponible!** Sobrecargas de Sacred God Mode, opcion para desactivar la rotacion automatica del lock-on y todas las correcciones de errores. Descarga desde **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** o **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Kit de herramientas de camara independiente para Crimson Desert. Interfaz grafic
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Kit de herramientas de camara independiente para Crimson Desert. Interfaz grafic
 
 | Rama | Estado | Descripcion |
 |------|--------|-------------|
-| **`main`** | v3.1.2 Release | Kit de herramientas de camara independiente con editor de tres niveles (UCM Quick / Fine Tune / God Mode), presets basados en archivos, catalogo comunitario, exportacion multiformato e instalacion directa de PAZ |
+| **`main`** | v3.2 Release | Kit de herramientas de camara independiente con editor de tres niveles (UCM Quick / Fine Tune / God Mode), presets basados en archivos, catalogo comunitario, exportacion multiformato e instalacion directa de PAZ |
 | **`development`** | Desarrollo | Rama de desarrollo de la proxima version |
 
 v3 incluye todas las funciones de camara de v2 mas una interfaz rediseñada, presets basados en archivos, un editor de tres niveles y exportacion multiformato. La instalacion directa de PAZ sigue disponible en v3 como opcion secundaria.
@@ -245,7 +245,7 @@ UCM solo modifica archivos de datos offline. No toca la memoria del juego, no in
 Normal - las actualizaciones del juego sobrescriben los archivos modificados. Vuelve a abrir UCM y haz clic en Instalar (o re-exporta JSON para JSON Mod Manager / CDUMM). Tus configuraciones se guardan automaticamente.
 
 **Mi antivirus detecto el exe.**
-Falso positivo conocido con aplicaciones .NET autocontenidas. El escaneo de VirusTotal esta limpio: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). El codigo fuente completo esta disponible aqui para revisar y compilar tu mismo.
+Falso positivo conocido con aplicaciones .NET autocontenidas. El escaneo de VirusTotal esta limpio: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). El codigo fuente completo esta disponible aqui para revisar y compilar tu mismo.
 
 **Que significa desplazamiento horizontal 0?**
 0 = posicion de camara vanilla (personaje ligeramente a la izquierda). 0.5 = personaje centrado en pantalla. Los valores negativos mueven mas a la izquierda, los valores positivos mueven mas a la derecha.
@@ -257,7 +257,7 @@ Usuarios de v3.x: simplemente reemplaza el exe, todos los presets y configuracio
 
 ## Historial de versiones
 
-- **v3.1.2** - Correccion de valores sagrados faltantes en Instalar/exportaciones en la pestaña God Mode. Ver [notas de la version](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** - Correccion de valores sagrados faltantes en Instalar/exportaciones en la pestaña God Mode. Ver [notas de la version](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** - Correccion de deteccion falsa positiva de backup contaminado en archivos de juego limpios.
 - **v3.1** - Sobrecargas de Sacred God Mode (ediciones de usuario protegidas permanentemente de reconstrucciones). Opcion de rotacion automatica de lock-on (creditos a [sillib1980](https://github.com/sillib1980)). Indicadores verdes de valores sagrados. Correccion de instalacion de Full Manual Control. Overlay de actualizacion compatible con versiones. Ver [notas de la version](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** - Todos los dialogos convertidos a sistema de overlay dentro de la aplicacion. Las sobrecargas de God Mode persisten entre cambios de pestaña. Seleccion de tipo de preset (UCM Managed vs Full Manual Control). Catalogo de presets comunitarios movido al repositorio principal. 54 tooltips de atributos de God Mode. Correcciones de crashes del juego. Validacion vanilla actualizada para el parche del juego de junio 2026. Wiki de 21 paginas.

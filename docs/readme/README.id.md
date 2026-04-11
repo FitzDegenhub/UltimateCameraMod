@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 telah hadir!** Sacred God Mode override, toggle Lock-on Auto-Rotate, dan semua perbaikan bug. Unduh dari **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** atau **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 telah hadir!** Sacred God Mode override, toggle Lock-on Auto-Rotate, dan semua perbaikan bug. Unduh dari **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** atau **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Perangkat kamera mandiri untuk Crimson Desert. GUI lengkap, pratinjau kamera lan
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Perangkat kamera mandiri untuk Crimson Desert. GUI lengkap, pratinjau kamera lan
 
 | Branch | Status | Keterangan |
 |--------|--------|------------|
-| **`main`** | v3.1.2 Rilis | Perangkat kamera mandiri dengan editor tiga tingkat (UCM Quick / Fine Tune / God Mode), preset berbasis file, katalog komunitas, ekspor multi-format, dan instalasi PAZ langsung |
+| **`main`** | v3.2 Rilis | Perangkat kamera mandiri dengan editor tiga tingkat (UCM Quick / Fine Tune / God Mode), preset berbasis file, katalog komunitas, ekspor multi-format, dan instalasi PAZ langsung |
 | **`development`** | Pengembangan | Branch pengembangan versi selanjutnya |
 
 v3 mencakup semua fitur kamera dari v2 ditambah UI yang dirancang ulang, preset berbasis file, editor tiga tingkat, dan ekspor multi-format. Instalasi PAZ langsung tetap tersedia di v3 sebagai opsi sekunder.
@@ -245,7 +245,7 @@ UCM hanya memodifikasi file data offline. Tidak menyentuh memori game, menyuntik
 Normal — pembaruan game menimpa file yang dimodifikasi. Buka kembali UCM dan klik Instal (atau ekspor ulang JSON untuk JSON Mod Manager / CDUMM). Pengaturan Anda tersimpan secara otomatis.
 
 **Antivirus saya menandai exe ini.**
-False positive yang umum terjadi pada aplikasi .NET self-contained. Pemindaian VirusTotal bersih: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Kode sumber lengkap tersedia di sini untuk ditinjau dan dibangun sendiri.
+False positive yang umum terjadi pada aplikasi .NET self-contained. Pemindaian VirusTotal bersih: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Kode sumber lengkap tersedia di sini untuk ditinjau dan dibangun sendiri.
 
 **Apa arti pergeseran horizontal 0?**
 0 = posisi kamera vanilla (karakter sedikit ke kiri). 0.5 = karakter terpusat di layar. Nilai negatif bergeser lebih ke kiri, nilai positif bergeser lebih ke kanan.
@@ -257,7 +257,7 @@ Pengguna v3.x: cukup ganti exe, semua preset dan pengaturan dipertahankan. Pengg
 
 ## Riwayat versi
 
-- **v3.1.2** — Perbaikan nilai sacred yang hilang dari Instal/ekspor di tab God Mode. Lihat [catatan rilis](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** — Perbaikan nilai sacred yang hilang dari Instal/ekspor di tab God Mode. Lihat [catatan rilis](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** — Perbaikan deteksi backup tercemar false-positive pada file game bersih.
 - **v3.1** — Sacred God Mode override (edit pengguna dilindungi secara permanen dari rebuild). Toggle Lock-on Auto-Rotate (kredit kepada [sillib1980](https://github.com/sillib1980)). Indikator sacred hijau. Perbaikan instalasi Full Manual Control. Overlay upgrade sadar versi. Lihat [catatan rilis](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** — Semua dialog dikonversi ke sistem overlay dalam aplikasi. Override God Mode bertahan saat pergantian tab. Pemilihan tipe preset (UCM Managed vs Full Manual Control). Katalog preset komunitas dipindah ke repo utama. 54 tooltip atribut God Mode. Perbaikan crash game. Validasi vanilla diperbarui untuk patch game Juni 2026. Wiki 21 halaman.

@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 출시!** Sacred God Mode 오버라이드, Lock-on Auto-Rotate 토글, 그리고 모든 버그 수정이 포함되었습니다. **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** 또는 **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**에서 다운로드하세요.
+> **v3.2 출시!** Sacred God Mode 오버라이드, Lock-on Auto-Rotate 토글, 그리고 모든 버그 수정이 포함되었습니다. **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** 또는 **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**에서 다운로드하세요.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Crimson Desert용 독립형 카메라 툴킷입니다. 완전한 GUI, 실시간 
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Crimson Desert용 독립형 카메라 툴킷입니다. 완전한 GUI, 실시간 
 
 | 브랜치 | 상태 | 설명 |
 |--------|------|------|
-| **`main`** | v3.1.2 릴리스 | 3단계 편집기(UCM Quick / Fine Tune / God Mode), 파일 기반 프리셋, 커뮤니티 카탈로그, 다중 형식 내보내기, 직접 PAZ 설치를 갖춘 독립형 카메라 툴킷 |
+| **`main`** | v3.2 릴리스 | 3단계 편집기(UCM Quick / Fine Tune / God Mode), 파일 기반 프리셋, 커뮤니티 카탈로그, 다중 형식 내보내기, 직접 PAZ 설치를 갖춘 독립형 카메라 툴킷 |
 | **`development`** | 개발 중 | 다음 버전 개발 브랜치 |
 
 v3에는 v2의 모든 카메라 기능이 포함되어 있으며, 재설계된 UI, 파일 기반 프리셋, 3단계 편집기, 다중 형식 내보내기가 추가되었습니다. 직접 PAZ 설치는 v3에서도 보조 옵션으로 제공됩니다.
@@ -245,7 +245,7 @@ UCM은 오프라인 데이터 파일만 수정합니다. 게임 메모리를 건
 정상입니다 -- 게임 업데이트가 모딩된 파일을 덮어씁니다. UCM을 다시 열고 설치를 클릭하세요(또는 JSON Mod Manager / CDUMM용으로 JSON을 재내보내기하세요). 설정은 자동으로 저장됩니다.
 
 **백신이 exe를 차단했습니다.**
-자체 포함 .NET 앱에서 발생하는 알려진 오탐지입니다. VirusTotal 검사 결과는 깨끗합니다: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). 전체 소스 코드가 여기에 공개되어 있으므로 직접 검토하고 빌드할 수 있습니다.
+자체 포함 .NET 앱에서 발생하는 알려진 오탐지입니다. VirusTotal 검사 결과는 깨끗합니다: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). 전체 소스 코드가 여기에 공개되어 있으므로 직접 검토하고 빌드할 수 있습니다.
 
 **수평 시프트 0은 무엇을 의미하나요?**
 0 = 바닐라 카메라 위치(캐릭터가 약간 왼쪽). 0.5 = 캐릭터가 화면 중앙. 음수 값은 더 왼쪽으로, 양수 값은 더 오른쪽으로 이동합니다.
@@ -257,7 +257,7 @@ v3.x 사용자: exe만 교체하면 됩니다. 모든 프리셋과 설정이 유
 
 ## 버전 히스토리
 
-- **v3.1.2** - God Mode 탭에서 Install/내보내기 시 Sacred 값이 누락되는 문제 수정. [릴리스 노트](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2) 참조.
+- **v3.2** - God Mode 탭에서 Install/내보내기 시 Sacred 값이 누락되는 문제 수정. [릴리스 노트](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2) 참조.
 - **v3.1.1** - 깨끗한 게임 파일에서 발생하던 잘못된 오염 백업 감지 수정.
 - **v3.1** - Sacred God Mode 오버라이드(사용자 편집이 재빌드로부터 영구 보호). 락온 자동 회전 토글([sillib1980](https://github.com/sillib1980) 제공). 녹색 Sacred 인디케이터. Full Manual Control 설치 수정. 버전 인식 업그레이드 오버레이. [릴리스 노트](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) 참조.
 - **v3.0.2** - 모든 대화 상자를 인앱 오버레이 시스템으로 변환. 탭 전환 시에도 God Mode 오버라이드 유지. 프리셋 유형 선택(UCM Managed vs Full Manual Control). 커뮤니티 프리셋 카탈로그를 메인 저장소로 이전. 54개 God Mode 속성 툴팁. 게임 크래시 수정. 2026년 6월 게임 패치에 맞춘 바닐라 검증 업데이트. 21페이지 Wiki.
