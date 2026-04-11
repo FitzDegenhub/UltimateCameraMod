@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -26,7 +27,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    // â”€â”€ Advanced Controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Advanced Controls â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     // Stores all slider controls keyed by ModKey.Attribute (same as AdvancedRow.FullKey)
     private readonly Dictionary<string, Slider> _advCtrlSliders = new();
@@ -91,7 +92,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("Fine Tune Error", $"Failed to load camera XML:\n{ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Title_FineTuneError"), string.Format(L("Status_FailedLoadCameraXml"), ex.Message), isError: true);
             SwitchAppMode("simple");
         }
 
@@ -164,20 +165,20 @@ public partial class MainWindow : Window
             VerticalAlignment = VerticalAlignment.Center,
             TextAlignment = TextAlignment.Right,
             Margin = new Thickness(0, 0, 2, 0),
-            ToolTip = $"Vanilla: {vanillaVal:F2}"
+            ToolTip = string.Format(L("Tip_Vanilla"), $"{vanillaVal:F2}")
         };
         Grid.SetColumn(vanillaLabel, 3);
 
         // Reset button
         var resetBtn = new System.Windows.Controls.Button
         {
-            Content = "Reset",
+            Content = L("Btn_Reset"),
             FontSize = 10,
             Width = 50,
             Height = 22,
             Padding = new Thickness(6, 2, 6, 2),
             Margin = new Thickness(2, 0, 0, 0),
-            ToolTip = $"Reset to vanilla ({vanillaVal:F2})",
+            ToolTip = string.Format(L("Tip_ResetToVanilla"), $"{vanillaVal:F2}"),
             Style = _subtleButtonStyle,
             Tag = (slider, vanillaVal)
         };
@@ -335,7 +336,7 @@ public partial class MainWindow : Window
         };
 
         foreach (int zl in new[] { 2, 3, 4 })
-            panel.Children.Add(BuildZoomLevelGroup($"Zoom Level {zl}", allOnFoot, zl, zoomAttrs));
+            panel.Children.Add(BuildZoomLevelGroup(string.Format(L("Card_ZoomLevel"), zl), allOnFoot, zl, zoomAttrs));
 
         AdvCtrlOnFootGrid.Children.Add(panel);
     }
@@ -356,7 +357,7 @@ public partial class MainWindow : Window
         };
 
         foreach (int zl in new[] { 2, 3 })
-            panel.Children.Add(BuildZoomLevelGroup($"Zoom Level {zl}", horseSections, zl, zoomAttrs));
+            panel.Children.Add(BuildZoomLevelGroup(string.Format(L("Card_ZoomLevel"), zl), horseSections, zl, zoomAttrs));
 
         AdvCtrlMountGrid.Children.Add(panel);
     }
@@ -366,27 +367,27 @@ public partial class MainWindow : Window
         var panel = new StackPanel();
 
         var sharedFovSliders = new List<UIElement>();
-        sharedFovSliders.Add(BuildSharedSliderRow("On-foot FoV",
+        sharedFovSliders.Add(BuildSharedSliderRow(L("Slider_OnFootFov"),
             new[]
             {
                 "Player_Basic_Default_Run", "Player_Basic_Default_Runfast", "Player_Basic_Default_Walk"
             },
-            "Fov", 25.0, 75.0, 1.0, "Shared field of view for the main on-foot movement cameras."));
-        sharedFovSliders.Add(BuildSharedSliderRow("Combat FoV",
+            "Fov", 25.0, 75.0, 1.0, L("Tip_OnFootFov")));
+        sharedFovSliders.Add(BuildSharedSliderRow(L("Slider_CombatFov"),
             new[]
             {
                 "Player_Weapon_Default", "Player_Weapon_Default_Run", "Player_Weapon_Default_RunFast",
                 "Player_Weapon_Default_RunFast_Follow", "Player_Weapon_Default_Walk",
                 "Player_Weapon_Rush", "Player_Weapon_Guard"
             },
-            "Fov", 25.0, 75.0, 1.0, "Shared field of view for the core weapon and combat movement cameras."));
-        sharedFovSliders.Add(BuildSharedSliderRow("Force/Titan/Cinematic FoV",
+            "Fov", 25.0, 75.0, 1.0, L("Tip_CombatFov")));
+        sharedFovSliders.Add(BuildSharedSliderRow(L("Slider_ForceTitanCinematicFov"),
             new[]
             {
                 "Player_Force_LockOn", "Player_LockOn_Titan", "Cinematic_LockOn"
             },
             "Fov", 25.0, 75.0, 1.0));
-        sharedFovSliders.Add(BuildSharedSliderRow("Warmachine/Broom FoV",
+        sharedFovSliders.Add(BuildSharedSliderRow(L("Slider_WarmachineBroomFov"),
             new[]
             {
                 "Player_Ride_Warmachine", "Player_Ride_Warmachine_Aim",
@@ -394,47 +395,47 @@ public partial class MainWindow : Window
             },
             "Fov", 25.0, 75.0, 1.0));
         {
-            var elephantFovRow = BuildSliderRow("Player_Ride_Elephant", "Fov", 25.0, 75.0, 1.0, "Elephant field of view.");
+            var elephantFovRow = BuildSliderRow("Player_Ride_Elephant", "Fov", 25.0, 75.0, 1.0, L("Tip_ElephantFov"));
             if (elephantFovRow.Children[0] is TextBlock elephantFovLabel)
-                elephantFovLabel.Text = "Elephant FoV";
+                elephantFovLabel.Text = L("Slider_ElephantFov");
             sharedFovSliders.Add(elephantFovRow);
         }
         {
-            var wyvernFovRow = BuildSliderRow("Player_Ride_Wyvern", "Fov", 25.0, 75.0, 1.0, "Wyvern field of view.");
+            var wyvernFovRow = BuildSliderRow("Player_Ride_Wyvern", "Fov", 25.0, 75.0, 1.0, L("Tip_WyvernFov"));
             if (wyvernFovRow.Children[0] is TextBlock wyvernFovLabel)
-                wyvernFovLabel.Text = "Wyvern FoV";
+                wyvernFovLabel.Text = L("Slider_WyvernFov");
             sharedFovSliders.Add(wyvernFovRow);
         }
         {
-            var swimFovRow = BuildSliderRow("Player_Swim_Default", "Fov", 25.0, 75.0, 1.0, "Swimming field of view.");
+            var swimFovRow = BuildSliderRow("Player_Swim_Default", "Fov", 25.0, 75.0, 1.0, L("Tip_SwimFov"));
             if (swimFovRow.Children[0] is TextBlock swimFovLabel)
-                swimFovLabel.Text = "Swim FoV";
+                swimFovLabel.Text = L("Slider_SwimFov");
             sharedFovSliders.Add(swimFovRow);
         }
-        panel.Children.Add(WrapInCard("Shared FoV", sharedFovSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_SharedFov"), sharedFovSliders.ToArray()));
 
         var twoTargetSliders = new List<UIElement>();
         {
             var interactionZl3Row = BuildSliderRow("Player_Interaction_TwoTarget/ZoomLevel[3]", "MaxZoomDistance", 4.0, 20.0, 0.5);
             if (interactionZl3Row.Children[0] is TextBlock interactionZl3Label)
-                interactionZl3Label.Text = "Interaction ZL3 Max";
+                interactionZl3Label.Text = L("Slider_InteractionZl3Max");
             twoTargetSliders.Add(interactionZl3Row);
         }
         {
             var interactionZl4Row = BuildSliderRow("Player_Interaction_TwoTarget/ZoomLevel[4]", "MaxZoomDistance", 4.0, 20.0, 0.5);
             if (interactionZl4Row.Children[0] is TextBlock interactionZl4Label)
-                interactionZl4Label.Text = "Interaction ZL4 Max";
+                interactionZl4Label.Text = L("Slider_InteractionZl4Max");
             twoTargetSliders.Add(interactionZl4Row);
         }
-        panel.Children.Add(WrapInCard("Two-target framing", twoTargetSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_TwoTargetFraming"), twoTargetSliders.ToArray()));
 
         var traversalFovSliders = new List<UIElement>();
         foreach (var (modKey, labelText) in new[]
         {
-            ("Player_Swim_Default", "Swim FoV"),
-            ("Player_Basic_Climb", "Climb FoV"),
-            ("Player_Basic_Gliding", "Glide FoV"),
-            ("Player_Basic_FreeFall", "Freefall FoV")
+            ("Player_Swim_Default", L("Slider_SwimFov")),
+            ("Player_Basic_Climb", L("Slider_ClimbFov")),
+            ("Player_Basic_Gliding", L("Slider_GlideFov")),
+            ("Player_Basic_FreeFall", L("Slider_FreefallFov"))
         })
         {
             var row = BuildSliderRow(modKey, "Fov", 25.0, 75.0, 1.0);
@@ -442,7 +443,7 @@ public partial class MainWindow : Window
                 label.Text = labelText;
             traversalFovSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Traversal FoV", traversalFovSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_TraversalFov"), traversalFovSliders.ToArray()));
 
         AdvCtrlGlobalGrid.Children.Add(panel);
     }
@@ -456,37 +457,37 @@ public partial class MainWindow : Window
         {
             var row = BuildSliderRow($"Player_Ride_Elephant/ZoomLevel[{zl}]", "ZoomDistance", 0.5, 25.0, 0.1);
             if (row.Children[0] is TextBlock label)
-                label.Text = $"Elephant ZL{zl}";
+                label.Text = string.Format(L("Slider_ElephantZl"), zl);
             elephantSliders.Add(row);
         }
         foreach (int zl in new[] { 2, 3, 4 })
         {
             var row = BuildSliderRow($"Player_Ride_Elephant/ZoomLevel[{zl}]", "UpOffset", -2.0, 3.0, 0.1);
             if (row.Children[0] is TextBlock label)
-                label.Text = $"Elephant ZL{zl} Height";
+                label.Text = string.Format(L("Slider_ElephantZlHeight"), zl);
             elephantSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Elephant", elephantSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_Elephant"), elephantSliders.ToArray()));
 
         var wyvernSliders = new List<UIElement>();
         foreach (int zl in new[] { 1, 2, 3, 4 })
         {
             var row = BuildSliderRow($"Player_Ride_Wyvern/ZoomLevel[{zl}]", "ZoomDistance", 1.0, 30.0, 0.1);
             if (row.Children[0] is TextBlock label)
-                label.Text = $"Wyvern ZL{zl}";
+                label.Text = string.Format(L("Slider_WyvernZl"), zl);
             wyvernSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Wyvern", wyvernSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_Wyvern"), wyvernSliders.ToArray()));
 
         var canoeMiscSliders = new List<UIElement>();
         foreach (var (modKey, attr, min, max, step, labelText) in new[]
         {
-            ("Player_Ride_Canoe/ZoomLevel[2]", "ZoomDistance", 1.0, 20.0, 0.1, "Canoe ZL2"),
-            ("Player_Ride_Canoe/ZoomLevel[3]", "ZoomDistance", 1.0, 20.0, 0.1, "Canoe ZL3"),
-            ("Player_Ride_Warmachine/ZoomLevel[2]", "ZoomDistance", 1.0, 20.0, 0.1, "Warmachine ZL2"),
-            ("Player_Ride_Warmachine/ZoomLevel[3]", "ZoomDistance", 1.0, 20.0, 0.1, "Warmachine ZL3"),
-            ("Player_Ride_Broom/ZoomLevel[2]", "ZoomDistance", 1.0, 24.0, 0.1, "Broom ZL2"),
-            ("Player_Ride_Broom/ZoomLevel[3]", "ZoomDistance", 1.0, 24.0, 0.1, "Broom ZL3")
+            ("Player_Ride_Canoe/ZoomLevel[2]", "ZoomDistance", 1.0, 20.0, 0.1, L("Slider_CanoeZl2")),
+            ("Player_Ride_Canoe/ZoomLevel[3]", "ZoomDistance", 1.0, 20.0, 0.1, L("Slider_CanoeZl3")),
+            ("Player_Ride_Warmachine/ZoomLevel[2]", "ZoomDistance", 1.0, 20.0, 0.1, L("Slider_WarmachineZl2")),
+            ("Player_Ride_Warmachine/ZoomLevel[3]", "ZoomDistance", 1.0, 20.0, 0.1, L("Slider_WarmachineZl3")),
+            ("Player_Ride_Broom/ZoomLevel[2]", "ZoomDistance", 1.0, 24.0, 0.1, L("Slider_BroomZl2")),
+            ("Player_Ride_Broom/ZoomLevel[3]", "ZoomDistance", 1.0, 24.0, 0.1, L("Slider_BroomZl3"))
         })
         {
             var row = BuildSliderRow(modKey, attr, min, max, step);
@@ -494,7 +495,7 @@ public partial class MainWindow : Window
                 label.Text = labelText;
             canoeMiscSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Canoe / Warmachine / Broom", canoeMiscSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_CanoeWarmachineBroom"), canoeMiscSliders.ToArray()));
 
         AdvCtrlSpecialMountGrid.Children.Add(panel);
     }
@@ -530,7 +531,7 @@ public partial class MainWindow : Window
                 lbl.Text = $"{sec.Replace("Player_", "")} - {attr}";
             trackingSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Lock-On Tracking", trackingSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_LockOnTracking"), trackingSliders.ToArray()));
 
         // ZoomDistance per lock-on section per zoom level
         // All sections now expose ZL2+ZL3+ZL4; missing levels are injected by Steadycam.
@@ -555,22 +556,22 @@ public partial class MainWindow : Window
                 if (row.Children[0] is TextBlock lbl) lbl.Text = $"ZL{zl} ZoomDistance";
                 zoomSliders.Add(row);
             }
-            panel.Children.Add(WrapInCard($"{sec.Replace("Player_", "")} - Zoom Distances", zoomSliders.ToArray()));
+            panel.Children.Add(WrapInCard(string.Format(L("Card_ZoomDistances"), sec.Replace("Player_", "")), zoomSliders.ToArray()));
         }
 
         var fovSliders = new List<UIElement>();
         foreach (var (modKey, labelText) in new[]
         {
-            ("Player_Weapon_LockOn", "Weapon LockOn FoV"),
-            ("Player_Weapon_TwoTarget", "Weapon TwoTarget FoV"),
-            ("Player_Interaction_TwoTarget", "Interaction TwoTarget FoV"),
-            ("Player_FollowLearn_LockOn_Boss", "Boss LockOn FoV"),
-            ("Player_Weapon_LockOn_System", "LockOn System FoV"),
-            ("Player_Revive_LockOn_System", "Revive LockOn FoV"),
-            ("Player_Weapon_LockOn_Non_Rotate", "Non-Rotate LockOn FoV"),
-            ("Player_Weapon_LockOn_WrestleOnly", "Wrestle LockOn FoV"),
-            ("Player_StartAggro_TwoTarget", "StartAggro FoV"),
-            ("Player_Wanted_TwoTarget", "Wanted FoV")
+            ("Player_Weapon_LockOn", L("Slider_WeaponLockOnFov")),
+            ("Player_Weapon_TwoTarget", L("Slider_WeaponTwoTargetFov")),
+            ("Player_Interaction_TwoTarget", L("Slider_InteractionTwoTargetFov")),
+            ("Player_FollowLearn_LockOn_Boss", L("Slider_BossLockOnFov")),
+            ("Player_Weapon_LockOn_System", L("Slider_LockOnSystemFov")),
+            ("Player_Revive_LockOn_System", L("Slider_ReviveLockOnFov")),
+            ("Player_Weapon_LockOn_Non_Rotate", L("Slider_NonRotateLockOnFov")),
+            ("Player_Weapon_LockOn_WrestleOnly", L("Slider_WrestleLockOnFov")),
+            ("Player_StartAggro_TwoTarget", L("Slider_StartAggroFov")),
+            ("Player_Wanted_TwoTarget", L("Slider_WantedFov"))
         })
         {
             var row = BuildSliderRow(modKey, "Fov", 25.0, 75.0, 1.0);
@@ -578,7 +579,7 @@ public partial class MainWindow : Window
                 label.Text = labelText;
             fovSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("FoV Touch Points", fovSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_FovTouchPoints"), fovSliders.ToArray()));
 
         AdvCtrlCombatGrid.Children.Add(panel);
     }
@@ -590,28 +591,28 @@ public partial class MainWindow : Window
         var smoothSliders = new List<UIElement>();
         var smoothEntries = new[]
         {
-            ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendInTime",  0.0, 3.0, 0.1, "Run blend-in"),
-            ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendOutTime", 0.0, 3.0, 0.1, "Run blend-out"),
-            ("Player_Weapon_Guard/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Guard blend-in"),
-            ("Player_Weapon_Guard/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Guard blend-out"),
-            ("Player_Weapon_Rush/CameraBlendParameter",        "BlendInTime",  0.0, 3.0, 0.1, "Rush blend-in"),
-            ("Player_Weapon_Rush/CameraBlendParameter",        "BlendOutTime", 0.0, 3.0, 0.1, "Rush blend-out"),
-            ("Player_Basic_Default_Run/OffsetByVelocity",      "OffsetLength", 0.0, 2.0, 0.1, "Run sway"),
-            ("Player_Weapon_Default_Run/OffsetByVelocity",     "OffsetLength", 0.0, 2.0, 0.1, "Combat run sway"),
-            ("Player_Weapon_Default_RunFast/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, "Combat sprint sway"),
-            ("Player_Weapon_Default_RunFast_Follow/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, "Follow sprint sway"),
-            ("Player_Animal_Default/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Animal idle blend-in"),
-            ("Player_Animal_Default_Run/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, "Animal run blend-in"),
-            ("Player_Animal_Default_Run/OffsetByVelocity",     "OffsetLength", 0.0, 2.0, 0.1, "Animal run sway"),
-            ("Player_Animal_Default_Runfast/CameraBlendParameter", "BlendInTime", 0.0, 3.0, 0.1, "Animal sprint blend-in"),
-            ("Player_Animal_Default_Runfast/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, "Animal sprint sway"),
-            ("Player_Animal_Default_Runfast/OffsetByVelocity", "DampSpeed",    0.0, 2.0, 0.1, "Animal sprint damp"),
-            ("Player_Weapon_LockOn/CameraBlendParameter",               "BlendInTime",  0.0, 3.0, 0.1, "LockOn blend-in"),
-            ("Player_Weapon_LockOn/CameraBlendParameter",               "BlendOutTime", 0.0, 3.0, 0.1, "LockOn blend-out"),
-            ("Player_Weapon_LockOn_System/CameraBlendParameter",        "BlendInTime",  0.0, 3.0, 0.1, "LockOn System blend-in"),
-            ("Player_Weapon_LockOn_System/CameraBlendParameter",        "BlendOutTime", 0.0, 3.0, 0.1, "LockOn System blend-out"),
-            ("Player_FollowLearn_LockOn_Boss/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Boss LockOn blend-in"),
-            ("Player_FollowLearn_LockOn_Boss/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Boss LockOn blend-out"),
+            ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendInTime",  0.0, 3.0, 0.1, L("Slider_RunBlendIn")),
+            ("Player_Basic_Default_Run/CameraBlendParameter",  "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_RunBlendOut")),
+            ("Player_Weapon_Guard/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, L("Slider_GuardBlendIn")),
+            ("Player_Weapon_Guard/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_GuardBlendOut")),
+            ("Player_Weapon_Rush/CameraBlendParameter",        "BlendInTime",  0.0, 3.0, 0.1, L("Slider_RushBlendIn")),
+            ("Player_Weapon_Rush/CameraBlendParameter",        "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_RushBlendOut")),
+            ("Player_Basic_Default_Run/OffsetByVelocity",      "OffsetLength", 0.0, 2.0, 0.1, L("Slider_RunSway")),
+            ("Player_Weapon_Default_Run/OffsetByVelocity",     "OffsetLength", 0.0, 2.0, 0.1, L("Slider_CombatRunSway")),
+            ("Player_Weapon_Default_RunFast/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, L("Slider_CombatSprintSway")),
+            ("Player_Weapon_Default_RunFast_Follow/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, L("Slider_FollowSprintSway")),
+            ("Player_Animal_Default/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, L("Slider_AnimalIdleBlendIn")),
+            ("Player_Animal_Default_Run/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, L("Slider_AnimalRunBlendIn")),
+            ("Player_Animal_Default_Run/OffsetByVelocity",     "OffsetLength", 0.0, 2.0, 0.1, L("Slider_AnimalRunSway")),
+            ("Player_Animal_Default_Runfast/CameraBlendParameter", "BlendInTime", 0.0, 3.0, 0.1, L("Slider_AnimalSprintBlendIn")),
+            ("Player_Animal_Default_Runfast/OffsetByVelocity", "OffsetLength", 0.0, 2.0, 0.1, L("Slider_AnimalSprintSway")),
+            ("Player_Animal_Default_Runfast/OffsetByVelocity", "DampSpeed",    0.0, 2.0, 0.1, L("Slider_AnimalSprintDamp")),
+            ("Player_Weapon_LockOn/CameraBlendParameter",               "BlendInTime",  0.0, 3.0, 0.1, L("Slider_LockOnBlendIn")),
+            ("Player_Weapon_LockOn/CameraBlendParameter",               "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_LockOnBlendOut")),
+            ("Player_Weapon_LockOn_System/CameraBlendParameter",        "BlendInTime",  0.0, 3.0, 0.1, L("Slider_LockOnSystemBlendIn")),
+            ("Player_Weapon_LockOn_System/CameraBlendParameter",        "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_LockOnSystemBlendOut")),
+            ("Player_FollowLearn_LockOn_Boss/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, L("Slider_BossLockOnBlendIn")),
+            ("Player_FollowLearn_LockOn_Boss/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_BossLockOnBlendOut")),
         };
 
         foreach (var (modKey, attr, min, max, step, friendlyName) in smoothEntries)
@@ -620,24 +621,24 @@ public partial class MainWindow : Window
             if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
             smoothSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("On-foot and combat smoothing", smoothSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_OnFootCombatSmoothing"), smoothSliders.ToArray()));
 
         // Movement transitions card -- freefall, rope, super jump, hit
         var movementTransitionSliders = new List<UIElement>();
         var movementTransitionEntries = new[]
         {
-            ("Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, "Freefall entry blend-in"),
-            ("Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendOutTime", 0.0, 3.0, 0.1, "Freefall entry blend-out"),
-            ("Player_Basic_FreeFall/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Freefall blend-in"),
-            ("Player_Basic_FreeFall/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Freefall blend-out"),
-            ("Player_Basic_SuperJump/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, "Super jump blend-in"),
-            ("Player_Basic_SuperJump/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, "Super jump blend-out"),
-            ("Player_Basic_RopePull/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, "Rope pull blend-in"),
-            ("Player_Basic_RopePull/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, "Rope pull blend-out"),
-            ("Player_Basic_RopeSwing/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, "Rope swing blend-in"),
-            ("Player_Basic_RopeSwing/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, "Rope swing blend-out"),
-            ("Player_Hit_Throw/CameraBlendParameter",            "BlendInTime",  0.0, 3.0, 0.1, "Hit/thrown blend-in"),
-            ("Player_Hit_Throw/CameraBlendParameter",            "BlendOutTime", 0.0, 3.0, 0.1, "Hit/thrown blend-out"),
+            ("Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, L("Slider_FreefallEntryBlendIn")),
+            ("Player_Basic_FreeFall_Start/CameraBlendParameter", "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_FreefallEntryBlendOut")),
+            ("Player_Basic_FreeFall/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, L("Slider_FreefallBlendIn")),
+            ("Player_Basic_FreeFall/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_FreefallBlendOut")),
+            ("Player_Basic_SuperJump/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, L("Slider_SuperJumpBlendIn")),
+            ("Player_Basic_SuperJump/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_SuperJumpBlendOut")),
+            ("Player_Basic_RopePull/CameraBlendParameter",       "BlendInTime",  0.0, 3.0, 0.1, L("Slider_RopePullBlendIn")),
+            ("Player_Basic_RopePull/CameraBlendParameter",       "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_RopePullBlendOut")),
+            ("Player_Basic_RopeSwing/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, L("Slider_RopeSwingBlendIn")),
+            ("Player_Basic_RopeSwing/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_RopeSwingBlendOut")),
+            ("Player_Hit_Throw/CameraBlendParameter",            "BlendInTime",  0.0, 3.0, 0.1, L("Slider_HitThrownBlendIn")),
+            ("Player_Hit_Throw/CameraBlendParameter",            "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_HitThrownBlendOut")),
         };
 
         foreach (var (modKey, attr, min, max, step, friendlyName) in movementTransitionEntries)
@@ -646,32 +647,32 @@ public partial class MainWindow : Window
             if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
             movementTransitionSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Movement transitions", movementTransitionSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_MovementTransitions"), movementTransitionSliders.ToArray()));
 
         // Extended lock-on smoothing card -- mount lock-on, revive, force, titan, non-rotate, wrestle, aggro, wanted
         var extLockOnSliders = new List<UIElement>();
         var extLockOnEntries = new[]
         {
-            ("Player_Ride_Aim_LockOn/CameraBlendParameter",          "BlendInTime",  0.0, 3.0, 0.1, "Mount LockOn blend-in"),
-            ("Player_Ride_Aim_LockOn/CameraBlendParameter",          "BlendOutTime", 0.0, 3.0, 0.1, "Mount LockOn blend-out"),
-            ("Player_Revive_LockOn_System/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Revive LockOn blend-in"),
-            ("Player_Revive_LockOn_System/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Revive LockOn blend-out"),
-            ("Player_Force_LockOn/CameraBlendParameter",             "BlendInTime",  0.0, 3.0, 0.1, "Force LockOn blend-in"),
-            ("Player_Force_LockOn/CameraBlendParameter",             "BlendOutTime", 0.0, 3.0, 0.1, "Force LockOn blend-out"),
-            ("Player_LockOn_Titan/CameraBlendParameter",             "BlendInTime",  0.0, 3.0, 0.1, "Titan LockOn blend-in"),
-            ("Player_LockOn_Titan/CameraBlendParameter",             "BlendOutTime", 0.0, 3.0, 0.1, "Titan LockOn blend-out"),
-            ("Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, "Non-rotate LockOn blend-in"),
-            ("Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendOutTime", 0.0, 3.0, 0.1, "Non-rotate LockOn blend-out"),
-            ("Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter","BlendInTime",  0.0, 3.0, 0.1, "Wrestle LockOn blend-in"),
-            ("Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter","BlendOutTime", 0.0, 3.0, 0.1, "Wrestle LockOn blend-out"),
-            ("Player_StartAggro_TwoTarget/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Aggro blend-in"),
-            ("Player_StartAggro_TwoTarget/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Aggro blend-out"),
-            ("Player_Wanted_TwoTarget/CameraBlendParameter",         "BlendInTime",  0.0, 3.0, 0.1, "Wanted blend-in"),
-            ("Player_Wanted_TwoTarget/CameraBlendParameter",         "BlendOutTime", 0.0, 3.0, 0.1, "Wanted blend-out"),
-            ("Player_Ride_Warmachine_Aim/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, "Warmachine aim blend-in"),
-            ("Player_Ride_Warmachine_Aim/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, "Warmachine aim blend-out"),
-            ("Player_Ride_Warmachine_Dash/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, "Warmachine dash blend-in"),
-            ("Player_Ride_Warmachine_Dash/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, "Warmachine dash blend-out"),
+            ("Player_Ride_Aim_LockOn/CameraBlendParameter",          "BlendInTime",  0.0, 3.0, 0.1, L("Slider_MountLockOnBlendIn")),
+            ("Player_Ride_Aim_LockOn/CameraBlendParameter",          "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_MountLockOnBlendOut")),
+            ("Player_Revive_LockOn_System/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, L("Slider_ReviveLockOnBlendIn")),
+            ("Player_Revive_LockOn_System/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_ReviveLockOnBlendOut")),
+            ("Player_Force_LockOn/CameraBlendParameter",             "BlendInTime",  0.0, 3.0, 0.1, L("Slider_ForceLockOnBlendIn")),
+            ("Player_Force_LockOn/CameraBlendParameter",             "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_ForceLockOnBlendOut")),
+            ("Player_LockOn_Titan/CameraBlendParameter",             "BlendInTime",  0.0, 3.0, 0.1, L("Slider_TitanLockOnBlendIn")),
+            ("Player_LockOn_Titan/CameraBlendParameter",             "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_TitanLockOnBlendOut")),
+            ("Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendInTime",  0.0, 3.0, 0.1, L("Slider_NonRotateLockOnBlendIn")),
+            ("Player_Weapon_LockOn_Non_Rotate/CameraBlendParameter", "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_NonRotateLockOnBlendOut")),
+            ("Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter","BlendInTime",  0.0, 3.0, 0.1, L("Slider_WrestleLockOnBlendIn")),
+            ("Player_Weapon_LockOn_WrestleOnly/CameraBlendParameter","BlendOutTime", 0.0, 3.0, 0.1, L("Slider_WrestleLockOnBlendOut")),
+            ("Player_StartAggro_TwoTarget/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, L("Slider_AggroBlendIn")),
+            ("Player_StartAggro_TwoTarget/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_AggroBlendOut")),
+            ("Player_Wanted_TwoTarget/CameraBlendParameter",         "BlendInTime",  0.0, 3.0, 0.1, L("Slider_WantedBlendIn")),
+            ("Player_Wanted_TwoTarget/CameraBlendParameter",         "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_WantedBlendOut")),
+            ("Player_Ride_Warmachine_Aim/CameraBlendParameter",      "BlendInTime",  0.0, 3.0, 0.1, L("Slider_WarmachineAimBlendIn")),
+            ("Player_Ride_Warmachine_Aim/CameraBlendParameter",      "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_WarmachineAimBlendOut")),
+            ("Player_Ride_Warmachine_Dash/CameraBlendParameter",     "BlendInTime",  0.0, 3.0, 0.1, L("Slider_WarmachineDashBlendIn")),
+            ("Player_Ride_Warmachine_Dash/CameraBlendParameter",     "BlendOutTime", 0.0, 3.0, 0.1, L("Slider_WarmachineDashBlendOut")),
         };
 
         foreach (var (modKey, attr, min, max, step, friendlyName) in extLockOnEntries)
@@ -680,7 +681,7 @@ public partial class MainWindow : Window
             if (row.Children[0] is TextBlock lbl) lbl.Text = friendlyName;
             extLockOnSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Extended lock-on and combat transitions", extLockOnSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_ExtendedLockOnTransitions"), extLockOnSliders.ToArray()));
 
         string[] onFootFollowSections =
         {
@@ -689,11 +690,11 @@ public partial class MainWindow : Window
         };
 
         var onFootFollowSliders = new List<UIElement>();
-        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot yaw follow", onFootFollowSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
-        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot pitch follow", onFootFollowSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
-        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot follow delay", onFootFollowSections, "FollowStartTime", 0.0, 5.0, 0.1));
-        onFootFollowSliders.Add(BuildSharedSliderRow("On-foot pivot damping", Array.ConvertAll(onFootFollowSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
-        panel.Children.Add(WrapInCard("On-foot follow behavior", onFootFollowSliders.ToArray()));
+        onFootFollowSliders.Add(BuildSharedSliderRow(L("Slider_OnFootYawFollow"), onFootFollowSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
+        onFootFollowSliders.Add(BuildSharedSliderRow(L("Slider_OnFootPitchFollow"), onFootFollowSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
+        onFootFollowSliders.Add(BuildSharedSliderRow(L("Slider_OnFootFollowDelay"), onFootFollowSections, "FollowStartTime", 0.0, 5.0, 0.1));
+        onFootFollowSliders.Add(BuildSharedSliderRow(L("Slider_OnFootPivotDamping"), Array.ConvertAll(onFootFollowSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
+        panel.Children.Add(WrapInCard(L("Card_OnFootFollowBehavior"), onFootFollowSliders.ToArray()));
 
         string[] horseSections =
         {
@@ -703,16 +704,16 @@ public partial class MainWindow : Window
         };
 
         var horseSyncSliders = new List<UIElement>();
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse yaw follow", horseSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse pitch follow", horseSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse follow delay", horseSections, "FollowStartTime", 0.0, 5.0, 0.1));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse default pitch", horseSections, "FollowDefaultPitch", -10.0, 30.0, 0.5));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse blend-in", Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendInTime", 0.0, 3.0, 0.1));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse blend-out", Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendOutTime", 0.0, 3.0, 0.1));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse pivot damping", Array.ConvertAll(horseSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse sway", Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "OffsetLength", 0.0, 2.0, 0.1));
-        horseSyncSliders.Add(BuildSharedSliderRow("Horse sway damp", Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "DampSpeed", 0.0, 2.0, 0.1));
-        panel.Children.Add(WrapInCard("Horse state synchronization", horseSyncSliders.ToArray()));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseYawFollow"), horseSections, "FollowYawSpeedRate", 0.0, 2.0, 0.05));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorsePitchFollow"), horseSections, "FollowPitchSpeedRate", 0.0, 2.0, 0.05));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseFollowDelay"), horseSections, "FollowStartTime", 0.0, 5.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseDefaultPitch"), horseSections, "FollowDefaultPitch", -10.0, 30.0, 0.5));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseBlendIn"), Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendInTime", 0.0, 3.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseBlendOut"), Array.ConvertAll(horseSections, s => $"{s}/CameraBlendParameter"), "BlendOutTime", 0.0, 3.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorsePivotDamping"), Array.ConvertAll(horseSections, s => $"{s}/CameraDamping"), "PivotDampingMaxDistance", 0.0, 2.0, 0.05));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseSway"), Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "OffsetLength", 0.0, 2.0, 0.1));
+        horseSyncSliders.Add(BuildSharedSliderRow(L("Slider_HorseSwayDamp"), Array.ConvertAll(horseSections, s => $"{s}/OffsetByVelocity"), "DampSpeed", 0.0, 2.0, 0.1));
+        panel.Children.Add(WrapInCard(L("Card_HorseStateSync"), horseSyncSliders.ToArray()));
 
         AdvCtrlSmoothGrid.Children.Add(panel);
     }
@@ -724,16 +725,16 @@ public partial class MainWindow : Window
         // Group aim sections by type
         var aimGroups = new[]
         {
-            ("Lantern / Spotlight", new[] {
+            (L("Card_LanternSpotlight"), new[] {
                 ("Player_Basic_Default_Aim_Zoom", 2), ("Player_Basic_Default_Aim_Zoom", 3), ("Player_Basic_Default_Aim_Zoom", 4) }),
-            ("Blinding Flash", new[] {
+            (L("Card_BlindingFlash"), new[] {
                 ("Player_Taeguk_Aim", 2), ("Player_Taeguk_Aim", 3) }),
-            ("Weapon Aim / Zoom", new[] {
+            (L("Card_WeaponAimZoom"), new[] {
                 ("Player_Weapon_Aim_Zoom", 2), ("Player_Weapon_Aim_Zoom", 3),
                 ("Player_Weapon_Zoom", 2), ("Player_Weapon_Zoom", 3) }),
-            ("Bow", new[] {
+            (L("Card_Bow"), new[] {
                 ("Player_Bow_Aim_Zoom", 2), ("Player_Bow_Aim_LockOn", 2) }),
-            ("Glide / FreeFall", new[] {
+            (L("Card_GlideFreeFall"), new[] {
                 ("Glide_Kick_Aim_Zoom", 2), ("Player_Basic_FreeFall_Aim", 2) }),
         };
 
@@ -765,14 +766,14 @@ public partial class MainWindow : Window
         var traversalFramingSliders = new List<UIElement>();
         foreach (var (modKey, attr, min, max, step, labelText) in new[]
         {
-            ("Player_Swim_Default/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, "Swim ZL2 Dist"),
-            ("Player_Swim_Default/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, "Swim ZL2 Height"),
-            ("Player_Basic_Climb/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, "Climb ZL2 Dist"),
-            ("Player_Basic_Climb/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, "Climb ZL2 Height"),
-            ("Player_Basic_Gliding/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, "Glide ZL2 Dist"),
-            ("Player_Basic_Gliding/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, "Glide ZL2 Height"),
-            ("Player_Basic_FreeFall/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, "Freefall ZL2 Dist"),
-            ("Player_Basic_FreeFall/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, "Freefall ZL2 Height")
+            ("Player_Swim_Default/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, L("Slider_SwimZl2Dist")),
+            ("Player_Swim_Default/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, L("Slider_SwimZl2Height")),
+            ("Player_Basic_Climb/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, L("Slider_ClimbZl2Dist")),
+            ("Player_Basic_Climb/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, L("Slider_ClimbZl2Height")),
+            ("Player_Basic_Gliding/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, L("Slider_GlideZl2Dist")),
+            ("Player_Basic_Gliding/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, L("Slider_GlideZl2Height")),
+            ("Player_Basic_FreeFall/ZoomLevel[2]", "ZoomDistance", 0.5, 20.0, 0.1, L("Slider_FreefallZl2Dist")),
+            ("Player_Basic_FreeFall/ZoomLevel[2]", "UpOffset", -2.0, 2.0, 0.1, L("Slider_FreefallZl2Height"))
         })
         {
             var row = BuildSliderRow(modKey, attr, min, max, step);
@@ -780,7 +781,7 @@ public partial class MainWindow : Window
                 label.Text = labelText;
             traversalFramingSliders.Add(row);
         }
-        panel.Children.Add(WrapInCard("Traversal framing", traversalFramingSliders.ToArray()));
+        panel.Children.Add(WrapInCard(L("Card_TraversalFraming"), traversalFramingSliders.ToArray()));
 
         AdvCtrlAimGrid.Children.Add(panel);
     }
@@ -928,7 +929,7 @@ public partial class MainWindow : Window
 
     private void OnAdvCtrlApply(object sender, RoutedEventArgs e)
     {
-        SetStatus("UCM Fine Tune no longer writes to game files in v3. Use Export JSON instead.", "Warn");
+        SetStatus(L("Status_FineTuneApplyRemovedV3"), "Warn");
     }
 
     private void OnAdvCtrlLoadFromSimple(object sender, RoutedEventArgs e)
@@ -955,12 +956,12 @@ public partial class MainWindow : Window
             _suppressEvents = false;
             AdvCtrlUpdateChangedLabel();
             SaveCurrentUiState(immediate: true);
-            SetStatus("Loaded values from UCM Quick.", "Success");
+            SetStatus(L("Status_LoadedFromSimple"), "Success");
         }
         catch (Exception ex)
         {
             _suppressEvents = false;
-            SetStatus($"Load failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -979,7 +980,7 @@ public partial class MainWindow : Window
         _suppressEvents = false;
         AdvCtrlUpdateChangedLabel();
         SaveCurrentUiState(immediate: true);
-        SetStatus("Reset all UCM Fine Tune controls to vanilla.", "Success");
+        SetStatus(L("Status_ResetVanilla"), "Success");
     }
 
     private void AdvCtrlRefreshPresetCombo()

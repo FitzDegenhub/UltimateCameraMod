@@ -1,4 +1,8 @@
-﻿> **v3.1.2 is here!** Sacred God Mode overrides, Lock-on Auto-Rotate toggle, and all bug fixes. Download from **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** or **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+﻿**English** | [한국어](docs/readme/README.ko.md) | [日本語](docs/readme/README.ja.md) | [简体中文](docs/readme/README.zh-CN.md) | [繁體中文](docs/readme/README.zh-Hant.md) | [ไทย](docs/readme/README.th.md) | [Bahasa Indonesia](docs/readme/README.id.md) | [Türkçe](docs/readme/README.tr.md) | [Polski](docs/readme/README.pl.md) | [Italiano](docs/readme/README.it.md) | [Svenska](docs/readme/README.sv.md) | [Norsk](docs/readme/README.nb.md) | [Dansk](docs/readme/README.da.md) | [Suomi](docs/readme/README.fi.md) | [Deutsch](docs/readme/README.de.md) | [Français](docs/readme/README.fr.md) | [Español](docs/readme/README.es.md) | [Português (BR)](docs/readme/README.pt-BR.md) | [Русский](docs/readme/README.ru.md)
+
+---
+
+> **v3.1.2 is here!** Sacred God Mode overrides, Lock-on Auto-Rotate toggle, and all bug fixes. Download from **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** or **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -15,6 +19,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
 [![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 

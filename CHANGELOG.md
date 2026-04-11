@@ -6,6 +6,35 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
+## [v3.2] - 2026-04-11
+
+### Project
+- **v2.5 source consolidated into V3** - Removed the legacy `src/UltimateCameraMod/` project folder. The 16 shared source files (Models, Services, Paz) that V3 was pulling via csproj linked compiles now live directly inside `src/UltimateCameraMod.V3/`. Single project, no more cross-folder dependencies.
+
+### Features
+- **Multi-language support (19 languages)** - Full .resx-based localization with live language switching and persistent selection. 719 resource keys across 173 XAML bindings and 880 code-behind lookups covering all UI strings, status messages, dialogs, tooltips, sidebar headings, and editor labels. Language selector ComboBox in the title bar with native language names.
+  - Hello! / 안녕하세요! / こんにちは! / 你好! / 你好! / สวัสดี! / Halo! / Merhaba! / Cześć! / Ciao! / Hej! / Hei! / Hej! / Hei! / Hallo! / Bonjour! / Hola! / Olá! / Привет!
+  - English, Korean, Japanese, Chinese Simplified, Chinese Traditional, Thai, Indonesian, Turkish, Polish, Italian, Swedish, Norwegian, Danish, Finnish, German, French, Spanish, Portuguese Brazilian, Russian
+- **Center HUD** - New checkbox + dropdown in UCM Quick to center gameplay HUD elements for ultrawide displays. Choose between 16:9 (1920px) or 21:9 (2520px) safe areas. Modifies HTML/CSS in PAZ archive 0012 independently from camera. Switching modes or unchecking restores vanilla automatically. Credits to wsres for the technique.
+
+### Security
+- **Fix path traversal in preset downloads** - Catalog `file` field from remote JSON is now sanitized with `Path.GetFileName()` in all code paths. Previously, the UCM preset browser and background auto-download used the raw catalog value directly in `Path.Combine()`, which could write files outside the presets directory if the catalog were compromised.
+- **SHA-256 integrity verification on download** - Downloaded preset bytes are now verified against the catalog's `sha256` hash before writing to disk. Mismatched downloads are rejected.
+- **URL encoding fix** - Community browser download URL now uses `Uri.EscapeDataString()` for the filename component, matching the existing safe pattern in background downloads.
+
+### WIP
+- **JSON patch import (disabled)** - Import UI and parser for CD JSON Mod Manager `.json` patch files. Supports both full XML fragment patches (CDCamera) and byte-level patches (CrimsonCamera). Semantically decodes hex patches and applies value changes to current vanilla, making imports game-version independent. Currently disabled because imported values produce valid XML that installs without error but crashes the game on launch. Under investigation.
+
+### Bug Fixes
+- **Shoulder Cam community preset removed** - The Shoulder Cam preset injects custom attributes (FollowCamera, DepthOfField) that the April 11 game patch no longer accepts, causing crashes on startup. Removed from the community preset catalog until the preset author pushes a compatible update.
+- **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
+- **Center HUD mode switching had no effect** - Reinstalling with a different safe area (16:9 vs 21:9) was detected as "already installed" and skipped. Now restores vanilla first before reinstalling with the new mode.
+- **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.
+- **Open button does nothing when game not auto-detected** - `OnOpenGameFolder` silently returned when `_gameDir` was empty. Now falls back to `BrowseForGameDir()` so users on non-standard install paths can manually set their game folder. Status message updated to tell users to click Open.
+- **Exported .ucmpreset files had hardcoded default settings** - `SaveUcmPresetExport` wrote hardcoded defaults (distance=5, height=0, shift=0, all checkboxes off) instead of the actual Quick slider and Global Settings values. Exported presets now include the real distance, height, horizontal shift, FoV, lock-on zoom, lock-on auto-rotate, centered camera, mount sync, steadycam, center HUD, and HUD width. Import is now 1:1 with the exporter's configuration.
+
+---
+
 ## [v3.1.2] - 2026-04-06
 
 ### Bug Fixes
@@ -100,7 +129,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 ## [v3.0.1] - 2026-04-03
 
 ### Added
-- **UCM preset catalog browser** - UCM style presets downloaded on demand via Browse button. Official presets hosted on v3-dev branch with auto-generated `catalog.json`.
+- **UCM preset catalog browser** - UCM style presets downloaded on demand via Browse button. Official presets hosted on main branch with auto-generated `catalog.json`.
 - **Preset update detection** - Background catalog check compares revision numbers. Outdated presets show update icon in sidebar. Update prompt offers to duplicate old version before downloading.
 - **Game Default sidebar group** - Vanilla preset separated into its own group.
 - **Community and UCM update detection** - SHA256 comparison against GitHub catalogs with pulsating update icons.

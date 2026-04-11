@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -77,7 +78,7 @@ public partial class MainWindow : Window
         SyncPreview();
         ScheduleSyncQuickSettingsToEditors();
         SaveCurrentUiState();
-        QueueSavedToast("Undone");
+        QueueSavedToast(L("Label_Undone"));
     }
 
     // â"€â"€ Tab switching â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -98,13 +99,7 @@ public partial class MainWindow : Window
         // Raw XML imports only support God Mode editing
         if (_sessionIsRawImport && (tab == "simple" || tab == "advanced"))
         {
-            _ = ShowAlertOverlayAsync("Raw XML Import",
-                "This preset was imported as raw XML and is not managed by UCM.\n\n" +
-                "UCM Quick and Fine Tune use UCM's camera rule system which would override " +
-                "values from the imported mod. To protect your import, only God Mode editing " +
-                "is available.\n\n" +
-                "To use UCM features like Steadycam and FoV control, create a new UCM preset " +
-                "from the sidebar instead.");
+            _ = ShowAlertOverlayAsync(L("Title_RawXmlImport"), L("Msg_RawXmlImportNotice"));
             return;
         }
 
@@ -117,8 +112,7 @@ public partial class MainWindow : Window
 
         if (tab != "simple" && string.IsNullOrEmpty(_gameDir))
         {
-            _ = ShowAlertOverlayAsync("Game Folder Not Set",
-                "Fine Tune and God Mode need your game folder to read camera data. Set your game folder first.");
+            _ = ShowAlertOverlayAsync(L("Title_GameFolderNotSet"), L("Msg_FineTuneGodModeNeedGameFolder"));
             return;
         }
 
@@ -126,12 +120,10 @@ public partial class MainWindow : Window
         // Offer to duplicate before entering these tabs.
         if ((tab == "advanced" || tab == "expert") && _selectedPresetManagerItem?.IsUcmPreset == true)
         {
-            string tabName = tab == "advanced" ? "Fine Tune" : "God Mode";
-            if (!await ShowConfirmOverlayAsync($"UCM Preset - {tabName}",
-                $"UCM presets are protected. {tabName} changes could corrupt the preset's carefully tuned values.\n\n" +
-                "Duplicate this preset first to create your own editable copy, then use Fine Tune or God Mode freely.\n\n" +
-                $"Open {tabName} in read-only mode anyway? (You can browse values but changes won't save.)",
-                "Open Read-Only", "Cancel"))
+            string tabName = tab == "advanced" ? L("Tab_FineTune") : L("Tab_GodMode");
+            if (!await ShowConfirmOverlayAsync(string.Format(L("Dlg_UcmPresetReadOnly"), tabName),
+                string.Format(L("Msg_UcmPresetProtected"), tabName),
+                L("Btn_OpenReadOnly"), L("Btn_Cancel")))
                 return;
         }
 
@@ -158,14 +150,14 @@ public partial class MainWindow : Window
             case "simple":
                 SimpleView.Visibility = Visibility.Visible;
                 CheckForUpdate();
-                SetStatus("UCM Quick — broad camera shaping with previews and common controls.", "TextDim");
+                SetStatus(L("Status_UcmQuickMode"), "TextDim");
                 break;
 
             case "advanced":
                 AdvancedControlsView.Visibility = Visibility.Visible;
                 _advCtrlNeedsRefresh = false;
                 EnterAdvancedControlsMode();
-                SetStatus("UCM Fine Tune — curated deeper tuning layered on top of UCM Quick.", "TextDim");
+                SetStatus(L("Status_FineTuneMode"), "TextDim");
                 break;
 
             case "expert":
@@ -274,7 +266,7 @@ public partial class MainWindow : Window
 
     private string BuildGodModeSessionXml()
     {
-        // Raw imports: start from the imported XML, only layer explicit God Mode edits.
+        // Raw imports: use the imported session XML directly, then layer God Mode edits.
         // No UCM rules (FoV normalization, Steadycam, etc.) applied.
         if (_sessionIsRawImport && !string.IsNullOrWhiteSpace(_sessionXml))
         {
@@ -541,7 +533,7 @@ public partial class MainWindow : Window
             HShiftSlider.IsEnabled = false;
             HShiftLabel.Text = "0.0";
             HShiftLabel.Foreground = _textDimBrush;
-            HShiftTip.Text = "\u26A0 Centered Camera forces character to screen center \u2014 untick to adjust";
+            HShiftTip.Text = L("Help_ShiftCenteredOn");
         }
         else
         {
@@ -579,6 +571,28 @@ public partial class MainWindow : Window
             CombatPullbackLabel.Text = FormatPullback(CombatPullbackSlider.Value);
         OnSettingChanged(s, e);
     }
+
+    // â"€â"€ HUD centering â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+
+    private void OnCenterHudChanged(object s, RoutedEventArgs e)
+    {
+        if (!IsLoaded || _suppressEvents) return;
+        HudModeCombo.IsEnabled = CenterHudCheck.IsChecked == true;
+        HudModeCombo.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
+        SaveCurrentUiState();
+        QueueSavedToast();
+    }
+
+    private void OnHudModeChanged(object s, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded || _suppressEvents) return;
+        SaveCurrentUiState();
+        QueueSavedToast();
+    }
+
+    private int GetHudWidth() =>
+        HudModeCombo.SelectedItem is System.Windows.Controls.ComboBoxItem item
+            && item.Tag is string tag && int.TryParse(tag, out int w) ? w : 1920;
 
     // â"€â"€ Presets â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 

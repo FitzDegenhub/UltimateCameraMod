@@ -3,11 +3,13 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class CommunityBrowserDialog : UserControl
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public Action? OnCloseRequested;
     private const long MaxPresetSize = 2 * 1024 * 1024; // 2MB
 
@@ -46,13 +48,13 @@ public partial class CommunityBrowserDialog : UserControl
         InitializeComponent();
         HeaderTitle.Text = title.ToUpperInvariant();
         if (needsSessionXmlBake)
-            HeaderSubtitle.Text = "Browse and download official UCM camera presets. Downloaded presets appear in your sidebar.";
+            HeaderSubtitle.Text = L("Help_UcmBrowserSubtitle");
         Loaded += async (_, _) => await FetchCatalogAsync();
     }
 
     private async Task FetchCatalogAsync()
     {
-        ShowLoading("Fetching community catalog...");
+        ShowLoading(L("Status_FetchingCommunityCatalog"));
         try
         {
             using var http = new HttpClient();
@@ -91,7 +93,7 @@ public partial class CommunityBrowserDialog : UserControl
         }
         catch (Exception ex)
         {
-            ShowError($"Could not fetch community catalog.\n\n{ex.Message}");
+            ShowError(string.Format(L("Status_DownloadFailed"), ex.Message));
         }
     }
 
@@ -99,7 +101,7 @@ public partial class CommunityBrowserDialog : UserControl
     {
         if (_catalog == null || _catalog.Count == 0)
         {
-            ShowError("No community presets available yet.\n\nCheck back later or contribute your own!");
+            ShowError(L("Status_NoCommunityPresets"));
             return;
         }
 
@@ -117,7 +119,7 @@ public partial class CommunityBrowserDialog : UserControl
         }
 
         ShowContent();
-        StatusText.Text = $"{_catalog.Count} presets available, {downloadedCount} downloaded";
+        StatusText.Text = string.Format(L("Status_PresetsAvailable"), _catalog.Count, downloadedCount);
     }
 
     private bool IsPresetDownloaded(CatalogEntry entry)
@@ -125,7 +127,7 @@ public partial class CommunityBrowserDialog : UserControl
         // UCM presets use the catalog filename; community presets use the entry id
         if (_needsSessionXmlBake && !string.IsNullOrEmpty(entry.File))
         {
-            string path = Path.Combine(_presetsDir, entry.File);
+            string path = Path.Combine(_presetsDir, Path.GetFileName(entry.File));
             return System.IO.File.Exists(path);
         }
         if (!string.IsNullOrEmpty(entry.File))
@@ -199,13 +201,13 @@ public partial class CommunityBrowserDialog : UserControl
 
         if (isDownloaded)
         {
-            actionBtn.Content = "Downloaded \u2714";
+            actionBtn.Content = L("Btn_Downloaded") + " \u2714";
             actionBtn.Style = (Style)FindResource("SubtleButton");
             actionBtn.IsEnabled = false;
         }
         else
         {
-            actionBtn.Content = "Download";
+            actionBtn.Content = L("Btn_Download");
             actionBtn.Style = (Style)FindResource("AccentButton");
             actionBtn.Click += OnDownloadClick;
         }
@@ -223,7 +225,7 @@ public partial class CommunityBrowserDialog : UserControl
         {
             var linkBtn = new Button
             {
-                Content = "\uD83D\uDD17 Nexus",
+                Content = "\uD83D\uDD17 " + L("Btn_NexusLink"),
                 Height = 28, FontSize = 10, Padding = new Thickness(10, 0, 10, 0),
                 MinWidth = 110,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -235,7 +237,9 @@ public partial class CommunityBrowserDialog : UserControl
             };
             linkBtn.Click += (_, _) =>
             {
-                try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(entry.Url) { UseShellExecute = true }); }
+                if (!Uri.TryCreate(entry.Url, UriKind.Absolute, out var uri)
+                    || (uri.Scheme != "https" && uri.Scheme != "http")) return;
+                try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(uri.AbsoluteUri) { UseShellExecute = true }); }
                 catch { }
             };
             rightStack.Children.Add(linkBtn);
@@ -267,7 +271,7 @@ public partial class CommunityBrowserDialog : UserControl
         if (sender is not Button btn || btn.Tag is not CatalogEntry entry) return;
 
         btn.IsEnabled = false;
-        btn.Content = "Downloading...";
+        btn.Content = L("Btn_Downloading");
 
         try
         {
@@ -275,14 +279,28 @@ public partial class CommunityBrowserDialog : UserControl
             http.DefaultRequestHeaders.UserAgent.ParseAdd("UltimateCameraMod/3.0");
             http.Timeout = TimeSpan.FromSeconds(15);
 
-            string downloadUrl = _rawBaseUrl + entry.File;
+            string downloadUrl = _rawBaseUrl + Uri.EscapeDataString(entry.File);
             byte[] rawBytes = await http.GetByteArrayAsync(downloadUrl);
 
             if (rawBytes.Length > MaxPresetSize)
             {
-                btn.Content = "Too large";
-                StatusText.Text = $"Preset '{entry.Name}' exceeds 2MB limit.";
+                btn.Content = L("Btn_TooLarge");
+                StatusText.Text = string.Format(L("Status_PresetTooLarge"), entry.Name);
                 return;
+            }
+
+            // Verify SHA-256 integrity if the catalog provides a hash
+            if (!string.IsNullOrEmpty(entry.Sha256))
+            {
+                string actualSha = Convert.ToHexString(
+                    System.Security.Cryptography.SHA256.HashData(rawBytes)).ToLowerInvariant();
+                if (!string.Equals(actualSha, entry.Sha256, StringComparison.OrdinalIgnoreCase))
+                {
+                    btn.Content = L("Btn_Failed");
+                    btn.IsEnabled = true;
+                    StatusText.Text = string.Format(L("Status_DownloadFailed"), "SHA-256 mismatch");
+                    return;
+                }
             }
 
             // Validate
@@ -293,19 +311,17 @@ public partial class CommunityBrowserDialog : UserControl
             bool hasStyleId = root.TryGetProperty("style_id", out _);
             if (!hasSessionXml && !hasStyleId && !_needsSessionXmlBake)
             {
-                btn.Content = "Invalid";
-                StatusText.Text = $"Preset '{entry.Name}' doesn't contain camera data.";
+                btn.Content = L("Btn_Invalid");
+                StatusText.Text = string.Format(L("Status_PresetInvalid"), entry.Name);
                 return;
             }
 
             // Save raw bytes as-is to preserve SHA hash for update detection.
             // Preset files in the repo should already have metadata (name, author, url, description).
             Directory.CreateDirectory(_presetsDir);
-            string destFileName = _needsSessionXmlBake && !string.IsNullOrEmpty(entry.File)
-                ? entry.File
-                : !string.IsNullOrEmpty(entry.File)
-                    ? Path.GetFileName(entry.File)
-                    : $"{entry.Id}.ucmpreset";
+            string destFileName = !string.IsNullOrEmpty(entry.File)
+                ? Path.GetFileName(entry.File)
+                : $"{entry.Id}.ucmpreset";
             string destPath = Path.Combine(_presetsDir, destFileName);
             await System.IO.File.WriteAllBytesAsync(destPath, rawBytes);
 
@@ -328,17 +344,17 @@ public partial class CommunityBrowserDialog : UserControl
                 catch { }
             }
 
-            btn.Content = "Downloaded \u2714";
+            btn.Content = L("Btn_Downloaded") + " \u2714";
             btn.Style = (Style)FindResource("SubtleButton");
-            StatusText.Text = $"Downloaded '{entry.Name}'";
+            StatusText.Text = $"{L("Btn_Downloaded")} '{entry.Name}'";
 
             _onPresetsChanged?.Invoke();
         }
         catch (Exception ex)
         {
-            btn.Content = "Failed";
+            btn.Content = L("Btn_Failed");
             btn.IsEnabled = true;
-            StatusText.Text = $"Download failed: {ex.Message}";
+            StatusText.Text = string.Format(L("Status_DownloadFailed"), ex.Message);
         }
     }
 

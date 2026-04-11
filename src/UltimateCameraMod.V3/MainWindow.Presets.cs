@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -63,16 +64,16 @@ public partial class MainWindow : Window
                         KindId = kind,
                         KindLabel = kind switch
                         {
-                            "default" => "Default",
-                            "style" => "UCM style",
-                            "community" => "Community",
-                            "imported" => "Imported",
-                            _ => "My preset"
+                            "default" => L("Label_KindDefault"),
+                            "style" => L("Label_KindUcmStyle"),
+                            "community" => L("Label_KindCommunity"),
+                            "imported" => L("Label_KindImportedXml"),
+                            _ => L("Label_KindMyPreset")
                         },
                         SourceLabel = author,
                         StatusText = desc,
                         SummaryText = string.IsNullOrEmpty(desc)
-                            ? "Custom preset."
+                            ? L("Label_CustomPreset")
                             : desc,
                         FilePath = file,
                         CanRebuild = false,
@@ -93,7 +94,7 @@ public partial class MainWindow : Window
             {
                 Name = "\0",
                 KindId = "style",
-                KindLabel = "UCM style",
+                KindLabel = L("Label_KindUcmStyle"),
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -107,7 +108,7 @@ public partial class MainWindow : Window
             {
                 Name = "\0",
                 KindId = "default",
-                KindLabel = "Game default",
+                KindLabel = L("Label_KindDefault"),
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -124,7 +125,7 @@ public partial class MainWindow : Window
             {
                 Name = "\0",
                 KindId = "community",
-                KindLabel = "Community",
+                KindLabel = L("Label_KindCommunity"),
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -239,7 +240,7 @@ public partial class MainWindow : Window
         if (_selectedPresetManagerItem != null)
             return _selectedPresetManagerItem;
 
-        SetStatus("Select a preset first.", "TextSecondary");
+        SetStatus(L("Status_SelectPresetFirst"), "TextSecondary");
         return null;
     }
 
@@ -301,7 +302,7 @@ public partial class MainWindow : Window
                         // silently skip rather than showing a spurious error to the user.
                         bool isUcmStylePreset = item.KindId == "style" || item.KindId == "default";
                         if (!isUcmStylePreset)
-                            SetStatus($"Preset file not found: {item.FilePath}", "Error");
+                            SetStatus(string.Format(L("Status_PresetFileNotFound"), item.FilePath), "Error");
                         _activePickerKey = previousPickerKey;
                         break;
                     }
@@ -370,6 +371,17 @@ public partial class MainWindow : Window
                                 LockOnAutoRotateCheck.IsChecked = arEl.ValueKind == JsonValueKind.True;
                             else
                                 LockOnAutoRotateCheck.IsChecked = false; // Default: auto-rotate on (vanilla)
+
+                            if (settings.TryGetProperty("center_hud", out var chEl))
+                                CenterHudCheck.IsChecked = chEl.ValueKind == JsonValueKind.True;
+                            else
+                                CenterHudCheck.IsChecked = false;
+                            if (settings.TryGetProperty("hud_width", out var hwEl) && hwEl.ValueKind == JsonValueKind.Number)
+                                HudModeCombo.SelectedIndex = hwEl.GetInt32() > 1920 ? 1 : 0;
+                            else
+                                HudModeCombo.SelectedIndex = 0;
+                            HudModeCombo.IsEnabled = CenterHudCheck.IsChecked == true;
+                            HudModeCombo.Opacity = CenterHudCheck.IsChecked == true ? 1.0 : 0.38;
                         }
                         finally
                         {
@@ -438,7 +450,7 @@ public partial class MainWindow : Window
         {
             _suppressEvents = false;
             _activePickerKey = previousPickerKey;
-            SetStatus($"Could not activate preset: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_CouldNotActivatePreset"), ex.Message), "Error");
         }
 
         if (string.Equals(_activePickerKey, slotKey, StringComparison.Ordinal))
@@ -499,7 +511,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Warning: could not fully apply preset to editors: {ex.Message}", "Warn");
+            SetStatus(string.Format(L("Status_CouldNotApplyPresetToEditors"), ex.Message), "Warn");
         }
         SyncPreview();
         SaveCurrentUiState();
@@ -590,9 +602,11 @@ public partial class MainWindow : Window
     private void OnActivePresetLinkClick(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrWhiteSpace(_loadedPresetUrl)) return;
+        if (!Uri.TryCreate(_loadedPresetUrl, UriKind.Absolute, out var uri)
+            || (uri.Scheme != "https" && uri.Scheme != "http")) return;
         try
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(_loadedPresetUrl) { UseShellExecute = true });
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(uri.AbsoluteUri) { UseShellExecute = true });
         }
         catch { }
     }
@@ -708,7 +722,7 @@ public partial class MainWindow : Window
             if (_advCtrlValueLabels.TryGetValue(key, out var lbl) && lbl != null)
                 lbl.Opacity = shouldLock ? 0.38 : 1.0;
             if (shouldLock)
-                slider.ToolTip = "Controlled by Steadycam — uncheck Steadycam to adjust manually";
+                slider.ToolTip = L("Tip_ControlledBySteadycam");
         }
     }
 
@@ -732,7 +746,7 @@ public partial class MainWindow : Window
                 slider.Opacity = 0.6;
                 if (_advCtrlValueLabels.TryGetValue(key, out var lbl) && lbl != null)
                     lbl.Foreground = greenBrush;
-                slider.ToolTip = "Sacred -- controlled by God Mode";
+                slider.ToolTip = L("Tip_SacredControlledByGodMode");
                 // Override the thumb fill after the template renders
                 slider.Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -771,13 +785,13 @@ public partial class MainWindow : Window
             _lastLockedToastTime = DateTime.Now;
             string msg;
             if (deep)
-                msg = "\uD83D\uDD12 UCM preset \u2014 duplicate it to use Fine Tune or God Mode";
+                msg = "\uD83D\uDD12 " + L("Toast_LockedDeepEdit");
             else if (offsets)
-                msg = "\uD83D\uDD12 UCM preset \u2014 duplicate to adjust distance and height";
+                msg = "\uD83D\uDD12 " + L("Toast_LockedOffsets");
             else if (_selectedPresetManagerItem?.IsUcmPreset == true)
-                msg = "\uD83D\uDD12 UCM preset \u2014 duplicate to create an editable copy";
+                msg = "\uD83D\uDD12 " + L("Toast_LockedUcmPreset");
             else
-                msg = "\uD83D\uDD12 Preset is locked \u2014 unlock the padlock to edit";
+                msg = "\uD83D\uDD12 " + L("Toast_LockedPreset");
             QueueSavedToast(msg, isError: true);
         }
     }
@@ -833,7 +847,7 @@ public partial class MainWindow : Window
                 // Full Manual Control: start from vanilla XML, no UCM rules
                 if (string.IsNullOrWhiteSpace(_gameDir))
                 {
-                    SetStatus("Game folder not set. Cannot create a manual preset without vanilla camera data.", "Warn");
+                    SetStatus(L("Status_GameFolderNotSetForManualPreset"), "Warn");
                     return;
                 }
                 string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
@@ -888,15 +902,15 @@ public partial class MainWindow : Window
                 SwitchEditorTab("expert", captureCurrent: false);
             }
 
-            QueueSavedToast($"Preset '{name}' created");
-            SetStatus($"Created preset '{name}'.", "Success");
+            QueueSavedToast(string.Format(L("Toast_PresetCreated"), name));
+            SetStatus(string.Format(L("Status_PresetSaved"), name), "Success");
         }
         catch (Exception ex)
         {
             if (ex.Message.Contains("not vanilla") || ex.Message.Contains("modified") || ex.Message.Contains("tainted"))
                 _ = HandleTaintedBackupAsync();
             else
-                _ = ShowAlertOverlayAsync("Failed to Create Preset", ex.Message, isError: true);
+                _ = ShowAlertOverlayAsync(L("Msg_FailedCreatePreset"), ex.Message, isError: true);
         }
     }
 
@@ -911,12 +925,12 @@ public partial class MainWindow : Window
             _activePickerKey = null;
             ActivatePickerFromSelection(item, skipCapture: true);
 
-            QueueSavedToast("Preset loaded");
-            SetStatus($"Preset '{item.Name}' loaded into the current session.", "Success");
+            QueueSavedToast(L("Toast_PresetLoaded"));
+            SetStatus(string.Format(L("Status_PresetLoaded"), item.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Load failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -926,11 +940,9 @@ public partial class MainWindow : Window
         if (item == null)
             return;
 
-        if (!await ShowConfirmOverlayAsync("Delete Preset",
-            item.IsUcmPreset
-                ? $"Delete '{item.Name}'? You can re-download it from the catalog anytime."
-                : $"Delete preset '{item.Name}'? This cannot be undone.",
-            "Delete", "Cancel"))
+        if (!await ShowConfirmOverlayAsync(L("Btn_DeletePreset"),
+            L("Msg_ConfirmDelete"),
+            L("Btn_Delete"), L("Btn_Cancel")))
             return;
 
         try
@@ -942,12 +954,12 @@ public partial class MainWindow : Window
                 _selectedImportedPreset = null;
 
             RefreshPresetManagerLists(preserveSelection: false);
-            QueueSavedToast("Preset deleted");
-            SetStatus($"Preset '{item.Name}' deleted.", "Success");
+            QueueSavedToast(string.Format(L("Status_PresetDeleted"), item.Name));
+            SetStatus(string.Format(L("Status_PresetDeleted"), item.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Delete failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_DeleteFailed"), ex.Message), "Error");
         }
     }
 
@@ -959,11 +971,11 @@ public partial class MainWindow : Window
 
         if (item.IsUcmPreset)
         {
-            _ = ShowAlertOverlayAsync("Cannot Rename", "UCM presets cannot be renamed. Duplicate it first to create your own editable copy.");
+            _ = ShowAlertOverlayAsync(L("Btn_Rename"), L("Msg_OverwriteExists"));
             return;
         }
 
-        string? response = await ShowInputOverlayAsync("Rename Preset", "Enter the new preset name:", item.Name);
+        string? response = await ShowInputOverlayAsync(L("Btn_Rename"), L("Dlg_EnterPresetName"), item.Name);
         if (string.IsNullOrWhiteSpace(response))
             return;
 
@@ -979,7 +991,7 @@ public partial class MainWindow : Window
 
             if (File.Exists(newPath))
             {
-                SetStatus($"A preset named '{newName}' already exists.", "Warn");
+                SetStatus(string.Format(L("Status_PresetAlreadyExists"), newName), "Warn");
                 return;
             }
 
@@ -1014,12 +1026,12 @@ public partial class MainWindow : Window
             if (string.Equals(_loadedPresetName, item.Name, StringComparison.OrdinalIgnoreCase))
                 SetLoadedPresetContext(newName, _loadedPresetKindLabel, _loadedPresetSourceLabel, _loadedPresetStatusText, _loadedPresetSummaryText);
 
-            QueueSavedToast("Preset renamed");
-            SetStatus($"Preset '{item.Name}' renamed to '{newName}'.", "Success");
+            QueueSavedToast(L("Toast_PresetRenamed"));
+            SetStatus(string.Format(L("Status_PresetRenamed"), item.Name, newName), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Rename failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_LoadFailed"), ex.Message), "Error");
         }
     }
 
@@ -1051,21 +1063,16 @@ public partial class MainWindow : Window
         if (sourceIsGodMode)
         {
             var choice = await ShowThreeChoiceOverlayAsync(
-                "Duplicate Preset",
-                $"'{item.Name}' is a God Mode preset. How would you like to duplicate it?\n\n" +
-                "Keep as God Mode: exact copy, UCM Quick and Fine Tune stay disabled. " +
-                "Preserves the original author's values exactly as they are.\n\n" +
-                "Convert to UCM Managed: enables UCM Quick and Fine Tune sliders. " +
-                "UCM camera rules will be applied which may change many of the original values " +
-                "(FoV consistency, lock-on scaling, smoothing, mount sync, etc.).",
-                yesText: "Keep God Mode",
-                noText: "Convert to UCM",
-                cancelText: "Cancel");
+                L("Dlg_DuplicatePreset"),
+                string.Format(L("Dlg_DuplicateGodModeBody"), item.Name),
+                yesText: L("Btn_KeepGodMode"),
+                noText: L("Btn_ConvertToUcm"),
+                cancelText: L("Btn_Cancel"));
             if (choice == MessageBoxResult.Cancel) return;
             convertToUcm = choice == MessageBoxResult.No;
         }
 
-        string? response = await ShowInputOverlayAsync("Duplicate Preset", "Enter a name for the duplicated preset:", $"{item.Name}_copy");
+        string? response = await ShowInputOverlayAsync(L("Btn_Duplicate"), L("Dlg_EnterPresetName"), $"{item.Name}_copy");
         if (string.IsNullOrWhiteSpace(response))
             return;
 
@@ -1085,7 +1092,7 @@ public partial class MainWindow : Window
 
             if (File.Exists(newPath))
             {
-                SetStatus($"A preset named '{newName}' already exists.", "Warn");
+                SetStatus(string.Format(L("Status_PresetAlreadyExists"), newName), "Warn");
                 return;
             }
 
@@ -1129,12 +1136,12 @@ public partial class MainWindow : Window
                 ActivatePickerFromSelection(duplicated, skipCapture: true);
             }
 
-            QueueSavedToast("Preset duplicated");
-            SetStatus($"Preset '{item.Name}' duplicated as '{newName}'.", "Success");
+            QueueSavedToast(L("Toast_PresetDuplicated"));
+            SetStatus(string.Format(L("Status_PresetDuplicated"), item.Name, newName), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Duplicate failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_DeleteFailed"), ex.Message), "Error");
         }
     }
 
@@ -1146,7 +1153,7 @@ public partial class MainWindow : Window
 
         if (item.KindId != "imported")
         {
-            SetStatus("Only imported XML / 0.paz presets need rebuild support.", "TextSecondary");
+            SetStatus(L("Status_OnlyImportedNeedRebuild"), "TextSecondary");
             return;
         }
 
@@ -1171,13 +1178,13 @@ public partial class MainWindow : Window
                 ImportedPresetKindLabel(preset.SourceType),
                 preset.SourceDisplayName,
                 BuildImportedPresetStatusText(preset),
-                "This imported preset has been rebuilt against the current game and is ready to export or inspect further.");
-            QueueSavedToast("Preset rebuilt");
-            SetStatus($"Imported preset '{preset.Name}' rebuilt for the current game.", "Success");
+                L("Status_ImportedPresetRebuiltSummary"));
+            QueueSavedToast(L("Toast_PresetRebuilt"));
+            SetStatus(string.Format(L("Status_ImportedPresetRebuilt"), preset.Name), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Rebuild failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_RebuildFailed"), ex.Message), "Error");
         }
     }
 
@@ -1189,7 +1196,7 @@ public partial class MainWindow : Window
 
         if (item.KindId != "imported")
         {
-            SetStatus("Load this preset into the current session first, then generate from Export JSON.", "TextSecondary");
+            SetStatus(L("Status_LoadPresetFirstThenGenerate"), "TextSecondary");
             return;
         }
 
@@ -1277,7 +1284,9 @@ public partial class MainWindow : Window
             ["centered"] = BaneCheck.IsChecked == true,
             ["mount_height"] = MountHeightCheck.IsChecked == true,
             ["steadycam"] = SteadycamCheck.IsChecked == true,
-            ["lock_on_auto_rotate_disabled"] = LockOnAutoRotateCheck.IsChecked == true
+            ["lock_on_auto_rotate_disabled"] = LockOnAutoRotateCheck.IsChecked == true,
+            ["center_hud"] = CenterHudCheck.IsChecked == true,
+            ["hud_width"] = GetHudWidth()
         };
     }
 
@@ -1483,14 +1492,14 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus("Failed to generate built-in presets.", "Warn");
+            SetStatus(L("Status_FailedGenerateBuiltIn"), "Warn");
             // Tainted backup: offer to delete 0.paz and tell user to verify on Steam
             if (ex.Message.Contains("not vanilla") || ex.Message.Contains("modified") || ex.Message.Contains("tainted"))
             {
                 _ = HandleTaintedBackupAsync();
             }
             else
-                _ = ShowAlertOverlayAsync("Failed to Generate Presets", ex.Message, isError: true);
+                _ = ShowAlertOverlayAsync(L("Msg_FailedGeneratePresets"), ex.Message, isError: true);
         }
     }
 

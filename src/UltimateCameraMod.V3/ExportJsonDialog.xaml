@@ -1,6 +1,7 @@
 <UserControl x:Class="UltimateCameraMod.V3.ExportJsonDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:UltimateCameraMod.V3.Localization"
         Width="680" MaxHeight="750">
     <UserControl.Resources>
         <!-- TextBox style for all input fields in this dialog -->
@@ -88,7 +89,7 @@
         <!-- Match MainWindow title strip -->
         <Border Grid.Row="0" Background="{StaticResource BgPanelBrush}" Padding="22,14,22,12">
             <StackPanel>
-                <TextBlock Text="EXPORT FOR SHARING" FontSize="14" FontWeight="Bold"
+                <TextBlock Text="{loc:Loc Title_ExportForSharing}" FontSize="14" FontWeight="Bold"
                            Foreground="{StaticResource AccentBrush}"/>
             </StackPanel>
         </Border>
@@ -103,18 +104,18 @@
                 <Border Background="{StaticResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
                         BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Format" FontSize="11" FontWeight="Bold"
+                        <TextBlock Text="{loc:Loc Label_Format}" FontSize="11" FontWeight="Bold"
                                    Foreground="{StaticResource TextDimBrush}" Margin="0,0,0,10"/>
                         <WrapPanel Margin="0,0,0,14">
                             <RadioButton x:Name="FormatJsonRadio" GroupName="ExportFormat"
-                                         Content="JSON · mod managers" Style="{StaticResource ExportFormatRadioStyle}"
+                                         Content="{loc:Loc Label_FormatJson}" Style="{StaticResource ExportFormatRadioStyle}"
                                          IsChecked="True"/>
                             <RadioButton x:Name="FormatXmlRadio" GroupName="ExportFormat"
-                                         Content="XML" Style="{StaticResource ExportFormatRadioStyle}"/>
+                                         Content="{loc:Loc Label_FormatXml}" Style="{StaticResource ExportFormatRadioStyle}"/>
                             <RadioButton x:Name="FormatPazRadio" GroupName="ExportFormat"
-                                         Content="0.paz" Style="{StaticResource ExportFormatRadioStyle}"/>
+                                         Content="{loc:Loc Label_FormatPaz}" Style="{StaticResource ExportFormatRadioStyle}"/>
                             <RadioButton x:Name="FormatPresetRadio" GroupName="ExportFormat"
-                                         Content="UCM Preset (.ucmpreset)" Style="{StaticResource ExportFormatRadioStyle}"/>
+                                         Content="{loc:Loc Label_FormatUcmPreset}" Style="{StaticResource ExportFormatRadioStyle}"/>
                         </WrapPanel>
                         <Border Background="{StaticResource BgInputBrush}" CornerRadius="6" Padding="12,10"
                                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
@@ -125,7 +126,7 @@
                 </Border>
 
                 <!-- Step 1 -->
-                <TextBlock Text="Mod info &amp; file name" FontSize="11" FontWeight="Bold"
+                <TextBlock Text="{loc:Loc Label_ModInfoFileName}" FontSize="11" FontWeight="Bold"
                            Foreground="{StaticResource AccentBrush}" Margin="2,2,0,8"/>
                 <Border Background="{StaticResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
                         BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
@@ -151,11 +152,11 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Title" Style="{StaticResource ExportDialogLabel}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{loc:Loc Label_Title}" Style="{StaticResource ExportDialogLabel}"/>
                             <TextBox Grid.Row="0" Grid.Column="1" x:Name="JsonTitleBox" Text="UCM Camera Config"
                                      VerticalAlignment="Center"/>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Version" Style="{StaticResource ExportDialogLabel}"
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{loc:Loc Label_Version}" Style="{StaticResource ExportDialogLabel}"
                                        Margin="0,10,14,0"/>
                             <Grid Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
                                 <Grid.ColumnDefinitions>
@@ -164,18 +165,18 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBox Grid.Column="0" x:Name="JsonVersionBox" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="Author" VerticalAlignment="Center"
+                                <TextBlock Grid.Column="1" Text="{loc:Loc Label_Author}" VerticalAlignment="Center"
                                            FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
                                            Margin="14,0,14,0"/>
                                 <TextBox Grid.Column="2" x:Name="JsonAuthorBox" VerticalAlignment="Center"/>
                             </Grid>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Nexus URL" Style="{StaticResource ExportDialogLabel}"
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{loc:Loc Label_NexusUrl}" Style="{StaticResource ExportDialogLabel}"
                                        Margin="0,10,14,0"/>
                             <TextBox Grid.Row="2" Grid.Column="1" x:Name="JsonNexusBox" Margin="0,10,0,0"
                                      Text="https://www.nexusmods.com/crimsondesert/mods/438" VerticalAlignment="Center"/>
 
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Description" Style="{StaticResource ExportDialogLabel}"
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="{loc:Loc Label_Description}" Style="{StaticResource ExportDialogLabel}"
                                        VerticalAlignment="Top" Margin="0,18,14,0"/>
                             <TextBox Grid.Row="3" Grid.Column="1" x:Name="JsonDescBox" Height="76" Margin="0,10,0,0"
                                      TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
@@ -184,7 +185,7 @@
                 </Border>
 
                 <!-- Step 2 -->
-                <TextBlock x:Name="Step2Header" Text="Prepare export" FontSize="11" FontWeight="Bold"
+                <TextBlock x:Name="Step2Header" Text="{loc:Loc Btn_PrepareExport}" FontSize="11" FontWeight="Bold"
                            Foreground="{StaticResource AccentBrush}" Margin="2,2,0,8"/>
                 <Border Background="{StaticResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
                         BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
@@ -192,7 +193,7 @@
                         <TextBlock x:Name="Step2Body" TextWrapping="Wrap" FontSize="11"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Margin="0,0,0,14" LineHeight="18"/>
-                        <Button Content="Prepare export" Style="{StaticResource AccentButton}"
+                        <Button Content="{loc:Loc Btn_PrepareExport}" Style="{StaticResource AccentButton}"
                                 Click="OnPrepareFromCurrent" MinHeight="36" Padding="18,8" FontSize="12"
                                 HorizontalAlignment="Left"/>
                     </StackPanel>
@@ -203,7 +204,7 @@
                         Background="{StaticResource BgPanelBrush}" CornerRadius="8" Padding="18,16" Margin="0,0,0,14"
                         BorderBrush="{StaticResource AccentBrush}" BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Save" FontSize="11" FontWeight="Bold"
+                        <TextBlock Text="{loc:Loc Label_SaveExport}" FontSize="11" FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}" Margin="0,0,0,12"/>
 
                         <StackPanel x:Name="JsonStatsPanel" Visibility="Collapsed" Margin="0,0,0,12">
@@ -220,7 +221,7 @@
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,10,14,10">
                                             <TextBlock x:Name="JsonPatchCountLabel" Text="0" FontSize="22" FontWeight="Bold"
                                                        Foreground="{StaticResource AccentBrush}"/>
-                                            <TextBlock Text=" regions" FontSize="11"
+                                            <TextBlock Text="{loc:Loc Label_Regions}" FontSize="11"
                                                        Foreground="{StaticResource TextSecondaryBrush}"
                                                        VerticalAlignment="Bottom" Margin="6,0,0,4"/>
                                         </StackPanel>
@@ -238,7 +239,7 @@
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,10,14,10">
                                             <TextBlock x:Name="JsonBytesChangedLabel" Text="0" FontSize="22" FontWeight="Bold"
                                                        Foreground="{StaticResource AccentBrush}"/>
-                                            <TextBlock Text=" bytes changed" FontSize="11"
+                                            <TextBlock Text="{loc:Loc Label_BytesChanged}" FontSize="11"
                                                        Foreground="{StaticResource TextSecondaryBrush}"
                                                        VerticalAlignment="Bottom" Margin="6,0,0,4"/>
                                         </StackPanel>
@@ -272,7 +273,7 @@
                                        LineHeight="15"/>
                         </Border>
 
-                        <Button x:Name="SaveExportButton" Content="Save export…" Style="{StaticResource AccentButton}"
+                        <Button x:Name="SaveExportButton" Content="{loc:Loc Btn_SaveExport}" Style="{StaticResource AccentButton}"
                                 Click="OnSaveExport" MinHeight="36" Padding="18,8" FontSize="12"
                                 HorizontalAlignment="Left"/>
                     </StackPanel>

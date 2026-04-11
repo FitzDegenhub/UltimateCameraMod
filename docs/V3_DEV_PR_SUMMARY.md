@@ -1,6 +1,6 @@
 ﻿# PR: `v3-dev` → `main` - UCM v3.0-beta
 
-**Use this as the GitHub PR description.** Updated to reflect the full branch tip as of v3.0-beta.
+**Historical document.** This was the PR description for the v3-dev to main merge. The `v3-dev` branch no longer exists; active development now happens on `development`.
 
 ---
 
@@ -104,7 +104,9 @@ Lock-on `ZoomDistance` values now derive from the user's actual on-foot ZL2/ZL3/
 
 `Player_Weapon_Down` (combat finisher): vanilla 0.5s → UCM 1.2s in / 1.5s out.
 
-### Shared library and services (`UltimateCameraMod`)
+### Core services (now inside `UltimateCameraMod.V3`)
+
+> **Note:** These files originally lived in a separate `src/UltimateCameraMod/` project and were linked via csproj `<Compile Include>`. As of April 2026 they have been consolidated directly into `src/UltimateCameraMod.V3/` (Models/, Services/, Paz/ subdirectories). The old v2.5 project folder has been removed.
 
 - **`JsonModExporter`**: binary diff → JSON patches; `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` for preset files; `ExtractJsonStringField` decodes JSON escapes in sidebar metadata; human-readable XML offset map labels each diff region
 - **`CameraMod`**: vanilla XML read path for Vanilla preset; `TryParseUcmQuickFootBaselineFromXml`; `vanilla_preset_rev`; `IsLiveCameraPayloadMatchingStoredBackup` for vanilla guard; `StripComments` for clean session XML

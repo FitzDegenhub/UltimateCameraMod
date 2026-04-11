@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Avancerede kameraindstillinger</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Import&#233;r avanceret indstillingsstreng</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Eksport&#233;r forudindstillingsstreng</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Import&#233;r forudindstillingsstreng</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Import&#233;r forudindstilling</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Input</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Fejl</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>EKSPORT&#201;R TIL DELING</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>F&#198;LLESSKABSFORUDINDSTILLINGER</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM-FORUDINDSTILLINGER</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Forudindstillingsdetaljer</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>V&#230;lg forudindstillingstype</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>R&#229; XML-import</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Spilmappe ikke angivet</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode-fejl</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune-fejl</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Forudindstillingsopdatering</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Spilopdatering opdaget</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>Spilfiler &#230;ndret</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM Fatal</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ-import mislykkedes</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>Import&#233;r God Mode-tilsides&#230;ttelser</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode-tilsides&#230;ttelser</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Anvend p&#229; spil</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Gem</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Slet</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Eksport&#233;r</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Import&#233;r</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Install&#233;r</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Install&#233;r i spil</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Gendan vanilla</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Gendan</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Luk</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>Luk UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Annull&#233;r</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Ja</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Nej</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Hent opdatering</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Kopi&#233;r til udklipsholder</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Kopieret!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Eksport&#233;r streng</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Import&#233;r streng</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Gem forudindstilling</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Slet forudindstilling</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Eksport&#233;r XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Import&#233;r XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Nulstil til standard</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Nulstil til vanilla</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Indl&#230;s fra Simpel</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Udvid alle</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Skjul alle</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Gener&#233;r fra aktuelle indstillinger</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Gener&#233;r fra XML-fil...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Gem .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Import&#233;r &amp; gem</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Eksport&#233;r streng</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Import&#233;r streng</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>K&#248;b mig en kaffe</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Nulstil standard</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Ny</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Duplik&#233;r</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Omd&#248;b</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>&#197;bn</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Fortryd</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Pr&#248;v igen</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Opdater</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>Download</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>Downloadet</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>Downloader...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Opret</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Overskriv</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Forbered eksport</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Gem eksport...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>Gem .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>Gem .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>Gem 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>Gem .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Gennemse</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Forst&#229;et</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>Udskyd 7 dage</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>Udskyd 7d</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Afvis</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>&#197;bn skrivebeskyttet</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Ja, sikkerhedskopi&#233;r f&#248;rst</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Nej, bare opdater</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Fjern &#230;ndret 0.paz</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Fjernet</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Ryd</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Nulstil</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>N&#230;ste</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Kom i gang</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Spring vejledning over</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Vis p&#229; Nexus</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+  <data name="Tab_Presets" xml:space="preserve"><value>Forudindstillinger</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Brugerdefineret</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Quick</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Fine Tune</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Simpel</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Avanceret</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Ekspert</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+  <data name="Label_Distance" xml:space="preserve"><value>Afstand</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>H&#248;jde</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Horisontal forskydning</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Synsfelt</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Kampkamera</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Centreret kamera</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Ridedyrkamera</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Kamerastil</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Gemt forudindstilling</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Forudindstilling</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Titel</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Version</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Forfatter</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Forfatter (valgfrit)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Beskrivelse</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Beskrivelse (valgfrit)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL &#8212; Nexus / GitHub / osv. (valgfrit)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Spilmappe:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> patch-omr&#229;der</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> bytes &#230;ndret</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> omr&#229;der</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>AKTIV</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Kladde</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Din arbejdskopi indtil du gemmer en navngivet forudindstilling.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Format</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Mod-info &amp; filnavn</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Forbered eksport</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Gem</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Navn</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Navn *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>S&#248;g</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Lock-on zoom</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Lock-on auto-rotation</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>Centr&#233;r HUD</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Sikkert omr&#229;de</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Arbejder...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Gemt</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Installeret</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Gendannet</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Fortrudt</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>ELLER</value></data>
+  <data name="Section_CameraStyle" xml:space="preserve"><value>KAMERASTIL</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>GLOBALE INDSTILLINGER</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>DEL</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>KAMERAFORH&#197;NDSVISNING</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>SYNSFELT</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>AVANCEREDE KONTROLLER</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>AVANCEREDE KAMERAINDSTILLINGER</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>S&#197;DAN VIRKER DET</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>TRIN 1  &#8212;  NAVNGIV DIN MOD</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>TRIN 2  &#8212;  GENER&#201;R PATCHEN</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>TRIN 3  &#8212;  GEM FILEN</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>FORUDINDSTILLINGER</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM QUICK</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>BRUGERDEFINEREDE FORSKYDNINGER</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>CENTR&#201;R HUD</value></data>
+  <data name="Header_Section" xml:space="preserve"><value>SEKTION</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>UNDERELEMENT</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ATTRIBUT</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>V&#198;RDI</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>VANILLA</value></data>
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  &#8212;  Zoom-niveauer til fods</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  &#8212;  Hest / ridedyr zoom-niveauer</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  &#8212;  Kamp / Lock-On</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  &#8212;  Kameraudj&#230;vning / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  &#8212;  Sigte / Tr&#229;dkorsposition</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Zoom-niveauer til fods</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - Hest / ridedyr zoom-niveauer</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Globalt / FoV-d&#230;kning</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Specielle ridedyr / Bev&#230;gelse</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Kamp / Lock-On</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Kameraudj&#230;vning / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Sigte / Tr&#229;dkorsposition</value></data>
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Centr&#233;r karakter p&#229; sk&#230;rmen (l&#229;ser horisontal forskydning til 0)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Centr&#233;r karakter p&#229; sk&#230;rmen</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Match ridedyr-/hesteh&#248;jde med spillerkamerah&#248;jde</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Bl&#248;de kameraovergange (fjerner zoom-rysten mellem tilstande)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Deaktiv&#233;r kamerasnap til m&#229;l ved l&#229;sning  --  Tak til @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Centr&#233;r spil-HUD inden for maks bredde</value></data>
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - mod-h&#229;ndterere</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM-forudindstilling (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Mod-h&#229;ndteringspakke (mappe)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>Kamera XML-fil (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ-arkiv (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM-forudindstilling (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON-patch fra JSON Mod Manager eller CDUMM</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml-fil</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>Spil-.paz-fil med kameradata</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>UCM-forudindstillingsfil fra en anden bruger</value></data>
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>Administreret af UCM</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Anbefalet)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Fuld manuel kontrol</value></data>
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM-forudindstillinger</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>F&#230;llesskabsforudindstillinger</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Mine forudindstillinger</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>Importeret</value></data>
+  <data name="Label_KindDefault" xml:space="preserve"><value>Standard</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM-stil</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>F&#230;llesskab</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Min forudindstilling</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>Importeret XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>Importeret 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Mod-pakke</value></data>
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Hvid = vanilla</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Guld = &#230;ndret af UCM Quick/Fine Tune</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Gr&#248;n = hellig (dine God Mode-redigeringer, beskyttet mod genopbygning)</value></data>
+  <data name="Status_Ready" xml:space="preserve"><value>Klar</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>kontrollerer...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>opdateret</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>offline</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Installerer...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Installeret! Start spillet.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Gendanner vanilla...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Vanilla gendannet.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Anvender...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>Anvendte {0} &#230;ndringer p&#229; spilfiler.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; indl&#230;st.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; gemt.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; slettet.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; eksporteret.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; opdateret.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>Importerede &#187;{0}&#171; og gemte &#8212; klik Install&#233;r for at anvende.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>Eksporterede {0} &#230;ndrede v&#230;rdier.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>Importerede {0} v&#230;rdier.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Eksporteret til {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>Installerede {0} i spillet.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>Importerede {0} v&#230;rdier fra {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Indl&#230;st &#8212; rediger v&#230;rdier og klik Install&#233;r i spil.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Nulstillet til standard (din forudindstilling + vanilla).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>Nulstillet til UCM Quick-standard plus vanilla.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Ingen &#230;ndringer at anvende.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Ingen &#230;ndrede v&#230;rdier at eksportere.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Ingen &#230;ndrede v&#230;rdier at gemme.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>V&#230;lg en gemt forudindstilling f&#248;rst.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>V&#230;lg en importeret forudindstilling f&#248;rst.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Spilmappe ikke angivet.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Ingen spilmappe valgt.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Installation mislykkedes. K&#248;rer spillet?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Installation mislykkedes: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Ingen sikkerhedskopi fundet. Kameraet er muligvis allerede vanilla.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Sikkerhedskopi er fra gammel version. Verificer spilfiler.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Gendannelse mislykkedes. Verificer spilfiler.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Gendannelse mislykkedes: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Gendannede vanilla-kamera fra sikkerhedskopi.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Ingen sikkerhedskopi fundet. Spilkameraet er muligvis allerede vanilla.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Spillet blev opdateret siden sidste installation &#8212; sikkerhedskopien er opdateret. Verificer spilfiler p&#229; Steam, og install&#233;r igen.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} tilg&#230;ngelig</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Avancerede kontroller &#8212; guidet kameraindstilling per parameter.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Eksperttilstand &#8212; rediger r&#229; XML-v&#230;rdier og klik Install&#233;r i spil.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager &#8212; gener&#233;r Crimson Desert Mod Manager v8-patchfiler.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Genererer patches...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>Genererede {0} patch-omr&#229;der. Klik Gem .json for at eksportere.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>Gemte {0} ({1} patches).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Gener&#233;r en patch f&#248;rst.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON-eksport kr&#230;ver vanilla-kamerafiler f&#248;rst.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Indl&#230;ste v&#230;rdier fra Simpel-tilstand.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Nulstillede alle avancerede kontroller til vanilla.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Indl&#230;ste forudindstilling &#187;{0}&#171; ({1} tilsides&#230;ttelser).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Avanceret forudindstilling &#187;{0}&#171; gemt ({1} tilsides&#230;ttelser).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Avanceret forudindstilling &#187;{0}&#171; slettet.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>Anvendte {0} avancerede kontrol&#230;ndringer p&#229; spillet.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Ryddede gammel v{0}-data op. Klik Install&#233;r for at anvende indstillingerne.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Spilmappe ikke angivet. Klik Install&#233;r s&#229; bliver du bedt om at gennemse.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: spilmappen er skrivebeskyttet. Flyt spillet eller ret mappetilladelser.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} r&#230;kker vist  |  {1} &#230;ndret</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} r&#230;kker  |  {1} &#230;ndret</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} r&#230;kker  |  {1} &#230;ndret  |  {2} hellige</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} &#230;ndring{1}</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick &#8212; bred kameraformning med forh&#229;ndsvisninger og almindelige kontroller.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune &#8212; kureret dybjustering lagt oven p&#229; UCM Quick.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode &#8212; rediger r&#229; XML-v&#230;rdier og eksport&#233;r dem som JSON.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Hellig redigering: denne v&#230;rdi er nu beskyttet mod Quick/Fine Tune-genopbygning.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>L&#229;s denne forudindstilling op i sidepanelet for at nulstille God Mode-v&#230;rdier.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Installerede aktuel session i spillet. Kamerapakken opdateret &#8212; {0} bytes ({1} komprimeret i PAZ).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Installation f&#230;rdig; kameraposten i PAZ var u&#230;ndret ({0} bytes pakke, {1} komprimeret).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Installerer kamera i spillet...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Forbereder aktuel sessions-XML...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>Installerer HUD-centrering...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Gendanner vanilla-HUD...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Gendanner vanilla-kamera...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>Download mislykkedes: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Opdatering mislykkedes: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>Import mislykkedes: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Eksport mislykkedes: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Sletning mislykkedes: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Indl&#230;sning mislykkedes: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Nulstilling mislykkedes: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Forberedelse mislykkedes: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Gemning mislykkedes: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD-installation mislykkedes: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD-gendannelse mislykkedes: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML-import mislykkedes: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz-import mislykkedes: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>Ingen manifest.json fundet i den mappe.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Ingen playercamerapreset.xml fundet i mod-pakken.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>Denne fil ser ikke ud til at v&#230;re en UCM-forudindstilling (ingen session_xml fundet).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Henter katalog...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Henter f&#230;llesskabskatalog...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} forudindstillinger tilg&#230;ngelige, {1} downloadet</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>Ingen f&#230;llesskabsforudindstillinger tilg&#230;ngelige endnu.
+
+Kom tilbage senere eller bidrag med din egen!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Klar til at gemme. Klik Gem n&#229;r du er klar.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Forbered eksporten f&#248;rst.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>Ingen sessions-XML tilg&#230;ngelig. Rediger indstillinger eller indl&#230;s en forudindstilling f&#248;rst.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>Sessions-XML er tom.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Validerer kodning for dette spil...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Skriver arkiv (kopierer + patcher)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>Dekrypterer 0.paz...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Eksporterer kamera-XML...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Installerer kamera-XML...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>Gemte {0}.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>Gemte {0} ({1} patches).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>Importeret forudindstilling &#187;{0}&#171; gemt med {1} v&#230;rdier.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Importerede mod-pakke som &#187;{0}&#171;.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>Importerede &#187;{0}&#171; med {1} v&#230;rdier.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>Importerede 0.paz som &#187;{0}&#171;.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>Importerede UCM-forudindstilling &#187;{0}&#171;.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Importeret forudindstilling &#187;{0}&#171; slettet.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Indl&#230;ste importeret forudindstilling &#187;{0}&#171; i God Mode.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Kamerasikkerhedskopien blev opdateret fra aktuelle spilfiler. Brug Install&#233;r n&#229;r du er klar til at genanvende din forudindstilling.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Kunne ikke opdatere kamerasikkerhedskopien automatisk. Hvis kameraet stadig er modificeret, verificer spilfiler i Steam og genstart UCM.</value></data>
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Kun importeret - ikke genopbygget til dette spil endnu.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Gemt forudindstilling klar - angiv en spilmappe for at kontrollere genopbygningsstatus.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Klar - allerede genopbygget til denne spilversion.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Beh&#248;ver genopbygning - aktuel spilversion afviger fra sidste build.</value></data>
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Den mappe indeholder ikke 0010\0.paz.
+S&#248;rg for at du valgte det korrekte Crimson Desert-bibliotek.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Forkert mappe</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Angiv en spilmappe f&#248;rst (klik Install&#233;r for at gennemse).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Overskriv forudindstilling &#187;{0}&#171; med aktuelle skyderv&#230;rdier?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Overskriv forudindstilling</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Overskriv avanceret forudindstilling &#187;{0}&#171; med aktuelle v&#230;rdier?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass-spilmappen ser ud til at v&#230;re skrivebeskyttet.
+
+For at l&#248;se dette, pr&#248;v et af f&#248;lgende:
+  1. Xbox-appen &#8594; Crimson Desert &#8594; Administrer &#8594; Flyt til et andet drev
+  2. H&#248;jreklik p&#229; spilmappen &#8594; Egenskaber &#8594; fjern flueben for &#187;Skrivebeskyttet&#171; &#8594; Anvend p&#229; alle undermapper</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Skrivetilladelse kr&#230;ves</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Install&#233;r &#187;{0}&#171; direkte i spillet?
+
+Dette vil overskrive dine aktuelle kameraindstillinger.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Import&#233;r XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Kameradataene i spilmappen matcher ikke UCMs vanilla-sikkerhedskopi.
+
+JSON-patches til eksterne mod-h&#229;ndterere skal bruge vanilla-&#187;originale&#171; bytes. Verificer spillet i Steam (eller tilbagef&#248;r kamera&#230;ndringer i mod-h&#229;ndtereren), og pr&#248;v igen.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>Kan ikke eksportere JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Uh&#229;ndteret fejl:
+
+{0}
+
+Alle detaljer gemt i crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Opstartsfejl:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Opstartsnedbrud:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Kunne ikke indl&#230;se kamera-XML:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Avanceret redigering</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Ekspertredigering</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Avancerede kontroller</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Mappedialogfejl: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Fejl</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>En forudindstilling med dette navn findes allerede. Overskriv?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Er du sikker? Dette kan ikke fortrydes.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>En opdatering er tilg&#230;ngelig for &#187;{0}&#171;.
+
+Vil du gemme en kopi af den aktuelle version til Mine forudindstillinger f&#248;r opdatering?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>Denne forudindstilling blev importeret som r&#229; XML og administreres ikke af UCM.
+
+UCM Quick og Fine Tune bruger UCMs kameraregelsystem, som ville tilsides&#230;tte v&#230;rdier fra den importerede mod. For at beskytte din import er kun God Mode-redigering tilg&#230;ngelig.
+
+For at bruge UCM-funktioner som Steadycam og FOV-kontrol, opret en ny UCM-forudindstilling fra sidepanelet i stedet.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune og God Mode beh&#248;ver din spilmappe for at l&#230;se kameradata. Angiv din spilmappe f&#248;rst.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM-forudindstillinger er beskyttede. {0}-&#230;ndringer kan &#248;del&#230;gge forudindstillingens omhyggeligt afstemte v&#230;rdier.
+
+Duplik&#233;r denne forudindstilling f&#248;rst for at oprette din egen redigerbare kopi, og brug derefter Fine Tune eller God Mode frit.
+
+&#197;bn {0} i skrivebeskyttet tilstand alligevel? (Du kan gennemse v&#230;rdier, men &#230;ndringer gemmes ikke.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>Spillets kamerafiler er blevet &#230;ndret af UCM v2.x, en anden kameramod eller en mod-h&#229;ndterer. UCM beh&#248;ver de originale vanilla-filer for at oprette en ren sikkerhedskopi.
+
+Klik p&#229; knappen nedenfor for at fjerne den &#230;ndrede fil, og verificer derefter p&#229; Steam for at gendownloade originalen.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz slettet. Nu:
+1. Luk UCM
+2. Steam &#8594; Crimson Desert &#8594; Egenskaber &#8594; Installerede filer &#8594; &#187;Verificer spilfilernes integritet&#171;
+3. Genstart UCM efter verificeringen er f&#230;rdig</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Kunne ikke slette: {0}
+Slet manuelt: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Ingen tilsvarende 0.pamt blev fundet ved siden af den valgte 0.paz. Angiv din spilmappe s&#229; v3 kan bruge den aktuelle 0010\0.pamt som arkivindeks.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Spilmappe ikke angivet. v3 beh&#248;ver det aktuelle spil for at genopbygge denne forudindstilling sikkert.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Kunne ikke duplikere: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON-eksport kr&#230;ver vanilla-kamerafiler (verificer spillet, og pr&#248;v igen).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Installationen blev f&#230;rdig, men returnerede et uventet resultat. Kameraet blev muligvis ikke anvendt korrekt &#8212; pr&#248;v at starte spillet for at verificere.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Gendannelsen blev f&#230;rdig, men resultatet kunne ikke bekr&#230;ftes. Start spillet for at kontrollere om kameraet er tilbage til vanilla.</value></data>
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>&#197;bn spilmappe (eller gennemse for at angive manuelt)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Udj&#230;vner blending, d&#230;mpning og hastighedsforskydninger mellem bev&#230;gelsestilstande. Deaktiv&#233;r for at gendanne vanilla-kameraovergange.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>&#197;bner Ko-fi &#8212; tips hj&#230;lper UCM med at forts&#230;tte</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Gem den aktuelle aktive kamera-XML til en fil</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Install&#233;r en kamera-XML-fil direkte i spillet</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Udfyld alle skydere fra aktuelle Simpel-tilstandsindstillinger</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Nulstil alle skydere til vanilla-XML-v&#230;rdier</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Indl&#230;s v&#230;rdier fra en playercamerapreset.xml-fil</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Bruger det der aktuelt er konfigureret i Simpel-tilstand</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>V&#230;lg en playercamerapreset.xml-fil til at sammenligne mod vanilla</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Import&#233;r en kamera-XML eller PAZ-arkiv som forudindstilling</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>Del som JSON (Mod Manager), sessions-XML eller patchet 0.paz &#8212; bruger din aktuelle UCM-session.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>Gendan den originale kameradel fra UCMs sikkerhedskopi.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Anvend den aktuelle UCM-session direkte p&#229; spilfilerne.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Fortryd sidste skyder&#230;ndring</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>V&#230;lg en mappe med manifest.json &#8212; importerer navn, forfatter og kamera-XML automatisk</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>V&#230;lg en playercamerapreset.xml-fil direkte</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>V&#230;lg en 0.paz-fil &#8212; UCM udtr&#230;kker kamera-XML fra den</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Import&#233;r en .ucmpreset-fil delt af en anden UCM-bruger</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Skjul denne p&#229;mindelse i en uge</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Skjul til n&#230;ste opstart</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Opdatering tilg&#230;ngelig &#8212; klik for at downloade nyeste version</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Gennemse og download forudindstillinger</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Tilf&#248;jer dette antal grader til hver Fov og InDoorFov i kamerafilen. Indend&#248;rs- og udend&#248;rsr&#230;kker starter fra forskellige vanilla-tal, s&#229; God Mode viser mange forskellige slutv&#230;rdier &#8212; ikke &#233;n vinkel overalt.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Separat fra horisontal forskydning ~0.5: den v&#230;rdi er ofte vanilla lateral sk&#230;vhed i XML. Denne indstilling tvinger forskydning til 0 og anvender st&#230;rkere centreringsregler (RightOffset mod 0 hvor underst&#248;ttet).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>N&#229;r afkrydset, forbliver kameraet p&#229; plads i stedet for at snappe rundt for at se mod det l&#229;ste m&#229;l.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Nulstil til vanilla ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Vanilla: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>&#197;bn skaberside i browseren</value></data>
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Hvor langt venstre/h&#248;jre kameraet sidder fra karakteren. Centreret kamera l&#229;ser dette til 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Centreret kamera tvinger karakter til sk&#230;rmcenter &#8212; fjern flueben for at justere</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = vanilla (karakter lidt til venstre). Center er ~0.5. Negativ = l&#230;ngere venstre, positiv = l&#230;ngere h&#248;jre.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>Venstre/h&#248;jre indramning som et delta p&#229; RightOffset (til fods, ridedyr, sigte og relaterede r&#230;kker). 0 matcher vanilla-sidesk&#230;vhed. For&#248;g mod ~0.5 for at tr&#230;kke mod geometrisk center i filen; negative v&#230;rdier sk&#230;vvrider mere til venstre. Matcher FoV-forh&#229;ndsvisningen ovenfra. Centreret kamera nedenfor er separat: det l&#229;ser denne skyder til 0 og anvender st&#230;rkere centrering.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Gr&#230;nser: Afstand 1.5-12.0  |  H&#248;jde -1.6 til 0.5  |  Forskydning -3.0 til 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Forskydning 0 = vanilla (karakter venstre)  |  0.5 = center  |  negativ = mere venstre  |  positiv = mere h&#248;jre</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Spilopdateringer overskriver moddede filer. Efter hver Crimson Desert-opdatering, k&#248;r UCM Install&#233;r igen for at gendanne dine kameraindstillinger.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Bem&#230;rk:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Hver skyder viser aktuel v&#230;rdi og vanilla-standard (d&#230;mpet). Klik &#8634; p&#229; en r&#230;kke for at nulstille den parameter til vanilla. Klik Install&#233;r for at skrive alle &#230;ndringer til spillet.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>&#198;ndringer anvendes oven p&#229; vanilla-XML &#8212; de interagerer ikke med Simpel-tilstandsforudindstillinger. Brug &#187;Indl&#230;s fra Simpel&#171; for at starte fra din aktuelle forudindstilling.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Spillet har 3 scroll-hjul zoom-niveauer til fods. ZL2 er t&#230;ttest (standardvisning), ZL3 er mellemtrin, ZL4 er l&#230;ngst ude. Hvert niveau kontrollerer kameraafstand, h&#248;jde og horisontal position uafh&#230;ngigt. Disse g&#230;lder alle tilstande til fods: stillest&#229;ende, gang, l&#248;b, sprint og kampbev&#230;gelse.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Hestekameraer bruger de 2 vanilla zoom-niveauer (ZL2-ZL3). Alle 8 hestetilstande er synkroniseret s&#229; kameraet ikke rykker under hastighedsskift, mens den faktiske spilzoomtrappe bevares.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>N&#229;r du l&#229;ser p&#229; en fjende, skifter kameraet til kampsporingstilstand. TargetRate styrer hvor aggressivt kameraet f&#248;lger fjenden &#8212; lavere v&#230;rdier giver mere manuel kontrol. ScreenClampRate styrer hvor centreret fjenden forbliver p&#229; sk&#230;rmen.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Disse styrer hvordan kameraet skifter mellem bev&#230;gelsestilstande. BlendInTime er hvor mange sekunder kameraet bruger p&#229; at glide ind i en tilstand. OffsetLength styrer kamerasving &#8212; at s&#230;tte den til 0 giver en Steadycam-f&#248;lelse uden sidebev&#230;gelse.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>N&#229;r du sigter med lygten, buen eller v&#229;benzoom, forskydes kameraet for at placere tr&#229;dkorset. Disse RightOffset-v&#230;rdier skalerer proportionalt fra din horisontale forskydning s&#229; kameraet ikke snapper sidevis n&#229;r evner aktiveres.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Denne fane genererer en .json-patchfil kompatibel med Crimson Desert JSON Mod Manager v8. Slip filen i mod-h&#229;ndtererens Mods/-mappe og dine kameraindstillinger vises som en valgfri mod &#8212; uden behov for UCM.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Patchen virker ved at sammenligne den modificerede kamerafil mod vanilla-filen byte-for-byte og kun registrere forskellene. Det betyder at den er spilversionspecifik &#8212; hvis spillet opdateres, gener&#233;r patchen p&#229; ny.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Denne information vises inde i mod-h&#229;ndtereren s&#229; folk ved hvad modden er.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>V&#230;lg hvilke indstillinger der skal patches fra. Aktuelle indstillinger bruger det der er aktivt i Simpel-tilstand lige nu. Fra XML-fil lader dig v&#230;lge en eksporteret playercamerapreset.xml at patche fra i stedet.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Gem .json-filen, og slip den i Mods/-mappen i din Crimson Desert JSON Mod Manager-installation. Den vil vises som en valgfri mod.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>S&#248;g i attributter...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>Dette er det hurtige, kurerede UCM-lag: bred kameraformning, forh&#229;ndsvisninger og de mest almindelige kameravalg.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune er det kurerede dybjusteringslag. Det starter fra dit UCM Quick-ops&#230;tning og lader dig finjustere felterne UCM bevidst eksponerer.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode viser hver r&#230;kke i filen. Skydere her redigerer specifikke attributter &#8212; disse tal skal matche den samme attribut i God Mode. Andre r&#230;kker &#230;ndres stadig fra Quick (FoV-boost, stil, kamp, Steadycam osv.) eller vanilla, s&#229; forvent ikke at &#233;n skyder forklarer hele gitteret.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode eksponerer de r&#229; kamerar&#230;kker. Brug den n&#229;r UCM Quick ikke er nok og du vil g&#229; direkte til fuld direkte kontrol, eller efter UCM Fine Tune hvis du vil g&#229; endnu dybere.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>V&#230;rdier her er den sammenlagte session: Quick + Fine Tune + eventuelle redigeringer i dette gitter. FoV i Quick er et delta tilf&#248;jet per r&#230;kke (Fov og InDoorFov), s&#229; vinkler varierer efter tilstand. Fine Tune matcher her r&#230;kke-for-r&#230;kke kun for de attributter disse skydere kontrollerer.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Disse r&#230;kker d&#230;kker bredere FoV-normalisering og delte kamerasystemer der g&#230;lder uden for de grundl&#230;ggende til-fods- og hestegrupper. Brug dem n&#229;r du vil have UCM Fine Tune til at afspejle hele mod-overfladen, inklusive lock-on-familier, krigsmaskintilstande og sv&#248;mmekameraer.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Elefant, wyvern, kano, krigsmaskin, kost og bev&#230;gelsesrelaterede kamerafamilier har alle deres egen zoom-adf&#230;rd. Disse kontroller eksponerer de ekstra ridedyrsv&#230;rdier modden allerede &#230;ndrer bag kulisserne.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Justerer kameraafstand ved l&#229;sning p&#229; eller forsvar mod et m&#229;l, relativt til din til-fods-afstand. 0% er s&#248;ml&#248;s med Steadycam. Negative v&#230;rdier zoomer ind for en filmisk fokuseffekt; positive v&#230;rdier tr&#230;kker tilbage for mere slagmarksoversigt.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Centrerer spillets HUD-elementer inden for angivet maks bredde (pixels). Nyttigt til ultrabrede sk&#230;rme hvor HUD-elementer er spredt for langt fra hinanden. P&#229;virker kun spil-HUD, ikke menuer. Tak til wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>Gennemse kameraforudindstillinger delt af UCM-f&#230;llesskabet. Downloadede forudindstillinger vises i dit sidepanel.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Gennemse og download officielle UCM-kameraforudindstillinger. Downloadede forudindstillinger vises i dit sidepanel.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM administrerer over 150 kameratilstande bag kulisserne &#8212; FoV-konsistens p&#229; tv&#230;rs af kamp, vagt, ridedyr og lock-on; bl&#248;de overgange mellem alle tilstande; afstandsskalering s&#229; lock-on ikke snapper indad. Quick-skydere og Fine Tune bygger sikkert oven p&#229; disse regler. God Mode lader dig tilsides&#230;tte enkelv&#230;rdier n&#229;r du har brug for det.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>Starter fra spillets vanilla-kamera-XML uden UCM-regler. UCM Quick og Fine Tune er deaktiveret fordi deres skydere ville overskrive dine manuelle redigeringer &#8212; UCM &#230;ndrer hundredvis af v&#230;rdier p&#229; tv&#230;rs af kamp, ridedyr, lock-on og udj&#230;vningstilstande, hvilket ville konflikte med h&#229;ndindstillede v&#230;rdier. Kun God Mode er tilg&#230;ngelig til direkte XML-redigering. Brug dette n&#229;r du importerer fra en anden kameramod eller n&#229;r du beh&#248;ver fuld kontrol over hver v&#230;rdi.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>Importeringer gemmes i mappen import_presets ved siden af denne app og listes under Importeret i sidepanelet.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>V&#230;lg hvilken filtype du vil importere.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Inds&#230;t UCM_ADV:-strengen for at importere avancerede indstillinger.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>Start fra UCM Quick, indl&#230;s noget fra Forudindstillingsh&#229;ndtereren, eller import&#233;r en skaberforudindstilling.</value></data>
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Kopi&#233;r og inds&#230;t p&#229; NexusMods, Discord osv.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Inds&#230;t en forudindstillingsstreng nedenfor:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>Fra NexusMods-kommentarer, Discord osv.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Inds&#230;t en avanceret indstillingsstreng nedenfor:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Skal starte med UCM_ADV: (fra Avanceret eksport)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Del denne streng for &#187;{0}&#171;:</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} avancerede indstillinger fundet</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>Ikke en avanceret indstillingsstreng (skal starte med UCM_ADV:)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>Skal starte med UCM_ADV:</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Ugyldig datapakke</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Gem brugerdefineret forudindstilling</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Gem avanceret forudindstilling</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Indtast et navn til denne forudindstilling:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>Indtast et navn til denne importerede forudindstilling:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Eksport&#233;r forudindstillingsstreng</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Navngiv denne forudindstilling til deling:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>V&#230;lg Crimson Desert-mappen (indeholder &#187;0010&#171;-mappen)</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>V&#230;lg mod-mappen (som indeholder manifest.json)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Eksport&#233;r kamera-XML</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Import&#233;r kamera-XML &#8212; installerer direkte i spillet</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Import&#233;r playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>Import&#233;r 0.paz &#8212; udtr&#230;k kamera-XML</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Import&#233;r UCM-forudindstilling</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>V&#230;lg kamera-XML til patching</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Gem JSON-patch</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Gem kamera-XML</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Gem patchet 0.paz</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>Gem UCM-forudindstilling</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>Gem importeret forudindstilling</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(ny &#8212; juster skydere)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(aktuelle redigeringer)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(aktuel)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>V&#230;lg en importkilde</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>Slet importeret forudindstilling</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>Overskriv importeret forudindstilling</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Importerer mod-pakke: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>Importerer XML: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>Importerer PAZ: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Eksporteret forudindstilling</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>Importeret kamera</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM-forudindstilling - {0}</value></data>
+  <data name="Filter_All" xml:space="preserve"><value>Alle</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Kun &#230;ndrede</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Kun hellige</value></data>
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Spilmappe:  IKKE ANGIVET  (klik Install&#233;r for at gennemse)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Spilmappe:  {0}{1}</value></data>
+  <data name="Overlay_CloseX" xml:space="preserve"><value>Luk dialog</value></data>
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Trin {0} af {1}</value></data>
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>Eksporterer en byte-patch-.json du kan importere i JSON Mod Manager eller Crimson Desert Ultimate Mods Manager. Brug den mod-h&#229;ndterer du foretr&#230;kker &#8212; modtagere beh&#248;ver ikke UCM.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>Eksporterer playercamerapreset.xml med samme normalisering UCM bruger ved installation (UTF-8 BOM, kommentarer fjernet). Fantastisk til Nexus-tekstuploads, h&#229;ndredigering eller genimport i UCM. Den der installerer beh&#248;ver stadig matchende komprimerede postst&#248;rrelser til sin spilversion.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Nexus-stil slip-ind-arkiv: en kopi af spillets 0010/0.paz med kun kameradataene opdateret til at matche din aktuelle UCM-session &#8212; spillere uden JSON-mod-h&#229;ndterer kan erstatte &#233;n fil. Det virker kun til samme spilopdatering som din installation (samme arkivlayout); n&#230;vn dette p&#229; mod-siden. Bed downloadere om at sikkerhedskopiere vanilla 0010/0.paz f&#248;r de bytter.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Eksporterer din aktuelle session som en .ucmpreset-fil som andre UCM-brugere kan slippe ind i forudindstillingsmappen eller dele via f&#230;llesskabskataloget. Indeholder hele din kamerakonfiguration inklusive alle Quick-, Fine Tune- og God Mode-indstillinger.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Bruger din aktive UCM-session (Quick, Fine Tune eller God Mode). V&#230;lg en forudindstilling i sidepanelet eller brug Import&#233;r hvis du starter fra XML eller en PAZ p&#229; disken.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Forbered kontrollerer at din session koder til denne spilmappe, derefter gemmer du XML-filen.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Forbered verificerer kodning mod din spilmappe. Gem skriver en komplet patchet 0.paz (stor fil). Sessionskilde er den samme som for de andre formater &#8212; sidepanelforudindstilling eller Import&#233;r f&#248;rst om n&#248;dvendigt.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Ingen kodning n&#248;dvendig &#8212; gemmer din session direkte. Udfyld infofelterne ovenfor s&#229; andre ved hvad de f&#229;r.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML-kodning matcher denne installations kamerapost. Gem som playercamerapreset.xml til deling eller redigering.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Uploadst&#248;rrelse svarer til en komplet 0.paz. Modtagere erstatter ...\0010\0.paz efter at have sikkerhedskopieret vanilla. Del kun med spillere p&#229; samme spilversion som denne eksport.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON bruger disse felter i modinfo. XML bruger Titel som standard gemmenavn. 0.paz bruger 0.paz som standard s&#229; du kan slippe den ind i 0010 uden at omd&#248;be.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>Genererede {0} patch-omr&#229;der. Gem n&#229;r du er klar.</value></data>
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>Dette betyder normalt at PAZ-filen er fra en anden spilversion end din aktuelle installation. Arkivindekset (0.pamt) matcher ikke PAZ-filstrukturen.
+
+FOR AT L&#216;SE:
+Plac&#233;r den matchende 0.pamt-fil i samme mappe som den 0.paz du importerer. Begge filer skal v&#230;re fra samme spilversion.</value></data>
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Ikke-gemt session</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Aktuel session</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Aktiv session</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Ingen forudindstilling indl&#230;st endnu.</value></data>
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroisk  -  Skulderh&#248;jde OTS, flot indramning</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panoramisk  -  Hovedh&#248;jde bred tilbagezoom, filmisk</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Umodificeret spilkamera (brug Steadycam for UCM-udj&#230;vning)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>N&#230;rbillede  -  Skulder OTS, t&#230;ttere (16:9-f&#248;lelse)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Hofteh&#248;jde, hel krop + horisont</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Kn&#230;h&#248;jde, dramatisk lav vinkel</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Jordniveau, ekstremt lav</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  T&#230;t gyserspil OTS (16:9-f&#248;lelse)</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>Ingen FoV-boost (0&#176;)  -  vanilla varierer efter tilstand (40&#176;, 45&#176;, 53&#176;&#8230;)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10&#176; (50&#176;)  -  Minimalt, godt for 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15&#176; (55&#176;)  -  Subtil forbedring</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20&#176; (60&#176;)  -  Perfekt til 21:9</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25&#176; (65&#176;)  -  Fremragende til 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30&#176; (70&#176;)  -  Perfekt til 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40&#176; (80&#176;)  -  Ekstremt, let fisheye</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Velkommen til Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>F&#248;r du begynder, har UCM brug for at dine spilfiler er umodificerede (vanilla) s&#229; den kan oprette en ren baseline-sikkerhedskopi.
+
+Hvis du tidligere brugte UCM v2.x, en anden kameramod eller en mod-h&#229;ndterer der &#230;ndrede spilfiler, verificer venligst f&#248;rst:
+
+Steam &#8594; Crimson Desert &#8594; Egenskaber &#8594; Installerede filer &#8594; &#187;Verificer spilfilernes integritet&#171;
+
+Har du verificeret dine spilfiler?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Ja, forts&#230;t</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Nej, luk UCM</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Dine forudindstillinger</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>Dette er forudindstillingssidepanelet. Klik Gennemse for at downloade officielle UCM-forudindstillinger og f&#230;llesskabsforudindstillinger. Dine egne forudindstillinger og importeringer vises ogs&#229; her. Klik p&#229; en forudindstilling for at indl&#230;se den.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Tre redigeringsniveauer</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick til hurtige &#230;ndringer, Fine Tune til dyb kontrol over hver kameratilstand, og God Mode til r&#229; XML-redigering. &#198;ndringer synkroniseres p&#229; tv&#230;rs af alle tre niveauer automatisk.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Kameraindstillinger</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Juster kameraafstand, h&#248;jde, horisontal forskydning, synsfelt, lock-on-zoom og kameraadf&#230;rd. Forh&#229;ndsvisningen opdateres mens du justerer.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Forh&#229;ndsvisning</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Kameraforh&#229;ndsvisningen viser karakterindramning og afstand. Synsfeltdiagrammet viser FoV-keglen ovenfra. Begge opdateres i realtid mens du justerer indstillinger.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Eksport&#233;r og install&#233;r</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Eksport&#233;r dine indstillinger som JSON til mod-h&#229;ndterere, XML, 0.paz eller .ucmpreset for at dele med andre. Eller klik Install&#233;r i spil for at anvende direkte p&#229; spilfilerne.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>En ting mere...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Jeg har brugt alt for meget tid p&#229; dette projekt. Hvis UCM sparede dig for timer med kamerafrustrationer, overvej at k&#248;be mig en kaffe. Eller lad v&#230;re. Jeg bliver ved med at lave den alligevel. Men kaffe hj&#230;lper.</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Opdateret til v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Velkommen tilbage! UCM er opdateret.
+
+Hvad er nyt:
+- Sacred God Mode: dine redigeringer er permanent beskyttet mod Quick/Fine Tune-genopbygning
+- Lock-on Auto-Rotate-kontakt (tak til @sillib1980)
+- Gr&#248;nne indikatorer for hellige v&#230;rdier i God Mode
+- Rettelse: hellige v&#230;rdier inkluderes nu korrekt i Install&#233;r og alle eksporter
+
+Dine forudindstillinger og indstillinger er bevaret.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Velkommen tilbage! UCM er opdateret fra v{0}.
+
+Hvad er nyt:
+- Sacred God Mode: dine redigeringer er permanent beskyttet mod Quick/Fine Tune-genopbygning
+- Lock-on Auto-Rotate-kontakt (tak til @sillib1980)
+- Gr&#248;nne indikatorer for hellige v&#230;rdier i God Mode
+- Rettelse: hellige v&#230;rdier inkluderes nu korrekt i Install&#233;r og alle eksporter
+
+Dine forudindstillinger og indstillinger er bevaret.</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Forudindstilling indl&#230;st</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Forudindstilling omd&#248;bt</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Forudindstilling duplikeret</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Forudindstilling genopbygget</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; oprettet</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Importeret forudindstilling indl&#230;st</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>En forudindstilling med navnet &#187;{0}&#171; findes allerede.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; omd&#248;bt til &#187;{1}&#171;.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; duplikeret som &#187;{1}&#171;.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Importeret forudindstilling &#187;{0}&#171; genopbygget til det aktuelle spil.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Spilmappe ikke angivet. Kan ikke oprette en manuel forudindstilling uden vanilla-kameradata.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Kun importerede XML / 0.paz-forudindstillinger beh&#248;ver genopbygningsunderst&#248;ttelse.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Indl&#230;s denne forudindstilling i den aktuelle session f&#248;rst, og gener&#233;r derefter fra Eksporter JSON.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Kunne ikke generere indbyggede forudindstillinger.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Forudindstillingsfil ikke fundet: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Kunne ikke aktivere forudindstilling: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; er l&#229;st &#8212; l&#229;s h&#230;ngel&#229;sen op for at redigere.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Forudindstilling &#187;{0}&#171; er ul&#229;st.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Genopbygning mislykkedes: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Kunne ikke oprette forudindstilling</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Kunne ikke generere forudindstillinger</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Importeret forudindstilling &#187;{0}&#171; havde ingen indlejret XML; genopbygget fra gemte indstillinger.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Kunne ikke indl&#230;se importeret forudindstilling &#187;{0}&#171;.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Import&#233;r playercamerapreset.xml som gemt forudindstilling</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Delt FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Tom&#229;ls-indramning</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>Bev&#230;gelses-FoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Elefant</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Kano / Krigsmaskin / Kost</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lock-On-sporing</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoV-ber&#248;ringspunkter</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Til-fods- og kampudj&#230;vning</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Bev&#230;gelsesovergange</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Udvidet lock-on- og kamptransitioner</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>F&#248;lgeadf&#230;rd til fods</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Synkronisering af hestetilstand</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Bev&#230;gelsesindramning</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Lygte / Spotlys</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Bl&#230;ndende blink</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>V&#229;bensigte / Zoom</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Bue</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Glid / Frit fald</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>Til-fods FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>Kamp-FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Filmisk FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>Krigsmaskin/Kost FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>Elefant-FoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>Wyvern-FoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>Sv&#248;mme-FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaktion ZL3 Maks</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaktion ZL4 Maks</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>Sv&#248;mme-FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>Klatre-FoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>Glide-FoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>Frit fald-FoV</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Zoom-niveau {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elefant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elefant ZL{0} H&#248;jde</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Kano ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Krigsmaskin ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Kost ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>V&#229;ben LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>V&#229;ben TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaktion TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Ikke-roter LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>L&#248;b ind-blending</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>L&#248;b ud-blending</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Vagt ind-blending</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Vagt ud-blending</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Rush ind-blending</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Rush ud-blending</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>L&#248;besving</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Kampl&#248;b-sving</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Kampsprint-sving</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>F&#248;lgesprint-sving</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Dyr hviletilstand ind-blending</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Dyr l&#248;b ind-blending</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Dyr l&#248;besving</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Dyr sprint ind-blending</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Dyr sprint-sving</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Dyr sprint-d&#230;mpning</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOn ind-blending</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOn ud-blending</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn System ind-blending</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn System ud-blending</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOn ind-blending</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOn ud-blending</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Frit fald start ind-blending</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Frit fald start ud-blending</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Frit fald ind-blending</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Frit fald ud-blending</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Superspring ind-blending</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Superspring ud-blending</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Rebtr&#230;k ind-blending</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Rebtr&#230;k ud-blending</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Rebsving ind-blending</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Rebsving ud-blending</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Ramt/kastet ind-blending</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Ramt/kastet ud-blending</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Ridedyr LockOn ind-blending</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Ridedyr LockOn ud-blending</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOn ind-blending</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOn ud-blending</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOn ind-blending</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOn ud-blending</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOn ind-blending</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOn ud-blending</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Ikke-roter LockOn ind-blending</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Ikke-roter LockOn ud-blending</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOn ind-blending</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOn ud-blending</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Aggro ind-blending</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Aggro ud-blending</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Wanted ind-blending</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Wanted ud-blending</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Krigsmaskin sigte ind-blending</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Krigsmaskin sigte ud-blending</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Krigsmaskin dash ind-blending</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Krigsmaskin dash ud-blending</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Til-fods drej-f&#248;lgning</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Til-fods stignings-f&#248;lgning</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Til-fods f&#248;lgeforsinkelse</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Til-fods drejepunktd&#230;mpning</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Hest drej-f&#248;lgning</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Hest stignings-f&#248;lgning</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Hest f&#248;lgeforsinkelse</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Hest standard stigning</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Hest ind-blending</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Hest ud-blending</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Hest drejepunktd&#230;mpning</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Hest sving</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Hest svingd&#230;mpning</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Afstand</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} H&#248;jde</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Forskydning</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Sv&#248;mning ZL2 Afstand</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Sv&#248;mning ZL2 H&#248;jde</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Klatring ZL2 Afstand</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Klatring ZL2 H&#248;jde</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glid ZL2 Afstand</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glid ZL2 H&#248;jde</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Frit fald ZL2 Afstand</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Frit fald ZL2 H&#248;jde</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Nulstil</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Anvend p&#229; spil er fjernet fra v3. Brug Eksport&#233;r JSON for at pakke disse tilsides&#230;ttelser.</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Kunne ikke l&#230;se spillets kamerafiler: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Scanning af spilmappe mislykkedes: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>For stor</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Ugyldig</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Mislykkedes</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Kunne ikke verificere kamerafiler: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Advarsel: kunne ikke fuldt ud anvende forudindstilling p&#229; redigeringsprogrammer: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCM-forudindstilling &#8212; duplik&#233;r den for at bruge Fine Tune eller God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCM-forudindstilling &#8212; duplik&#233;r for at justere afstand og h&#248;jde</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCM-forudindstilling &#8212; duplik&#233;r for at oprette en redigerbar kopi</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Forudindstilling er l&#229;st &#8212; l&#229;s h&#230;ngel&#229;sen op for at redigere</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Kontrolleret af Steadycam &#8212; fjern flueben for Steadycam for at justere manuelt</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Hellig -- kontrolleret af God Mode</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Zoom-afstande</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Spilstandard</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM-forudindstillinger</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>F&#230;llesskabsforudindstillinger</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>Mine forudindstillinger</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>Importeret</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Andet</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM-forudindstilling &#8212; duplik&#233;r for at oprette en redigerbar kopi</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>L&#229;st &#8212; klik for at tillade redigering af denne forudindstilling</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Ul&#229;st &#8212; klik for at l&#229;se og forhindre &#230;ndringer</value></data>
+
+  <!-- ═══ Buy Me a Coffee (with emoji prefix) ═══ -->
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>&#9749; K&#248;b mig en kaffe</value></data>
+
+</root>

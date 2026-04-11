@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -82,7 +83,8 @@ public partial class MainWindow : Window
         presetAuthor: expAuthor,
         presetDescription: expDesc,
         presetUrl: expUrl,
-        isRawImport: _sessionIsRawImport);
+        isRawImport: _sessionIsRawImport,
+        getSettingsPayload: () => BuildCurrentPresetSettingsPayload());
         ctrl.OnCloseRequested = () => CloseOverlay();
         _ = ShowOverlayAsync(ctrl, width: 720, height: 750);
     }
@@ -93,7 +95,7 @@ public partial class MainWindow : Window
     {
         if (string.IsNullOrWhiteSpace(_gameDir))
         {
-            SetStatus("Game folder not set.", "Warn");
+            SetStatus(L("Status_GameFolderNotSet"), "Warn");
             return;
         }
 
@@ -109,7 +111,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            SetStatus($"Install failed before write: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_InstallFailedMessage"), ex.Message), "Error");
             return;
         }
 
@@ -117,9 +119,11 @@ public partial class MainWindow : Window
         string platform = _detectedPlatform;
         string activeMode = _activeMode;
         string styleId = GetSelectedStyleId();
+        bool hudEnabled = CenterHudCheck.IsChecked == true;
+        int hudWidth = GetHudWidth();
 
-        SetGlobalBusy(true, "Installing camera to game…");
-        SetStatus("Preparing current session XML…", "Accent");
+        SetGlobalBusy(true, L("Status_InstallingCamera"));
+        SetStatus(L("Status_PreparingSessionXml"), "Accent");
         Task.Run(() =>
         {
             Action<string> log = msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent"));
@@ -127,6 +131,32 @@ public partial class MainWindow : Window
 
             var (beforeEntry, beforeRaw) = CameraMod.ReadCameraEntryWithRawBytes(gameDir);
             Dictionary<string, object> installResult = CameraMod.InstallRawXml(gameDir, xml, log: log);
+
+            // HUD centering (archive 0012, independent from camera)
+            if (hudEnabled)
+            {
+                try
+                {
+                    log(L("Status_InstallingHud"));
+                    HudMod.InstallCenteredHud(gameDir, hudWidth, log);
+                }
+                catch (Exception hudEx)
+                {
+                    log(string.Format(L("Status_HudInstallFailed"), hudEx.Message));
+                }
+            }
+            else if (HudMod.DetectHudModified(gameDir))
+            {
+                try
+                {
+                    log(L("Status_RestoringHud"));
+                    HudMod.RestoreHud(gameDir, log);
+                }
+                catch (Exception hudEx)
+                {
+                    log(string.Format(L("Status_HudRestoreFailed"), hudEx.Message));
+                }
+            }
 
             var (afterEntry, afterRaw) = CameraMod.ReadCameraEntryWithRawBytes(gameDir);
             bool payloadChanged = !beforeRaw.AsSpan().SequenceEqual(afterRaw);
@@ -157,17 +187,17 @@ public partial class MainWindow : Window
                     if (t.IsFaulted)
                     {
                         string message = t.Exception?.GetBaseException().Message ?? "Unknown error";
-                        SetStatus($"Install failed: {message}", "Error");
+                        SetStatus(string.Format(L("Status_InstallFailedMessage"), message), "Error");
                         return;
                     }
 
-                    QueueSavedToast("Installed");
+                    QueueSavedToast(L("Label_Installed"));
                     var (installResult, payloadChanged, tracePath, finalPayloadBytes, finalCompBytes) = t.Result;
                     bool ok = installResult.TryGetValue("status", out var statusObj)
                         && string.Equals(statusObj?.ToString(), "ok", StringComparison.OrdinalIgnoreCase);
                     if (!ok)
                     {
-                        SetStatus("Install completed but returned an unexpected result. Camera may not have been applied correctly — try launching the game to verify.", "Warn");
+                        SetStatus(L("Msg_InstallCompletedUnexpected"), "Warn");
                         return;
                     }
 
@@ -182,8 +212,8 @@ public partial class MainWindow : Window
 
                     SetStatus(
                         payloadChanged
-                            ? $"Installed current session to game. Camera payload updated — {finalPayloadBytes:N0} bytes ({finalCompBytes:N0} compressed in PAZ)."
-                            : $"Install completed; camera entry in PAZ was unchanged ({finalPayloadBytes:N0} bytes payload, {finalCompBytes:N0} compressed).",
+                            ? string.Format(L("Status_InstalledSession"), $"{finalPayloadBytes:N0}", $"{finalCompBytes:N0}")
+                            : string.Format(L("Status_InstalledUnchanged"), $"{finalPayloadBytes:N0}", $"{finalCompBytes:N0}"),
                         payloadChanged ? "Success" : "Warn");
                 });
             });
@@ -195,13 +225,13 @@ public partial class MainWindow : Window
     {
         if (string.IsNullOrWhiteSpace(_gameDir))
         {
-            SetStatus("Game folder not set.", "Warn");
+            SetStatus(L("Status_GameFolderNotSet"), "Warn");
             return;
         }
 
         string gameDir = _gameDir;
-        SetGlobalBusy(true, "Restoring vanilla camera…");
-        SetStatus("Restoring vanilla camera…", "Accent");
+        SetGlobalBusy(true, L("Status_RestoringVanillaCamera"));
+        SetStatus(L("Status_RestoringVanillaCamera"), "Accent");
         Task.Run(() => CameraMod.RestoreCamera(gameDir,
             log: msg => Dispatcher.Invoke(() => SetStatus(msg, "Accent"))))
             .ContinueWith(t =>
@@ -212,7 +242,7 @@ public partial class MainWindow : Window
                     if (t.IsFaulted)
                     {
                         string message = t.Exception?.GetBaseException().Message ?? "Unknown error";
-                        SetStatus($"Restore failed: {message}", "Error");
+                        SetStatus(string.Format(L("Status_RestoreFailedMessage"), message), "Error");
                         return;
                     }
 
@@ -221,18 +251,18 @@ public partial class MainWindow : Window
                     switch (status)
                     {
                         case "ok":
-                            QueueSavedToast("Restored");
-                            SetStatus("Restored vanilla camera from backup.", "Success");
+                            QueueSavedToast(L("Label_Restored"));
+                            SetStatus(L("Status_RestoredVanilla"), "Success");
                             break;
                         case "no_backup":
-                            SetStatus("No backup found. The game camera may already be vanilla.", "Warn");
+                            SetStatus(L("Status_NoBackupMayBeVanilla"), "Warn");
                             break;
                         case "stale_backup":
-                            SetStatus("Game was updated since last install — backup has been refreshed. Verify game files on Steam, then install again.", "Warn");
+                            SetStatus(L("Status_StaleBackupRefreshed"), "Warn");
                             RefreshGameUpdateNotice();
                             break;
                         default:
-                            SetStatus("Restore completed but the result could not be confirmed. Launch the game to check if the camera is back to vanilla.", "Warn");
+                            SetStatus(L("Msg_RestoreCompletedUnconfirmed"), "Warn");
                             break;
                     }
                 });

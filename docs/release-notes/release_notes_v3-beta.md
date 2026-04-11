@@ -3,7 +3,7 @@
 > **Nexus Mods page temporarily unavailable** - The Nexus Mods team is currently reviewing UCM's source code as part of their new-author verification process. This is a routine security check to confirm the mod is safe for the community. The review is in progress and I'm actively working with them. Downloads are available here on GitHub Releases in the meantime. Thank you for your patience!
 
 > **First public beta of Ultimate Camera Mod v3.**
-> Source code: [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
+> Source code: [`main` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/main)
 > Nexus: [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)
 
 ---
@@ -187,7 +187,7 @@ Lock-on `ZoomDistance` values now scale dynamically with your chosen camera dist
 
 ### UCM preset catalog browser
 - UCM style presets are no longer generated locally on startup - they're **downloaded on demand** via the Browse button on the "UCM presets" sidebar header
-- Official presets hosted on the [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev/ucm_presets) with a `catalog.json` manifest
+- Official presets hosted on the [`main` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/main/ucm_presets) with a `catalog.json` manifest
 - **Preset update detection** - background catalog check compares revision numbers. Outdated presets show an update icon in the sidebar
 - Update prompt offers to **duplicate the old version** to My Presets before downloading the update
 
@@ -265,6 +265,16 @@ All major error messages rewritten with clear, actionable guidance:
 
 ---
 
+## New in v3.1.3
+
+### Security hardening
+
+- **Fix path traversal in preset downloads** - Catalog `file` field from remote JSON is now sanitized with `Path.GetFileName()` in all code paths. Previously, the UCM preset browser (`_needsSessionXmlBake`) and background auto-download (`FetchUcmPresetsAsync`) used the raw catalog value directly in `Path.Combine()`, which could write files outside the presets directory if the catalog were compromised
+- **SHA-256 integrity verification on download** - Downloaded preset bytes are now verified against the catalog's `sha256` hash before writing to disk. Mismatched downloads are rejected (community browser shows error, background fetch silently skips)
+- **URL encoding fix** - Community browser download URL now uses `Uri.EscapeDataString()` for the filename component, matching the existing safe pattern in `FetchUcmPresetsAsync`
+
+---
+
 ## Known limitations
 
 - **HUD centering (ultrawide) is temporarily disabled** - a game update added integrity checks that trigger a Coherent Gameface watermark. Will be re-enabled when a workaround is found
@@ -275,6 +285,8 @@ All major error messages rewritten with clear, actionable guidance:
 ## Credits
 
 - **0xFitz** - UCM development, camera tuning, advanced editor, ultrawide HUD support
+- **[@sillib1980](https://github.com/sillib1980)** - Discovered Lock-on Auto-Rotate camera fields
+- **wsres** - Center HUD technique for ultrawide displays
 - **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - C# PAZ/PAMT parser, ChaCha20, LZ4, archive repacker
 - **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** - Pure C# ChaCha20 implementation
 - **@Maszradine** - CDCamera - camera rules, steadycam system, style presets (original Python version)
@@ -283,7 +295,7 @@ All major error messages rewritten with clear, actionable guidance:
 
 ---
 
-**Source:** [`v3-dev` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/v3-dev)
+**Source:** [`main` branch](https://github.com/FitzDegenhub/UltimateCameraMod/tree/main)
 **Nexus:** [Ultimate Camera Mod](https://www.nexusmods.com/crimsondesert/mods/438)
 **VirusTotal:** [v3.0.1 - Clean (0/72)](https://www.virustotal.com/gui/file/7d5292e9557c9122b89b72680b021aeb975746dc46b08f21c987745034c0dc51)
 **Support:** [Ko-fi](https://ko-fi.com/0xfitz)

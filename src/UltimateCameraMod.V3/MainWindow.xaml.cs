@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -26,11 +27,37 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.1.2";
+    private const string Ver = "3.2";
+
+    private static string L(string key) => TranslationSource.Instance[key];
+
+    private static string LanguagePath => Path.Combine(ExeDir, "ucm_language.json");
+
+    private static readonly Dictionary<string, string> LangNativeNames = new()
+    {
+        ["en"] = "English",
+        ["ko"] = "\ud55c\uad6d\uc5b4",
+        ["ja"] = "\u65e5\u672c\u8a9e",
+        ["zh-CN"] = "\u4e2d\u6587(\u7b80\u4f53)",
+        ["zh-Hant"] = "\u4e2d\u6587(\u7e41\u9ad4)",
+        ["th"] = "\u0e44\u0e17\u0e22",
+        ["id"] = "Indonesia",
+        ["tr"] = "T\u00fcrk\u00e7e",
+        ["pl"] = "Polski",
+        ["it"] = "Italiano",
+        ["sv"] = "Svenska",
+        ["nb"] = "Norsk",
+        ["da"] = "Dansk",
+        ["fi"] = "Suomi",
+        ["de"] = "Deutsch",
+        ["fr"] = "Fran\u00e7ais",
+        ["es"] = "Espa\u00f1ol",
+        ["pt-BR"] = "Portugu\u00eas",
+        ["ru"] = "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+    };
 
     /// <summary>UCM Quick horizontal shift help when Centered camera is off (keep in sync with HShiftTip default in XAML).</summary>
-    private const string HShiftTipUnlocked =
-        "Left/right framing as a delta on RightOffset (on foot, mounts, aim, and related rows). 0 matches vanilla side bias. Increase toward ~0.5 to pull toward geometric center in the file; negative values bias further left. Matches the top-down FoV preview. Centered camera below is separate: it locks this slider to 0 and applies stronger centering.";
+    private static string HShiftTipUnlocked => L("Help_HShiftTipUnlocked");
     private const string LegacyPresetsDirName = "presets";
     private const string UcmPresetsDirName = "ucm_presets";
     private const string MyPresetsDirName = "my_presets";
@@ -86,7 +113,7 @@ public partial class MainWindow : Window
     private bool _taskbarIconActivatedDone;
     private bool _shellTaskbarPropertyStoreApplied;
 
-    // â”€â”€ Mode state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Mode state â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
     private string _activeMode = "simple";
     private bool _isExpertMode;
     private bool _advCtrlNeedsRefresh;
@@ -97,7 +124,7 @@ public partial class MainWindow : Window
     private List<AdvancedRow> _advAllRows = new();
     private bool _sacredToastShown;
 
-    // â”€â”€ JSON Mod Manager state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ JSON Mod Manager state â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
     private List<JsonModExporter.PatchChange>? _jsonLastPatches;
     private string? _jsonLastJson;
     private ImportedPreset? _selectedImportedPreset;
@@ -199,7 +226,7 @@ public partial class MainWindow : Window
 
     private static bool _legacyPresetFoldersMigrated;
     private static bool _importPresetsFolderMigrated;
-    // â”€â”€ Style/FoV/Combat data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Style/FoV/Combat data â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     private static readonly (string Id, string Label)[] Styles =
     {
@@ -237,9 +264,69 @@ public partial class MainWindow : Window
         ["survival"] = (3.0, 0.0, 0.7),
     };
 
-    // â”€â”€ Constructor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Constructor â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     private static string WindowStatePath => Path.Combine(ExeDir, "window_state.json");
+
+    private void LoadSavedLanguage()
+    {
+        try
+        {
+            if (!File.Exists(LanguagePath)) return;
+            string json = File.ReadAllText(LanguagePath);
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("culture", out var cEl) && cEl.ValueKind == JsonValueKind.String)
+            {
+                string code = cEl.GetString() ?? "en";
+                TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(code);
+            }
+        }
+        catch { }
+    }
+
+    private void InitLanguageSelector()
+    {
+        if (LanguageCombo == null) return;
+        string currentCode = TranslationSource.Instance.CurrentCulture.Name;
+        if (string.IsNullOrEmpty(currentCode)) currentCode = "en";
+
+        LanguageCombo.Items.Clear();
+        int selectedIdx = 0;
+        int idx = 0;
+        foreach (var lang in TranslationSource.AvailableLanguages)
+        {
+            string code = lang.Name;
+            string native = LangNativeNames.TryGetValue(code, out string? n) ? n : code;
+            LanguageCombo.Items.Add(new ComboBoxItem { Content = native, Tag = code });
+            if (string.Equals(code, currentCode, StringComparison.OrdinalIgnoreCase))
+                selectedIdx = idx;
+            idx++;
+        }
+        LanguageCombo.SelectedIndex = selectedIdx;
+        LanguageCombo.SelectionChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (LanguageCombo.SelectedItem is not ComboBoxItem item || item.Tag is not string code) return;
+        TranslationSource.Instance.CurrentCulture = new System.Globalization.CultureInfo(code);
+        try
+        {
+            string json = JsonSerializer.Serialize(new { culture = code });
+            File.WriteAllText(LanguagePath, json);
+        }
+        catch { }
+        _presetCatalogFingerprint = null;
+        RefreshPresetManagerLists(preserveSelection: true);
+
+        // Re-set status bar text for the current mode
+        SetStatus(_activeMode switch
+        {
+            "advanced" => L("Status_FineTuneMode"),
+            "expert" => L("Status_GodModeMode"),
+            _ => L("Status_UcmQuickMode")
+        }, "TextDim");
+    }
 
     public MainWindow()
     {
@@ -247,7 +334,9 @@ public partial class MainWindow : Window
         System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
         System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
+        LoadSavedLanguage();
         InitializeComponent();
+        InitLanguageSelector();
 
         // WPF applies Window.Icon after HWND creation and can overwrite WM_SETICON; re-apply on later dispatcher phases.
         SourceInitialized += (_, _) =>
@@ -483,8 +572,8 @@ public partial class MainWindow : Window
 
             if (string.IsNullOrEmpty(_gameDir))
             {
-                GamePathLabel.Text = "Game folder:  not detected (optional for browsing presets)";
-                SetStatus("Game not detected. Browse presets and edit settings — set game folder to enable JSON export.", "Warn");
+                GamePathLabel.Text = L("GamePath_NotSet");
+                SetStatus(L("Status_GameFolderNotSetBrowse"), "Warn");
             }
             else
             {
@@ -537,14 +626,8 @@ public partial class MainWindow : Window
                     try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        _ = ShowAlertOverlayAsync("Updated to v" + Ver,
-                            "Welcome back! UCM has been updated.\n\n" +
-                            "What's new:\n" +
-                            "- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds\n" +
-                            "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
-                            "- Green indicators for sacred values in God Mode\n" +
-                            "- Fix: sacred values now correctly included in Install and all exports\n\n" +
-                            "Your presets and settings have been preserved.");
+                        _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedTitle"), Ver),
+                            L("Dlg_UpdatedBody"));
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
                 else
@@ -561,22 +644,17 @@ public partial class MainWindow : Window
                 // Existing user upgrading between versions (e.g. v3.0.2 -> v3.1)
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string fromText = string.IsNullOrEmpty(savedVersion) ? "" : " from v" + savedVersion;
-                    _ = ShowAlertOverlayAsync("Updated to v" + Ver,
-                        "Welcome back! UCM has been updated" + fromText + ".\n\n" +
-                        "What's new:\n" +
-                        "- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds\n" +
-                        "- Lock-on Auto-Rotate toggle (credits to @sillib1980)\n" +
-                        "- Green indicators for sacred values in God Mode\n" +
-                        "- Fix: sacred values now correctly included in Install and all exports\n\n" +
-                        "Your presets and settings have been preserved.");
+                    _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedTitle"), Ver),
+                        string.IsNullOrEmpty(savedVersion)
+                            ? L("Dlg_UpdatedBody")
+                            : string.Format(L("Dlg_UpdatedBodyFrom"), savedVersion));
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
             // Users can click Browse to download UCM presets when ready
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("Startup Error", $"{ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Title_Error"), $"{ex.Message}", isError: true);
         }
     }
     private void ShowWelcomeVerifyScreen()
@@ -600,7 +678,7 @@ public partial class MainWindow : Window
         // Title
         var titleBlock = new TextBlock
         {
-            Text = "Welcome to Ultimate Camera Mod",
+            Text = L("Dlg_WelcomeTitle"),
             FontSize = 20, FontWeight = FontWeights.Bold,
             Foreground = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
             Margin = new Thickness(0, 0, 0, 14)
@@ -609,12 +687,7 @@ public partial class MainWindow : Window
         // Description
         var descBlock = new TextBlock
         {
-            Text = "Before getting started, UCM needs your game files to be unmodified (vanilla) " +
-                   "so it can create a clean baseline backup.\n\n" +
-                   "If you previously used UCM v2.x, another camera mod, or a mod manager " +
-                   "that modified game files, please verify first:\n\n" +
-                   "Steam \u2192 Crimson Desert \u2192 Properties \u2192 Installed Files \u2192 \"Verify integrity of game files\"\n\n" +
-                   "Have you verified your game files?",
+            Text = L("Dlg_WelcomeBody"),
             FontSize = 13, TextWrapping = TextWrapping.Wrap,
             Foreground = new SolidColorBrush(Color.FromRgb(0xE0, 0xE0, 0xE0)),
             LineHeight = 20,
@@ -624,7 +697,7 @@ public partial class MainWindow : Window
         // Yes button (gold, matching tutorial Next button)
         var yesBtn = new Button
         {
-            Content = "Yes, continue",
+            Content = L("Btn_YesContinue"),
             Width = 130, Height = 36, FontSize = 13, FontWeight = FontWeights.SemiBold,
             Background = new SolidColorBrush(Color.FromRgb(0xC8, 0xA2, 0x4E)),
             Foreground = new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A)),
@@ -635,7 +708,7 @@ public partial class MainWindow : Window
         // No button (subtle, matching tutorial Skip button)
         var noBtn = new Button
         {
-            Content = "No, close UCM",
+            Content = L("Btn_NoCloseUcm"),
             Width = 120, Height = 36, FontSize = 12,
             Background = Brushes.Transparent,
             Foreground = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88)),
@@ -717,28 +790,28 @@ public partial class MainWindow : Window
     {
         var steps = new List<TutorialOverlay.TutorialStep>
         {
-            new("Your Presets",
-                "This is your preset sidebar. Click Browse to download official UCM presets and community presets. Your own presets and imports also appear here. Click any preset to load it.",
+            new(L("Tutorial_Step1Title"),
+                L("Tutorial_Step1Desc"),
                 () => PresetRailList),
 
-            new("Three Editing Tiers",
-                "UCM Quick for fast changes, Fine Tune for deep control over every camera state, and God Mode for raw XML editing. Changes sync across all three tiers automatically.",
+            new(L("Tutorial_Step2Title"),
+                L("Tutorial_Step2Desc"),
                 () => EditorTabBar),
 
-            new("Camera Settings",
-                "Adjust camera distance, height, horizontal shift, field of view, lock-on zoom, and camera behaviour. The live preview updates as you tweak.",
+            new(L("Tutorial_Step3Title"),
+                L("Tutorial_Step3Desc"),
                 () => SettingsPanel),
 
-            new("Live Preview",
-                "The camera preview shows character framing and distance. The field of view diagram shows the FoV cone from above. Both update in real time as you adjust settings.",
+            new(L("Tutorial_Step4Title"),
+                L("Tutorial_Step4Desc"),
                 () => PreviewsPanel),
 
-            new("Export & Install",
-                "Export your settings as JSON for mod managers, XML, 0.paz, or .ucmpreset to share with others. Or click Install to Game to apply directly to your game files.",
+            new(L("Tutorial_Step5Title"),
+                L("Tutorial_Step5Desc"),
                 () => SidebarActionButtons),
 
-            new("One More Thing...",
-                "I've dedicated way too much time to this project. If UCM saved you hours of camera frustration, consider buying me a coffee. Or don't. I'll keep making it anyway. But coffee helps.",
+            new(L("Tutorial_Step6Title"),
+                L("Tutorial_Step6Desc"),
                 () => KofiBtn)
         };
 
@@ -774,7 +847,7 @@ public partial class MainWindow : Window
         {
             using var dlg = new System.Windows.Forms.FolderBrowserDialog
             {
-                Description = "Select Crimson Desert folder (contains the '0010' folder)",
+                Description = L("Dlg_BrowseGameFolder"),
                 UseDescriptionForTitle = true
             };
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -783,13 +856,12 @@ public partial class MainWindow : Window
                 if (File.Exists(Path.Combine(folder, "0010", "0.paz")))
                     return folder;
 
-                _ = ShowAlertOverlayAsync("Wrong Folder",
-                    "That folder doesn't contain 0010\\0.paz.\nMake sure you selected the correct Crimson Desert directory.");
+                _ = ShowAlertOverlayAsync(L("Msg_WrongFolderTitle"), L("Msg_WrongFolder"));
             }
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("Error", $"Folder dialog error: {ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Msg_ErrorTitle"), string.Format(L("Msg_FolderDialogError"), ex.Message), isError: true);
         }
         return "";
     }
@@ -820,6 +892,7 @@ public partial class MainWindow : Window
 
         string backupsDir = Path.Combine(ExeDir, "backups");
         CameraMod.BackupsDirOverride = () => backupsDir;
+        HudMod.BackupsDirOverride = () => backupsDir;
         CameraMod.AppVersion = Ver;
 
         CleanStaleData(backupsDir);
@@ -829,16 +902,12 @@ public partial class MainWindow : Window
         if (pt.Length > 55) pt = "..." + pt[^52..];
 
         string platformTag = _detectedPlatform != "Unknown" ? $" [{_detectedPlatform}]" : "";
-        GamePathLabel.Text = $"Game folder:  {pt}{platformTag}";
+        GamePathLabel.Text = string.Format(L("GamePath_Display"), pt, platformTag);
 
         if (_detectedPlatform == "Xbox/GamePass" && !GameDetector.CheckWritePermission(_gameDir))
         {
-            SetStatus("Xbox/Game Pass: game folder is read-only. Move the game or fix folder permissions.", "Warn");
-            _ = ShowAlertOverlayAsync("Write Permission Required",
-                "Xbox / Game Pass game folder appears to be read-only.\n\n" +
-                "To fix this, try one of:\n" +
-                "1. Xbox App \u2192 Crimson Desert \u2192 Manage \u2192 Move to a different drive\n" +
-                "2. Right-click the game folder \u2192 Properties \u2192 uncheck \"Read-only\" \u2192 Apply to all subfolders");
+            SetStatus(L("Status_XboxReadOnly"), "Warn");
+            _ = ShowAlertOverlayAsync(L("Msg_XboxReadOnlyTitle"), L("Msg_XboxReadOnly"));
         }
 
         CheckForUpdate();
@@ -879,7 +948,7 @@ public partial class MainWindow : Window
             catch (Exception ex)
             {
                 await Dispatcher.InvokeAsync(() =>
-                    SetStatus($"Could not read game camera files: {ex.Message}", "Error"));
+                    SetStatus(string.Format(L("Status_CouldNotReadGameFiles"), ex.Message), "Error"));
                 return;
             }
 
@@ -900,7 +969,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             await Dispatcher.InvokeAsync(() =>
-                SetStatus($"Game folder scan failed: {ex.Message}", "Error"));
+                SetStatus(string.Format(L("Status_GameFolderScanFailed"), ex.Message), "Error"));
         }
         finally
         {
@@ -1005,7 +1074,7 @@ public partial class MainWindow : Window
                 if (File.Exists(StatePath))
                     File.Delete(StatePath);
                 GameInstallBaselineTracker.Delete(ExeDir);
-                SetStatus($"Upgraded from v{savedVer}. Old backup cleared.", "Warn");
+                SetStatus(string.Format(L("Status_CleanedOldData"), savedVer), "Warn");
             }
         }
         catch { }
@@ -1037,7 +1106,7 @@ public partial class MainWindow : Window
             return je.ValueKind == JsonValueKind.String ? je.GetString() : null;
         return v.ToString();
     }
-    // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // â"€â"€ Helpers â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
     private void SetStatus(string text, string brushKey)
     {
@@ -1056,12 +1125,12 @@ public partial class MainWindow : Window
     {
         _ = enabled;
     }
-    private void QueueSavedToast(string text = "Saved", bool isError = false)
+    private void QueueSavedToast(string? text = null, bool isError = false)
     {
         if (!IsLoaded || _suppressEvents || _saveToastDelayTimer == null || _saveToastHideTimer == null)
             return;
 
-        _pendingSaveToastText = text;
+        _pendingSaveToastText = text ?? L("Label_Saved");
         _pendingSaveToastIsError = isError;
         _saveToastHideTimer.Stop();
         _saveToastDelayTimer.Stop();
@@ -1120,7 +1189,23 @@ public partial class MainWindow : Window
     private void OnOpenGameFolder(object s, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(_gameDir) && Directory.Exists(_gameDir))
+        {
             Process.Start(new ProcessStartInfo(_gameDir) { UseShellExecute = true });
+            return;
+        }
+
+        // Game not detected — let the user browse for it manually
+        string picked = BrowseForGameDir();
+        if (string.IsNullOrEmpty(picked)) return;
+
+        _gameDir = picked;
+        _detectedPlatform = "Manual";
+        OnGameDirResolved();
+        MigrateJsonToUcmPreset(UcmPresetsDir);
+        MigrateJsonToUcmPreset(MyPresetsDir);
+        GenerateBuiltInPresets();
+        RefreshPresetManagerLists(preserveSelection: false);
+        SetStatus(L("Status_Ready"), "OK");
     }
     private static int GetInt(Dictionary<string, object>? dict, string key, int def = 0)
     {

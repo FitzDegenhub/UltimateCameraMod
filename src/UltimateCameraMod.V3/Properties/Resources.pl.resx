@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>Zaawansowane ustawienia kamery</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>Importuj tekst ustawien zaawansowanych</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>Eksportuj tekst presetu</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>Importuj tekst presetu</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>Importuj preset</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>Dane wejsciowe</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - Blad</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>EKSPORT DO UDOSTEPNIENIA</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>PRESETY SPOLECZNOSCI</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>PRESETY UCM</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>Szczegoly presetu</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>Wybierz typ presetu</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Import surowego XML</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>Folder gry nie ustawiony</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>Blad God Mode</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Blad Fine Tune</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>Aktualizacja presetu</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>Wykryto aktualizacje gry</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>Pliki gry zostaly zmodyfikowane</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM Fatal</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>Import PAZ nie powiodl sie</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>Importuj nadpisania God Mode</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>Nadpisania God Mode</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>Zastosuj w grze</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>Usun</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>Eksportuj</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>Importuj</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>Zainstaluj</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>Zainstaluj w grze</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>Przywroc vanilla</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>Przywroc</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>Zamknij UCM</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>Anuluj</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>Tak</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>Nie</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>Pobierz aktualizacje</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>Kopiuj do schowka</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>Skopiowano!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>Eksportuj tekst</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>Importuj tekst</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>Zapisz preset</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>Usun preset</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>Eksportuj XML</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>Importuj XML</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>Przywroc domyslne</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>Przywroc vanilla</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>Wczytaj z Simple</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>Rozwin wszystko</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>Zwin wszystko</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>Generuj z biezacych ustawien</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>Generuj z pliku XML...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>Zapisz .json...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>Importuj &amp; Zapisz</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>Eksportuj tekst</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>Importuj tekst</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>Postaw mi kawe</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>Przywroc domyslne</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>Nowy</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>Duplikuj</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>Zmien nazwe</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>Otworz</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>Cofnij</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>Ponow</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>Odswiez</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>Pobierz</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>Pobrano</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>Pobieranie...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>Utworz</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>Nadpisz</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>Przygotuj eksport</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>Zapisz eksport...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>Zapisz .json...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>Zapisz .xml...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>Zapisz 0.paz...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>Zapisz .ucmpreset...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>Przegladaj</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>Rozumiem</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>Odloz na 7 dni</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>Odloz 7d</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>Odrzuc</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>Otworz tylko do odczytu</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>Tak, najpierw zrob kopie</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>Nie, po prostu zaktualizuj</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>Usun zmodyfikowany 0.paz</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>Usunieto</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>Wyczysc</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>Resetuj</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>Dalej</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>Rozpocznij</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>Pomin samouczek</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Zobacz na Nexus</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>Presety</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>Wlasne</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM Quick</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>Fine Tune</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>Prosty</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>Zaawansowany</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>Ekspert</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod Mgr</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>Odleglosc</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>Wysokosc</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>Przesuniecie poziome</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>Pole widzenia</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>Kamera walki</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>Kamera wycentrowana</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>Kamera wierzchowca</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>Steadycam</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>Styl kamery</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>Zapisany preset</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>Preset</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>Tytul</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>Wersja</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>Autor</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>Autor (opcjonalnie)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>URL Nexus</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>Opis</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>Opis (opcjonalnie)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / itp. (opcjonalnie)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>Folder gry:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> regionow patcha</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> bajtow zmienionych</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> regionow</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>AKTYWNY</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>Wersja robocza</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>Twoja kopia robocza do momentu zapisania nazwanego presetu.</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>Format</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Info o modzie &amp; nazwa pliku</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>Przygotuj eksport</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>Nazwa</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>Nazwa *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>Szukaj</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>Zoom lock-on</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>Auto-obrot lock-on</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>Wycentruj HUD</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>Strefa bezpieczna</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>Przetwarzanie...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>Zapisano</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>Zainstalowano</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>Przywrocono</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>Cofnieto</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>LUB</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>STYL KAMERY</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>USTAWIENIA GLOBALNE</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>UDOSTEPNIJ</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>PODGLAD KAMERY</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>POLE WIDZENIA</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>KONTROLKI ZAAWANSOWANE</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>ZAAWANSOWANE USTAWIENIA KAMERY</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>JAK TO DZIALA</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>KROK 1  —  NAZWIJ SWOJEGO MODA</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>KROK 2  —  WYGENERUJ PATCH</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>KROK 3  —  ZAPISZ PLIK</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>PRESETY</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM QUICK</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>WLASNE PRZESUNIECIA</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>WYCENTRUJ HUD</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>SEKCJA</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>PODELEMENT</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>ATRYBUT</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>WARTOSC</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>VANILLA</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  Poziomy zoomu pieszego</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  Poziomy zoomu konia / wierzchowca</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  Walka / Lock-On</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  Wygladzanie kamery / Steadycam</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  Celowanie / Pozycja celownika</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - Poziomy zoomu pieszego</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - Poziomy zoomu konia / wierzchowca</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - Globalne / Pokrycie FoV</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - Wierzchowce specjalne / Przemieszczanie</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - Walka / Lock-On</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - Wygladzanie kamery / Steadycam</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - Celowanie / Pozycja celownika</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>Wycentruj postac na ekranie (blokuje przesuniecie poziome na 0)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>Wycentruj postac na ekranie</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>Dopasuj wysokosc wierzchowca/konia do wysokosci kamery gracza</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>Plynne przejscia kamery (eliminuje drgania zoomu miedzy stanami)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>Wylacz przyciaganie kamery do celu przy lock-on  --  Autor: @sillib1980</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>Wycentruj HUD rozgrywki w maksymalnej szerokosci</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - menedzery modow</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Pakiet menedzera modow (folder)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>Plik XML kamery (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>Archiwum PAZ (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>Patch JSON z JSON Mod Manager lub CDUMM</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>Plik playercamerapreset.xml</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>Plik .paz gry z danymi kamery</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>Plik presetu UCM od innego uzytkownika</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>Zarzadzany przez UCM</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(Zalecane)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>Pelna kontrola reczna</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>Presety UCM</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>Presety spolecznosci</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>Moje presety</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>Zaimportowane</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>Domyslny</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>Styl UCM</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>Spolecznosc</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>Moj preset</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>Zaimportowany XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>Zaimportowany 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Pakiet modow</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>Bialy = vanilla</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>Zloty = zmodyfikowany przez UCM Quick/Fine Tune</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>Zielony = swiety (Twoje edycje God Mode, chronione przed przebudowa)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>Gotowy</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>sprawdzanie...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>aktualny</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>offline</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>Instalowanie...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>Zainstalowano! Uruchom gre.</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>Przywracanie vanilla...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>Vanilla przywrocona.</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>Stosowanie...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>Zastosowano {0} zmian w plikach gry.</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>Preset '{0}' wczytany.</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>Preset '{0}' zapisany.</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>Preset '{0}' usuniety.</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>Preset '{0}' wyeksportowany.</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>Preset '{0}' zaktualizowany.</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>Zaimportowano '{0}' i zapisano — kliknij Zainstaluj aby zastosowac.</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>Wyeksportowano {0} zmodyfikowanych wartosci.</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>Zaimportowano {0} wartosci.</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>Wyeksportowano do {0}.</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>Zainstalowano {0} w grze.</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>Zaimportowano {0} wartosci z {1}.</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>Wczytano — edytuj wartosci i kliknij Zastosuj w grze.</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>Zresetowano do domyslnych (Twoj preset + vanilla).</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>Zresetowano do domyslnych UCM Quick plus vanilla.</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>Brak zmian do zastosowania.</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>Brak zmodyfikowanych wartosci do eksportu.</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>Brak zmodyfikowanych wartosci do zapisania.</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>Najpierw wybierz zapisany preset.</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>Najpierw wybierz zaimportowany preset.</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>Folder gry nie ustawiony.</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>Nie wybrano folderu gry.</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>Instalacja nie powiodla sie. Czy gra jest uruchomiona?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>Instalacja nie powiodla sie: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>Nie znaleziono kopii zapasowej. Kamera moze juz byc vanilla.</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>Kopia zapasowa ze starej wersji. Zweryfikuj pliki gry.</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>Przywracanie nie powiodlo sie. Zweryfikuj pliki gry.</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>Przywracanie nie powiodlo sie: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>Przywrocono kamere vanilla z kopii zapasowej.</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>Nie znaleziono kopii zapasowej. Kamera gry moze juz byc vanilla.</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>Gra zostala zaktualizowana od ostatniej instalacji — kopia zapasowa zostala odswiezona. Zweryfikuj pliki gry w Steam, a nastepnie zainstaluj ponownie.</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} dostepna</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>Kontrolki zaawansowane — prowadzone dostrajanie kamery po parametrach.</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>Tryb eksperta — edytuj surowe wartosci XML i kliknij Zastosuj w grze.</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod Manager — generuj pliki patchy Crimson Desert Mod Manager v8.</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>Generowanie patchy...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>Wygenerowano {0} regionow patcha. Kliknij Zapisz .json aby wyeksportowac.</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>Zapisano {0} ({1} patchy).</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>Najpierw wygeneruj patch.</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>Eksport JSON wymaga najpierw plikow kamery vanilla.</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>Wartosci wczytane z trybu Simple.</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>Wszystkie kontrolki zaawansowane zresetowane do vanilla.</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>Wczytano preset '{0}' ({1} nadpisan).</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>Zaawansowany preset '{0}' zapisany ({1} nadpisan).</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>Zaawansowany preset '{0}' usuniety.</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>Zastosowano {0} zmian kontrolek zaawansowanych w grze.</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>Wyczyszczono stare dane v{0}. Kliknij Zainstaluj aby zastosowac swoje ustawienia.</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>Folder gry nie ustawiony. Kliknij Zainstaluj i zostaniesz poproszony o przegladanie.</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: folder gry jest tylko do odczytu. Przenies gre lub napraw uprawnienia folderu.</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} wierszy wyswietlonych  |  {1} zmodyfikowanych</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} wierszy  |  {1} zmodyfikowanych</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} wierszy  |  {1} zmodyfikowanych  |  {2} swietych</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} zmian</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — szerokie ksztaltowanie kamery z podgladem i typowymi kontrolkami.</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — precyzyjne dostrajanie nakladane na UCM Quick.</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — edytuj surowe wartosci XML i eksportuj jako JSON.</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>Edycja swieta: ta wartosc jest teraz chroniona przed przebudowa Quick/Fine Tune.</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>Odblokuj ten preset na pasku bocznym aby zresetowac wartosci God Mode.</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>Biezaca sesja zainstalowana w grze. Dane kamery zaktualizowane — {0} bajtow ({1} skompresowanych w PAZ).</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>Instalacja zakonczona; wpis kamery w PAZ nie zmienil sie ({0} bajtow danych, {1} skompresowanych).</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>Instalowanie kamery w grze...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>Przygotowywanie biezacego XML sesji...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>Instalowanie centrowania HUD...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>Przywracanie vanilla HUD...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>Przywracanie vanilla kamery...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>Pobieranie nie powiodlo sie: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>Aktualizacja nie powiodla sie: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>Import nie powiodl sie: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>Eksport nie powiodl sie: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>Usuwanie nie powiodlo sie: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>Wczytywanie nie powiodlo sie: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>Reset nie powiodl sie: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>Przygotowanie nie powiodlo sie: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>Zapisywanie nie powiodlo sie: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>Instalacja HUD nie powiodla sie: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>Przywracanie HUD nie powiodlo sie: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>Import XML nie powiodl sie: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>Import 0.paz nie powiodl sie: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>Nie znaleziono manifest.json w tym folderze.</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Nie znaleziono playercamerapreset.xml w pakiecie modow.</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>Ten plik nie wyglada na preset UCM (nie znaleziono session_xml).</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>Pobieranie katalogu...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>Pobieranie katalogu spolecznosci...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} presetow dostepnych, {1} pobranych</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>Brak dostepnych presetow spolecznosci.
+
+Sprawdz pozniej lub dodaj wlasne!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>Gotowe do zapisu. Kliknij Zapisz gdy bedziesz gotowy.</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>Najpierw przygotuj eksport.</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>Brak dostepnego XML sesji. Najpierw edytuj ustawienia lub wczytaj preset.</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>XML sesji jest pusty.</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Walidacja kodowania dla tej gry...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>Zapisywanie archiwum (kopia + patch)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>Deszyfrowanie 0.paz...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Eksportowanie XML kamery...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Instalowanie XML kamery...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>Zapisano {0}.</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>Zapisano {0} ({1} patchy).</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>Zaimportowany preset '{0}' zapisany z {1} wartosciami.</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Pakiet modow zaimportowany jako '{0}'.</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>Zaimportowano '{0}' z {1} wartosciami.</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>0.paz zaimportowany jako '{0}'.</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>UCM preset '{0}' zaimportowany.</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Zaimportowany preset '{0}' usuniety.</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Zaimportowany preset '{0}' wczytany do God Mode.</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>Kopia zapasowa kamery zostala odswiezona z biezacych plikow gry. Uzyj Zainstaluj gdy bedziesz gotowy ponownie zastosowac preset.</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>Nie udalo sie automatycznie odswiezyc kopii zapasowej kamery. Jesli kamera jest nadal zmodyfikowana, zweryfikuj pliki gry w Steam i uruchom ponownie UCM.</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>Tylko zaimportowany - jeszcze nie przebudowany dla tej gry.</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>Zapisany preset gotowy - ustaw folder gry aby sprawdzic status przebudowy.</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>Gotowy - juz przebudowany dla tej wersji gry.</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>Wymaga przebudowy - biezaca wersja gry rozni sie od ostatniej budowy.</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>Ten folder nie zawiera 0010\0.paz.
+Upewnij sie, ze wybrales wlasciwy katalog Crimson Desert.</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>Zly folder</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>Najpierw ustaw folder gry (kliknij Zainstaluj aby przegladac).</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>Nadpisac preset '{0}' biezacymi wartosciami suwakow?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>Nadpisz preset</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>Nadpisac zaawansowany preset '{0}' biezacymi wartosciami?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Folder gry Xbox / Game Pass wyglada na tylko do odczytu.
+
+Aby to naprawic, sprobuj:
+  1. Aplikacja Xbox → Crimson Desert → Zarzadzaj → Przenies na inny dysk
+  2. Kliknij prawym folder gry → Wlasciwosci → odznacz "Tylko do odczytu" → Zastosuj do wszystkich podfolderow</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>Wymagane uprawnienia do zapisu</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>Zainstalowac '{0}' bezposrednio w grze?
+
+To nadpisze biezace ustawienia kamery.</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>Import XML</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>Dane kamery w folderze gry nie pasuja do kopii zapasowej vanilla UCM.
+
+Patche JSON dla zewnetrznych menedzerow modow musza uzywac oryginalnych bajtow vanilla. Zweryfikuj gre w Steam (lub cofnij zmiany kamery w menedzerze modow), a nastepnie sprobuj ponownie.</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>Nie mozna wyeksportowac JSON</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>Nieobsluzony blad:
+
+{0}
+
+Pelne szczegoly zapisano w crash.log</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>Blad uruchamiania:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>Crash przy uruchamianiu:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>Nie udalo sie wczytac XML kamery:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>Edytor zaawansowany</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>Edytor eksperta</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>Kontrolki zaawansowane</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>Blad okna dialogowego folderu: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>Blad</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>Preset o tej nazwie juz istnieje. Nadpisac?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>Czy na pewno? Tego nie mozna cofnac.</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>Dostepna aktualizacja dla '{0}'.
+
+Czy chcesz zapisac kopie biezacej wersji w Moich presetach przed aktualizacja?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>Ten preset zostal zaimportowany jako surowy XML i nie jest zarzadzany przez UCM.
+
+UCM Quick i Fine Tune uzywaja systemu regul kamery UCM, ktory nadpisalby wartosci z zaimportowanego moda. Aby chronic Twoj import, dostepna jest tylko edycja God Mode.
+
+Aby korzystac z funkcji UCM takich jak Steadycam i kontrola FoV, utworz nowy preset UCM z paska bocznego.</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune i God Mode wymagaja folderu gry do odczytu danych kamery. Najpierw ustaw folder gry.</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>Presety UCM sa chronione. Zmiany {0} moga uszkodzic starannie dostrojone wartosci.
+
+Najpierw zduplikuj ten preset aby utworzyc edytowalna kopie, a nastepnie swobodnie uzywaj Fine Tune lub God Mode.
+
+Otworzyc {0} w trybie tylko do odczytu? (Mozesz przegladac wartosci, ale zmiany nie zostana zapisane.)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>Pliki kamery gry zostaly zmodyfikowane przez UCM v2.x, inny mod kamery lub menedzer modow. UCM potrzebuje oryginalnych plikow vanilla aby utworzyc czysta kopie zapasowa.
+
+Kliknij przycisk ponizej aby usunac zmodyfikowany plik, a nastepnie zweryfikuj w Steam aby ponownie pobrac oryginal.</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz usuniety. Teraz:
+1. Zamknij UCM
+2. Steam → Crimson Desert → Wlasciwosci → Zainstalowane pliki → "Weryfikacja integralnosci plikow gry"
+3. Uruchom ponownie UCM po zakonczeniu weryfikacji</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>Nie mozna usunac: {0}
+Usun recznie: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>Nie znaleziono pasujacego 0.pamt obok wybranego 0.paz. Ustaw folder gry aby v3 mogl uzyc biezacego 0010\0.pamt jako indeksu archiwum.</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>Folder gry nie ustawiony. v3 potrzebuje biezacej gry aby bezpiecznie przebudowac ten preset.</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>Nie udalo sie zduplikowac: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>Eksport JSON wymaga plikow kamery vanilla (zweryfikuj gre, potem sprobuj ponownie).</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>Instalacja zakonczona, ale zwrocila nieoczekiwany wynik. Kamera mogla nie zostac zastosowana prawidlowo — sprobuj uruchomic gre aby zweryfikowac.</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>Przywracanie zakonczone, ale wynik nie mogl byc potwierdzony. Uruchom gre aby sprawdzic czy kamera wrocila do vanilla.</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>Otworz folder gry (lub przegladaj aby ustawic recznie)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>Wygladzanie blendingu, tlumienia i offsetow predkosci miedzy stanami ruchu. Wylacz aby przywrocic vanilla przejscia kamery.</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Otwiera Ko-fi — datki pomagaja utrzymac UCM</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>Zapisz biezacy XML kamery do pliku</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>Zainstaluj plik XML kamery bezposrednio w grze</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>Wypelnij wszystkie suwaki z biezacych ustawien trybu Simple</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>Zresetuj wszystkie suwaki do wartosci vanilla XML</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>Wczytaj wartosci z pliku playercamerapreset.xml</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>Uzywa aktualnej konfiguracji z trybu Simple</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>Wybierz plik playercamerapreset.xml do porownania z vanilla</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>Importuj XML kamery lub archiwum PAZ jako preset</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>Udostepnij jako JSON (Mod Manager), XML sesji lub zpatchowany 0.paz — uzywa biezacej sesji UCM.</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>Przywroc oryginalny blok kamery z kopii zapasowej UCM.</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>Zastosuj biezaca sesje UCM bezposrednio w plikach gry.</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>Cofnij ostatnia zmiane suwaka</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>Wybierz folder zawierajacy manifest.json — automatycznie importuje nazwe, autora i XML kamery</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>Wybierz plik playercamerapreset.xml bezposrednio</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>Wybierz plik 0.paz — UCM wyodrebni z niego XML kamery</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>Importuj plik .ucmpreset udostepniony przez innego uzytkownika UCM</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>Ukryj to przypomnienie na tydzien</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>Ukryj do nastepnego uruchomienia</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>Dostepna aktualizacja — kliknij aby pobrac najnowsza wersje</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>Przegladaj i pobieraj presety</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>Dodaje tyle stopni do kazdego Fov i InDoorFov w pliku kamery. Wiersze wewnetrzne i zewnetrzne zaczynaja sie od roznych wartosci vanilla, wiec God Mode pokaze wiele roznych wartosci koncowych — nie jeden kat wszedzie.</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>Oddzielone od przesuniecia poziomego ~0.5: ta wartosc to czesto vanilla boczne odchylenie w XML. Ta opcja wymusza przesuniecie na 0 i stosuje silniejsze reguly centrowania (RightOffset w kierunku 0 gdzie wspierane).</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>Po zaznaczeniu kamera pozostaje na miejscu zamiast przeskakiwac w strone zablokowanego celu.</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>Zresetuj do vanilla ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>Vanilla: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>Otworz strone tworcy w przegladarce</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>Jak daleko na lewo/prawo kamera znajduje sie od postaci. Wycentrowana kamera blokuje to na 0.</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>Wycentrowana kamera wymusza postac na srodku ekranu — odznacz aby dostosowac</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = vanilla (postac lekko w lewo). Srodek to okolo 0.5. Ujemne = bardziej w lewo, dodatnie = bardziej w prawo.</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>Kadrowanie lewo/prawo jako delta na RightOffset (pieszy, wierzchowce, celowanie i powiazane wiersze). 0 odpowiada vanilla bocznemu odchyleniu. Zwieksz w kierunku ~0.5 aby przyciagnac do geometrycznego srodka w pliku; ujemne wartosci odchylaja bardziej w lewo. Pasuje do podgladu FoV z gory. Wycentrowana kamera ponizej jest oddzielna: blokuje ten suwak na 0 i stosuje silniejsze centrowanie.</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>Limity: Odleglosc 1.5-12.0  |  Wysokosc -1.6 do 0.5  |  Przesuniecie -3.0 do 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>Przesuniecie 0 = vanilla (postac lewo)  |  0.5 = srodek  |  ujemne = bardziej lewo  |  dodatnie = bardziej prawo</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>Aktualizacje gry nadpisza zmodyfikowane pliki. Po kazdej aktualizacji Crimson Desert, uruchom ponownie UCM Zainstaluj aby przywrocic ustawienia kamery.</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>Uwaga:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>Kazdy suwak pokazuje biezaca wartosc i domyslna vanilla (przyciemniona). Kliknij ↺ w dowolnym wierszu aby zresetowac ten parametr do vanilla. Kliknij Zastosuj aby zapisac wszystkie zmiany w grze.</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>Zmiany sa nakladane na XML vanilla — nie wchodza w interakcje z presetami trybu Simple. Uzyj "Wczytaj z Simple" aby zaczac od biezacego presetu.</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>Gra ma 3 poziomy zoomu kolka myszy pieszego. ZL2 jest najblizej (domyslny widok), ZL3 sredni zasieg, ZL4 najdalej. Kazdy poziom niezaleznie kontroluje odleglosc kamery, wysokosc i pozycje pozioma. Dotyczy wszystkich stanow pieszych: spoczynek, chodzenie, bieg, sprint i ruch w walce.</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>Kamery konia uzywaja 2 poziomow zoomu vanilla (ZL2-ZL3). Wszystkie 8 stanow konia sa zsynchronizowane aby kamera nie szarpala przy zmianach predkosci, zachowujac prawdziwa drabinke zoomu gry.</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>Gdy zablokujesz cel wroga, kamera przelacza sie w tryb sledzenia walki. TargetRate kontroluje jak agresywnie kamera sledzi wroga — nizsze wartosci daja wiecej kontroli recznej. ScreenClampRate kontroluje jak wycentrowany jest wrog na ekranie.</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>Kontroluja jak kamera przechodzi miedzy stanami ruchu. BlendInTime to ile sekund kamera wchodzi lagodnie w stan. OffsetLength kontroluje kolysanie kamery — ustawienie na 0 daje efekt steadycam bez ruchu bocznego.</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>Gdy celujesz latarnia, lukiem lub zoomem broni, kamera przesuwa sie aby ustawic celownik. Te wartosci RightOffset skaluja sie proporcjonalnie do Twojego przesuniecia poziomego, aby kamera nie szarpala na boki przy aktywacji umiejetnosci.</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>Ta zakladka generuje plik patcha .json kompatybilny z Crimson Desert JSON Mod Manager v8. Wrzuc plik do folderu Mods/ menedzera modow i Twoje ustawienia kamery pojawia sie jako przelaczalny mod — UCM nie jest wymagany.</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>Patch dziala porownujac zmodyfikowany plik kamery z plikiem vanilla bajt po bajcie i rejestrujac tylko roznice. Oznacza to, ze jest specyficzny dla wersji gry — jesli gra sie zaktualizuje, wygeneruj patch ponownie.</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>Te informacje pojawia sie w menedzerze modow zeby ludzie wiedzieli czym jest mod.</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>Wybierz jakie ustawienia patchowac. Biezace ustawienia uzywaja tego co jest aktywne w trybie Simple teraz. Z pliku XML pozwala wybrac wyeksportowany playercamerapreset.xml do patchowania.</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>Zapisz plik .json, nastepnie wrzuc go do folderu Mods/ w Twojej instalacji Crimson Desert JSON Mod Manager. Pojawi sie jako przelaczalny mod.</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>Szukaj atrybutow...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>To jest szybka, wyselekcjonowana warstwa UCM: szerokie ksztaltowanie kamery, podglady i najczesciej uzywane opcje kamery.</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune to wyselekcjonowana warstwa gleboskiego dostrajania. Zaczyna od Twoich ustawien UCM Quick i pozwala dopracowac pola celowo ujawnione przez UCM.</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode wyswietla kazdy wiersz w pliku. Suwaki tutaj edytuja konkretne atrybuty — te liczby powinny pasowac do tego samego atrybutu w God Mode. Inne wiersze nadal zmieniaja sie od Quick (boost FoV, styl, walka, steadycam itp.) lub vanilla, wiec nie oczekuj ze jeden suwak wyjasni cala siatke.</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode ujawnia surowe wiersze kamery. Uzyj gdy UCM Quick nie wystarcza i chcesz przejsc od razu do pelnej kontroli, lub po UCM Fine Tune jesli chcesz isc jeszcze glebiej.</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>Wartosci tutaj to polaczona sesja: Quick + Fine Tune + wszystkie edycje w tej siatce. FoV w Quick to delta dodawana na wiersz (Fov i InDoorFov), wiec katy roznia sie w zaleznosci od stanu. Fine Tune pasuje tutaj wiersz po wierszu tylko dla atrybutow kontrolowanych przez te suwaki.</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>Te wiersze obejmuja szersza normalizacje FoV i wspolne systemy kamery dzialajace poza podstawowymi grupami pieszymi i konnymi. Uzyj gdy chcesz aby UCM Fine Tune odzwierciedlal pelna powierzchnie moda, wlaczajac rodziny lock-on, stany warmachine i kamery plywania.</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>Slon, wyvern, kajak, warmachine, miotla i rodziny kamer powiazane z przemieszczaniem maja wlasne zachowanie zoomu. Te kontrolki ujawniaja dodatkowe wartosci wierzchowcow ktore mod juz zmienia za kulisami.</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>Dostosowuje odleglosc kamery przy blokowaniu lub strzezeniu celu, wzgledem odleglosci pieszej. 0% jest plynne ze Steadycam. Ujemne wartosci przyblizaja dla kinematycznego efektu skupienia; dodatnie wartosci oddalaja dla wiekszej swiadomosci pola bitwy.</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>Centruje elementy HUD rozgrywki w okreslonej maksymalnej szerokosci (piksele). Przydatne dla ekranow ultrawide gdzie elementy HUD sa zbyt rozlozone. Dotyczy tylko HUD rozgrywki, nie menu. Autor: wsres.</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>Przegladaj presety kamer udostepnione przez spolecznosc UCM. Pobrane presety pojawia sie na pasku bocznym.</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>Przegladaj i pobieraj oficjalne presety kamer UCM. Pobrane presety pojawia sie na pasku bocznym.</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM zarzadza ponad 150 stanami kamery za kulisami — spojnosc FoV w walce, obronie, na wierzchowcach i lock-on; plynne przejscia miedzy kazdym stanem; skalowanie odleglosci aby lock-on nie szarpal do wewnatrz. Suwaki Quick i Fine Tune buduja bezpiecznie na tych regulach. God Mode pozwala nadpisac poszczegolne wartosci gdy potrzebujesz.</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>Zaczyna od vanilla XML kamery gry bez zastosowanych regul UCM. UCM Quick i Fine Tune sa wylaczone, poniewaz ich suwaki nadpisalyby Twoje reczne edycje — UCM modyfikuje setki wartosci w walce, na wierzchowcach, lock-on i stanach wygladzania, co kolidowaloby z recznie dostrojonymi wartosciami. Tylko God Mode jest dostepny do bezposredniej edycji XML. Uzyj tego przy imporcie z innego moda kamery lub gdy potrzebujesz pelnej kontroli nad kazda wartoscia.</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>Importy sa zapisywane w folderze import_presets obok tej aplikacji i wyswietlane pod Zaimportowane na pasku bocznym.</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>Wybierz jaki typ pliku chcesz zaimportowac.</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>Wklej tekst UCM_ADV: aby zaimportowac ustawienia zaawansowane.</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>Zacznij od UCM Quick, wczytaj cos z Menedzera presetow lub zaimportuj preset tworcy.</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>Kopiuj i wklej na NexusMods, Discord itp.</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>Wklej tekst presetu ponizej:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>Z komentarzy NexusMods, Discord itp.</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>Wklej tekst ustawien zaawansowanych ponizej:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>Musi zaczynac sie od UCM_ADV: (z Eksportu zaawansowanego)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>Udostepnij ten tekst dla "{0}":</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} ustawien zaawansowanych znalezionych</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>To nie jest tekst ustawien zaawansowanych (musi zaczynac sie od UCM_ADV:)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>Musi zaczynac sie od UCM_ADV:</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>Nieprawidlowe dane</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>Zapisz wlasny preset</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>Zapisz zaawansowany preset</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>Podaj nazwe dla tego presetu:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>Podaj nazwe dla tego zaimportowanego presetu:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>Eksportuj tekst presetu</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>Nazwij ten preset do udostepnienia:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Wybierz folder Crimson Desert (zawierajacy folder '0010')</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Wybierz folder moda (zawierajacy manifest.json)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Eksportuj XML kamery</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Importuj XML kamery — instaluje bezposrednio w grze</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Importuj playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>Importuj 0.paz — wyodrebnij XML kamery</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Importuj UCM Preset</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Wybierz XML kamery do patchowania</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>Zapisz patch JSON</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>Zapisz XML kamery</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>Zapisz zpatchowany 0.paz</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>Zapisz UCM Preset</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>Zapisz zaimportowany preset</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(nowy — dostosuj suwaki)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(biezace edycje)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(biezacy)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>Wybierz zrodlo importu</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>Usun zaimportowany preset</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>Nadpisz zaimportowany preset</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Importowanie pakietu modow: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>Importowanie XML: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>Importowanie PAZ: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>Wyeksportowany preset</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>Zaimportowana kamera</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM Preset - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>Wszystkie</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>Tylko zmodyfikowane</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>Tylko swiete</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>Folder gry:  NIE USTAWIONY  (kliknij Zainstaluj aby przegladac)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>Folder gry:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>Zamknij okno dialogowe</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>Krok {0} z {1}</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>Eksportuje .json patch bajtowy ktory mozesz zaimportowac do JSON Mod Manager lub Crimson Desert Ultimate Mods Manager. Uzyj menedzera modow jakiego chcesz — odbiorcy nie potrzebuja UCM.</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>Eksportuje playercamerapreset.xml z ta sama normalizacja jakiej UCM uzywa przy instalacji (UTF-8 BOM, komentarze usuniete). Dobry do wrzucania tekstu na Nexus, recznej edycji lub ponownego importu w UCM. Ktokolwiek go zainstaluje nadal potrzebuje pasujacych rozmiarow skompresowanych wpisow dla swojej budowy gry.</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Archiwum drop-in w stylu Nexus: kopia 0010/0.paz Twojej gry z jedynie danymi kamery zaktualizowanymi do biezacej sesji UCM — gracze nie uzywajacy menedzera modow JSON moga zamienic jeden plik. Dziala tylko dla tej samej wersji gry co Twoja instalacja (ten sam uklad archiwum); wspomnij o tym na stronie moda. Powiadom pobierajacych aby zrobili kopie zapasowa vanilla 0010/0.paz przed zamiana.</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>Eksportuje biezaca sesje jako plik .ucmpreset ktory inni uzytkownicy UCM moga wrzucic do folderu presetow lub udostepnic przez katalog spolecznosci. Zawiera pelna konfiguracje kamery wlaczajac wszystkie ustawienia Quick, Fine Tune i God Mode.</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>Uzywa Twojej biezacej sesji UCM (Quick, Fine Tune lub God Mode). Wybierz preset na pasku bocznym lub uzyj Importu jesli zaczynasz od XML lub PAZ na dysku.</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>Przygotuj sprawdza czy Twoja sesja koduje sie dla tego folderu gry, nastepnie zapisujesz plik XML.</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>Przygotuj weryfikuje kodowanie wzgledem Twojego folderu gry. Zapisz tworzy pelny zpatchowany 0.paz (duzy plik). Zrodlo sesji jest takie samo jak w innych formatach — preset z paska bocznego lub najpierw Import jesli potrzebny.</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>Kodowanie nie jest potrzebne — zapisuje Twoja sesje bezposrednio. Wypelnij pola informacyjne powyzej zeby inni wiedzieli co dostaja.</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>Kodowanie XML pasuje do wpisu kamery tej instalacji. Zapisz jako playercamerapreset.xml do udostepnienia lub edycji.</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>Rozmiar przesylania bedzie odpowiadal pelnemu 0.paz. Odbiorcy zamieniaja ...\0010\0.paz po wykonaniu kopii zapasowej vanilla. Udostepniaj tylko graczom na tej samej wersji gry co ten eksport.</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON uzywa tych pol w modinfo. XML uzywa Tytulu jako domyslnej nazwy zapisu. 0.paz domyslnie to 0.paz zeby mozna bylo wrzucic go do 0010 bez zmiany nazwy.</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>Wygenerowano {0} regionow patcha. Zapisz gdy gotowe.</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>Zwykle oznacza to ze plik PAZ pochodzi z innej wersji gry niz biezaca instalacja. Indeks archiwum (0.pamt) nie pasuje do struktury pliku PAZ.
+
+ABY NAPRAWIC:
+Umiesc pasujacy plik 0.pamt w tym samym folderze co importowany 0.paz. Oba pliki musza byc z tej samej wersji gry.</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>Niezapisana sesja</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>Biezaca sesja</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>Sesja na zywo</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>Nie wczytano jeszcze zadnego presetu.</value></data>
+
+  <!-- ═══ Camera Style Labels ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>Heroic  -  OTS na wysokosci ramion, swietne kadrowanie</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>Panoramic  -  Szerokie oddalenie na wysokosci glowy, filmowe</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>Vanilla  -  Niezmodyfikowana kamera gry (uzyj Steadycam dla wygladzania UCM)</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>Close-Up  -  OTS na ramieniu, ciasniejszy (styl 16:9)</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>Low Rider  -  Na wysokosci bioder, cale cialo + horyzont</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>Knee Cam  -  Na wysokosci kolan, dramatycznie niski kat</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>Dirt Cam  -  Na poziomie ziemi, ekstremalnie nisko</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>Survival  -  Ciasny OTS jak w horrorze (styl 16:9)</value></data>
+
+  <!-- ═══ FoV Option Labels ═══ -->
+  <data name="Fov_0" xml:space="preserve"><value>Bez boostu FoV (0°)  -  vanilla rozni sie w zaleznosci od stanu (40°, 45°, 53°...)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  Minimalne, dobre dla 16:9</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  Subtelna poprawa</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  Idealny punkt dla 21:9</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  Swietne dla 21:9 + 32:9</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  Idealne dla 32:9</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  Ekstremalne, lekki efekt rybiego oka</value></data>
+
+  <!-- ═══ Welcome Dialog ═══ -->
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Witaj w Ultimate Camera Mod</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>Przed rozpoczeciem UCM potrzebuje niezmodyfikowanych (vanilla) plikow gry aby moc utworzyc czysta kopie bazowa.
+
+Jesli wczesniej uzywales UCM v2.x, innego moda kamery lub menedzera modow ktory modyfikowal pliki gry, najpierw zweryfikuj:
+
+Steam → Crimson Desert → Wlasciwosci → Zainstalowane pliki → "Weryfikacja integralnosci plikow gry"
+
+Czy zweryfikowales pliki gry?</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>Tak, kontynuuj</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>Nie, zamknij UCM</value></data>
+
+  <!-- ═══ Tutorial Step Titles and Descriptions ═══ -->
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>Twoje presety</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>To jest Twoj pasek boczny presetow. Kliknij Przegladaj aby pobrac oficjalne presety UCM i presety spolecznosci. Twoje wlasne presety i importy takze sie tu pojawia. Kliknij dowolny preset aby go wczytac.</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>Trzy poziomy edycji</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quick do szybkich zmian, Fine Tune do gleboskiej kontroli nad kazdym stanem kamery i God Mode do edycji surowego XML. Zmiany synchronizuja sie automatycznie miedzy wszystkimi trzema poziomami.</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>Ustawienia kamery</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>Dostosuj odleglosc kamery, wysokosc, przesuniecie poziome, pole widzenia, zoom lock-on i zachowanie kamery. Podglad na zywo aktualizuje sie w trakcie dostosowywania.</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>Podglad na zywo</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>Podglad kamery pokazuje kadrowanie postaci i odleglosc. Diagram pola widzenia pokazuje stozek FoV z gory. Oba aktualizuja sie w czasie rzeczywistym gdy dostosowujesz ustawienia.</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>Eksport &amp; Instalacja</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>Eksportuj ustawienia jako JSON dla menedzerow modow, XML, 0.paz lub .ucmpreset do udostepnienia. Lub kliknij Zainstaluj w grze aby zastosowac bezposrednio w plikach gry.</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>Jeszcze jedno...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>Poswiecilem zdecydowanie za duzo czasu na ten projekt. Jesli UCM zaoszczedzil Ci godzin frustracji z kamera, rozwaz postawienie mi kawy. Albo nie. I tak bede to dalej rozwijac. Ale kawa pomaga.</value></data>
+
+  <!-- ═══ Update Changelog Dialog ═══ -->
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>Zaktualizowano do v{0}</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Witaj ponownie! UCM zostal zaktualizowany.
+
+Co nowego:
+- Sacred God Mode: Twoje edycje sa trwale chronione przed przebudowa Quick/Fine Tune
+- Przelacznik Lock-on Auto-Rotate (autor: @sillib1980)
+- Zielone wskazniki dla swietych wartosci w God Mode
+- Poprawka: swiete wartosci teraz prawidlowo uwzgledniane w Instalacji i wszystkich eksportach
+
+Twoje presety i ustawienia zostaly zachowane.</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Witaj ponownie! UCM zostal zaktualizowany z v{0}.
+
+Co nowego:
+- Sacred God Mode: Twoje edycje sa trwale chronione przed przebudowa Quick/Fine Tune
+- Przelacznik Lock-on Auto-Rotate (autor: @sillib1980)
+- Zielone wskazniki dla swietych wartosci w God Mode
+- Poprawka: swiete wartosci teraz prawidlowo uwzgledniane w Instalacji i wszystkich eksportach
+
+Twoje presety i ustawienia zostaly zachowane.</value></data>
+
+  <!-- ═══ Preset Toast Messages ═══ -->
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>Preset wczytany</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>Preset przemianowany</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>Preset zduplikowany</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>Preset przebudowany</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>Preset '{0}' utworzony</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>Zaimportowany preset wczytany</value></data>
+
+  <!-- ═══ Preset Status Messages (missed) ═══ -->
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>Preset o nazwie '{0}' juz istnieje.</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>Preset '{0}' przemianowany na '{1}'.</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>Preset '{0}' zduplikowany jako '{1}'.</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>Zaimportowany preset '{0}' przebudowany dla biezacej gry.</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>Folder gry nie ustawiony. Nie mozna utworzyc recznego presetu bez danych vanilla kamery.</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>Tylko zaimportowane presety XML / 0.paz wymagaja wsparcia przebudowy.</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>Najpierw wczytaj ten preset do biezacej sesji, nastepnie generuj z Eksportu JSON.</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>Nie udalo sie wygenerowac wbudowanych presetow.</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>Nie znaleziono pliku presetu: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>Nie mozna aktywowac presetu: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>Preset '{0}' jest zablokowany — odblokuj klodke aby edytowac.</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>Preset '{0}' jest odblokowany.</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>Przebudowa nie powiodla sie: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>Nie udalo sie utworzyc presetu</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>Nie udalo sie wygenerowac presetow</value></data>
+
+  <!-- ═══ Import Missed Strings ═══ -->
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>Zaimportowany preset '{0}' nie mial osadzonego XML; przebudowany z zapisanych ustawien.</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>Nie udalo sie wczytac zaimportowanego presetu '{0}'.</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>Importuj playercamerapreset.xml jako zapisany preset</value></data>
+
+  <!-- ═══ Fine Tune Card Titles ═══ -->
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>Wspolne FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>Kadrowanie dwoch celow</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>FoV przemieszczania</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>Slon</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>Wyvern</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>Kajak / Warmachine / Miotla</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Sledzenie Lock-On</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>Punkty styku FoV</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>Wygladzanie piesze i w walce</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>Przejscia ruchu</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>Rozszerzone lock-on i przejscia walki</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>Zachowanie sledzenia pieszego</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>Synchronizacja stanow konia</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>Kadrowanie przemieszczania</value></data>
+
+  <!-- ═══ Fine Tune Aim Group Titles ═══ -->
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>Latarnia / Reflektor</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>Osleplajacy blysk</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>Celowanie bronia / Zoom</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>Luk</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>Szybowanie / Spadanie swobodne</value></data>
+
+  <!-- ═══ Fine Tune Shared FoV Slider Labels ═══ -->
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>FoV pieszego</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>FoV walki</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>FoV Force/Titan/Kinowy</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>FoV Warmachine/Miotla</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>FoV slonia</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>FoV wyverna</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>FoV plywania</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interakcja ZL3 Maks</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interakcja ZL4 Maks</value></data>
+
+  <!-- ═══ Fine Tune Traversal FoV Slider Labels ═══ -->
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>FoV plywania</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>FoV wspinania</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>FoV szybowania</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>FoV spadania swobodnego</value></data>
+
+  <!-- ═══ Fine Tune On-Foot Zoom Level Labels ═══ -->
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>Poziom zoomu {0}</value></data>
+
+  <!-- ═══ Fine Tune Mount Slider Labels ═══ -->
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Slon ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Slon ZL{0} Wysokosc</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Kajak ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Miotla ZL{0}</value></data>
+
+  <!-- ═══ Fine Tune Combat Slider Labels ═══ -->
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>FoV LockOn broni</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>FoV TwoTarget broni</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>FoV TwoTarget interakcji</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>FoV LockOn bossa</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>FoV systemu LockOn</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>FoV LockOn Revive</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>FoV LockOn Non-Rotate</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>FoV LockOn Wrestle</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>FoV StartAggro</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>FoV Wanted</value></data>
+
+  <!-- ═══ Fine Tune Smoothing Slider Labels ═══ -->
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>Blend-in biegu</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>Blend-out biegu</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>Blend-in obrony</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>Blend-out obrony</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>Blend-in szarzy</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>Blend-out szarzy</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>Kolysanie biegu</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>Kolysanie biegu w walce</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>Kolysanie sprintu w walce</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>Kolysanie sprintu sledzenia</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>Blend-in spoczynku zwierzecia</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>Blend-in biegu zwierzecia</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>Kolysanie biegu zwierzecia</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>Blend-in sprintu zwierzecia</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>Kolysanie sprintu zwierzecia</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>Tlumienie sprintu zwierzecia</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>Blend-in systemu LockOn</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>Blend-out systemu LockOn</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn bossa</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn bossa</value></data>
+
+  <!-- ═══ Fine Tune Movement Transition Slider Labels ═══ -->
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>Blend-in wejscia w spadanie</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>Blend-out wejscia w spadanie</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>Blend-in spadania swobodnego</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>Blend-out spadania swobodnego</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>Blend-in super skoku</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>Blend-out super skoku</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>Blend-in ciagniecia lina</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>Blend-out ciagniecia lina</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>Blend-in wahania na linie</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>Blend-out wahania na linie</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>Blend-in trafienia/rzutu</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>Blend-out trafienia/rzutu</value></data>
+
+  <!-- ═══ Fine Tune Extended Lock-On Slider Labels ═══ -->
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn wierzchowca</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn wierzchowca</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Revive</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Revive</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Force</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Force</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Titan</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Titan</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn non-rotate</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn non-rotate</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Blend-in LockOn Wrestle</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Blend-out LockOn Wrestle</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>Blend-in Aggro</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>Blend-out Aggro</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>Blend-in Wanted</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>Blend-out Wanted</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>Blend-in celowania Warmachine</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>Blend-out celowania Warmachine</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>Blend-in daszu Warmachine</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>Blend-out daszu Warmachine</value></data>
+
+  <!-- ═══ Fine Tune Follow Behavior Slider Labels ═══ -->
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>Sledzenie odchylenia pieszego</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>Sledzenie pochylenia pieszego</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>Opoznienie sledzenia pieszego</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>Tlumienie obrotu pieszego</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>Sledzenie odchylenia konia</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>Sledzenie pochylenia konia</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>Opoznienie sledzenia konia</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>Domyslne pochylenie konia</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>Blend-in konia</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>Blend-out konia</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>Tlumienie obrotu konia</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>Kolysanie konia</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>Tlumienie kolysania konia</value></data>
+
+  <!-- ═══ Fine Tune Aiming Slider Labels ═══ -->
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Odleglosc</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Wysokosc</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Przesuniecie</value></data>
+
+  <!-- ═══ Fine Tune Traversal Framing Slider Labels ═══ -->
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Plywanie ZL2 Odleglosc</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Plywanie ZL2 Wysokosc</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Wspinanie ZL2 Odleglosc</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Wspinanie ZL2 Wysokosc</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Szybowanie ZL2 Odleglosc</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Szybowanie ZL2 Wysokosc</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Spadanie swobodne ZL2 Odleglosc</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Spadanie swobodne ZL2 Wysokosc</value></data>
+
+  <!-- ═══ Fine Tune Reset Button ═══ -->
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>Resetuj</value></data>
+
+  <!-- ═══ God Mode Apply Removed Warning ═══ -->
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Zastosuj w grze zostalo usuniete z v3. Uzyj Eksportu JSON aby spakowac te nadpisania.</value></data>
+
+  <!-- ═══ Game Folder Scan Errors ═══ -->
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>Nie mozna odczytac plikow kamery gry: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>Skanowanie folderu gry nie powiodlo sie: {0}</value></data>
+
+  <!-- ═══ Community Browser Button States ═══ -->
+  <data name="Btn_TooLarge" xml:space="preserve"><value>Za duzy</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>Nieprawidlowy</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>Nie powiodlo sie</value></data>
+
+  <!-- ═══ Export JSON Dialog ═══ -->
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>Nie mozna zweryfikowac plikow kamery: {0}</value></data>
+
+  <!-- ═══ Preset Warning Editors ═══ -->
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>Ostrzezenie: nie udalo sie w pelni zastosowac presetu do edytorow: {0}</value></data>
+
+  <!-- ═══ Lock Toast Messages ═══ -->
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>Preset UCM — zduplikuj aby uzyc Fine Tune lub God Mode</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>Preset UCM — zduplikuj aby dostosowac odleglosc i wysokosc</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>Preset UCM — zduplikuj aby utworzyc edytowalna kopie</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>Preset zablokowany — odblokuj klodke aby edytowac</value></data>
+
+  <!-- ═══ Fine Tune Steadycam/Sacred Tooltips ═══ -->
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Kontrolowany przez Steadycam — odznacz Steadycam aby dostosowac recznie</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Swiety -- kontrolowany przez God Mode</value></data>
+
+  <!-- ═══ Combat Lock-On Section Zoom Distances Label Pattern ═══ -->
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - Odleglosci zoomu</value></data>
+
+  <!-- ═══ Sidebar Group Labels ═══ -->
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>Domyslne gry</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>Presety UCM</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>Presety spolecznosci</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>Moje presety</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>Zaimportowane</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>Inne</value></data>
+
+  <!-- ═══ Lock/Unlock Tooltips ═══ -->
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>Preset UCM — zduplikuj aby utworzyc edytowalna kopie</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>Zablokowany — kliknij aby umozliwic edycje tego presetu</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>Odblokowany — kliknij aby zablokowac i zapobiec zmianom</value></data>
+
+  <!-- ═══ Buy Me a Coffee (with emoji prefix) ═══ -->
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ Postaw mi kawe</value></data>
+
+</root>

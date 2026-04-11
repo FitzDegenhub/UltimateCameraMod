@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.Services;
 
 namespace UltimateCameraMod.V3;
@@ -126,9 +127,9 @@ public partial class MainWindow : Window
         Margin = new Thickness(0, 0, 8, 0)
     };
 
-    private Button OverlayCancelButton(string text = "Cancel") => new()
+    private Button OverlayCancelButton(string? text = null) => new()
     {
-        Content = text,
+        Content = text ?? L("Btn_Cancel"),
         Style = (Style)FindResource("SubtleButton"),
         Height = 32,
         FontSize = 12,
@@ -204,7 +205,7 @@ public partial class MainWindow : Window
         var textBox = OverlayTextBox(initialText: initialText);
         stack.Children.Add(textBox);
 
-        var okBtn = OverlayPrimaryButton("OK");
+        var okBtn = OverlayPrimaryButton(L("Btn_OK"));
         var cancelBtn = OverlayCancelButton();
 
         okBtn.Click += (_, _) => CloseOverlay(textBox.Text?.Trim());
@@ -228,13 +229,13 @@ public partial class MainWindow : Window
         textBox.IsReadOnly = true;
         stack.Children.Add(textBox);
 
-        var copyBtn = OverlayPrimaryButton("Copy to clipboard");
-        var closeBtn = OverlayCancelButton("Close");
+        var copyBtn = OverlayPrimaryButton(L("Btn_CopyClipboard"));
+        var closeBtn = OverlayCancelButton(L("Btn_Close"));
 
         copyBtn.Click += (_, _) =>
         {
             Clipboard.SetText(text);
-            copyBtn.Content = "Copied!";
+            copyBtn.Content = L("Btn_Copied");
         };
         closeBtn.Click += (_, _) => CloseOverlay(null);
 
@@ -247,8 +248,8 @@ public partial class MainWindow : Window
     private async Task<string?> ShowImportTypeOverlayAsync()
     {
         var stack = new StackPanel { Width = 420 };
-        stack.Children.Add(OverlayTitle("Import Preset"));
-        stack.Children.Add(OverlaySubtext("Choose what type of file you want to import."));
+        stack.Children.Add(OverlayTitle(L("Title_ImportPresetChooser")));
+        stack.Children.Add(OverlaySubtext(L("Help_ChooseImportSource")));
 
         string? selectedMode = null;
 
@@ -283,10 +284,14 @@ public partial class MainWindow : Window
             stack.Children.Add(border);
         }
 
-        AddImportButton("Mod Manager Package", "JSON patch from JSON Mod Manager or CDUMM", "mod_package");
-        AddImportButton("Raw XML", "playercamerapreset.xml file", "xml");
-        AddImportButton("PAZ Archive", "Game .paz file with camera data", "paz");
-        AddImportButton(".ucmpreset File", "UCM preset file from another user", "ucmpreset");
+        AddImportButton(L("Label_ImportModPackage"), L("Label_ImportModPackageDesc"), "mod_package");
+        AddImportButton(L("Label_ImportCameraXml"), L("Label_ImportRawXmlDesc"), "xml");
+        // JSON patch import disabled — imported values install correctly but crash the game on launch.
+        // Under investigation. The XML structure and values are valid but something in the
+        // round-trip through the import pipeline produces output the game engine rejects.
+        // AddImportButton(L("Label_ImportJsonPatch"), L("Label_ImportJsonPatchDesc"), "json");
+        AddImportButton(L("Label_ImportPazArchive"), L("Label_ImportPazDesc"), "paz");
+        AddImportButton(L("Label_ImportUcmPreset"), L("Label_ImportUcmPresetDesc"), "ucmpreset");
 
         var result = await ShowOverlayAsync(stack, width: 480);
         return result as string;
@@ -296,8 +301,8 @@ public partial class MainWindow : Window
     private async Task<Dictionary<string, string>?> ShowAdvancedImportOverlayAsync()
     {
         var stack = new StackPanel { Width = 480 };
-        stack.Children.Add(OverlayTitle("Import God Mode Overrides"));
-        stack.Children.Add(OverlaySubtext("Paste the UCM_ADV: string to import advanced settings."));
+        stack.Children.Add(OverlayTitle(L("Title_ImportGodModeOverrides")));
+        stack.Children.Add(OverlaySubtext(L("Help_PasteAdvancedImport")));
 
         var textBox = OverlayMultiLineTextBox(lines: 5);
         stack.Children.Add(textBox);
@@ -310,7 +315,7 @@ public partial class MainWindow : Window
         };
         stack.Children.Add(previewText);
 
-        var importBtn = OverlayPrimaryButton("Import");
+        var importBtn = OverlayPrimaryButton(L("Btn_Import"));
         importBtn.IsEnabled = false;
         var cancelBtn = OverlayCancelButton();
 
@@ -329,13 +334,13 @@ public partial class MainWindow : Window
             try
             {
                 if (!raw.StartsWith("UCM_ADV:"))
-                    throw new FormatException("Must start with UCM_ADV:");
+                    throw new FormatException(L("Dlg_MustStartWithUcmAdv"));
                 string b64 = raw["UCM_ADV:".Length..];
                 byte[] bytes = Convert.FromBase64String(b64);
                 string json = System.Text.Encoding.UTF8.GetString(bytes);
                 decoded = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(json)
-                    ?? throw new FormatException("Invalid payload");
-                previewText.Text = $"\u2714  {decoded.Count} advanced settings found";
+                    ?? throw new FormatException(L("Dlg_InvalidPayload"));
+                previewText.Text = $"\u2714  {string.Format(L("Dlg_AdvSettingsFound"), decoded.Count)}";
                 previewText.Foreground = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
                 importBtn.IsEnabled = true;
             }
@@ -492,7 +497,7 @@ public partial class MainWindow : Window
 
         var closeBtn = new Button
         {
-            Content = "Close UCM",
+            Content = L("Btn_CloseUcm"),
             Style = (Style)FindResource("AccentButton"),
             Height = 32,
             FontSize = 12,
@@ -529,7 +534,7 @@ public partial class MainWindow : Window
         });
         titleRow.Children.Add(new TextBlock
         {
-            Text = "Game Update Detected",
+            Text = L("Title_GameUpdateDetected"),
             FontSize = 18,
             FontWeight = FontWeights.SemiBold,
             Foreground = new SolidColorBrush(Color.FromRgb(0xE6, 0xA2, 0x3C)),
@@ -547,8 +552,8 @@ public partial class MainWindow : Window
             Margin = new Thickness(0, 0, 0, 20)
         });
 
-        var snoozeBtn = OverlayCancelButton("Snooze 7 days");
-        var dismissBtn = OverlayPrimaryButton("Got it");
+        var snoozeBtn = OverlayCancelButton(L("Btn_Snooze7Days"));
+        var dismissBtn = OverlayPrimaryButton(L("Btn_GotIt"));
 
         snoozeBtn.Click += (_, _) =>
         {
@@ -586,7 +591,7 @@ public partial class MainWindow : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Game Files Modified",
+            Text = L("Title_GameFilesModified"),
             FontSize = 18,
             FontWeight = FontWeights.SemiBold,
             Foreground = new SolidColorBrush(Color.FromRgb(0xE6, 0xA2, 0x3C)),
@@ -595,9 +600,7 @@ public partial class MainWindow : Window
 
         stack.Children.Add(new TextBlock
         {
-            Text = "Your game camera files have been modified by UCM v2.x, another camera mod, or a mod manager. " +
-                   "UCM needs the original vanilla files to create a clean backup.\n\n" +
-                   "Click the button below to remove the modified file, then verify on Steam to re-download the original.",
+            Text = L("Msg_GameFilesModifiedBody"),
             FontSize = 12,
             TextWrapping = TextWrapping.Wrap,
             LineHeight = 18,
@@ -613,8 +616,8 @@ public partial class MainWindow : Window
         }
         catch { }
 
-        var deleteBtn = OverlayPrimaryButton("Remove modified 0.paz");
-        var closeBtn = OverlayCancelButton("Close UCM");
+        var deleteBtn = OverlayPrimaryButton(L("Btn_RemoveModifiedPaz"));
+        var closeBtn = OverlayCancelButton(L("Btn_CloseUcm"));
 
         var statusText = new TextBlock
         {
@@ -632,16 +635,13 @@ public partial class MainWindow : Window
                 {
                     File.Delete(pazPath);
                     deleteBtn.IsEnabled = false;
-                    deleteBtn.Content = "Removed";
-                    statusText.Text = "0.paz deleted. Now:\n" +
-                        "1. Close UCM\n" +
-                        "2. Steam \u2192 Crimson Desert \u2192 Properties \u2192 Installed Files \u2192 \"Verify integrity of game files\"\n" +
-                        "3. Relaunch UCM after verification completes";
+                    deleteBtn.Content = L("Btn_Removed");
+                    statusText.Text = L("Msg_PazRemovedInstructions");
                     statusText.Foreground = new SolidColorBrush(Color.FromRgb(0x4C, 0xAF, 0x50));
                 }
                 catch (Exception ex)
                 {
-                    statusText.Text = $"Could not delete: {ex.Message}\nManually delete: {pazPath}";
+                    statusText.Text = string.Format(L("Msg_CouldNotDeletePaz"), ex.Message, pazPath);
                     statusText.Foreground = new SolidColorBrush(Color.FromRgb(0xF4, 0x43, 0x36));
                 }
             }

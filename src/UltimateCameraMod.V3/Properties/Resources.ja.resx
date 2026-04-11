@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- ═══ Window Titles ═══ -->
+  <data name="Title_MainWindow" xml:space="preserve"><value>Ultimate Camera Mod</value></data>
+  <data name="Title_Brand" xml:space="preserve"><value>ULTIMATE CAMERA MOD</value></data>
+  <data name="Title_AdvancedEditor" xml:space="preserve"><value>カメラ詳細設定</value></data>
+  <data name="Title_AdvancedImport" xml:space="preserve"><value>詳細設定文字列のインポート</value></data>
+  <data name="Title_ExportPreset" xml:space="preserve"><value>プリセット文字列のエクスポート</value></data>
+  <data name="Title_ImportPreset" xml:space="preserve"><value>プリセット文字列のインポート</value></data>
+  <data name="Title_ImportPresetChooser" xml:space="preserve"><value>プリセットのインポート</value></data>
+  <data name="Title_Input" xml:space="preserve"><value>入力</value></data>
+  <data name="Title_Error" xml:space="preserve"><value>Ultimate Camera Mod - エラー</value></data>
+  <data name="Title_ExportForSharing" xml:space="preserve"><value>共有用エクスポート</value></data>
+  <data name="Title_CommunityPresets" xml:space="preserve"><value>コミュニティプリセット</value></data>
+  <data name="Title_UcmPresets" xml:space="preserve"><value>UCM プリセット</value></data>
+  <data name="Title_PresetDetails" xml:space="preserve"><value>プリセット詳細</value></data>
+  <data name="Title_ChoosePresetType" xml:space="preserve"><value>プリセットタイプの選択</value></data>
+  <data name="Title_RawXmlImport" xml:space="preserve"><value>Raw XML インポート</value></data>
+  <data name="Title_GameFolderNotSet" xml:space="preserve"><value>ゲームフォルダ未設定</value></data>
+  <data name="Title_GodModeError" xml:space="preserve"><value>God Mode エラー</value></data>
+  <data name="Title_FineTuneError" xml:space="preserve"><value>Fine Tune エラー</value></data>
+  <data name="Title_PresetUpdate" xml:space="preserve"><value>プリセット更新</value></data>
+  <data name="Title_GameUpdateDetected" xml:space="preserve"><value>ゲーム更新を検出</value></data>
+  <data name="Title_GameFilesModified" xml:space="preserve"><value>ゲームファイルが変更されています</value></data>
+  <data name="Title_UcmFatal" xml:space="preserve"><value>UCM 致命的エラー</value></data>
+  <data name="Title_PazImportFailed" xml:space="preserve"><value>PAZ インポート失敗</value></data>
+  <data name="Title_ImportGodModeOverrides" xml:space="preserve"><value>God Mode オーバーライドのインポート</value></data>
+  <data name="Title_GodModeOverrides" xml:space="preserve"><value>God Mode オーバーライド</value></data>
+
+  <!-- ═══ Buttons ═══ -->
+  <data name="Btn_Apply" xml:space="preserve"><value>ゲームに適用</value></data>
+  <data name="Btn_Save" xml:space="preserve"><value>保存</value></data>
+  <data name="Btn_Delete" xml:space="preserve"><value>削除</value></data>
+  <data name="Btn_Export" xml:space="preserve"><value>エクスポート</value></data>
+  <data name="Btn_Import" xml:space="preserve"><value>インポート</value></data>
+  <data name="Btn_Install" xml:space="preserve"><value>インストール</value></data>
+  <data name="Btn_InstallToGame" xml:space="preserve"><value>ゲームにインストール</value></data>
+  <data name="Btn_RestoreVanilla" xml:space="preserve"><value>バニラに復元</value></data>
+  <data name="Btn_Restore" xml:space="preserve"><value>復元</value></data>
+  <data name="Btn_Close" xml:space="preserve"><value>閉じる</value></data>
+  <data name="Btn_CloseUcm" xml:space="preserve"><value>UCM を閉じる</value></data>
+  <data name="Btn_Cancel" xml:space="preserve"><value>キャンセル</value></data>
+  <data name="Btn_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Btn_Yes" xml:space="preserve"><value>はい</value></data>
+  <data name="Btn_No" xml:space="preserve"><value>いいえ</value></data>
+  <data name="Btn_GetUpdate" xml:space="preserve"><value>更新を取得</value></data>
+  <data name="Btn_CopyClipboard" xml:space="preserve"><value>クリップボードにコピー</value></data>
+  <data name="Btn_Copied" xml:space="preserve"><value>コピー済み!</value></data>
+  <data name="Btn_ExportString" xml:space="preserve"><value>文字列をエクスポート</value></data>
+  <data name="Btn_ImportString" xml:space="preserve"><value>文字列をインポート</value></data>
+  <data name="Btn_SavePreset" xml:space="preserve"><value>プリセットを保存</value></data>
+  <data name="Btn_DeletePreset" xml:space="preserve"><value>プリセットを削除</value></data>
+  <data name="Btn_ExportXml" xml:space="preserve"><value>XML エクスポート</value></data>
+  <data name="Btn_ImportXml" xml:space="preserve"><value>XML インポート</value></data>
+  <data name="Btn_ResetDefaults" xml:space="preserve"><value>デフォルトに戻す</value></data>
+  <data name="Btn_ResetVanilla" xml:space="preserve"><value>バニラに戻す</value></data>
+  <data name="Btn_LoadFromSimple" xml:space="preserve"><value>シンプルから読み込み</value></data>
+  <data name="Btn_ExpandAll" xml:space="preserve"><value>すべて展開</value></data>
+  <data name="Btn_CollapseAll" xml:space="preserve"><value>すべて折りたたみ</value></data>
+  <data name="Btn_GenerateCurrentSettings" xml:space="preserve"><value>現在の設定から生成</value></data>
+  <data name="Btn_GenerateFromXml" xml:space="preserve"><value>XML ファイルから生成...</value></data>
+  <data name="Btn_SaveJson" xml:space="preserve"><value>.json を保存...</value></data>
+  <data name="Btn_ImportSave" xml:space="preserve"><value>インポート &amp; 保存</value></data>
+  <data name="Btn_ExportStringSimple" xml:space="preserve"><value>文字列をエクスポート</value></data>
+  <data name="Btn_ImportStringSimple" xml:space="preserve"><value>文字列をインポート</value></data>
+  <data name="Btn_NexusMods" xml:space="preserve"><value>NexusMods</value></data>
+  <data name="Btn_GitHub" xml:space="preserve"><value>GitHub</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>コーヒーをおごる</value></data>
+  <data name="Btn_ResetDefaultsAdv" xml:space="preserve"><value>デフォルトに戻す</value></data>
+  <data name="Btn_New" xml:space="preserve"><value>新規作成</value></data>
+  <data name="Btn_Duplicate" xml:space="preserve"><value>複製</value></data>
+  <data name="Btn_Rename" xml:space="preserve"><value>名前変更</value></data>
+  <data name="Btn_Open" xml:space="preserve"><value>開く</value></data>
+  <data name="Btn_Undo" xml:space="preserve"><value>元に戻す</value></data>
+  <data name="Btn_Retry" xml:space="preserve"><value>再試行</value></data>
+  <data name="Btn_Refresh" xml:space="preserve"><value>更新</value></data>
+  <data name="Btn_Download" xml:space="preserve"><value>ダウンロード</value></data>
+  <data name="Btn_Downloaded" xml:space="preserve"><value>ダウンロード済み</value></data>
+  <data name="Btn_Downloading" xml:space="preserve"><value>ダウンロード中...</value></data>
+  <data name="Btn_Create" xml:space="preserve"><value>作成</value></data>
+  <data name="Btn_Overwrite" xml:space="preserve"><value>上書き</value></data>
+  <data name="Btn_PrepareExport" xml:space="preserve"><value>エクスポート準備</value></data>
+  <data name="Btn_SaveExport" xml:space="preserve"><value>エクスポート保存...</value></data>
+  <data name="Btn_SaveJsonFile" xml:space="preserve"><value>.json を保存...</value></data>
+  <data name="Btn_SaveXmlFile" xml:space="preserve"><value>.xml を保存...</value></data>
+  <data name="Btn_SavePazFile" xml:space="preserve"><value>0.paz を保存...</value></data>
+  <data name="Btn_SaveUcmPreset" xml:space="preserve"><value>.ucmpreset を保存...</value></data>
+  <data name="Btn_Browse" xml:space="preserve"><value>参照</value></data>
+  <data name="Btn_GotIt" xml:space="preserve"><value>了解</value></data>
+  <data name="Btn_Snooze7Days" xml:space="preserve"><value>7日間スヌーズ</value></data>
+  <data name="Btn_Snooze7d" xml:space="preserve"><value>7日後に</value></data>
+  <data name="Btn_Dismiss" xml:space="preserve"><value>閉じる</value></data>
+  <data name="Btn_OpenReadOnly" xml:space="preserve"><value>読み取り専用で開く</value></data>
+  <data name="Btn_YesBackupFirst" xml:space="preserve"><value>はい、先にバックアップ</value></data>
+  <data name="Btn_NoJustUpdate" xml:space="preserve"><value>いいえ、そのまま更新</value></data>
+  <data name="Btn_RemoveModifiedPaz" xml:space="preserve"><value>変更された 0.paz を削除</value></data>
+  <data name="Btn_Removed" xml:space="preserve"><value>削除済み</value></data>
+  <data name="Btn_Clear" xml:space="preserve"><value>クリア</value></data>
+  <data name="Btn_Reset" xml:space="preserve"><value>リセット</value></data>
+  <data name="Btn_Next" xml:space="preserve"><value>次へ</value></data>
+  <data name="Btn_GetStarted" xml:space="preserve"><value>はじめる</value></data>
+  <data name="Btn_SkipTutorial" xml:space="preserve"><value>チュートリアルをスキップ</value></data>
+  <data name="Btn_ViewOnNexus" xml:space="preserve"><value>Nexus で表示</value></data>
+  <data name="Btn_NexusLink" xml:space="preserve"><value>Nexus</value></data>
+
+  <!-- ═══ Tabs / Modes ═══ -->
+  <data name="Tab_Presets" xml:space="preserve"><value>プリセット</value></data>
+  <data name="Tab_Custom" xml:space="preserve"><value>カスタム</value></data>
+  <data name="Tab_UcmQuick" xml:space="preserve"><value>UCM クイック</value></data>
+  <data name="Tab_FineTune" xml:space="preserve"><value>微調整</value></data>
+  <data name="Tab_GodMode" xml:space="preserve"><value>God Mode</value></data>
+  <data name="Mode_Simple" xml:space="preserve"><value>シンプル</value></data>
+  <data name="Mode_Advanced" xml:space="preserve"><value>詳細</value></data>
+  <data name="Mode_Expert" xml:space="preserve"><value>エキスパート</value></data>
+  <data name="Mode_JsonModMgr" xml:space="preserve"><value>JSON Mod 管理</value></data>
+
+  <!-- ═══ Labels ═══ -->
+  <data name="Label_Distance" xml:space="preserve"><value>距離</value></data>
+  <data name="Label_Height" xml:space="preserve"><value>高さ</value></data>
+  <data name="Label_HShift" xml:space="preserve"><value>水平シフト</value></data>
+  <data name="Label_Fov" xml:space="preserve"><value>視野角</value></data>
+  <data name="Label_CombatCamera" xml:space="preserve"><value>戦闘カメラ</value></data>
+  <data name="Label_CenteredCamera" xml:space="preserve"><value>カメラ中央固定</value></data>
+  <data name="Label_MountCamera" xml:space="preserve"><value>騎乗カメラ</value></data>
+  <data name="Label_Steadycam" xml:space="preserve"><value>ステディカム</value></data>
+  <data name="Label_CameraStyle" xml:space="preserve"><value>カメラスタイル</value></data>
+  <data name="Label_SavedPreset" xml:space="preserve"><value>保存済みプリセット</value></data>
+  <data name="Label_Preset" xml:space="preserve"><value>プリセット</value></data>
+  <data name="Label_Title" xml:space="preserve"><value>タイトル</value></data>
+  <data name="Label_Version" xml:space="preserve"><value>バージョン</value></data>
+  <data name="Label_Author" xml:space="preserve"><value>作者</value></data>
+  <data name="Label_AuthorOptional" xml:space="preserve"><value>作者 (任意)</value></data>
+  <data name="Label_NexusUrl" xml:space="preserve"><value>Nexus URL</value></data>
+  <data name="Label_Description" xml:space="preserve"><value>説明</value></data>
+  <data name="Label_DescriptionOptional" xml:space="preserve"><value>説明 (任意)</value></data>
+  <data name="Label_UrlOptional" xml:space="preserve"><value>URL — Nexus / GitHub / その他 (任意)</value></data>
+  <data name="Label_GameFolder" xml:space="preserve"><value>ゲームフォルダ:</value></data>
+  <data name="Label_PatchRegions" xml:space="preserve"><value> パッチ領域</value></data>
+  <data name="Label_BytesChanged" xml:space="preserve"><value> バイト変更</value></data>
+  <data name="Label_Regions" xml:space="preserve"><value> 領域</value></data>
+  <data name="Label_Active" xml:space="preserve"><value>有効</value></data>
+  <data name="Label_Draft" xml:space="preserve"><value>下書き</value></data>
+  <data name="Label_DraftDetail" xml:space="preserve"><value>名前を付けてプリセットを保存するまでの作業コピーです。</value></data>
+  <data name="Label_Format" xml:space="preserve"><value>形式</value></data>
+  <data name="Label_ModInfoFileName" xml:space="preserve"><value>Mod 情報 &amp; ファイル名</value></data>
+  <data name="Label_PrepareExport" xml:space="preserve"><value>エクスポート準備</value></data>
+  <data name="Label_SaveExport" xml:space="preserve"><value>保存</value></data>
+  <data name="Label_Name" xml:space="preserve"><value>名前</value></data>
+  <data name="Label_NameRequired" xml:space="preserve"><value>名前 *</value></data>
+  <data name="Label_Search" xml:space="preserve"><value>検索</value></data>
+  <data name="Label_LockOnZoom" xml:space="preserve"><value>ロックオンズーム</value></data>
+  <data name="Label_LockOnAutoRotate" xml:space="preserve"><value>ロックオン自動回転</value></data>
+  <data name="Label_CenterHud" xml:space="preserve"><value>HUD 中央寄せ</value></data>
+  <data name="Label_SafeArea" xml:space="preserve"><value>セーフエリア</value></data>
+  <data name="Label_Working" xml:space="preserve"><value>処理中...</value></data>
+  <data name="Label_Saved" xml:space="preserve"><value>保存済み</value></data>
+  <data name="Label_Installed" xml:space="preserve"><value>インストール済み</value></data>
+  <data name="Label_Restored" xml:space="preserve"><value>復元済み</value></data>
+  <data name="Label_Undone" xml:space="preserve"><value>取り消し済み</value></data>
+  <data name="Label_Or" xml:space="preserve"><value>または</value></data>
+
+  <!-- ═══ Section Headers ═══ -->
+  <data name="Section_CameraStyle" xml:space="preserve"><value>カメラスタイル</value></data>
+  <data name="Section_GlobalSettings" xml:space="preserve"><value>全体設定</value></data>
+  <data name="Section_Share" xml:space="preserve"><value>共有</value></data>
+  <data name="Section_CameraPreview" xml:space="preserve"><value>カメラプレビュー</value></data>
+  <data name="Section_FieldOfView" xml:space="preserve"><value>視野角</value></data>
+  <data name="Section_AdvancedControls" xml:space="preserve"><value>詳細コントロール</value></data>
+  <data name="Section_AdvancedCameraSettings" xml:space="preserve"><value>カメラ詳細設定</value></data>
+  <data name="Section_HowItWorks" xml:space="preserve"><value>使い方</value></data>
+  <data name="Section_Step1" xml:space="preserve"><value>ステップ 1  —  Mod 名の設定</value></data>
+  <data name="Section_Step2" xml:space="preserve"><value>ステップ 2  —  パッチの生成</value></data>
+  <data name="Section_Step3" xml:space="preserve"><value>ステップ 3  —  ファイルの保存</value></data>
+  <data name="Section_Presets" xml:space="preserve"><value>プリセット</value></data>
+  <data name="Section_UcmQuick" xml:space="preserve"><value>UCM クイック</value></data>
+  <data name="Section_CustomOffsets" xml:space="preserve"><value>カスタムオフセット</value></data>
+  <data name="Section_CenterHud" xml:space="preserve"><value>HUD 中央寄せ</value></data>
+
+  <!-- ═══ DataGrid Headers ═══ -->
+  <data name="Header_Section" xml:space="preserve"><value>セクション</value></data>
+  <data name="Header_SubElement" xml:space="preserve"><value>サブ要素</value></data>
+  <data name="Header_Attribute" xml:space="preserve"><value>属性</value></data>
+  <data name="Header_Value" xml:space="preserve"><value>値</value></data>
+  <data name="Header_Vanilla" xml:space="preserve"><value>バニラ</value></data>
+
+  <!-- ═══ Fine Tune Expander Headers ═══ -->
+  <data name="Section_OnFootZoom" xml:space="preserve"><value>A  —  徒歩ズームレベル</value></data>
+  <data name="Section_HorseZoom" xml:space="preserve"><value>B  —  馬 / 騎乗ズームレベル</value></data>
+  <data name="Section_CombatLockOn" xml:space="preserve"><value>C  —  戦闘 / ロックオン</value></data>
+  <data name="Section_CameraSmoothing" xml:space="preserve"><value>D  —  カメラスムージング / ステディカム</value></data>
+  <data name="Section_AimingCrosshair" xml:space="preserve"><value>E  —  エイム / クロスヘア位置</value></data>
+  <data name="Section_FineTuneOnFoot" xml:space="preserve"><value>A - 徒歩ズームレベル</value></data>
+  <data name="Section_FineTuneMount" xml:space="preserve"><value>B - 馬 / 騎乗ズームレベル</value></data>
+  <data name="Section_FineTuneGlobalFov" xml:space="preserve"><value>C - グローバル / FOV 範囲</value></data>
+  <data name="Section_FineTuneSpecialMounts" xml:space="preserve"><value>D - 特殊騎乗 / 移動</value></data>
+  <data name="Section_FineTuneCombat" xml:space="preserve"><value>E - 戦闘 / ロックオン</value></data>
+  <data name="Section_FineTuneSmoothing" xml:space="preserve"><value>F - カメラスムージング / ステディカム</value></data>
+  <data name="Section_FineTuneAiming" xml:space="preserve"><value>G - エイム / クロスヘア位置</value></data>
+
+  <!-- ═══ Checkbox Content ═══ -->
+  <data name="Check_CenterCharacter" xml:space="preserve"><value>キャラクターを画面中央に配置 (水平シフトを0に固定)</value></data>
+  <data name="Check_CenterCharacterShort" xml:space="preserve"><value>キャラクターを画面中央に配置</value></data>
+  <data name="Check_MountHeight" xml:space="preserve"><value>騎乗/馬の高さをプレイヤーカメラの高さに合わせる</value></data>
+  <data name="Check_Steadycam" xml:space="preserve"><value>カメラ遷移をスムーズに (状態間のズームジッターを除去)</value></data>
+  <data name="Check_LockOnAutoRotate" xml:space="preserve"><value>ロックオン時にカメラがターゲットへ自動回転しない  --  @sillib1980 提供</value></data>
+  <data name="Check_CenterHud" xml:space="preserve"><value>最大幅内でゲームプレイ HUD を中央寄せ</value></data>
+
+  <!-- ═══ ComboBox Items ═══ -->
+  <data name="Combo_Hud16x9" xml:space="preserve"><value>16:9 (1920px)</value></data>
+  <data name="Combo_Hud21x9" xml:space="preserve"><value>21:9 (2520px)</value></data>
+
+  <!-- ═══ Export Format Radio Labels ═══ -->
+  <data name="Label_FormatJson" xml:space="preserve"><value>JSON - Mod 管理ツール</value></data>
+  <data name="Label_FormatXml" xml:space="preserve"><value>XML</value></data>
+  <data name="Label_FormatPaz" xml:space="preserve"><value>0.paz</value></data>
+  <data name="Label_FormatUcmPreset" xml:space="preserve"><value>UCM プリセット (.ucmpreset)</value></data>
+
+  <!-- ═══ Import Source Labels ═══ -->
+  <data name="Label_ImportModPackage" xml:space="preserve"><value>Mod 管理ツールパッケージ (フォルダ)</value></data>
+  <data name="Label_ImportCameraXml" xml:space="preserve"><value>カメラ XML ファイル (.xml)</value></data>
+  <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ アーカイブ (.paz)</value></data>
+  <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM プリセット (.ucmpreset)</value></data>
+  <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON Mod Manager または CDUMM の JSON パッチ</value></data>
+  <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml ファイル</value></data>
+  <data name="Label_ImportPazDesc" xml:space="preserve"><value>カメラデータを含むゲーム .paz ファイル</value></data>
+  <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>他のユーザーの UCM プリセットファイル</value></data>
+
+  <!-- ═══ Preset Type Labels ═══ -->
+  <data name="Label_ManagedByUcm" xml:space="preserve"><value>UCM 管理</value></data>
+  <data name="Label_Recommended" xml:space="preserve"><value>(推奨)</value></data>
+  <data name="Label_FullManualControl" xml:space="preserve"><value>完全手動制御</value></data>
+
+  <!-- ═══ Sidebar Preset Group Names ═══ -->
+  <data name="Label_UcmPresetsGroup" xml:space="preserve"><value>UCM プリセット</value></data>
+  <data name="Label_CommunityPresetsGroup" xml:space="preserve"><value>コミュニティプリセット</value></data>
+  <data name="Label_MyPresetsGroup" xml:space="preserve"><value>マイプリセット</value></data>
+  <data name="Label_ImportedPresetsGroup" xml:space="preserve"><value>インポート済み</value></data>
+
+  <!-- ═══ Preset Kind Labels ═══ -->
+  <data name="Label_KindDefault" xml:space="preserve"><value>デフォルト</value></data>
+  <data name="Label_KindUcmStyle" xml:space="preserve"><value>UCM スタイル</value></data>
+  <data name="Label_KindCommunity" xml:space="preserve"><value>コミュニティ</value></data>
+  <data name="Label_KindMyPreset" xml:space="preserve"><value>マイプリセット</value></data>
+  <data name="Label_KindImportedXml" xml:space="preserve"><value>インポート XML</value></data>
+  <data name="Label_KindImportedPaz" xml:space="preserve"><value>インポート 0.paz</value></data>
+  <data name="Label_KindModPackage" xml:space="preserve"><value>Mod パッケージ</value></data>
+
+  <!-- ═══ God Mode Color Legend ═══ -->
+  <data name="Label_GodModeWhiteVanilla" xml:space="preserve"><value>白 = バニラ</value></data>
+  <data name="Label_GodModeGoldModified" xml:space="preserve"><value>金 = UCM Quick/Fine Tune で変更済み</value></data>
+  <data name="Label_GodModeGreenSacred" xml:space="preserve"><value>緑 = 固定値 (God Mode の編集値、リビルド時に保護)</value></data>
+
+  <!-- ═══ Status Messages ═══ -->
+  <data name="Status_Ready" xml:space="preserve"><value>準備完了</value></data>
+  <data name="Status_Checking" xml:space="preserve"><value>確認中...</value></data>
+  <data name="Status_UpToDate" xml:space="preserve"><value>最新版</value></data>
+  <data name="Status_Offline" xml:space="preserve"><value>オフライン</value></data>
+  <data name="Status_Installing" xml:space="preserve"><value>インストール中...</value></data>
+  <data name="Status_Installed" xml:space="preserve"><value>インストール完了！ゲームを起動してください。</value></data>
+  <data name="Status_Restoring" xml:space="preserve"><value>バニラを復元中...</value></data>
+  <data name="Status_Restored" xml:space="preserve"><value>バニラに復元しました。</value></data>
+  <data name="Status_Applying" xml:space="preserve"><value>適用中...</value></data>
+  <data name="Status_Applied" xml:space="preserve"><value>{0} 件の変更をゲームファイルに適用しました。</value></data>
+  <data name="Status_PresetLoaded" xml:space="preserve"><value>プリセット '{0}' を読み込みました。</value></data>
+  <data name="Status_PresetSaved" xml:space="preserve"><value>プリセット '{0}' を保存しました。</value></data>
+  <data name="Status_PresetDeleted" xml:space="preserve"><value>プリセット '{0}' を削除しました。</value></data>
+  <data name="Status_PresetExported" xml:space="preserve"><value>プリセット '{0}' をエクスポートしました。</value></data>
+  <data name="Status_PresetUpdated" xml:space="preserve"><value>プリセット '{0}' を更新しました。</value></data>
+  <data name="Status_ImportedAndSaved" xml:space="preserve"><value>'{0}' をインポート・保存しました — インストールで適用してください。</value></data>
+  <data name="Status_ExportedValues" xml:space="preserve"><value>{0} 件の変更値をエクスポートしました。</value></data>
+  <data name="Status_ImportedValues" xml:space="preserve"><value>{0} 件の値をインポートしました。</value></data>
+  <data name="Status_ExportedToFile" xml:space="preserve"><value>{0} にエクスポートしました。</value></data>
+  <data name="Status_InstalledXml" xml:space="preserve"><value>{0} をゲームにインストールしました。</value></data>
+  <data name="Status_ImportedFromFile" xml:space="preserve"><value>{1} から {0} 件の値をインポートしました。</value></data>
+  <data name="Status_AdvLoadedEditor" xml:space="preserve"><value>読み込み完了 — 値を編集してゲームに適用をクリックしてください。</value></data>
+  <data name="Status_ResetDefaults" xml:space="preserve"><value>デフォルトにリセットしました (プリセット + バニラ)。</value></data>
+  <data name="Status_ResetToUcmQuickDefaults" xml:space="preserve"><value>UCM Quick デフォルトとバニラにリセットしました。</value></data>
+  <data name="Status_NoChanges" xml:space="preserve"><value>適用する変更はありません。</value></data>
+  <data name="Status_NoModifiedExport" xml:space="preserve"><value>エクスポートする変更値がありません。</value></data>
+  <data name="Status_NoModifiedSave" xml:space="preserve"><value>保存する変更値がありません。</value></data>
+  <data name="Status_SelectPresetFirst" xml:space="preserve"><value>先に保存済みプリセットを選択してください。</value></data>
+  <data name="Status_SelectImportedFirst" xml:space="preserve"><value>先にインポート済みプリセットを選択してください。</value></data>
+  <data name="Status_GameFolderNotSet" xml:space="preserve"><value>ゲームフォルダが設定されていません。</value></data>
+  <data name="Status_NoGameFolder" xml:space="preserve"><value>ゲームフォルダが選択されていません。</value></data>
+  <data name="Status_InstallFailed" xml:space="preserve"><value>インストール失敗。ゲームが起動中ですか?</value></data>
+  <data name="Status_InstallFailedMessage" xml:space="preserve"><value>インストール失敗: {0}</value></data>
+  <data name="Status_NoBackup" xml:space="preserve"><value>バックアップが見つかりません。カメラは既にバニラかもしれません。</value></data>
+  <data name="Status_StaleBackup" xml:space="preserve"><value>バックアップが古いバージョンです。ゲームファイルを検証してください。</value></data>
+  <data name="Status_RestoreFailed" xml:space="preserve"><value>復元失敗。ゲームファイルを検証してください。</value></data>
+  <data name="Status_RestoreFailedMessage" xml:space="preserve"><value>復元失敗: {0}</value></data>
+  <data name="Status_RestoredVanilla" xml:space="preserve"><value>バックアップからバニラカメラを復元しました。</value></data>
+  <data name="Status_NoBackupMayBeVanilla" xml:space="preserve"><value>バックアップが見つかりません。ゲームカメラは既にバニラかもしれません。</value></data>
+  <data name="Status_StaleBackupRefreshed" xml:space="preserve"><value>前回のインストール以降にゲームが更新され、バックアップが更新されました。Steam でゲームファイルを検証してから再度インストールしてください。</value></data>
+  <data name="Status_VersionAvailable" xml:space="preserve"><value>v{0} が利用可能</value></data>
+  <data name="Status_AdvCtrlMode" xml:space="preserve"><value>詳細コントロール — パラメータ別のカメラ調整ガイド。</value></data>
+  <data name="Status_ExpertMode" xml:space="preserve"><value>エキスパートモード — XML の生の値を編集してゲームに適用をクリック。</value></data>
+  <data name="Status_JsonMode" xml:space="preserve"><value>JSON Mod 管理 — Crimson Desert Mod Manager v8 パッチファイルを生成。</value></data>
+  <data name="Status_GeneratingPatches" xml:space="preserve"><value>パッチを生成中...</value></data>
+  <data name="Status_GeneratedPatches" xml:space="preserve"><value>{0} 件のパッチ領域を生成しました。.json を保存をクリックしてエクスポートしてください。</value></data>
+  <data name="Status_SavedJsonFile" xml:space="preserve"><value>{0} を保存しました ({1} パッチ)。</value></data>
+  <data name="Status_GenerateFirst" xml:space="preserve"><value>先にパッチを生成してください。</value></data>
+  <data name="Status_JsonNeedsVanilla" xml:space="preserve"><value>JSON エクスポートにはバニラカメラファイルが必要です。</value></data>
+  <data name="Status_LoadedFromSimple" xml:space="preserve"><value>シンプルモードから値を読み込みました。</value></data>
+  <data name="Status_ResetVanilla" xml:space="preserve"><value>すべての詳細コントロールをバニラにリセットしました。</value></data>
+  <data name="Status_AdvPresetLoaded" xml:space="preserve"><value>プリセット '{0}' を読み込みました ({1} オーバーライド)。</value></data>
+  <data name="Status_AdvPresetSaved" xml:space="preserve"><value>詳細プリセット '{0}' を保存しました ({1} オーバーライド)。</value></data>
+  <data name="Status_AdvPresetDeleted" xml:space="preserve"><value>詳細プリセット '{0}' を削除しました。</value></data>
+  <data name="Status_AdvCtrlApplied" xml:space="preserve"><value>{0} 件の詳細コントロール変更をゲームに適用しました。</value></data>
+  <data name="Status_CleanedOldData" xml:space="preserve"><value>旧 v{0} データをクリーンアップしました。インストールをクリックして設定を適用してください。</value></data>
+  <data name="Status_GameFolderNotSetBrowse" xml:space="preserve"><value>ゲームフォルダが設定されていません。インストールをクリックするとフォルダ選択が表示されます。</value></data>
+  <data name="Status_XboxReadOnly" xml:space="preserve"><value>Xbox/Game Pass: ゲームフォルダが読み取り専用です。ゲームを移動するかフォルダの権限を修正してください。</value></data>
+  <data name="Status_RowCount" xml:space="preserve"><value>{0} 行表示  |  {1} 件変更済み</value></data>
+  <data name="Status_RowCountExpert" xml:space="preserve"><value>{0} 行  |  {1} 件変更済み</value></data>
+  <data name="Status_RowCountSacred" xml:space="preserve"><value>{0} 行  |  {1} 件変更済み  |  {2} 件固定値</value></data>
+  <data name="Status_ChangesCount" xml:space="preserve"><value>{0} 件の変更</value></data>
+  <data name="Status_UcmQuickMode" xml:space="preserve"><value>UCM Quick — プレビューと一般コントロールによる全体的なカメラ調整。</value></data>
+  <data name="Status_FineTuneMode" xml:space="preserve"><value>UCM Fine Tune — UCM Quick の上に重ねる深い微調整レイヤー。</value></data>
+  <data name="Status_GodModeMode" xml:space="preserve"><value>God Mode — XML の生の値を編集し、JSON としてエクスポート。</value></data>
+  <data name="Status_SacredEdit" xml:space="preserve"><value>固定値編集: この値は Quick/Fine Tune リビルドから保護されます。</value></data>
+  <data name="Status_UnlockToReset" xml:space="preserve"><value>サイドバーでプリセットのロックを解除して God Mode の値をリセットしてください。</value></data>
+  <data name="Status_InstalledSession" xml:space="preserve"><value>現在のセッションをゲームにインストールしました。カメラペイロード更新 — {0} バイト (PAZ 内 {1} 圧縮)。</value></data>
+  <data name="Status_InstalledUnchanged" xml:space="preserve"><value>インストール完了; PAZ 内のカメラエントリは変更なし ({0} バイトペイロード、{1} 圧縮)。</value></data>
+  <data name="Status_InstallingCamera" xml:space="preserve"><value>カメラをゲームにインストール中...</value></data>
+  <data name="Status_PreparingSessionXml" xml:space="preserve"><value>現在のセッション XML を準備中...</value></data>
+  <data name="Status_InstallingHud" xml:space="preserve"><value>HUD 中央寄せをインストール中...</value></data>
+  <data name="Status_RestoringHud" xml:space="preserve"><value>バニラ HUD を復元中...</value></data>
+  <data name="Status_RestoringVanillaCamera" xml:space="preserve"><value>バニラカメラを復元中...</value></data>
+  <data name="Status_DownloadFailed" xml:space="preserve"><value>ダウンロード失敗: {0}</value></data>
+  <data name="Status_UpdateFailed" xml:space="preserve"><value>更新失敗: {0}</value></data>
+  <data name="Status_ImportFailed" xml:space="preserve"><value>インポート失敗: {0}</value></data>
+  <data name="Status_ExportFailed" xml:space="preserve"><value>エクスポート失敗: {0}</value></data>
+  <data name="Status_DeleteFailed" xml:space="preserve"><value>削除失敗: {0}</value></data>
+  <data name="Status_LoadFailed" xml:space="preserve"><value>読み込み失敗: {0}</value></data>
+  <data name="Status_ResetFailed" xml:space="preserve"><value>リセット失敗: {0}</value></data>
+  <data name="Status_PrepareFailed" xml:space="preserve"><value>準備失敗: {0}</value></data>
+  <data name="Status_SaveFailed" xml:space="preserve"><value>保存失敗: {0}</value></data>
+  <data name="Status_HudInstallFailed" xml:space="preserve"><value>HUD インストール失敗: {0}</value></data>
+  <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD 復元失敗: {0}</value></data>
+  <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML インポート失敗: {0}</value></data>
+  <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz インポート失敗: {0}</value></data>
+  <data name="Status_NoManifestFound" xml:space="preserve"><value>そのフォルダに manifest.json が見つかりません。</value></data>
+  <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>Mod パッケージに playercamerapreset.xml が見つかりません。</value></data>
+  <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>このファイルは UCM プリセットではないようです (session_xml が見つかりません)。</value></data>
+  <data name="Status_FetchingCatalog" xml:space="preserve"><value>カタログを取得中...</value></data>
+  <data name="Status_FetchingCommunityCatalog" xml:space="preserve"><value>コミュニティカタログを取得中...</value></data>
+  <data name="Status_PresetsAvailable" xml:space="preserve"><value>{0} プリセット利用可能、{1} ダウンロード済み</value></data>
+  <data name="Status_NoCommunityPresets" xml:space="preserve"><value>コミュニティプリセットはまだありません。
+
+後で再確認するか、自分のプリセットを投稿してください!</value></data>
+  <data name="Status_ReadyToSave" xml:space="preserve"><value>保存の準備ができました。準備ができたら保存をクリックしてください。</value></data>
+  <data name="Status_PrepareExportFirst" xml:space="preserve"><value>先にエクスポートを準備してください。</value></data>
+  <data name="Status_NoSessionXmlAvailable" xml:space="preserve"><value>セッション XML がありません。設定を編集するかプリセットを先に読み込んでください。</value></data>
+  <data name="Status_SessionXmlEmpty" xml:space="preserve"><value>セッション XML が空です。</value></data>
+  <data name="Status_ValidatingEncoding" xml:space="preserve"><value>このゲームのエンコーディングを検証中...</value></data>
+  <data name="Status_WritingArchive" xml:space="preserve"><value>アーカイブ書き込み中 (コピー + パッチ)...</value></data>
+  <data name="Status_DecryptingPaz" xml:space="preserve"><value>0.paz を復号中...</value></data>
+  <data name="Status_ExportingCameraXml" xml:space="preserve"><value>カメラ XML をエクスポート中...</value></data>
+  <data name="Status_InstallingCameraXml" xml:space="preserve"><value>カメラ XML をインストール中...</value></data>
+  <data name="Status_SavedFile" xml:space="preserve"><value>{0} を保存しました。</value></data>
+  <data name="Status_SavedFilePatches" xml:space="preserve"><value>{0} を保存しました ({1} パッチ)。</value></data>
+  <data name="Status_ImportedPresetSaved" xml:space="preserve"><value>インポートプリセット '{0}' を {1} 件の値で保存しました。</value></data>
+  <data name="Status_ImportedModPackage" xml:space="preserve"><value>Mod パッケージを '{0}' としてインポートしました。</value></data>
+  <data name="Status_ImportedXml" xml:space="preserve"><value>'{0}' を {1} 件の値でインポートしました。</value></data>
+  <data name="Status_ImportedPaz" xml:space="preserve"><value>0.paz を '{0}' としてインポートしました。</value></data>
+  <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>UCM プリセット '{0}' をインポートしました。</value></data>
+  <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>インポートプリセット '{0}' を削除しました。</value></data>
+  <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>インポートプリセット '{0}' を God Mode に読み込みました。</value></data>
+  <data name="Status_BackupRefreshed" xml:space="preserve"><value>現在のゲームファイルからカメラバックアップが更新されました。プリセットを再適用するにはインストールを使用してください。</value></data>
+  <data name="Status_BackupRefreshFailed" xml:space="preserve"><value>カメラバックアップを自動更新できませんでした。カメラがまだ Mod 適用状態の場合は、Steam でゲームファイルを検証して UCM を再起動してください。</value></data>
+
+  <!-- ═══ Imported Preset Status ═══ -->
+  <data name="Status_ImportedNotRebuilt" xml:space="preserve"><value>インポートのみ - このゲーム向けにまだリビルドされていません。</value></data>
+  <data name="Status_ImportedReadyNoGameFolder" xml:space="preserve"><value>保存済みプリセット準備完了 - ゲームフォルダを設定してリビルド状態を確認してください。</value></data>
+  <data name="Status_ImportedReadyRebuilt" xml:space="preserve"><value>準備完了 - このゲームバージョン向けにリビルド済み。</value></data>
+  <data name="Status_ImportedNeedsRebuild" xml:space="preserve"><value>リビルド必要 - 現在のゲームバージョンが前回のビルドと異なります。</value></data>
+
+  <!-- ═══ MessageBox Messages ═══ -->
+  <data name="Msg_WrongFolder" xml:space="preserve"><value>そのフォルダに 0010\0.paz がありません。
+正しい Crimson Desert ディレクトリを選択したか確認してください。</value></data>
+  <data name="Msg_WrongFolderTitle" xml:space="preserve"><value>不正なフォルダ</value></data>
+  <data name="Msg_SetGameFolder" xml:space="preserve"><value>先にゲームフォルダを設定してください (インストールをクリックして参照)。</value></data>
+  <data name="Msg_OverwritePreset" xml:space="preserve"><value>プリセット '{0}' を現在のスライダー値で上書きしますか?</value></data>
+  <data name="Msg_OverwritePresetTitle" xml:space="preserve"><value>プリセットの上書き</value></data>
+  <data name="Msg_OverwriteAdvPreset" xml:space="preserve"><value>詳細プリセット '{0}' を現在の値で上書きしますか?</value></data>
+  <data name="Msg_XboxReadOnly" xml:space="preserve"><value>Xbox / Game Pass のゲームフォルダが読み取り専用のようです。
+
+修正するには以下のいずれかを試してください:
+  1. Xbox アプリ → Crimson Desert → 管理 → 別のドライブに移動
+  2. ゲームフォルダを右クリック → プロパティ → 「読み取り専用」のチェックを外す → すべてのサブフォルダに適用</value></data>
+  <data name="Msg_XboxReadOnlyTitle" xml:space="preserve"><value>書き込み権限が必要</value></data>
+  <data name="Msg_ConfirmImportXml" xml:space="preserve"><value>'{0}' をゲームに直接インストールしますか?
+
+現在のカメラ設定が上書きされます。</value></data>
+  <data name="Msg_ConfirmImportXmlTitle" xml:space="preserve"><value>XML インポート</value></data>
+  <data name="Msg_CannotExportJson" xml:space="preserve"><value>ゲームフォルダのカメラデータが UCM のバニラバックアップと一致しません。
+
+外部 Mod 管理ツール用の JSON パッチはバニラの「原本」バイトを使用する必要があります。Steam でゲームを検証するか (Mod 管理ツールでカメラの変更を元に戻してから) 再試行してください。</value></data>
+  <data name="Msg_CannotExportJsonTitle" xml:space="preserve"><value>JSON エクスポート不可</value></data>
+  <data name="Msg_CrashError" xml:space="preserve"><value>未処理のエラー:
+
+{0}
+
+詳細は crash.log に保存されました</value></data>
+  <data name="Msg_StartupError" xml:space="preserve"><value>起動エラー:
+{0}</value></data>
+  <data name="Msg_StartupCrash" xml:space="preserve"><value>起動時クラッシュ:
+
+{0}</value></data>
+  <data name="Msg_FailedLoadXml" xml:space="preserve"><value>カメラ XML の読み込み失敗:
+{0}</value></data>
+  <data name="Msg_AdvancedEditorTitle" xml:space="preserve"><value>詳細エディタ</value></data>
+  <data name="Msg_ExpertEditorTitle" xml:space="preserve"><value>エキスパートエディタ</value></data>
+  <data name="Msg_AdvancedControlsTitle" xml:space="preserve"><value>詳細コントロール</value></data>
+  <data name="Msg_FolderDialogError" xml:space="preserve"><value>フォルダダイアログエラー: {0}</value></data>
+  <data name="Msg_ErrorTitle" xml:space="preserve"><value>エラー</value></data>
+  <data name="Msg_OverwriteExists" xml:space="preserve"><value>この名前のプリセットは既に存在します。上書きしますか?</value></data>
+  <data name="Msg_ConfirmDelete" xml:space="preserve"><value>本当に削除しますか? この操作は元に戻せません。</value></data>
+  <data name="Msg_PresetUpdateAvailable" xml:space="preserve"><value>'{0}' の更新があります。
+
+更新前に現在のバージョンをマイプリセットにコピーしますか?</value></data>
+  <data name="Msg_RawXmlImportNotice" xml:space="preserve"><value>このプリセットは Raw XML としてインポートされ、UCM の管理対象外です。
+
+UCM Quick と Fine Tune は UCM のカメラルールシステムを使用するため、インポートした Mod の値を上書きする可能性があります。インポートデータを保護するため、God Mode 編集のみ利用可能です。
+
+ステディカムや FOV 制御などの UCM 機能を使用するには、サイドバーから新しい UCM プリセットを作成してください。</value></data>
+  <data name="Msg_FineTuneGodModeNeedGameFolder" xml:space="preserve"><value>Fine Tune と God Mode はカメラデータを読み取るためにゲームフォルダが必要です。先にゲームフォルダを設定してください。</value></data>
+  <data name="Msg_UcmPresetProtected" xml:space="preserve"><value>UCM プリセットは保護されています。{0} の変更はプリセットの丁寧に調整された値を壊す可能性があります。
+
+先にこのプリセットを複製して編集可能なコピーを作成し、Fine Tune や God Mode を自由に使用してください。
+
+{0} を読み取り専用モードで開きますか? (値の閲覧は可能ですが変更は保存されません。)</value></data>
+  <data name="Msg_GameFilesModifiedBody" xml:space="preserve"><value>ゲームのカメラファイルが UCM v2.x、別のカメラ Mod、または Mod 管理ツールによって変更されています。UCM はクリーンなバックアップを作成するためにオリジナルのバニラファイルが必要です。
+
+下のボタンをクリックして変更されたファイルを削除し、Steam でゲームを検証してオリジナルを再ダウンロードしてください。</value></data>
+  <data name="Msg_PazRemovedInstructions" xml:space="preserve"><value>0.paz を削除しました。次の手順:
+1. UCM を閉じる
+2. Steam → Crimson Desert → プロパティ → インストール済みファイル → 「ゲームファイルの整合性を検証」
+3. 検証完了後に UCM を再起動</value></data>
+  <data name="Msg_CouldNotDeletePaz" xml:space="preserve"><value>削除できませんでした: {0}
+手動で削除してください: {1}</value></data>
+  <data name="Msg_NoPamtFound" xml:space="preserve"><value>選択した 0.paz の隣に一致する 0.pamt が見つかりません。ゲームフォルダを設定して v3 が現在の 0010\0.pamt をアーカイブインデックスとして使用できるようにしてください。</value></data>
+  <data name="Msg_GameFolderNotSetForImport" xml:space="preserve"><value>ゲームフォルダが設定されていません。v3 はこのプリセットを安全にリビルドするために現在のゲームが必要です。</value></data>
+  <data name="Msg_FailedToDuplicate" xml:space="preserve"><value>複製失敗: {0}</value></data>
+  <data name="Msg_JsonExportNeedsVanilla" xml:space="preserve"><value>JSON エクスポートにはバニラカメラファイルが必要です (ゲームを検証してから再試行してください)。</value></data>
+  <data name="Msg_InstallCompletedUnexpected" xml:space="preserve"><value>インストールは完了しましたが予期しない結果が返されました。カメラが正しく適用されていない可能性があります — ゲームを起動して確認してください。</value></data>
+  <data name="Msg_RestoreCompletedUnconfirmed" xml:space="preserve"><value>復元は完了しましたが結果を確認できませんでした。ゲームを起動してカメラがバニラに戻ったか確認してください。</value></data>
+
+  <!-- ═══ Tooltips ═══ -->
+  <data name="Tip_OpenGameFolder" xml:space="preserve"><value>ゲームフォルダを開く (または手動設定のため参照)</value></data>
+  <data name="Tip_Steadycam" xml:space="preserve"><value>移動状態間のブレンディング、減衰、速度オフセットをスムーズにします。無効にするとバニラのカメラ遷移に戻ります。</value></data>
+  <data name="Tip_Kofi" xml:space="preserve"><value>Ko-fi を開く — 支援は UCM の継続に役立ちます</value></data>
+  <data name="Tip_ExportXml" xml:space="preserve"><value>現在のライブカメラ XML をファイルに保存</value></data>
+  <data name="Tip_ImportXml" xml:space="preserve"><value>カメラ XML ファイルをゲームに直接インストール</value></data>
+  <data name="Tip_LoadFromSimple" xml:space="preserve"><value>現在のシンプルモード設定からすべてのスライダーを読み込む</value></data>
+  <data name="Tip_ResetVanilla" xml:space="preserve"><value>すべてのスライダーをバニラ XML の値にリセット</value></data>
+  <data name="Tip_ImportXmlFile" xml:space="preserve"><value>playercamerapreset.xml ファイルから値を読み込む</value></data>
+  <data name="Tip_GenerateCurrent" xml:space="preserve"><value>シンプルモードで現在設定されている内容を使用</value></data>
+  <data name="Tip_GenerateFromXml" xml:space="preserve"><value>バニラと比較する playercamerapreset.xml ファイルを選択</value></data>
+  <data name="Tip_ImportPreset" xml:space="preserve"><value>カメラ XML または PAZ アーカイブをプリセットとしてインポート</value></data>
+  <data name="Tip_ExportPreset" xml:space="preserve"><value>JSON (Mod 管理ツール)、セッション XML、またはパッチ済み 0.paz で共有 — 現在の UCM セッションを使用。</value></data>
+  <data name="Tip_RestorePreset" xml:space="preserve"><value>UCM バックアップからオリジナルのカメラチャンクを復元します。</value></data>
+  <data name="Tip_InstallToGame" xml:space="preserve"><value>現在の UCM セッションをゲームファイルに直接適用します。</value></data>
+  <data name="Tip_UndoSlider" xml:space="preserve"><value>最後のスライダー変更を元に戻す</value></data>
+  <data name="Tip_ImportModPackage" xml:space="preserve"><value>manifest.json を含むフォルダを選択 — 名前、作者、カメラ XML を自動でインポート</value></data>
+  <data name="Tip_ImportXmlDirect" xml:space="preserve"><value>playercamerapreset.xml ファイルを直接選択</value></data>
+  <data name="Tip_ImportPaz" xml:space="preserve"><value>0.paz ファイルを選択 — UCM がカメラ XML を抽出します</value></data>
+  <data name="Tip_ImportUcmPreset" xml:space="preserve"><value>他の UCM ユーザーが共有した .ucmpreset ファイルをインポート</value></data>
+  <data name="Tip_Snooze7d" xml:space="preserve"><value>このリマインダーを1週間非表示</value></data>
+  <data name="Tip_DismissUntilRelaunch" xml:space="preserve"><value>次回起動まで非表示</value></data>
+  <data name="Tip_UpdateAvailable" xml:space="preserve"><value>更新あり — クリックで最新版をダウンロード</value></data>
+  <data name="Tip_BrowsePresets" xml:space="preserve"><value>プリセットの閲覧とダウンロード</value></data>
+  <data name="Tip_FovCombo" xml:space="preserve"><value>カメラファイルの各 Fov と InDoorFov にこの角度を加算します。屋内と屋外の行はそれぞれ異なるバニラ値から始まるため、God Mode では様々な最終値が表示されます — すべての場所で同じ角度にはなりません。</value></data>
+  <data name="Tip_CenteredCamera" xml:space="preserve"><value>水平シフト ~0.5 とは別です: その値は XML のバニラ側面バイアスであることが多いです。このオプションはシフトを 0 に強制し、より強力なセンタリングルールを適用します (対応箇所で RightOffset を 0 に)。</value></data>
+  <data name="Tip_LockOnAutoRotate" xml:space="preserve"><value>チェック時、ロックオン対象に向かってカメラが自動回転する代わりにその場に留まります。</value></data>
+  <data name="Tip_ResetToVanilla" xml:space="preserve"><value>バニラにリセット ({0})</value></data>
+  <data name="Tip_Vanilla" xml:space="preserve"><value>バニラ: {0}</value></data>
+  <data name="Tip_OpenCreatorPage" xml:space="preserve"><value>作者のページをブラウザで開く</value></data>
+
+  <!-- ═══ Help / Info Text ═══ -->
+  <data name="Help_ShiftExplain" xml:space="preserve"><value>キャラクターからカメラが左右にどれだけ離れるかを表します。カメラ中央固定時は 0 にロックされます。</value></data>
+  <data name="Help_ShiftCenteredOn" xml:space="preserve"><value>カメラ中央固定がキャラクターを画面中心に配置します — 調整するにはチェックを外してください</value></data>
+  <data name="Help_ShiftCenteredOff" xml:space="preserve"><value>0 = バニラ (キャラクターやや左)。中央は ~0.5。マイナス = さらに左、プラス = さらに右。</value></data>
+  <data name="Help_HShiftTipUnlocked" xml:space="preserve"><value>RightOffset に対する左右フレーミングデルタ (徒歩、騎乗、エイム、関連行)。0 はバニラの側面バイアスと一致。~0.5 に向かって増やすとファイル内の幾何学的中心に引き寄せられ、負の値はさらに左に偏ります。トップダウン FOV プレビューと一致します。下のカメラ中央固定は別機能で、このスライダーを 0 にロックしてより強力なセンタリングを適用します。</value></data>
+  <data name="Help_Limits" xml:space="preserve"><value>制限: 距離 1.5-12.0  |  高さ -1.6 ~ 0.5  |  シフト -3.0 ~ 3.0</value></data>
+  <data name="Help_PreviewShiftExplain" xml:space="preserve"><value>シフト 0 = バニラ (キャラ左)  |  0.5 = 中央  |  マイナス = さらに左  |  プラス = さらに右</value></data>
+  <data name="Help_GameUpdateNote" xml:space="preserve"><value>ゲーム更新は Mod 適用ファイルを上書きします。Crimson Desert の更新後、UCM インストールを再実行してカメラ設定を復元してください。</value></data>
+  <data name="Help_GameUpdateNoteLabel" xml:space="preserve"><value>注意:</value></data>
+  <data name="Help_AdvApplyInfo" xml:space="preserve"><value>各スライダーは現在の値とバニラデフォルト (薄く表示) を表示します。行の ↺ をクリックするとそのパラメータをバニラにリセットします。適用をクリックしてすべての変更をゲームに書き込んでください。</value></data>
+  <data name="Help_AdvChangesInfo" xml:space="preserve"><value>変更はバニラ XML の上に適用されます — シンプルモードプリセットとは相互作用しません。「シンプルから読み込み」を使用して現在のプリセットから開始してください。</value></data>
+  <data name="Help_OnFootZoomDesc" xml:space="preserve"><value>ゲームには徒歩時に 3 段階のスクロールホイールズームレベルがあります。ZL2 は最も近い視点 (デフォルト)、ZL3 は中距離、ZL4 は最も遠い視点です。各レベルはカメラ距離、高さ、水平位置を独立して制御します。待機、歩行、走行、ダッシュ、戦闘移動などすべての徒歩状態に適用されます。</value></data>
+  <data name="Help_HorseZoomDesc" xml:space="preserve"><value>馬カメラは 2 つのバニラズームレベル (ZL2-ZL3) を使用します。8 つの馬の状態すべてが同期され、実際のゲームズーム段階を維持しながら速度変更時にカメラが揺れません。</value></data>
+  <data name="Help_CombatDesc" xml:space="preserve"><value>敵をロックオンするとカメラが戦闘追跡モードに切り替わります。TargetRate はカメラが敵をどれだけ積極的に追うかを制御します — 値が低いほど手動制御が多くなります。ScreenClampRate は敵が画面中央にどれだけ近く保たれるかを制御します。</value></data>
+  <data name="Help_SmoothingDesc" xml:space="preserve"><value>移動状態間のカメラ遷移方法を制御します。BlendInTime はカメラが状態に入るまでの秒数です。OffsetLength はカメラの揺れを制御します — 0 に設定すると横方向の動きがないステディカムの雰囲気になります。</value></data>
+  <data name="Help_AimingDesc" xml:space="preserve"><value>ランタン、弓、武器ズームで狙いを定めるとカメラがクロスヘア位置に移動します。これらの RightOffset 値は水平シフトに比例してスケーリングされるため、アビリティ発動時にカメラが横に急移動しません。</value></data>
+  <data name="Help_JsonHowItWorks" xml:space="preserve"><value>このタブは Crimson Desert JSON Mod Manager v8 と互換性のある .json パッチファイルを生成します。ファイルを Mod 管理ツールの Mods/ フォルダにドロップすると、カメラ設定がトグル可能な Mod として表示されます — UCM は不要です。</value></data>
+  <data name="Help_JsonDiffExplain" xml:space="preserve"><value>パッチは変更されたカメラファイルをバニラファイルとバイト単位で比較し、差分のみを記録します。そのためゲームバージョン固有です — ゲームが更新されたらパッチを再生成してください。</value></data>
+  <data name="Help_JsonStep1Desc" xml:space="preserve"><value>この情報は Mod 管理ツール内に表示され、Mod の内容を知らせます。</value></data>
+  <data name="Help_JsonStep2Desc" xml:space="preserve"><value>パッチする設定を選択します。現在の設定はシンプルモードで現在有効な内容を使用します。XML ファイルからはエクスポート済みの playercamerapreset.xml を選択してパッチできます。</value></data>
+  <data name="Help_JsonStep3Desc" xml:space="preserve"><value>.json ファイルを保存し、Crimson Desert JSON Mod Manager のインストールフォルダ内の Mods/ フォルダにドロップしてください。トグル可能な Mod として表示されます。</value></data>
+  <data name="Help_SearchPlaceholder" xml:space="preserve"><value>属性を検索...</value></data>
+  <data name="Help_UcmQuickIntro" xml:space="preserve"><value>高速でキュレーションされた UCM レイヤーです: 全体的なカメラ調整、プレビュー、最も一般的なカメラ設定を提供します。</value></data>
+  <data name="Help_FineTuneIntro" xml:space="preserve"><value>UCM Fine Tune はキュレーションされた深い調整レイヤーです。UCM Quick の設定から始めて、UCM が意図的に公開したフィールドを細かく調整できます。</value></data>
+  <data name="Help_FineTuneGodModeNote" xml:space="preserve"><value>God Mode はファイルのすべての行を表示します。ここのスライダーは特定の属性を編集します — その数値は God Mode の同じ属性と一致するはずです。他の行は Quick (FOV ブースト、スタイル、戦闘、ステディカムなど) またはバニラから変更されるため、1 つのスライダーがグリッド全体を説明するわけではありません。</value></data>
+  <data name="Help_GodModeIntro" xml:space="preserve"><value>God Mode は生のカメラ行を公開します。UCM Quick だけでは不十分で完全な直接制御が必要な場合、または UCM Fine Tune の後さらに深く調整したい場合に使用してください。</value></data>
+  <data name="Help_GodModeSessionNote" xml:space="preserve"><value>ここの値はマージされたセッションです: Quick + Fine Tune + このグリッドでの編集。Quick の FOV は行ごとに加算されるデルタ (Fov と InDoorFov) なので角度は状態により異なります。Fine Tune はそのスライダーが制御する属性についてのみ行ごとに一致します。</value></data>
+  <data name="Help_GlobalFovDesc" xml:space="preserve"><value>これらの行は基本的な徒歩・騎乗グループ外の、より広い FOV 正規化と共有カメラシステムをカバーします。UCM Fine Tune がロックオンファミリー、戦争機械状態、水泳カメラなどの完全な Mod 範囲を反映するようにしたい場合に使用してください。</value></data>
+  <data name="Help_SpecialMountsDesc" xml:space="preserve"><value>象、ワイバーン、カヌー、戦争機械、ほうき、移動関連のカメラファミリーはすべて独自のズーム動作を持ちます。これらのコントロールは Mod が既に内部で変更している追加の騎乗値を公開します。</value></data>
+  <data name="Help_LockOnZoomDesc" xml:space="preserve"><value>ターゲットをロックオンまたはガード時のカメラ距離を、徒歩距離を基準に調整します。0% はステディカムとシームレスに繋がります。マイナス値はシネマティックなフォーカス効果でズームイン、プラス値は戦場をより広く見渡すために引きます。</value></data>
+  <data name="Help_CenterHudDesc" xml:space="preserve"><value>指定した最大幅 (ピクセル) 内でゲームプレイ HUD 要素を中央に配置します。HUD 要素が離れすぎるウルトラワイドディスプレイに便利です。ゲームプレイ HUD にのみ影響し、メニューには影響しません。wsres 提供。</value></data>
+  <data name="Help_CommunityBrowserSubtitle" xml:space="preserve"><value>UCM コミュニティが共有したカメラプリセットを閲覧します。ダウンロードしたプリセットはサイドバーに表示されます。</value></data>
+  <data name="Help_UcmBrowserSubtitle" xml:space="preserve"><value>公式 UCM カメラプリセットを閲覧・ダウンロードします。ダウンロードしたプリセットはサイドバーに表示されます。</value></data>
+  <data name="Help_ManagedByUcmDesc" xml:space="preserve"><value>UCM は 150 以上のカメラ状態を内部で管理します — 戦闘、ガード、騎乗、ロックオン全体の FOV 一貫性、すべての状態間のスムーズな遷移、ロックオン時に内側にスナップしない距離スケーリング。Quick スライダーと Fine Tune はこれらのルールの上に安全に構築されます。God Mode を使えば必要な時に個別の値をオーバーライドできます。</value></data>
+  <data name="Help_FullManualDesc" xml:space="preserve"><value>UCM ルールが適用されていないゲームのバニラカメラ XML から開始します。UCM Quick と Fine Tune はスライダーが手動編集を上書きするため無効になります — UCM は戦闘、騎乗、ロックオン、スムージング状態全体で数百の値を変更し、手動調整値と競合します。直接 XML 編集のため God Mode のみ利用可能です。他のカメラ Mod からインポートする場合や、すべての値を完全に制御したい場合に使用してください。</value></data>
+  <data name="Help_ImportedPresetsNote" xml:space="preserve"><value>インポートしたプリセットはこのアプリの隣の import_presets フォルダに保存され、サイドバーのインポート済みに表示されます。</value></data>
+  <data name="Help_ChooseImportSource" xml:space="preserve"><value>インポートするファイルタイプを選択してください。</value></data>
+  <data name="Help_PasteAdvancedImport" xml:space="preserve"><value>UCM_ADV: 文字列を貼り付けて詳細設定をインポートしてください。</value></data>
+  <data name="Help_UnsavedSession" xml:space="preserve"><value>UCM Quick から始めるか、プリセットマネージャーから読み込むか、クリエイタープリセットをインポートしてください。</value></data>
+
+  <!-- ═══ Dialog Strings ═══ -->
+  <data name="Dlg_CopyPasteHint" xml:space="preserve"><value>NexusMods、Discord などにコピー＆ペーストしてください。</value></data>
+  <data name="Dlg_PastePresetBelow" xml:space="preserve"><value>下にプリセット文字列を貼り付けてください:</value></data>
+  <data name="Dlg_PasteFromHint" xml:space="preserve"><value>NexusMods のコメント、Discord などからコピーしたもの</value></data>
+  <data name="Dlg_PasteAdvancedBelow" xml:space="preserve"><value>下に詳細設定文字列を貼り付けてください:</value></data>
+  <data name="Dlg_PasteAdvancedHint" xml:space="preserve"><value>UCM_ADV: で始まる必要があります (詳細エクスポートからコピー)</value></data>
+  <data name="Dlg_ShareString" xml:space="preserve"><value>"{0}" の共有文字列:</value></data>
+  <data name="Dlg_AdvSettingsFound" xml:space="preserve"><value>{0} 件の詳細設定が見つかりました</value></data>
+  <data name="Dlg_AdvSettingsError" xml:space="preserve"><value>{0}</value></data>
+  <data name="Dlg_NotAdvString" xml:space="preserve"><value>詳細設定文字列ではありません (UCM_ADV: で始まる必要があります)</value></data>
+  <data name="Dlg_MustStartWithUcmAdv" xml:space="preserve"><value>UCM_ADV: で始まる必要があります</value></data>
+  <data name="Dlg_InvalidPayload" xml:space="preserve"><value>無効なペイロード</value></data>
+  <data name="Dlg_SaveCustomPreset" xml:space="preserve"><value>カスタムプリセットを保存</value></data>
+  <data name="Dlg_SaveAdvancedPreset" xml:space="preserve"><value>詳細プリセットを保存</value></data>
+  <data name="Dlg_EnterPresetName" xml:space="preserve"><value>プリセット名を入力してください:</value></data>
+  <data name="Dlg_EnterImportedPresetName" xml:space="preserve"><value>インポートプリセットの名前を入力してください:</value></data>
+  <data name="Dlg_ExportPresetString" xml:space="preserve"><value>プリセット文字列のエクスポート</value></data>
+  <data name="Dlg_NamePresetForSharing" xml:space="preserve"><value>共有用プリセット名:</value></data>
+  <data name="Dlg_BrowseGameFolder" xml:space="preserve"><value>Crimson Desert フォルダを選択 ('0010' フォルダを含む場所)</value></data>
+  <data name="Dlg_BrowseModFolder" xml:space="preserve"><value>Mod フォルダを選択 (manifest.json を含む場所)</value></data>
+  <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>カメラ XML エクスポート</value></data>
+  <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>カメラ XML インポート — ゲームに直接インストール</value></data>
+  <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>playercamerapreset.xml インポート</value></data>
+  <data name="Dlg_ImportPaz" xml:space="preserve"><value>0.paz インポート — カメラ XML を抽出</value></data>
+  <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>UCM プリセットインポート</value></data>
+  <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>パッチするカメラ XML を選択</value></data>
+  <data name="Dlg_SaveJsonPatch" xml:space="preserve"><value>JSON パッチを保存</value></data>
+  <data name="Dlg_SaveCameraXml" xml:space="preserve"><value>カメラ XML を保存</value></data>
+  <data name="Dlg_SavePatchedPaz" xml:space="preserve"><value>パッチ済み 0.paz を保存</value></data>
+  <data name="Dlg_SaveUcmPreset" xml:space="preserve"><value>UCM プリセットを保存</value></data>
+  <data name="Dlg_SaveImportedPreset" xml:space="preserve"><value>インポートプリセットを保存</value></data>
+  <data name="Dlg_NewPresetItem" xml:space="preserve"><value>(新規 — スライダーを調整)</value></data>
+  <data name="Dlg_CurrentEdits" xml:space="preserve"><value>(現在の編集)</value></data>
+  <data name="Dlg_Current" xml:space="preserve"><value>(現在)</value></data>
+  <data name="Dlg_ChooseImportSource" xml:space="preserve"><value>インポートソースを選択</value></data>
+  <data name="Dlg_DeleteImportedPreset" xml:space="preserve"><value>インポートプリセットを削除</value></data>
+  <data name="Dlg_OverwriteImportedPreset" xml:space="preserve"><value>インポートプリセットを上書き</value></data>
+  <data name="Dlg_ImportingModPackage" xml:space="preserve"><value>Mod パッケージをインポート中: {0}</value></data>
+  <data name="Dlg_ImportingXml" xml:space="preserve"><value>XML をインポート中: {0}</value></data>
+  <data name="Dlg_ImportingPaz" xml:space="preserve"><value>PAZ をインポート中: {0}</value></data>
+  <data name="Dlg_ExportedPreset" xml:space="preserve"><value>エクスポート済みプリセット</value></data>
+  <data name="Dlg_ImportedCamera" xml:space="preserve"><value>インポート済みカメラ</value></data>
+  <data name="Dlg_UcmPresetReadOnly" xml:space="preserve"><value>UCM プリセット - {0}</value></data>
+
+  <!-- ═══ Filter Items ═══ -->
+  <data name="Filter_All" xml:space="preserve"><value>すべて</value></data>
+  <data name="Filter_ModifiedOnly" xml:space="preserve"><value>変更済みのみ</value></data>
+  <data name="Filter_SacredOnly" xml:space="preserve"><value>固定値のみ</value></data>
+
+  <!-- ═══ Game Path Display ═══ -->
+  <data name="GamePath_NotSet" xml:space="preserve"><value>ゲームフォルダ:  未設定  (インストールをクリックして参照)</value></data>
+  <data name="GamePath_Display" xml:space="preserve"><value>ゲームフォルダ:  {0}{1}</value></data>
+
+  <!-- ═══ Overlay / In-App Dialog ═══ -->
+  <data name="Overlay_CloseX" xml:space="preserve"><value>ダイアログを閉じる</value></data>
+
+  <!-- ═══ Tutorial Steps ═══ -->
+  <data name="Tutorial_StepCounter" xml:space="preserve"><value>ステップ {0} / {1}</value></data>
+
+  <!-- ═══ Export Format Help Text ═══ -->
+  <data name="Help_ExportJsonFormat" xml:space="preserve"><value>JSON Mod Manager または Crimson Desert Ultimate Mods Manager にインポートできるバイトパッチ .json をエクスポートします。お好みの Mod 管理ツールを使用してください — 受信者は UCM 不要です。</value></data>
+  <data name="Help_ExportXmlFormat" xml:space="preserve"><value>UCM がインストール時に使用するのと同じ正規化 (UTF-8 BOM、コメント除去) で playercamerapreset.xml をエクスポートします。Nexus テキストアップロード、手動編集、UCM 再インポートに最適です。インストールする人は該当ゲームビルドの圧縮エントリサイズが必要です。</value></data>
+  <data name="Help_ExportPazFormat" xml:space="preserve"><value>Nexus スタイルのドロップインアーカイブ: 現在の UCM セッションに合わせてカメラデータのみ更新されたゲームの 0010/0.paz のコピーです — JSON Mod 管理ツールを使わないプレイヤーはファイル 1 つを置き換えるだけです。インストールと同じゲームパッチでのみ動作します (同じアーカイブレイアウト)。Mod ページに記載してください。ダウンローダーには交換前にバニラの 0010/0.paz をバックアップするよう伝えてください。</value></data>
+  <data name="Help_ExportUcmPresetFormat" xml:space="preserve"><value>現在のセッションを .ucmpreset ファイルとしてエクスポートします。他の UCM ユーザーがプリセットフォルダにドロップしたりコミュニティカタログで共有できます。Quick、Fine Tune、God Mode 設定を含む完全なカメラ構成が含まれます。</value></data>
+  <data name="Help_ExportJsonStep2" xml:space="preserve"><value>ライブ UCM セッション (Quick、Fine Tune、または God Mode) を使用します。サイドバーでプリセットを選択するか、ディスク上の XML や PAZ から始めるにはインポートを使用してください。</value></data>
+  <data name="Help_ExportXmlStep2" xml:space="preserve"><value>準備でセッションがこのゲームフォルダに対してエンコードされるか確認し、XML ファイルを保存します。</value></data>
+  <data name="Help_ExportPazStep2" xml:space="preserve"><value>準備でゲームフォルダに対するエンコーディングを検証します。保存で完全なパッチ済み 0.paz を書き出します (大きなファイル)。セッションソースは他の形式と同じ — 必要に応じてサイドバープリセットまたは先にインポート。</value></data>
+  <data name="Help_ExportPresetStep2" xml:space="preserve"><value>エンコーディング不要 — セッションを直接保存します。上の情報フィールドを埋めて他の人に内容を伝えてください。</value></data>
+  <data name="Help_XmlEncodingMatches" xml:space="preserve"><value>XML エンコーディングがこのインストールのカメラエントリと一致します。共有や編集用に playercamerapreset.xml として保存してください。</value></data>
+  <data name="Help_PazUploadNote" xml:space="preserve"><value>アップロードサイズは完全な 0.paz と同じです。受信者はバニラをバックアップした後 ...\0010\0.paz を置き換えます。このエクスポートと同じゲームバージョンのプレイヤーにのみ共有してください。</value></data>
+  <data name="Help_ExportModInfoNote" xml:space="preserve"><value>JSON はこれらのフィールドを modinfo に使用します。XML はタイトルをデフォルト保存名として使用します。0.paz はデフォルトで 0.paz なのでリネームなしで 0010 にドロップできます。</value></data>
+  <data name="Help_GeneratedPatchReady" xml:space="preserve"><value>{0} 件のパッチ領域を生成しました。準備ができたら保存してください。</value></data>
+
+  <!-- ═══ PAZ Import Error Detail ═══ -->
+  <data name="Help_PazImportErrorDetail" xml:space="preserve"><value>通常これは PAZ ファイルが現在のインストールと異なるゲームバージョンのものであることを意味します。アーカイブインデックス (0.pamt) が PAZ ファイル構造と一致しません。
+
+修正方法:
+インポートする 0.paz と同じフォルダに一致する 0.pamt ファイルを配置してください。両方のファイルが同じゲームバージョンである必要があります。</value></data>
+
+  <!-- ═══ Loaded Preset Context ═══ -->
+  <data name="Label_UnsavedSession" xml:space="preserve"><value>未保存のセッション</value></data>
+  <data name="Label_CurrentSession" xml:space="preserve"><value>現在のセッション</value></data>
+  <data name="Label_LiveSession" xml:space="preserve"><value>ライブセッション</value></data>
+  <data name="Label_NoPresetLoaded" xml:space="preserve"><value>まだプリセットが読み込まれていません。</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+  <data name="Style_Heroic" xml:space="preserve"><value>ヒロイック  -  肩レベルOTS、優れたフレーミング</value></data>
+  <data name="Style_Panoramic" xml:space="preserve"><value>パノラミック  -  頭の高さのワイドプルバック、映画的</value></data>
+  <data name="Style_Default" xml:space="preserve"><value>バニラ  -  未変更のゲームカメラ（UCMスムージングにはSteadycamを使用）</value></data>
+  <data name="Style_CloseUp" xml:space="preserve"><value>クローズアップ  -  肩OTS、タイト（16:9風）</value></data>
+  <data name="Style_LowRider" xml:space="preserve"><value>ローライダー  -  腰の高さ、全身＋地平線</value></data>
+  <data name="Style_KneeCam" xml:space="preserve"><value>ニーカム  -  膝の高さのドラマチックなローアングル</value></data>
+  <data name="Style_DirtCam" xml:space="preserve"><value>ダートカム  -  地面レベル、超ローアングル</value></data>
+  <data name="Style_Survival" xml:space="preserve"><value>サバイバル  -  タイトなホラーゲームOTS（16:9風）</value></data>
+  <data name="Fov_0" xml:space="preserve"><value>FoVブーストなし (0°)  -  バニラは状態により変動 (40°, 45°, 53°…)</value></data>
+  <data name="Fov_10" xml:space="preserve"><value>+10° (50°)  -  最小限、16:9に最適</value></data>
+  <data name="Fov_15" xml:space="preserve"><value>+15° (55°)  -  微妙な改善</value></data>
+  <data name="Fov_20" xml:space="preserve"><value>+20° (60°)  -  21:9に最適</value></data>
+  <data name="Fov_25" xml:space="preserve"><value>+25° (65°)  -  21:9 + 32:9に最適</value></data>
+  <data name="Fov_30" xml:space="preserve"><value>+30° (70°)  -  32:9に最適</value></data>
+  <data name="Fov_40" xml:space="preserve"><value>+40° (80°)  -  極端、わずかな魚眼効果</value></data>
+  <data name="Dlg_WelcomeTitle" xml:space="preserve"><value>Ultimate Camera Modへようこそ</value></data>
+  <data name="Dlg_WelcomeBody" xml:space="preserve"><value>始める前に、UCMがクリーンなベースラインバックアップを作成できるよう、ゲームファイルが未変更（バニラ）の状態である必要があります。
+
+以前にUCM v2.x、他のカメラMOD、またはゲームファイルを変更するMODマネージャーを使用した場合は、まず確認してください：
+
+Steam → Crimson Desert → プロパティ → インストール済みファイル → 「ゲームファイルの整合性を確認」
+
+ゲームファイルを確認しましたか？</value></data>
+  <data name="Btn_YesContinue" xml:space="preserve"><value>はい、続行</value></data>
+  <data name="Btn_NoCloseUcm" xml:space="preserve"><value>いいえ、UCMを閉じる</value></data>
+  <data name="Tutorial_Step1Title" xml:space="preserve"><value>プリセット一覧</value></data>
+  <data name="Tutorial_Step1Desc" xml:space="preserve"><value>プリセットサイドバーです。Browseをクリックして公式UCMプリセットやコミュニティプリセットをダウンロードできます。自分のプリセットやインポートしたものもここに表示されます。プリセットをクリックして読み込みます。</value></data>
+  <data name="Tutorial_Step2Title" xml:space="preserve"><value>3つの編集ティア</value></data>
+  <data name="Tutorial_Step2Desc" xml:space="preserve"><value>UCM Quickは素早い変更、Fine Tuneはすべてのカメラ状態の詳細制御、God ModeはRAW XML編集用です。変更は3つのティア全体に自動的に同期されます。</value></data>
+  <data name="Tutorial_Step3Title" xml:space="preserve"><value>カメラ設定</value></data>
+  <data name="Tutorial_Step3Desc" xml:space="preserve"><value>カメラ距離、高さ、水平シフト、視野角、ロックオンズーム、カメラ動作を調整します。ライブプレビューが調整に応じてリアルタイムで更新されます。</value></data>
+  <data name="Tutorial_Step4Title" xml:space="preserve"><value>ライブプレビュー</value></data>
+  <data name="Tutorial_Step4Desc" xml:space="preserve"><value>カメラプレビューはキャラクターのフレーミングと距離を表示します。視野角ダイアグラムは上から見たFoVコーンを表示します。設定を調整すると両方がリアルタイムで更新されます。</value></data>
+  <data name="Tutorial_Step5Title" xml:space="preserve"><value>エクスポート＆インストール</value></data>
+  <data name="Tutorial_Step5Desc" xml:space="preserve"><value>設定をJSON（MODマネージャー用）、XML、0.paz、または.ucmpresetとしてエクスポートして共有できます。またはInstall to Gameをクリックしてゲームファイルに直接適用します。</value></data>
+  <data name="Tutorial_Step6Title" xml:space="preserve"><value>もうひとつ...</value></data>
+  <data name="Tutorial_Step6Desc" xml:space="preserve"><value>このプロジェクトにあまりにも多くの時間を費やしました。UCMがカメラのストレスを軽減したなら、コーヒーをおごってください。おごらなくても大丈夫です。どちらにしても作り続けます。でもコーヒーは助かります。</value></data>
+  <data name="Dlg_UpdatedTitle" xml:space="preserve"><value>v{0}に更新されました</value></data>
+  <data name="Dlg_UpdatedBody" xml:space="preserve"><value>おかえりなさい！UCMが更新されました。
+
+新機能：
+- Sacred God Mode：編集内容がQuick/Fine Tuneの再ビルドから永久に保護されます
+- Lock-on Auto-Rotateトグル（@sillib1980氏提供）
+- God Modeでのsacred値の緑色インジケーター
+- 修正：sacred値がInstallとすべてのエクスポートに正しく含まれるようになりました
+
+プリセットと設定は保持されています。</value></data>
+  <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>おかえりなさい！UCMがv{0}から更新されました。
+
+新機能：
+- Sacred God Mode：編集内容がQuick/Fine Tuneの再ビルドから永久に保護されます
+- Lock-on Auto-Rotateトグル（@sillib1980氏提供）
+- God Modeでのsacred値の緑色インジケーター
+- 修正：sacred値がInstallとすべてのエクスポートに正しく含まれるようになりました
+
+プリセットと設定は保持されています。</value></data>
+  <data name="Toast_PresetLoaded" xml:space="preserve"><value>プリセット読み込み完了</value></data>
+  <data name="Toast_PresetRenamed" xml:space="preserve"><value>プリセット名変更完了</value></data>
+  <data name="Toast_PresetDuplicated" xml:space="preserve"><value>プリセット複製完了</value></data>
+  <data name="Toast_PresetRebuilt" xml:space="preserve"><value>プリセット再ビルド完了</value></data>
+  <data name="Toast_PresetCreated" xml:space="preserve"><value>プリセット '{0}' が作成されました</value></data>
+  <data name="Toast_ImportedPresetLoaded" xml:space="preserve"><value>インポートしたプリセット読み込み完了</value></data>
+  <data name="Status_PresetNameExists" xml:space="preserve"><value>'{0}' という名前のプリセットは既に存在します。</value></data>
+  <data name="Status_PresetRenamed" xml:space="preserve"><value>プリセット '{0}' が '{1}' に名前変更されました。</value></data>
+  <data name="Status_PresetDuplicated" xml:space="preserve"><value>プリセット '{0}' が '{1}' として複製されました。</value></data>
+  <data name="Status_ImportedPresetRebuilt" xml:space="preserve"><value>インポートしたプリセット '{0}' が現在のゲーム用に再ビルドされました。</value></data>
+  <data name="Status_GameFolderNotSetManual" xml:space="preserve"><value>ゲームフォルダが設定されていません。バニラカメラデータなしではマニュアルプリセットを作成できません。</value></data>
+  <data name="Status_OnlyImportedNeedRebuild" xml:space="preserve"><value>インポートされたXML / 0.pazプリセットのみ再ビルドが必要です。</value></data>
+  <data name="Status_LoadPresetFirstForExport" xml:space="preserve"><value>まずこのプリセットを現在のセッションに読み込んでから、Export JSONから生成してください。</value></data>
+  <data name="Status_FailedGenerateBuiltins" xml:space="preserve"><value>ビルトインプリセットの生成に失敗しました。</value></data>
+  <data name="Status_PresetFileNotFound" xml:space="preserve"><value>プリセットファイルが見つかりません: {0}</value></data>
+  <data name="Status_CouldNotActivatePreset" xml:space="preserve"><value>プリセットをアクティブにできません: {0}</value></data>
+  <data name="Status_PresetLocked" xml:space="preserve"><value>プリセット '{0}' はロックされています — 編集するにはロックを解除してください。</value></data>
+  <data name="Status_PresetUnlocked" xml:space="preserve"><value>プリセット '{0}' がロック解除されました。</value></data>
+  <data name="Status_RebuildFailed" xml:space="preserve"><value>再ビルド失敗: {0}</value></data>
+  <data name="Msg_FailedCreatePreset" xml:space="preserve"><value>プリセット作成に失敗</value></data>
+  <data name="Msg_FailedGeneratePresets" xml:space="preserve"><value>プリセット生成に失敗</value></data>
+  <data name="Status_ImportedPresetNoXml" xml:space="preserve"><value>インポートしたプリセット '{0}' には埋め込みXMLがなかったため、保存された設定から再ビルドしました。</value></data>
+  <data name="Status_FailedLoadImported" xml:space="preserve"><value>インポートしたプリセット '{0}' の読み込みに失敗しました。</value></data>
+  <data name="Dlg_ImportXmlAsSavedPreset" xml:space="preserve"><value>playercamerapreset.xmlを保存済みプリセットとしてインポート</value></data>
+  <data name="FineTune_SharedFov" xml:space="preserve"><value>共有FoV</value></data>
+  <data name="FineTune_TwoTargetFraming" xml:space="preserve"><value>2ターゲットフレーミング</value></data>
+  <data name="FineTune_TraversalFov" xml:space="preserve"><value>トラバーサルFoV</value></data>
+  <data name="FineTune_Elephant" xml:space="preserve"><value>エレファント</value></data>
+  <data name="FineTune_Wyvern" xml:space="preserve"><value>ワイバーン</value></data>
+  <data name="FineTune_CanoeWarmachineBroom" xml:space="preserve"><value>カヌー / ウォーマシン / ブルーム</value></data>
+  <data name="FineTune_LockOnTracking" xml:space="preserve"><value>Lock-On トラッキング</value></data>
+  <data name="FineTune_FovTouchPoints" xml:space="preserve"><value>FoVタッチポイント</value></data>
+  <data name="FineTune_OnFootCombatSmoothing" xml:space="preserve"><value>徒歩・戦闘スムージング</value></data>
+  <data name="FineTune_MovementTransitions" xml:space="preserve"><value>移動トランジション</value></data>
+  <data name="FineTune_ExtLockOnCombatTransitions" xml:space="preserve"><value>拡張Lock-Onおよび戦闘トランジション</value></data>
+  <data name="FineTune_OnFootFollowBehavior" xml:space="preserve"><value>徒歩フォロー動作</value></data>
+  <data name="FineTune_HorseStateSync" xml:space="preserve"><value>馬状態同期</value></data>
+  <data name="FineTune_TraversalFraming" xml:space="preserve"><value>トラバーサルフレーミング</value></data>
+  <data name="FineTune_LanternSpotlight" xml:space="preserve"><value>ランタン / スポットライト</value></data>
+  <data name="FineTune_BlindingFlash" xml:space="preserve"><value>ブラインディングフラッシュ</value></data>
+  <data name="FineTune_WeaponAimZoom" xml:space="preserve"><value>武器エイム / ズーム</value></data>
+  <data name="FineTune_Bow" xml:space="preserve"><value>弓</value></data>
+  <data name="FineTune_GlideFreeFall" xml:space="preserve"><value>グライド / フリーフォール</value></data>
+  <data name="FineTune_OnFootFov" xml:space="preserve"><value>徒歩FoV</value></data>
+  <data name="FineTune_CombatFov" xml:space="preserve"><value>戦闘FoV</value></data>
+  <data name="FineTune_ForceTitanCinematicFov" xml:space="preserve"><value>Force/Titan/Cinematic FoV</value></data>
+  <data name="FineTune_WarmachineBroomFov" xml:space="preserve"><value>ウォーマシン/ブルーム FoV</value></data>
+  <data name="FineTune_ElephantFov" xml:space="preserve"><value>エレファントFoV</value></data>
+  <data name="FineTune_WyvernFov" xml:space="preserve"><value>ワイバーンFoV</value></data>
+  <data name="FineTune_SwimFov" xml:space="preserve"><value>水泳FoV</value></data>
+  <data name="FineTune_InteractionZl3Max" xml:space="preserve"><value>Interaction ZL3 Max</value></data>
+  <data name="FineTune_InteractionZl4Max" xml:space="preserve"><value>Interaction ZL4 Max</value></data>
+  <data name="FineTune_SwimFovTraversal" xml:space="preserve"><value>水泳FoV</value></data>
+  <data name="FineTune_ClimbFov" xml:space="preserve"><value>クライムFoV</value></data>
+  <data name="FineTune_GlideFov" xml:space="preserve"><value>グライドFoV</value></data>
+  <data name="FineTune_FreefallFov" xml:space="preserve"><value>フリーフォールFoV</value></data>
+  <data name="FineTune_ZoomLevelN" xml:space="preserve"><value>ズームレベル {0}</value></data>
+  <data name="FineTune_ElephantZlN" xml:space="preserve"><value>Elephant ZL{0}</value></data>
+  <data name="FineTune_ElephantZlNHeight" xml:space="preserve"><value>Elephant ZL{0} Height</value></data>
+  <data name="FineTune_WyvernZlN" xml:space="preserve"><value>Wyvern ZL{0}</value></data>
+  <data name="FineTune_CanoeZlN" xml:space="preserve"><value>Canoe ZL{0}</value></data>
+  <data name="FineTune_WarmachineZlN" xml:space="preserve"><value>Warmachine ZL{0}</value></data>
+  <data name="FineTune_BroomZlN" xml:space="preserve"><value>Broom ZL{0}</value></data>
+  <data name="FineTune_ZlNZoomDistance" xml:space="preserve"><value>ZL{0} ZoomDistance</value></data>
+  <data name="FineTune_WeaponLockOnFov" xml:space="preserve"><value>Weapon LockOn FoV</value></data>
+  <data name="FineTune_WeaponTwoTargetFov" xml:space="preserve"><value>Weapon TwoTarget FoV</value></data>
+  <data name="FineTune_InteractionTwoTargetFov" xml:space="preserve"><value>Interaction TwoTarget FoV</value></data>
+  <data name="FineTune_BossLockOnFov" xml:space="preserve"><value>Boss LockOn FoV</value></data>
+  <data name="FineTune_LockOnSystemFov" xml:space="preserve"><value>LockOn System FoV</value></data>
+  <data name="FineTune_ReviveLockOnFov" xml:space="preserve"><value>Revive LockOn FoV</value></data>
+  <data name="FineTune_NonRotateLockOnFov" xml:space="preserve"><value>Non-Rotate LockOn FoV</value></data>
+  <data name="FineTune_WrestleLockOnFov" xml:space="preserve"><value>Wrestle LockOn FoV</value></data>
+  <data name="FineTune_StartAggroFov" xml:space="preserve"><value>StartAggro FoV</value></data>
+  <data name="FineTune_WantedFov" xml:space="preserve"><value>Wanted FoV</value></data>
+  <data name="FineTune_RunBlendIn" xml:space="preserve"><value>走りブレンドイン</value></data>
+  <data name="FineTune_RunBlendOut" xml:space="preserve"><value>走りブレンドアウト</value></data>
+  <data name="FineTune_GuardBlendIn" xml:space="preserve"><value>ガードブレンドイン</value></data>
+  <data name="FineTune_GuardBlendOut" xml:space="preserve"><value>ガードブレンドアウト</value></data>
+  <data name="FineTune_RushBlendIn" xml:space="preserve"><value>ラッシュブレンドイン</value></data>
+  <data name="FineTune_RushBlendOut" xml:space="preserve"><value>ラッシュブレンドアウト</value></data>
+  <data name="FineTune_RunSway" xml:space="preserve"><value>走りスウェイ</value></data>
+  <data name="FineTune_CombatRunSway" xml:space="preserve"><value>戦闘走りスウェイ</value></data>
+  <data name="FineTune_CombatSprintSway" xml:space="preserve"><value>戦闘スプリントスウェイ</value></data>
+  <data name="FineTune_FollowSprintSway" xml:space="preserve"><value>フォロースプリントスウェイ</value></data>
+  <data name="FineTune_AnimalIdleBlendIn" xml:space="preserve"><value>動物アイドルブレンドイン</value></data>
+  <data name="FineTune_AnimalRunBlendIn" xml:space="preserve"><value>動物走りブレンドイン</value></data>
+  <data name="FineTune_AnimalRunSway" xml:space="preserve"><value>動物走りスウェイ</value></data>
+  <data name="FineTune_AnimalSprintBlendIn" xml:space="preserve"><value>動物スプリントブレンドイン</value></data>
+  <data name="FineTune_AnimalSprintSway" xml:space="preserve"><value>動物スプリントスウェイ</value></data>
+  <data name="FineTune_AnimalSprintDamp" xml:space="preserve"><value>動物スプリントダンプ</value></data>
+  <data name="FineTune_LockOnBlendIn" xml:space="preserve"><value>LockOnブレンドイン</value></data>
+  <data name="FineTune_LockOnBlendOut" xml:space="preserve"><value>LockOnブレンドアウト</value></data>
+  <data name="FineTune_LockOnSystemBlendIn" xml:space="preserve"><value>LockOn Systemブレンドイン</value></data>
+  <data name="FineTune_LockOnSystemBlendOut" xml:space="preserve"><value>LockOn Systemブレンドアウト</value></data>
+  <data name="FineTune_BossLockOnBlendIn" xml:space="preserve"><value>Boss LockOnブレンドイン</value></data>
+  <data name="FineTune_BossLockOnBlendOut" xml:space="preserve"><value>Boss LockOnブレンドアウト</value></data>
+  <data name="FineTune_FreefallEntryBlendIn" xml:space="preserve"><value>フリーフォール進入ブレンドイン</value></data>
+  <data name="FineTune_FreefallEntryBlendOut" xml:space="preserve"><value>フリーフォール進入ブレンドアウト</value></data>
+  <data name="FineTune_FreefallBlendIn" xml:space="preserve"><value>フリーフォールブレンドイン</value></data>
+  <data name="FineTune_FreefallBlendOut" xml:space="preserve"><value>フリーフォールブレンドアウト</value></data>
+  <data name="FineTune_SuperJumpBlendIn" xml:space="preserve"><value>スーパージャンプブレンドイン</value></data>
+  <data name="FineTune_SuperJumpBlendOut" xml:space="preserve"><value>スーパージャンプブレンドアウト</value></data>
+  <data name="FineTune_RopePullBlendIn" xml:space="preserve"><value>ロープ引きブレンドイン</value></data>
+  <data name="FineTune_RopePullBlendOut" xml:space="preserve"><value>ロープ引きブレンドアウト</value></data>
+  <data name="FineTune_RopeSwingBlendIn" xml:space="preserve"><value>ロープスイングブレンドイン</value></data>
+  <data name="FineTune_RopeSwingBlendOut" xml:space="preserve"><value>ロープスイングブレンドアウト</value></data>
+  <data name="FineTune_HitThrownBlendIn" xml:space="preserve"><value>ヒット/スローブレンドイン</value></data>
+  <data name="FineTune_HitThrownBlendOut" xml:space="preserve"><value>ヒット/スローブレンドアウト</value></data>
+  <data name="FineTune_MountLockOnBlendIn" xml:space="preserve"><value>マウントLockOnブレンドイン</value></data>
+  <data name="FineTune_MountLockOnBlendOut" xml:space="preserve"><value>マウントLockOnブレンドアウト</value></data>
+  <data name="FineTune_ReviveLockOnBlendIn" xml:space="preserve"><value>Revive LockOnブレンドイン</value></data>
+  <data name="FineTune_ReviveLockOnBlendOut" xml:space="preserve"><value>Revive LockOnブレンドアウト</value></data>
+  <data name="FineTune_ForceLockOnBlendIn" xml:space="preserve"><value>Force LockOnブレンドイン</value></data>
+  <data name="FineTune_ForceLockOnBlendOut" xml:space="preserve"><value>Force LockOnブレンドアウト</value></data>
+  <data name="FineTune_TitanLockOnBlendIn" xml:space="preserve"><value>Titan LockOnブレンドイン</value></data>
+  <data name="FineTune_TitanLockOnBlendOut" xml:space="preserve"><value>Titan LockOnブレンドアウト</value></data>
+  <data name="FineTune_NonRotateLockOnBlendIn" xml:space="preserve"><value>Non-rotate LockOnブレンドイン</value></data>
+  <data name="FineTune_NonRotateLockOnBlendOut" xml:space="preserve"><value>Non-rotate LockOnブレンドアウト</value></data>
+  <data name="FineTune_WrestleLockOnBlendIn" xml:space="preserve"><value>Wrestle LockOnブレンドイン</value></data>
+  <data name="FineTune_WrestleLockOnBlendOut" xml:space="preserve"><value>Wrestle LockOnブレンドアウト</value></data>
+  <data name="FineTune_AggroBlendIn" xml:space="preserve"><value>アグロブレンドイン</value></data>
+  <data name="FineTune_AggroBlendOut" xml:space="preserve"><value>アグロブレンドアウト</value></data>
+  <data name="FineTune_WantedBlendIn" xml:space="preserve"><value>ウォンテッドブレンドイン</value></data>
+  <data name="FineTune_WantedBlendOut" xml:space="preserve"><value>ウォンテッドブレンドアウト</value></data>
+  <data name="FineTune_WarmachineAimBlendIn" xml:space="preserve"><value>ウォーマシンエイムブレンドイン</value></data>
+  <data name="FineTune_WarmachineAimBlendOut" xml:space="preserve"><value>ウォーマシンエイムブレンドアウト</value></data>
+  <data name="FineTune_WarmachineDashBlendIn" xml:space="preserve"><value>ウォーマシンダッシュブレンドイン</value></data>
+  <data name="FineTune_WarmachineDashBlendOut" xml:space="preserve"><value>ウォーマシンダッシュブレンドアウト</value></data>
+  <data name="FineTune_OnFootYawFollow" xml:space="preserve"><value>徒歩ヨーフォロー</value></data>
+  <data name="FineTune_OnFootPitchFollow" xml:space="preserve"><value>徒歩ピッチフォロー</value></data>
+  <data name="FineTune_OnFootFollowDelay" xml:space="preserve"><value>徒歩フォロー遅延</value></data>
+  <data name="FineTune_OnFootPivotDamping" xml:space="preserve"><value>徒歩ピボットダンピング</value></data>
+  <data name="FineTune_HorseYawFollow" xml:space="preserve"><value>馬ヨーフォロー</value></data>
+  <data name="FineTune_HorsePitchFollow" xml:space="preserve"><value>馬ピッチフォロー</value></data>
+  <data name="FineTune_HorseFollowDelay" xml:space="preserve"><value>馬フォロー遅延</value></data>
+  <data name="FineTune_HorseDefaultPitch" xml:space="preserve"><value>馬デフォルトピッチ</value></data>
+  <data name="FineTune_HorseBlendIn" xml:space="preserve"><value>馬ブレンドイン</value></data>
+  <data name="FineTune_HorseBlendOut" xml:space="preserve"><value>馬ブレンドアウト</value></data>
+  <data name="FineTune_HorsePivotDamping" xml:space="preserve"><value>馬ピボットダンピング</value></data>
+  <data name="FineTune_HorseSway" xml:space="preserve"><value>馬スウェイ</value></data>
+  <data name="FineTune_HorseSwayDamp" xml:space="preserve"><value>馬スウェイダンプ</value></data>
+  <data name="FineTune_AimDist" xml:space="preserve"><value>{0} Dist</value></data>
+  <data name="FineTune_AimHeight" xml:space="preserve"><value>{0} Height</value></data>
+  <data name="FineTune_AimShift" xml:space="preserve"><value>{0} Shift</value></data>
+  <data name="FineTune_SwimZl2Dist" xml:space="preserve"><value>Swim ZL2 Dist</value></data>
+  <data name="FineTune_SwimZl2Height" xml:space="preserve"><value>Swim ZL2 Height</value></data>
+  <data name="FineTune_ClimbZl2Dist" xml:space="preserve"><value>Climb ZL2 Dist</value></data>
+  <data name="FineTune_ClimbZl2Height" xml:space="preserve"><value>Climb ZL2 Height</value></data>
+  <data name="FineTune_GlideZl2Dist" xml:space="preserve"><value>Glide ZL2 Dist</value></data>
+  <data name="FineTune_GlideZl2Height" xml:space="preserve"><value>Glide ZL2 Height</value></data>
+  <data name="FineTune_FreefallZl2Dist" xml:space="preserve"><value>Freefall ZL2 Dist</value></data>
+  <data name="FineTune_FreefallZl2Height" xml:space="preserve"><value>Freefall ZL2 Height</value></data>
+  <data name="FineTune_ResetBtn" xml:space="preserve"><value>リセット</value></data>
+  <data name="Status_ApplyRemovedFromV3" xml:space="preserve"><value>Apply to gameはv3で削除されました。Export JSONを使用してこれらのオーバーライドをパッケージしてください。</value></data>
+  <data name="Status_CouldNotReadGameFiles" xml:space="preserve"><value>ゲームカメラファイルを読み取れませんでした: {0}</value></data>
+  <data name="Status_GameFolderScanFailed" xml:space="preserve"><value>ゲームフォルダスキャン失敗: {0}</value></data>
+  <data name="Btn_TooLarge" xml:space="preserve"><value>大きすぎます</value></data>
+  <data name="Btn_Invalid" xml:space="preserve"><value>無効</value></data>
+  <data name="Btn_Failed" xml:space="preserve"><value>失敗</value></data>
+  <data name="Status_CouldNotVerifyFiles" xml:space="preserve"><value>カメラファイルを検証できませんでした: {0}</value></data>
+  <data name="Status_WarningCouldNotApplyToEditors" xml:space="preserve"><value>警告: プリセットをエディタに完全に適用できませんでした: {0}</value></data>
+  <data name="Toast_UcmPresetDuplicateForFineTune" xml:space="preserve"><value>UCMプリセット -- Fine TuneまたはGod Modeを使用するには複製してください</value></data>
+  <data name="Toast_UcmPresetDuplicateForOffsets" xml:space="preserve"><value>UCMプリセット -- 距離と高さを調整するには複製してください</value></data>
+  <data name="Toast_UcmPresetDuplicateForEdit" xml:space="preserve"><value>UCMプリセット -- 編集可能なコピーを作成するには複製してください</value></data>
+  <data name="Toast_PresetLockedUnlock" xml:space="preserve"><value>プリセットはロックされています -- 編集するにはロックを解除してください</value></data>
+  <data name="Tip_ControlledBySteadycam" xml:space="preserve"><value>Steadycamによって制御されています -- 手動調整するにはSteadycamのチェックを外してください</value></data>
+  <data name="Tip_SacredControlledByGodMode" xml:space="preserve"><value>Sacred -- God Modeによって制御されています</value></data>
+  <data name="FineTune_SectionZoomDistances" xml:space="preserve"><value>{0} - ズーム距離</value></data>
+  <data name="Label_GroupGameDefault" xml:space="preserve"><value>ゲームデフォルト</value></data>
+  <data name="Label_GroupUcmPresets" xml:space="preserve"><value>UCM プリセット</value></data>
+  <data name="Label_GroupCommunityPresets" xml:space="preserve"><value>コミュニティプリセット</value></data>
+  <data name="Label_GroupMyPresets" xml:space="preserve"><value>マイプリセット</value></data>
+  <data name="Label_GroupImported" xml:space="preserve"><value>インポート済み</value></data>
+  <data name="Label_GroupOther" xml:space="preserve"><value>その他</value></data>
+  <data name="Tip_UcmPresetDuplicate" xml:space="preserve"><value>UCM プリセット — 編集可能なコピーを作成するには複製してください</value></data>
+  <data name="Tip_LockedPreset" xml:space="preserve"><value>ロック中 — クリックしてこのプリセットの編集を許可します</value></data>
+  <data name="Tip_UnlockedPreset" xml:space="preserve"><value>ロック解除中 — クリックして変更を防止します</value></data>
+  <data name="Btn_BuyCoffee" xml:space="preserve"><value>☕ コーヒーをおごる</value></data>
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+
+  <!-- ═══ New v3.1 Keys ═══ -->
+
+</root>

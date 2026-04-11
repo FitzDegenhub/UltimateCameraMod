@@ -18,6 +18,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using UltimateCameraMod.V3.Controls;
+using UltimateCameraMod.V3.Localization;
 using UltimateCameraMod.V3.Models;
 using UltimateCameraMod.Models;
 using UltimateCameraMod.Services;
@@ -31,9 +32,7 @@ public partial class MainWindow : Window
         try
         {
             string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
-            _advAllRows = CameraMod.ParseXmlToRows(vanillaXml)
-                .Where(r => r.Section.StartsWith("Player_", StringComparison.Ordinal))
-                .ToList();
+            _advAllRows = CameraMod.ParseXmlToRows(vanillaXml);
 
             string liveXml = _sessionXml ?? CameraMod.ReadLiveXml(_gameDir);
             var liveRows = CameraMod.ParseXmlToRows(liveXml);
@@ -68,11 +67,11 @@ public partial class MainWindow : Window
             AdvSearchBox.Foreground = lightText;
             AdvSearchBox.CaretBrush = lightText;
 
-            SetStatus("God Mode — edit raw XML values and export them as JSON.", "TextDim");
+            SetStatus(L("Status_GodModeMode"), "TextDim");
         }
         catch (Exception ex)
         {
-            _ = ShowAlertOverlayAsync("God Mode Error", $"Failed to load camera XML:\n{ex.Message}", isError: true);
+            _ = ShowAlertOverlayAsync(L("Title_GodModeError"), string.Format(L("Status_FailedLoadCameraXml"), ex.Message), isError: true);
             SwitchAppMode("simple");
         }
 
@@ -92,16 +91,16 @@ public partial class MainWindow : Window
     private void AdvPopulateFilter()
     {
         AdvFilterCombo.Items.Clear();
-        AdvFilterCombo.Items.Add("All");
+        AdvFilterCombo.Items.Add(L("Filter_All"));
         AdvFilterCombo.Items.Add(new System.Windows.Controls.TextBlock
         {
-            Text = "Modified only",
+            Text = L("Filter_ModifiedOnly"),
             Foreground = (Brush)FindResource("AccentBrush"),
             Tag = "Modified only"
         });
         AdvFilterCombo.Items.Add(new System.Windows.Controls.TextBlock
         {
-            Text = "Sacred only",
+            Text = L("Filter_SacredOnly"),
             Foreground = (Brush)FindResource("SuccessBrush"),
             Tag = "Sacred only"
         });
@@ -126,8 +125,8 @@ public partial class MainWindow : Window
         int modified = _advAllRows.Count(r => r.IsModified);
         int sacred = _advAllRows.Count(r => r.IsUserEdited);
         AdvRowCountLabel.Text = sacred > 0
-            ? $"{_advFilteredRows.Count} rows  |  {modified} modified  |  {sacred} sacred"
-            : $"{_advFilteredRows.Count} rows  |  {modified} modified";
+            ? string.Format(L("Status_RowCountSacred"), _advFilteredRows.Count, modified, sacred)
+            : string.Format(L("Status_RowCountExpert"), _advFilteredRows.Count, modified);
     }
 
     private void OnAdvSearchChanged(object sender, System.Windows.Input.KeyEventArgs e) => AdvApplyFilter();
@@ -142,7 +141,7 @@ public partial class MainWindow : Window
     {
         string search = AdvSearchBox.Text?.Trim().ToLowerInvariant() ?? "";
         var selectedItem = AdvFilterCombo.SelectedItem;
-        string filter = selectedItem is System.Windows.Controls.TextBlock tb ? (tb.Tag?.ToString() ?? "All") : selectedItem?.ToString() ?? "All";
+        string filter = selectedItem is System.Windows.Controls.TextBlock tb ? (tb.Tag?.ToString() ?? "All") : (selectedItem?.ToString() == L("Filter_All") ? "All" : selectedItem?.ToString() ?? "All");
 
         var filtered = _advAllRows.AsEnumerable();
 
@@ -199,14 +198,14 @@ public partial class MainWindow : Window
             if (!_sacredToastShown && editedRow != null && editedRow.IsUserEdited)
             {
                 _sacredToastShown = true;
-                SetStatus("Sacred edit: this value is now protected from Quick/Fine Tune rebuilds.", "Success");
+                SetStatus(L("Status_SacredEdit"), "Success");
             }
         }), DispatcherPriority.ContextIdle);
     }
 
     private void OnAdvExpandAll(object sender, RoutedEventArgs e)
     {
-        bool expanding = (sender as System.Windows.Controls.Button)?.Content?.ToString() == "Expand All";
+        bool expanding = (sender as System.Windows.Controls.Button)?.Content?.ToString() == L("Btn_ExpandAll");
         if (expanding)
         {
             _godModeExpandedSections.Clear();
@@ -219,7 +218,7 @@ public partial class MainWindow : Window
         ExpertDataGrid.GroupStyle.Clear();
         ExpertDataGrid.GroupStyle.Add(BuildAdvGroupStyle(expanding));
         if (sender is System.Windows.Controls.Button btn)
-            btn.Content = expanding ? "Collapse All" : "Expand All";
+            btn.Content = expanding ? L("Btn_CollapseAll") : L("Btn_ExpandAll");
 
         ScheduleGodModeExpandHook();
     }
@@ -250,7 +249,7 @@ public partial class MainWindow : Window
     {
         if (IsActivePresetEditingLocked())
         {
-            SetStatus("Unlock this preset in the sidebar to reset God Mode values.", "Warn");
+            SetStatus(L("Status_UnlockToReset"), "Warn");
             return;
         }
 
@@ -289,26 +288,26 @@ public partial class MainWindow : Window
             AdvSaveOverrides();
             SaveCurrentUiState(immediate: true);
             _sacredToastShown = false;
-            SetStatus("Reset to UCM Quick defaults plus vanilla.", "Success");
+            SetStatus(L("Status_ResetToUcmQuickDefaults"), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Reset failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_ResetFailed"), ex.Message), "Error");
         }
     }
 
     private void OnAdvExport(object sender, RoutedEventArgs e)
     {
         var modified = _advAllRows.Where(r => r.IsModified).ToList();
-        if (modified.Count == 0) { SetStatus("No modified values to export.", "TextSecondary"); return; }
+        if (modified.Count == 0) { SetStatus(L("Status_NoModifiedExport"), "TextSecondary"); return; }
 
         var payload = new Dictionary<string, string>();
         foreach (var r in modified) payload[r.FullKey] = r.Value;
         string json = JsonSerializer.Serialize(payload);
         string encoded = "UCM_ADV:" + Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
 
-        _ = ShowExportStringOverlayAsync("God Mode Overrides", encoded);
-        SetStatus($"Exported {modified.Count} modified values.", "Success");
+        _ = ShowExportStringOverlayAsync(L("Title_GodModeOverrides"), encoded);
+        SetStatus(string.Format(L("Status_ExportedValues"), modified.Count), "Success");
     }
 
     private async void OnAdvImport(object sender, RoutedEventArgs e)
@@ -327,14 +326,14 @@ public partial class MainWindow : Window
         AdvApplyFilter();
         AdvSaveOverrides();
         SaveCurrentUiState(immediate: true);
-        SetStatus($"Imported {applied} values.", "Success");
+        SetStatus(string.Format(L("Status_ImportedValues"), applied), "Success");
     }
 
     private void OnAdvImportXml(object sender, RoutedEventArgs e)
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Import playercamerapreset.xml",
+            Title = L("Dlg_ImportXmlFile"),
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = "playercamerapreset.xml"
         };
@@ -362,17 +361,17 @@ public partial class MainWindow : Window
             AdvApplyFilter();
             AdvSaveOverrides();
             SaveCurrentUiState(immediate: true);
-            SetStatus($"Imported {applied} values from {Path.GetFileName(ofd.FileName)}.", "Success");
+            SetStatus(string.Format(L("Status_ImportedFromFile"), applied, Path.GetFileName(ofd.FileName)), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"XML import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_XmlImportFailed"), ex.Message), "Error");
         }
     }
 
     private void OnAdvApply(object sender, RoutedEventArgs e)
     {
-        SetStatus("Apply to game has been removed from v3. Use Export JSON to package these overrides.", "Warn");
+        SetStatus(L("Status_ApplyRemovedFromV3"), "Warn");
     }
 
     private void AdvSaveOverrides()
@@ -419,13 +418,13 @@ public partial class MainWindow : Window
     {
         if (string.IsNullOrEmpty(_gameDir))
         {
-            SetStatus("Game folder not set.", "Warn");
+            SetStatus(L("Status_GameFolderNotSet"), "Warn");
             return;
         }
 
         var sfd = new Microsoft.Win32.SaveFileDialog
         {
-            Title = "Export Camera XML",
+            Title = L("Dlg_ExportCameraXml"),
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = "playercamerapreset.xml"
         };
@@ -433,15 +432,15 @@ public partial class MainWindow : Window
 
         string gameDir = _gameDir;
         string destPath = sfd.FileName;
-        SetGlobalBusy(true, "Exporting camera XML\u2026");
+        SetGlobalBusy(true, L("Status_ExportingCameraXml"));
         try
         {
             await Task.Run(() => CameraMod.ExportLiveXml(gameDir, destPath)).ConfigureAwait(true);
-            SetStatus($"Exported to {Path.GetFileName(destPath)}.", "Success");
+            SetStatus(string.Format(L("Status_ExportedToFile"), Path.GetFileName(destPath)), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Export failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_ExportFailed"), ex.Message), "Error");
         }
         finally
         {
@@ -453,26 +452,26 @@ public partial class MainWindow : Window
     {
         if (string.IsNullOrEmpty(_gameDir))
         {
-            SetStatus("Game folder not set.", "Warn");
+            SetStatus(L("Status_GameFolderNotSet"), "Warn");
             return;
         }
 
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Import Camera XML â€” installs directly to game",
+            Title = L("Dlg_ImportCameraXml"),
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = "playercamerapreset.xml"
         };
         if (ofd.ShowDialog(this) != true) return;
 
-        if (!await ShowConfirmOverlayAsync("Import XML",
-            $"Install '{Path.GetFileName(ofd.FileName)}' directly to the game?\n\nThis will overwrite your current camera settings.",
-            "Install", "Cancel")) return;
+        if (!await ShowConfirmOverlayAsync(L("Msg_ConfirmImportXmlTitle"),
+            string.Format(L("Msg_ConfirmImportXml"), Path.GetFileName(ofd.FileName)),
+            L("Btn_Install"), L("Btn_Cancel"))) return;
 
         string gameDir = _gameDir;
         string platform = _detectedPlatform;
         string srcPath = ofd.FileName;
-        SetGlobalBusy(true, "Installing camera XML\u2026");
+        SetGlobalBusy(true, L("Status_InstallingCameraXml"));
         try
         {
             await Task.Run(() =>
@@ -487,11 +486,11 @@ public partial class MainWindow : Window
             }
             catch { }
             RefreshGameUpdateNotice();
-            SetStatus($"Installed {Path.GetFileName(srcPath)} to game.", "Success");
+            SetStatus(string.Format(L("Status_InstalledXml"), Path.GetFileName(srcPath)), "Success");
         }
         catch (Exception ex)
         {
-            SetStatus($"Import failed: {ex.Message}", "Error");
+            SetStatus(string.Format(L("Status_ImportFailed"), ex.Message), "Error");
         }
         finally
         {

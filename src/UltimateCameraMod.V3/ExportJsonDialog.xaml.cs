@@ -6,15 +6,18 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using UltimateCameraMod.Services;
+using UltimateCameraMod.V3.Localization;
 
 namespace UltimateCameraMod.V3;
 
 public partial class ExportJsonDialog : UserControl
 {
+    private static string L(string key) => TranslationSource.Instance[key];
     public Action? OnCloseRequested;
 
     private readonly string _gameDir;
     private readonly Func<string?> _getSessionXml;
+    private readonly Func<Dictionary<string, object>>? _getSettingsPayload;
     private readonly bool _isRawImport;
 
     private List<JsonModExporter.PatchChange>? _jsonLastPatches;
@@ -24,10 +27,12 @@ public partial class ExportJsonDialog : UserControl
     public ExportJsonDialog(string gameDir, Func<string?> getSessionXmlForExport,
         string? presetName = null, string? presetAuthor = null,
         string? presetDescription = null, string? presetUrl = null,
-        bool isRawImport = false)
+        bool isRawImport = false,
+        Func<Dictionary<string, object>>? getSettingsPayload = null)
     {
         _gameDir = gameDir;
         _getSessionXml = getSessionXmlForExport;
+        _getSettingsPayload = getSettingsPayload;
         _isRawImport = isRawImport;
         InitializeComponent();
         // Pre-fill from active preset metadata
@@ -81,36 +86,19 @@ public partial class ExportJsonDialog : UserControl
         {
             case ShareExportFormat.Json:
                 SetJsonFormatHelpDetail();
-                Step2Body.Text =
-                    "Uses your live UCM session (Quick, Fine Tune, or God Mode). " +
-                    "Pick a preset in the sidebar or use Import if you are starting from XML or a PAZ on disk.";
+                Step2Body.Text = L("Help_ExportJsonStep2");
                 break;
             case ShareExportFormat.Xml:
-                HelpDetailText.Text =
-                    "Exports playercamerapreset.xml with the same normalization UCM uses when installing " +
-                    "(UTF-8 BOM, comments stripped). Great for Nexus text uploads, hand editing, or re-import in UCM. " +
-                    "Whoever installs it still needs matching compressed entry sizes for their game build.";
-                Step2Body.Text =
-                    "Prepare checks that your session encodes for this game folder, then you save the XML file.";
+                HelpDetailText.Text = L("Help_ExportXmlFormat");
+                Step2Body.Text = L("Help_ExportXmlStep2");
                 break;
             case ShareExportFormat.Paz:
-                HelpDetailText.Text =
-                    "Nexus-style “drop-in” archive: a copy of your game’s 0010/0.paz with only the camera data updated " +
-                    "to match your current UCM session — players who don’t use a JSON mod manager can replace one file. " +
-                    "It only works for the same game patch as your install (same archive layout); say that on the mod page. " +
-                    "Tell downloaders to back up vanilla 0010/0.paz before swapping.";
-                Step2Body.Text =
-                    "Prepare verifies encoding against your game folder. Save writes a full patched 0.paz (large file). " +
-                    "Session source is the same as the other formats — sidebar preset or Import first if needed.";
+                HelpDetailText.Text = L("Help_ExportPazFormat");
+                Step2Body.Text = L("Help_ExportPazStep2");
                 break;
             case ShareExportFormat.UcmPreset:
-                HelpDetailText.Text =
-                    "Exports your current session as a .ucmpreset file that other UCM users can drop into their " +
-                    "presets folder or share via the community catalog. Contains your full camera configuration " +
-                    "including all Quick, Fine Tune, and God Mode settings.";
-                Step2Body.Text =
-                    "No encoding needed — saves your session directly. Fill in the info fields above so others " +
-                    "know what they're getting.";
+                HelpDetailText.Text = L("Help_ExportUcmPresetFormat");
+                Step2Body.Text = L("Help_ExportPresetStep2");
                 break;
         }
     }
@@ -180,14 +168,14 @@ public partial class ExportJsonDialog : UserControl
     {
         if (string.IsNullOrEmpty(_gameDir))
         {
-            SetStatus("Game folder not set.", true);
+            SetStatus(L("Status_GameFolderNotSet"), true);
             return;
         }
 
         string? xml = _getSessionXml?.Invoke();
         if (string.IsNullOrEmpty(xml))
         {
-            SetStatus("No session XML available. Edit settings or load a preset first.", true);
+            SetStatus(L("Status_NoSessionXmlAvailable"), true);
             return;
         }
 
@@ -205,23 +193,17 @@ public partial class ExportJsonDialog : UserControl
                             msg => Dispatcher.Invoke(() => SetStatus(msg, false))))
                     {
                         MessageBox.Show(
-                            "The camera data in your game folder does not match UCM's vanilla backup.\n\n" +
-                            "JSON patches for JSON Mod Manager or Crimson Desert Ultimate Mods Manager must use " +
-                            "vanilla \"original\" bytes. If UCM or another tool has already changed " +
-                            "playercamerapreset in 0.paz, exported JSON will not apply for other players.\n\n" +
-                            "Fix: Steam → Crimson Desert → Properties → Installed Files → " +
-                            "\"Verify integrity of game files\", then reopen UCM and export again. " +
-                            "If you use a mod manager, revert camera changes there before verifying.",
-                            "Cannot export JSON",
+                            L("Msg_CannotExportJson"),
+                            L("Msg_CannotExportJsonTitle"),
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning);
-                        SetStatus("JSON export needs vanilla camera files (verify game, then try again).", true);
+                        SetStatus(L("Msg_JsonExportNeedsVanilla"), true);
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    SetStatus($"Could not verify camera files: {ex.Message}", true);
+                    SetStatus(string.Format(L("Status_CouldNotVerifyFiles"), ex.Message), true);
                     return;
                 }
 
@@ -239,7 +221,7 @@ public partial class ExportJsonDialog : UserControl
             case ShareExportFormat.UcmPreset:
                 if (string.IsNullOrWhiteSpace(xml))
                 {
-                    SetStatus("Session XML is empty.", true);
+                    SetStatus(L("Status_SessionXmlEmpty"), true);
                     return;
                 }
                 _preparedXml = xml;
@@ -249,16 +231,16 @@ public partial class ExportJsonDialog : UserControl
                 JsonStatsPanel.Visibility = Visibility.Collapsed;
                 XmlSaveHint.Visibility = Visibility.Collapsed;
                 PazSaveHint.Visibility = Visibility.Collapsed;
-                FingerprintLabel.Text = $"Session XML: {xml.Length:N0} characters";
-                SaveExportButton.Content = "Save .ucmpreset...";
-                SetStatus("Ready to save. Click Save when ready.", false);
+                FingerprintLabel.Text = string.Format(L("Status_SessionXmlCharacters"), xml.Length);
+                SaveExportButton.Content = L("Btn_SaveUcmPreset");
+                SetStatus(L("Status_ReadyToSave"), false);
                 break;
         }
     }
 
     private void RunJsonGenerate(Func<(List<JsonModExporter.PatchChange>, string)> work)
     {
-        SetStatus("Generating patches...", false);
+        SetStatus(L("Status_GeneratingPatches"), false);
         ClearPreparedExport();
 
         Task.Run(() =>
@@ -282,20 +264,20 @@ public partial class ExportJsonDialog : UserControl
                     PazSaveHint.Visibility = Visibility.Collapsed;
                     FingerprintLabel.Text = fingerprint;
 
-                    SaveExportButton.Content = "Save .json...";
-                    SetStatus($"Generated {changes.Count} patch regions. Save when ready.", false);
+                    SaveExportButton.Content = L("Btn_SaveJsonFile");
+                    SetStatus(string.Format(L("Help_GeneratedPatchReady"), changes.Count), false);
                 });
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke(() => SetStatus($"Prepare failed: {ex.Message}", true));
+                Dispatcher.Invoke(() => SetStatus(string.Format(L("Status_PrepareFailed"), ex.Message), true));
             }
         });
     }
 
     private void RunValidateThenReady(string xml)
     {
-        SetStatus("Validating encoding for this game...", false);
+        SetStatus(L("Status_ValidatingEncoding"), false);
         ClearPreparedExport();
 
         var gameDir = _gameDir;
@@ -321,26 +303,23 @@ public partial class ExportJsonDialog : UserControl
                     {
                         XmlSaveHint.Visibility = Visibility.Visible;
                         PazSaveHint.Visibility = Visibility.Collapsed;
-                        XmlSaveHint.Text =
-                            "XML encoding matches this install's camera entry. Save as playercamerapreset.xml for sharing or editing.";
-                        SaveExportButton.Content = "Save .xml...";
+                        XmlSaveHint.Text = L("Help_XmlEncodingMatches");
+                        SaveExportButton.Content = L("Btn_SaveXmlFile");
                     }
                     else
                     {
                         XmlSaveHint.Visibility = Visibility.Collapsed;
                         PazSaveHint.Visibility = Visibility.Visible;
-                        PazSaveHint.Text =
-                            "Upload size will match a full 0.paz. Recipients replace …\\0010\\0.paz after backing up vanilla. " +
-                            "Only share with players on the same game version as this export.";
-                        SaveExportButton.Content = "Save 0.paz...";
+                        PazSaveHint.Text = L("Help_PazUploadNote");
+                        SaveExportButton.Content = L("Btn_SavePazFile");
                     }
 
-                    SetStatus("Ready to save.", false);
+                    SetStatus(L("Status_ReadyToSave"), false);
                 });
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke(() => SetStatus($"Prepare failed: {ex.Message}", true));
+                Dispatcher.Invoke(() => SetStatus(string.Format(L("Status_PrepareFailed"), ex.Message), true));
             }
         });
     }
@@ -368,7 +347,7 @@ public partial class ExportJsonDialog : UserControl
     {
         if (_jsonLastJson == null)
         {
-            SetStatus("Prepare the export first.", false);
+            SetStatus(L("Status_PrepareExportFirst"), false);
             return;
         }
 
@@ -379,7 +358,7 @@ public partial class ExportJsonDialog : UserControl
 
         var sfd = new Microsoft.Win32.SaveFileDialog
         {
-            Title = "Save JSON Patch",
+            Title = L("Dlg_SaveJsonPatch"),
             Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
             FileName = $"{safeName}.json"
         };
@@ -389,11 +368,11 @@ public partial class ExportJsonDialog : UserControl
         try
         {
             File.WriteAllText(sfd.FileName, _jsonLastJson, new UTF8Encoding(false));
-            SetStatus($"Saved {Path.GetFileName(sfd.FileName)} ({_jsonLastPatches!.Count} patches).", false);
+            SetStatus(string.Format(L("Status_SavedFilePatches"), Path.GetFileName(sfd.FileName), _jsonLastPatches!.Count), false);
         }
         catch (Exception ex)
         {
-            SetStatus($"Save failed: {ex.Message}", true);
+            SetStatus(string.Format(L("Status_SaveFailed"), ex.Message), true);
         }
     }
 
@@ -401,7 +380,7 @@ public partial class ExportJsonDialog : UserControl
     {
         if (string.IsNullOrEmpty(_preparedXml))
         {
-            SetStatus("Prepare the export first.", false);
+            SetStatus(L("Status_PrepareExportFirst"), false);
             return;
         }
 
@@ -412,7 +391,7 @@ public partial class ExportJsonDialog : UserControl
 
         var sfd = new Microsoft.Win32.SaveFileDialog
         {
-            Title = "Save camera XML",
+            Title = L("Dlg_SaveCameraXml"),
             Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             FileName = $"{safeName}.xml"
         };
@@ -422,11 +401,11 @@ public partial class ExportJsonDialog : UserControl
         try
         {
             CameraMod.ExportPresetXml(sfd.FileName, _preparedXml);
-            SetStatus($"Saved {Path.GetFileName(sfd.FileName)}.", false);
+            SetStatus(string.Format(L("Status_SavedFile"), Path.GetFileName(sfd.FileName)), false);
         }
         catch (Exception ex)
         {
-            SetStatus($"Save failed: {ex.Message}", true);
+            SetStatus(string.Format(L("Status_SaveFailed"), ex.Message), true);
         }
     }
 
@@ -434,13 +413,13 @@ public partial class ExportJsonDialog : UserControl
     {
         if (string.IsNullOrEmpty(_preparedXml))
         {
-            SetStatus("Prepare the export first.", false);
+            SetStatus(L("Status_PrepareExportFirst"), false);
             return;
         }
 
         var sfd = new Microsoft.Win32.SaveFileDialog
         {
-            Title = "Save patched 0.paz",
+            Title = L("Dlg_SavePatchedPaz"),
             Filter = "PAZ archive (*.paz)|*.paz|All files (*.*)|*.*",
             FileName = "0.paz"
         };
@@ -451,7 +430,7 @@ public partial class ExportJsonDialog : UserControl
         string gameDir = _gameDir;
         string xml = _preparedXml;
 
-        SetStatus("Writing archive (copy + patch)...", false);
+        SetStatus(L("Status_WritingArchive"), false);
         SaveExportButton.IsEnabled = false;
 
         Task.Run(() =>
@@ -462,7 +441,7 @@ public partial class ExportJsonDialog : UserControl
                     msg => Dispatcher.Invoke(() => SetStatus(msg, false)));
                 Dispatcher.Invoke(() =>
                 {
-                    SetStatus($"Saved {Path.GetFileName(destPath)}.", false);
+                    SetStatus(string.Format(L("Status_SavedFile"), Path.GetFileName(destPath)), false);
                     SaveExportButton.IsEnabled = true;
                 });
             }
@@ -470,7 +449,7 @@ public partial class ExportJsonDialog : UserControl
             {
                 Dispatcher.Invoke(() =>
                 {
-                    SetStatus($"Save failed: {ex.Message}", true);
+                    SetStatus(string.Format(L("Status_SaveFailed"), ex.Message), true);
                     SaveExportButton.IsEnabled = true;
                 });
             }
@@ -481,7 +460,7 @@ public partial class ExportJsonDialog : UserControl
     {
         if (string.IsNullOrWhiteSpace(_preparedXml))
         {
-            SetStatus("Prepare first.", true);
+            SetStatus(L("Status_PrepareExportFirst"), true);
             return;
         }
 
@@ -492,7 +471,7 @@ public partial class ExportJsonDialog : UserControl
 
         var sfd = new Microsoft.Win32.SaveFileDialog
         {
-            Title = "Save UCM Preset",
+            Title = L("Dlg_SaveUcmPreset"),
             Filter = "UCM Preset (*.ucmpreset)|*.ucmpreset|All files (*.*)|*.*",
             FileName = $"{safeName}.ucmpreset"
         };
@@ -506,7 +485,7 @@ public partial class ExportJsonDialog : UserControl
             // fall within the 4KB header window for fast reads
             var preset = new Dictionary<string, object>
             {
-                ["name"] = string.IsNullOrWhiteSpace(title) ? "Exported Preset" : title,
+                ["name"] = string.IsNullOrWhiteSpace(title) ? L("Dlg_ExportedPreset") : title,
                 ["author"] = JsonAuthorBox.Text.Trim(),
                 ["description"] = JsonDescBox.Text.Trim(),
                 ["kind"] = "user",
@@ -514,27 +493,32 @@ public partial class ExportJsonDialog : UserControl
             if (!string.IsNullOrWhiteSpace(url))
                 preset["url"] = url;
             preset["preset_mode"] = _isRawImport ? "godmode" : "ucm";
-            preset["settings"] = new Dictionary<string, object>
-            {
-                ["distance"] = 5.0,
-                ["height"] = 0.0,
-                ["right_offset"] = 0.0,
-                ["fov"] = 0,
-                ["combat"] = "default",
-                ["centered"] = false,
-                ["mount_height"] = false,
-                ["steadycam"] = true
-            };
+            preset["settings"] = _getSettingsPayload != null
+                ? _getSettingsPayload()
+                : new Dictionary<string, object>
+                {
+                    ["distance"] = 5.0,
+                    ["height"] = 0.0,
+                    ["right_offset"] = 0.0,
+                    ["fov"] = 0,
+                    ["combat_pullback"] = 0.0,
+                    ["centered"] = false,
+                    ["mount_height"] = false,
+                    ["steadycam"] = true,
+                    ["lock_on_auto_rotate_disabled"] = false,
+                    ["center_hud"] = false,
+                    ["hud_width"] = 1920
+                };
             preset["session_xml"] = _preparedXml;
 
             string json = System.Text.Json.JsonSerializer.Serialize(preset,
                 new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(sfd.FileName, json, new UTF8Encoding(false));
-            SetStatus($"Saved {Path.GetFileName(sfd.FileName)}", false);
+            SetStatus(string.Format(L("Status_SavedFile"), Path.GetFileName(sfd.FileName)), false);
         }
         catch (Exception ex)
         {
-            SetStatus($"Save failed: {ex.Message}", true);
+            SetStatus(string.Format(L("Status_SaveFailed"), ex.Message), true);
         }
     }
 
