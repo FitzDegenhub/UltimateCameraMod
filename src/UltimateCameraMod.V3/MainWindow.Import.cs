@@ -36,6 +36,7 @@ public partial class MainWindow : Window
         {
             case "mod_package": ImportModManagerPackage(); break;
             case "xml": ImportRawXml(); break;
+            case "json": ImportJsonPatch(); break;
             case "paz": ImportFromPaz(); break;
             case "ucmpreset": ImportUcmPreset(); break;
         }
@@ -69,7 +70,12 @@ public partial class MainWindow : Window
             string nexusUrl = manifest.TryGetProperty("nexus_url", out var nu) ? nu.GetString() ?? "" : "";
 
             string filesDir = manifest.TryGetProperty("files_dir", out var fd) ? fd.GetString() ?? "files" : "files";
-            string fullFilesDir = Path.Combine(folder, filesDir);
+            string fullFilesDir = Path.GetFullPath(Path.Combine(folder, filesDir));
+            if (!fullFilesDir.StartsWith(folder, StringComparison.OrdinalIgnoreCase))
+            {
+                SetStatus(L("Status_NoCameraXmlInPackage"), "Error");
+                return;
+            }
             string? xmlPath = Directory.GetFiles(fullFilesDir, "playercamerapreset.xml", SearchOption.AllDirectories)
                 .FirstOrDefault();
 
@@ -239,6 +245,103 @@ public partial class MainWindow : Window
         }
     }
 
+    private async void ImportJsonPatch()
+    {
+        if (string.IsNullOrWhiteSpace(_gameDir))
+        {
+            SetStatus(L("Status_GameFolderNotSet"), "Warn");
+            return;
+        }
+
+        var ofd = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = L("Dlg_ImportJson"),
+            Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*"
+        };
+        if (ofd.ShowDialog(this) != true) return;
+
+        SetGlobalBusy(true, L("Status_ApplyingJsonPatch"));
+        try
+        {
+            string jsonText = File.ReadAllText(ofd.FileName);
+            using var doc = JsonDocument.Parse(jsonText);
+            var root = doc.RootElement;
+
+            // Extract metadata from modinfo
+            string title = "";
+            string author = "";
+            string description = "";
+            string nexusUrl = "";
+            if (root.TryGetProperty("modinfo", out var modinfo))
+            {
+                title = modinfo.TryGetProperty("title", out var t) ? t.GetString() ?? "" : "";
+                author = modinfo.TryGetProperty("author", out var a) ? a.GetString() ?? "" : "";
+                description = modinfo.TryGetProperty("description", out var d) ? d.GetString() ?? "" : "";
+                nexusUrl = modinfo.TryGetProperty("nexus_url", out var u) ? u.GetString() ?? "" : "";
+            }
+
+            if (string.IsNullOrWhiteSpace(title))
+                title = Path.GetFileNameWithoutExtension(ofd.FileName);
+
+            // Two JSON patch formats exist:
+            // 1. Full XML fragment patches (CDCamera) — hex decodes to complete XML tags, parsed semantically
+            // 2. Byte-level patches (CrimsonCamera) — short hex sequences patched at byte offsets
+            // Try semantic first; if no changes found, fall back to binary patching.
+            string xml = await Task.Run(() =>
+            {
+                if (!root.TryGetProperty("patches", out var patches))
+                    throw new InvalidOperationException("JSON file has no 'patches' array.");
+
+                // Try semantic parsing first (full XML fragment patches)
+                var modSet = BuildModSetFromJsonPatches(patches);
+                if (modSet.ElementMods.Count > 0)
+                {
+                    string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
+                    return CameraMod.ApplyModifications(vanillaXml, modSet);
+                }
+
+                // Fall back to binary patching against decompressed vanilla payload
+                return ApplyBinaryJsonPatches(patches, _gameDir);
+            }).ConfigureAwait(true);
+
+            SetGlobalBusy(false);
+
+            string shortDesc = description.Split("\n\n")[0].Replace("\n", " ").Trim();
+            if (shortDesc.Length > 200) shortDesc = shortDesc[..197] + "...";
+
+            var metaDlg = await ShowImportMetadataOverlayAsync(
+                string.Format(L("Dlg_ImportingJson"), Path.GetFileName(ofd.FileName)),
+                string.IsNullOrWhiteSpace(title) ? Path.GetFileNameWithoutExtension(ofd.FileName) : title,
+                string.IsNullOrWhiteSpace(author) ? null : author,
+                string.IsNullOrWhiteSpace(shortDesc) ? null : shortDesc,
+                string.IsNullOrWhiteSpace(nexusUrl) ? null : nexusUrl);
+            if (metaDlg == null) return;
+
+            string chosenName = SanitizeFileStem(metaDlg.PresetName);
+            if (chosenName.Length > 60) chosenName = chosenName[..60];
+
+            string importPath = ImportedPresetPath(chosenName);
+            if (File.Exists(importPath))
+            {
+                if (!await ShowConfirmOverlayAsync(L("Title_ImportPresetChooser"), L("Msg_OverwriteExists"), L("Btn_Overwrite"), L("Btn_Cancel")))
+                    return;
+            }
+
+            var imported = BuildImportedPreset(chosenName, "json", Path.GetFileName(ofd.FileName), ofd.FileName, xml, null,
+                metaDlg.PresetAuthor, metaDlg.PresetDescription, metaDlg.PresetUrl);
+            SaveImportedPreset(imported);
+            RefreshPresetManagerLists(preserveSelection: false);
+            SelectImportedPreset(SanitizeFileStem(imported.Name));
+            QueueSavedToast(string.Format(L("Status_ImportedJson"), imported.Name));
+            SetStatus(string.Format(L("Status_ImportedJson"), imported.Name), "Success");
+        }
+        catch (Exception ex)
+        {
+            SetGlobalBusy(false);
+            SetStatus(string.Format(L("Status_JsonImportFailed"), ex.Message), "Error");
+        }
+    }
+
     private async void ImportUcmPreset()
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
@@ -352,6 +455,164 @@ public partial class MainWindow : Window
         foreach (var row in CameraMod.ParseXmlToRows(xml))
             values[row.FullKey] = row.Value;
         return values;
+    }
+
+    private static readonly HashSet<string> JsonPatchSubElements = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "CameraDamping", "CameraBlendParameter", "OffsetByVelocity", "PivotHeight",
+        "ZoomLevel", "ApplyCameraSetting"
+    };
+
+    /// <summary>
+    /// Parses CD JSON Mod Manager patch changes semantically: decodes original and patched hex
+    /// as XML fragments, diffs their attributes, and builds a ModificationSet from the differences.
+    /// Game-version independent — byte offsets are ignored. Patches are processed in offset order
+    /// to track which camera section sub-elements belong to.
+    /// </summary>
+    private static ModificationSet BuildModSetFromJsonPatches(JsonElement patches)
+    {
+        var elementMods = new Dictionary<string, Dictionary<string, (string Action, string Value)>>(StringComparer.OrdinalIgnoreCase);
+        string currentSection = "";
+
+        foreach (var patch in patches.EnumerateArray())
+        {
+            if (!patch.TryGetProperty("changes", out var changes)) continue;
+            foreach (var change in changes.EnumerateArray())
+            {
+                string origHex = change.GetProperty("original").GetString() ?? "";
+                string patchedHex = change.GetProperty("patched").GetString() ?? "";
+                if (origHex.Length == 0 || patchedHex.Length == 0) continue;
+
+                string origText, patchedText;
+                try
+                {
+                    origText = Encoding.UTF8.GetString(Convert.FromHexString(origHex));
+                    patchedText = Encoding.UTF8.GetString(Convert.FromHexString(patchedHex));
+                }
+                catch { continue; }
+
+                var origParsed = ParseXmlFragmentAttrs(origText);
+                var patchedParsed = ParseXmlFragmentAttrs(patchedText);
+                if (origParsed == null || patchedParsed == null) continue;
+                if (origParsed.Value.Tag != patchedParsed.Value.Tag) continue;
+
+                string tag = patchedParsed.Value.Tag;
+
+                // Build the correct modKey based on element type
+                string modKey;
+                if (tag == "ZoomLevel")
+                {
+                    string level = patchedParsed.Value.Attrs.GetValueOrDefault("Level", "?");
+                    modKey = string.IsNullOrEmpty(currentSection)
+                        ? $"ZoomLevel[{level}]"
+                        : $"{currentSection}/ZoomLevel[{level}]";
+                }
+                else if (JsonPatchSubElements.Contains(tag))
+                {
+                    modKey = string.IsNullOrEmpty(currentSection) ? tag : $"{currentSection}/{tag}";
+                }
+                else
+                {
+                    // Section-level tag — update current section tracker
+                    currentSection = tag;
+                    modKey = tag;
+                }
+
+                // Find attributes that changed
+                foreach (var (attr, val) in patchedParsed.Value.Attrs)
+                {
+                    string? origVal = origParsed.Value.Attrs.GetValueOrDefault(attr);
+                    if (origVal == val) continue; // unchanged
+
+                    if (!elementMods.TryGetValue(modKey, out var attrs))
+                    {
+                        attrs = new Dictionary<string, (string, string)>(StringComparer.OrdinalIgnoreCase);
+                        elementMods[modKey] = attrs;
+                    }
+                    attrs[attr] = ("SET", val);
+                }
+            }
+        }
+
+        return new ModificationSet { ElementMods = elementMods, FovValue = 0 };
+    }
+
+    /// <summary>
+    /// Extracts the tag name and attributes from an XML fragment like
+    /// &lt;Player_Basic_Default Type="TPS" Fov="40"&gt; or &lt;ZoomLevel Level="2" .../&gt;
+    /// </summary>
+    private static (string Tag, Dictionary<string, string> Attrs)? ParseXmlFragmentAttrs(string fragment)
+    {
+        fragment = fragment.Trim();
+        if (!fragment.StartsWith("<")) return null;
+
+        // Remove leading < and trailing /> or >
+        fragment = fragment.TrimStart('<').TrimEnd('>', '/').Trim();
+
+        // Split tag name from attributes
+        int firstSpace = fragment.IndexOf(' ');
+        if (firstSpace < 0) return (fragment, new Dictionary<string, string>());
+
+        string tag = fragment[..firstSpace];
+        string rest = fragment[firstSpace..];
+
+        var attrs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (System.Text.RegularExpressions.Match m in
+            System.Text.RegularExpressions.Regex.Matches(rest, @"(\w+)=""([^""]*)"""))
+        {
+            attrs[m.Groups[1].Value] = m.Groups[2].Value;
+        }
+
+        return (tag, attrs);
+    }
+
+    /// <summary>
+    /// Applies byte-level JSON patches to the decompressed vanilla payload and returns the resulting XML.
+    /// Used for CrimsonCamera-style patches where original/patched are short byte sequences, not full XML fragments.
+    /// </summary>
+    private static string ApplyBinaryJsonPatches(JsonElement patches, string gameDir)
+    {
+        var (vanillaBytes, _, _) = CameraMod.ReadStoredVanillaDecompressedPayloadForJson(gameDir);
+        byte[] patched = (byte[])vanillaBytes.Clone();
+
+        int applied = 0;
+        int skipped = 0;
+        foreach (var patch in patches.EnumerateArray())
+        {
+            if (!patch.TryGetProperty("changes", out var changes)) continue;
+            foreach (var change in changes.EnumerateArray())
+            {
+                int offset = change.GetProperty("offset").GetInt32();
+                byte[] original = Convert.FromHexString(change.GetProperty("original").GetString() ?? "");
+                byte[] patchedData = Convert.FromHexString(change.GetProperty("patched").GetString() ?? "");
+
+                if (original.Length == 0 || patchedData.Length == 0) continue;
+                if (offset + original.Length > patched.Length || offset + patchedData.Length > patched.Length)
+                {
+                    skipped++;
+                    continue;
+                }
+
+                bool matches = patched.AsSpan(offset, original.Length).SequenceEqual(original);
+                if (matches)
+                {
+                    Array.Copy(patchedData, 0, patched, offset, patchedData.Length);
+                    applied++;
+                }
+                else
+                {
+                    skipped++;
+                }
+            }
+        }
+
+        if (applied == 0)
+            throw new InvalidOperationException(
+                "No patches could be applied — the JSON patch was built for a different game version.\n\n" +
+                "Try deleting the 0010 folder, verifying game files on Steam, then import again.");
+
+        string xmlText = Encoding.UTF8.GetString(patched).TrimEnd('\0');
+        return CameraMod.StripComments(xmlText);
     }
 
     private static ImportedPresetFingerprint BuildImportedPresetFingerprint(UltimateCameraMod.Paz.PazEntry entry, byte[] rawBytes)

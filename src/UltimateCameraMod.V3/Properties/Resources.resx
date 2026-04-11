@@ -251,10 +251,12 @@
   <!-- ═══ Import Source Labels ═══ -->
   <data name="Label_ImportModPackage" xml:space="preserve"><value>Mod Manager Package (folder)</value></data>
   <data name="Label_ImportCameraXml" xml:space="preserve"><value>Camera XML File (.xml)</value></data>
+  <data name="Label_ImportJsonPatch" xml:space="preserve"><value>JSON Patch (.json)</value></data>
   <data name="Label_ImportPazArchive" xml:space="preserve"><value>PAZ Archive (.paz)</value></data>
   <data name="Label_ImportUcmPreset" xml:space="preserve"><value>UCM Preset (.ucmpreset)</value></data>
   <data name="Label_ImportModPackageDesc" xml:space="preserve"><value>JSON patch from JSON Mod Manager or CDUMM</value></data>
   <data name="Label_ImportRawXmlDesc" xml:space="preserve"><value>playercamerapreset.xml file</value></data>
+  <data name="Label_ImportJsonPatchDesc" xml:space="preserve"><value>CD JSON Mod Manager patch file</value></data>
   <data name="Label_ImportPazDesc" xml:space="preserve"><value>Game .paz file with camera data</value></data>
   <data name="Label_ImportUcmPresetDesc" xml:space="preserve"><value>UCM preset file from another user</value></data>
 
@@ -371,6 +373,7 @@
   <data name="Status_HudRestoreFailed" xml:space="preserve"><value>HUD restore failed: {0}</value></data>
   <data name="Status_XmlImportFailed" xml:space="preserve"><value>XML import failed: {0}</value></data>
   <data name="Status_PazImportFailed" xml:space="preserve"><value>0.paz import failed: {0}</value></data>
+  <data name="Status_JsonImportFailed" xml:space="preserve"><value>JSON import failed: {0}</value></data>
   <data name="Status_NoManifestFound" xml:space="preserve"><value>No manifest.json found in that folder.</value></data>
   <data name="Status_NoCameraXmlInPackage" xml:space="preserve"><value>No playercamerapreset.xml found in the mod package.</value></data>
   <data name="Status_NoSessionXmlInPreset" xml:space="preserve"><value>This file doesn't appear to be a UCM preset (no session_xml found).</value></data>
@@ -387,6 +390,7 @@ Check back later or contribute your own!</value></data>
   <data name="Status_ValidatingEncoding" xml:space="preserve"><value>Validating encoding for this game...</value></data>
   <data name="Status_WritingArchive" xml:space="preserve"><value>Writing archive (copy + patch)...</value></data>
   <data name="Status_DecryptingPaz" xml:space="preserve"><value>Decrypting 0.paz...</value></data>
+  <data name="Status_ApplyingJsonPatch" xml:space="preserve"><value>Applying JSON patch...</value></data>
   <data name="Status_ExportingCameraXml" xml:space="preserve"><value>Exporting camera XML...</value></data>
   <data name="Status_InstallingCameraXml" xml:space="preserve"><value>Installing camera XML...</value></data>
   <data name="Status_SavedFile" xml:space="preserve"><value>Saved {0}.</value></data>
@@ -395,6 +399,7 @@ Check back later or contribute your own!</value></data>
   <data name="Status_ImportedModPackage" xml:space="preserve"><value>Imported mod package as '{0}'.</value></data>
   <data name="Status_ImportedXml" xml:space="preserve"><value>Imported '{0}' with {1} values.</value></data>
   <data name="Status_ImportedPaz" xml:space="preserve"><value>Imported 0.paz as '{0}'.</value></data>
+  <data name="Status_ImportedJson" xml:space="preserve"><value>Imported JSON patch as '{0}'.</value></data>
   <data name="Status_ImportedUcmPreset" xml:space="preserve"><value>Imported UCM preset '{0}'.</value></data>
   <data name="Status_ImportedPresetDeleted" xml:space="preserve"><value>Imported preset '{0}' deleted.</value></data>
   <data name="Status_LoadedIntoGodMode" xml:space="preserve"><value>Loaded imported preset '{0}' into God Mode.</value></data>
@@ -572,6 +577,8 @@ Manually delete: {1}</value></data>
   <data name="Dlg_ExportCameraXml" xml:space="preserve"><value>Export Camera XML</value></data>
   <data name="Dlg_ImportCameraXml" xml:space="preserve"><value>Import Camera XML — installs directly to game</value></data>
   <data name="Dlg_ImportXmlFile" xml:space="preserve"><value>Import playercamerapreset.xml</value></data>
+  <data name="Dlg_ImportJson" xml:space="preserve"><value>Import JSON Patch</value></data>
+  <data name="Dlg_ImportingJson" xml:space="preserve"><value>Importing JSON patch: {0}</value></data>
   <data name="Dlg_ImportPaz" xml:space="preserve"><value>Import 0.paz — extract camera XML</value></data>
   <data name="Dlg_ImportUcmPreset" xml:space="preserve"><value>Import UCM Preset</value></data>
   <data name="Dlg_SelectCameraXml" xml:space="preserve"><value>Select camera XML to patch</value></data>

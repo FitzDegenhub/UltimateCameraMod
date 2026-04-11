@@ -22,10 +22,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **SHA-256 integrity verification on download** - Downloaded preset bytes are now verified against the catalog's `sha256` hash before writing to disk. Mismatched downloads are rejected.
 - **URL encoding fix** - Community browser download URL now uses `Uri.EscapeDataString()` for the filename component, matching the existing safe pattern in background downloads.
 
-### Known Bugs
-- **Shoulder Cam preset crashes the game** - The Shoulder Cam preset is causing game crashes for some users. Under investigation.
+### WIP
+- **JSON patch import (disabled)** - Import UI and parser for CD JSON Mod Manager `.json` patch files. Supports both full XML fragment patches (CDCamera) and byte-level patches (CrimsonCamera). Semantically decodes hex patches and applies value changes to current vanilla, making imports game-version independent. Currently disabled because imported values produce valid XML that installs without error but crashes the game on launch. Under investigation.
 
 ### Bug Fixes
+- **Shoulder Cam community preset removed** - The Shoulder Cam preset injects custom attributes (FollowCamera, DepthOfField) that the April 11 game patch no longer accepts, causing crashes on startup. Removed from the community preset catalog until the preset author pushes a compatible update.
 - **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
 - **Center HUD mode switching had no effect** - Reinstalling with a different safe area (16:9 vs 21:9) was detected as "already installed" and skipped. Now restores vanilla first before reinstalling with the new mode.
 - **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.

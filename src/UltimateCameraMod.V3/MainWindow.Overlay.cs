@@ -286,6 +286,10 @@ public partial class MainWindow : Window
 
         AddImportButton(L("Label_ImportModPackage"), L("Label_ImportModPackageDesc"), "mod_package");
         AddImportButton(L("Label_ImportCameraXml"), L("Label_ImportRawXmlDesc"), "xml");
+        // JSON patch import disabled — imported values install correctly but crash the game on launch.
+        // Under investigation. The XML structure and values are valid but something in the
+        // round-trip through the import pipeline produces output the game engine rejects.
+        // AddImportButton(L("Label_ImportJsonPatch"), L("Label_ImportJsonPatchDesc"), "json");
         AddImportButton(L("Label_ImportPazArchive"), L("Label_ImportPazDesc"), "paz");
         AddImportButton(L("Label_ImportUcmPreset"), L("Label_ImportUcmPresetDesc"), "ucmpreset");
 

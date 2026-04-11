@@ -266,7 +266,7 @@ public partial class MainWindow : Window
 
     private string BuildGodModeSessionXml()
     {
-        // Raw imports: start from the imported XML, only layer explicit God Mode edits.
+        // Raw imports: use the imported session XML directly, then layer God Mode edits.
         // No UCM rules (FoV normalization, Steadycam, etc.) applied.
         if (_sessionIsRawImport && !string.IsNullOrWhiteSpace(_sessionXml))
         {
