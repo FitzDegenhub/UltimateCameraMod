@@ -34,6 +34,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -1812,8 +1813,43 @@ def read_live_xml(game_dir: str) -> str:
     return decode_entry_xml(entry, raw)
 
 
-def _validate_vanilla(xml_text: str) -> bool:
-    # Heuristic: if UCM has already touched the file, refuse to back it up.
+# ── Vanilla validation ──────────────────────────────────────────────────────
+#
+# We bundle SHA-256 hashes of every known-vanilla `playercamerapreset.xml`
+# (one per game version). The corresponding XML fixtures live upstream at
+# `docs/vanilla_xml/playercamerapreset_<version>.xml`. Hashes are computed
+# over the *normalized* form (any leading UTF-8 BOMs stripped, CRLF -> LF)
+# so they don't depend on whether the bytes came from the live PAZ entry
+# (1 BOM, CRLF) or the upstream fixture file (2 BOMs, LF).
+#
+# When a new game patch lands, regenerate this dict by hashing the new
+# fixture under `docs/vanilla_xml/` (see _normalize_for_hash below for the
+# exact byte transform).
+_VANILLA_FIXTURE_SHA256: dict[str, str] = {
+    # docs/vanilla_xml/playercamerapreset_v1.02.xx.xml
+    "v1.02.xx": "2cca7a02587c868ba4e1380fb179444b3ef96bcd25a1019180fc7f591cbd1d0b",
+    # docs/vanilla_xml/playercamerapreset_v1.03.00.xml
+    "v1.03.00": "6664050d5af09a4d7910e3675dc5d9ca4f0210c8c4ea7a7845e5b7aad9ef330a",
+}
+
+
+def _normalize_for_hash(xml_text: str) -> bytes:
+    """Strip leading BOMs + normalize line endings, then return bytes for hashing."""
+    s = xml_text
+    while s.startswith("\ufeff"):
+        s = s[1:]
+    s = s.replace("\r\n", "\n")
+    return s.encode("utf-8")
+
+
+def _vanilla_heuristic(xml_text: str) -> bool:
+    """Cheap fallback: detects the rule-engine fingerprint UCM leaves on a file.
+
+    Used only when no fixture matches AND we want to give the user the benefit
+    of the doubt on a brand-new game patch we don't have a fixture for yet.
+    Vanilla has Player_Basic_Default_Run Fov=45 / Runfast Fov=53; UCM forces
+    both to 40 via build_smoothing.
+    """
     m1 = re.search(r'<Player_Basic_Default_Run\s+[^>]*?Fov="(\d+)"', xml_text)
     if m1 and m1.group(1) == "40":
         return False
@@ -1826,6 +1862,39 @@ def _validate_vanilla(xml_text: str) -> bool:
     ):
         return False
     return True
+
+
+def _validate_vanilla(xml_text: str) -> bool:
+    """Decide whether `xml_text` is the untouched, vanilla camera XML.
+
+    Strategy (in order):
+      1. Hash the normalized XML and look it up in _VANILLA_FIXTURE_SHA256.
+         An exact match is the strongest possible signal — we log which
+         version matched and accept.
+      2. If no fixture matches, fall back to the legacy heuristic. This
+         keeps the script usable when a new game patch ships before we've
+         had a chance to bake a new fixture into the bundled hash table.
+         A warning is logged so the user knows they're in fallback mode.
+      3. If both fail, the file has either been UCM-modded or touched by
+         another mod — refuse the backup.
+    """
+    digest = hashlib.sha256(_normalize_for_hash(xml_text)).hexdigest()
+    for version, expected in _VANILLA_FIXTURE_SHA256.items():
+        if digest == expected:
+            _log(f"Vanilla fixture match: {version}")
+            return True
+
+    if _vanilla_heuristic(xml_text):
+        known = ", ".join(sorted(_VANILLA_FIXTURE_SHA256.keys()))
+        _log(
+            f"WARNING: live XML did not match any bundled vanilla fixture "
+            f"({known}). Falling back to heuristic — game may be on a newer "
+            f"patch than this script knows about. If apply/restore misbehaves, "
+            f"check for an updated ucm.py."
+        )
+        return True
+
+    return False
 
 
 def ensure_backup(entry: PazEntry) -> None:
