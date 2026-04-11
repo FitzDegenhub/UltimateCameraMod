@@ -22,8 +22,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 - **SHA-256 integrity verification on download** - Downloaded preset bytes are now verified against the catalog's `sha256` hash before writing to disk. Mismatched downloads are rejected.
 - **URL encoding fix** - Community browser download URL now uses `Uri.EscapeDataString()` for the filename component, matching the existing safe pattern in background downloads.
 
+### Known Bugs
+- **Shoulder Cam preset crashes the game** - The Shoulder Cam preset is causing game crashes for some users. Under investigation.
+
 ### Bug Fixes
-- **Shoulder Cam community preset crashing the game** - The shipped Shoulder Cam preset was built on pre-patch vanilla XML missing new camera sections and attributes added in the April 11 game update. Updated preset rebuilt from current vanilla.
 - **Center HUD not applying** - Size matching was scattering XML comments throughout HTML content, triggering the Coherent Gameface watermark. Now uses a single trailing comment matching CentreHUD's proven approach.
 - **Center HUD mode switching had no effect** - Reinstalling with a different safe area (16:9 vs 21:9) was detected as "already installed" and skipped. Now restores vanilla first before reinstalling with the new mode.
 - **Sacred values missing on raw import/Full Manual Control preset path** - BuildGodModeSessionXml's raw import path returned before ReapplyGodModeOverrides ran.

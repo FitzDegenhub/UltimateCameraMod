@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-11T10:45:00Z",
+  "updated_at": "2026-04-05T14:05:29Z",
   "presets": [
     {
       "id": "proper-3rd-person-camera-by-orangeees",
@@ -34,8 +34,8 @@
       "description": "my custom shoulder camera preset",
       "url": "https://www.nexusmods.com/crimsondesert/mods/217",
       "version": "",
-      "sha256": "a50a52d9a8e249313d330f4d795ef06535ce620f087305c59bdcd6a9d01fd0e2",
-      "size_bytes": 444832,
+      "sha256": "252ee051f81b5a02bf05e0caf282d4959fa9f9a6290dab8b8256f9dc7a5de9ee",
+      "size_bytes": 318637,
       "tags": []
     },
     {
