@@ -25,18 +25,6 @@
       "sha256": "fb1d5d764c091ca37f4d6df4389dbbe3a2492579d3ad61ef6dd3f80fb4871f5d",
       "size_bytes": 440336,
       "tags": []
-    },
-    {
-      "id": "shoulder-camera-by-latranchedepain",
-      "file": "shoulder-camera-by-latranchedepain.ucmpreset",
-      "name": "Shoulder Camera",
-      "author": "latranchedepain",
-      "description": "my custom shoulder camera preset",
-      "url": "https://www.nexusmods.com/crimsondesert/mods/217",
-      "version": "",
-      "sha256": "252ee051f81b5a02bf05e0caf282d4959fa9f9a6290dab8b8256f9dc7a5de9ee",
-      "size_bytes": 318637,
-      "tags": []
     }
   ]
 }
