@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 est disponible !** Remplacements Sacred God Mode, option Lock-on Auto-Rotate et toutes les corrections de bugs. Telechargez depuis **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** ou **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 est disponible !** Remplacements Sacred God Mode, option Lock-on Auto-Rotate et toutes les corrections de bugs. Telechargez depuis **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** ou **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Boite a outils camera autonome pour Crimson Desert. Interface graphique complete
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Boite a outils camera autonome pour Crimson Desert. Interface graphique complete
 
 | Branche | Statut | Description |
 |---------|--------|-------------|
-| **`main`** | v3.1.2 Release | Boite a outils camera autonome avec editeur a trois niveaux (UCM Quick / Fine Tune / God Mode), presets bases sur fichiers, catalogue communautaire, export multi-format et installation PAZ directe |
+| **`main`** | v3.2 Release | Boite a outils camera autonome avec editeur a trois niveaux (UCM Quick / Fine Tune / God Mode), presets bases sur fichiers, catalogue communautaire, export multi-format et installation PAZ directe |
 | **`development`** | Developpement | Branche de developpement pour la prochaine version |
 
 v3 inclut toutes les fonctionnalites camera de v2 plus une interface repensee, des presets bases sur fichiers, un editeur a trois niveaux et l'export multi-format. L'installation PAZ directe est toujours disponible dans v3 comme option secondaire.
@@ -245,7 +245,7 @@ UCM modifie uniquement des fichiers de donnees hors ligne. Il ne touche pas la m
 Normal -- les mises a jour du jeu ecrasent les fichiers modifies. Rouvrez UCM et cliquez sur Installer (ou re-exportez le JSON pour JSON Mod Manager / CDUMM). Vos parametres sont sauvegardes automatiquement.
 
 **Mon antivirus a signale l'exe.**
-Faux positif connu avec les applications .NET autonomes. L'analyse VirusTotal est propre : [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Le code source complet est disponible ici pour examen et compilation par vos soins.
+Faux positif connu avec les applications .NET autonomes. L'analyse VirusTotal est propre : [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Le code source complet est disponible ici pour examen et compilation par vos soins.
 
 **Que signifie un decalage horizontal de 0 ?**
 0 = position camera d'origine (personnage legerement a gauche). 0.5 = personnage centre a l'ecran. Les valeurs negatives decalent davantage a gauche, les valeurs positives davantage a droite.
@@ -257,7 +257,7 @@ Utilisateurs v3.x : remplacez simplement l'exe, tous les presets et parametres s
 
 ## Historique des versions
 
-- **v3.1.2** -- Correction des valeurs Sacred manquantes dans l'installation/les exports depuis l'onglet God Mode. Voir les [notes de version](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** -- Correction des valeurs Sacred manquantes dans l'installation/les exports depuis l'onglet God Mode. Voir les [notes de version](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** -- Correction d'un faux positif de detection de sauvegarde corrompue sur des fichiers de jeu propres.
 - **v3.1** -- Remplacements Sacred God Mode (modifications utilisateur definitivement protegees des reconstructions). Option Lock-on Auto-Rotate (credits a [sillib1980](https://github.com/sillib1980)). Indicateurs Sacred verts. Correction de l'installation Full Manual Control. Overlay de mise a niveau tenant compte des versions. Voir les [notes de version](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** -- Toutes les boites de dialogue converties en systeme d'overlay integre. Les remplacements God Mode persistent entre les changements d'onglets. Selection du type de preset (UCM Managed vs Full Manual Control). Catalogue des presets communautaires deplace vers le depot principal. 54 infobulles d'attributs God Mode. Corrections de plantages du jeu. Validation vanilla mise a jour pour le patch de juin 2026. Wiki de 21 pages.

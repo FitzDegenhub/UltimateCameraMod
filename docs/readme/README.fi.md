@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 on julkaistu!** Sacred God Mode -ohitukset, Lock-on Auto-Rotate -kytkin ja kaikki bugikorjaukset. Lataa **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** -sivulta tai **[Nexus Modsista](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 on julkaistu!** Sacred God Mode -ohitukset, Lock-on Auto-Rotate -kytkin ja kaikki bugikorjaukset. Lataa **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** -sivulta tai **[Nexus Modsista](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Itsenäinen kameratyökalupaketti Crimson Desertiin. Täysi graafinen käyttöli
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Itsenäinen kameratyökalupaketti Crimson Desertiin. Täysi graafinen käyttöli
 
 | Haara | Tila | Kuvaus |
 |-------|------|--------|
-| **`main`** | v3.1.2 Julkaisu | Itsenäinen kameratyökalupaketti kolmitasoisella editorilla (UCM Quick / Fine Tune / God Mode), tiedostopohjaiset presetit, yhteisökatalogi, moniformaattivienti ja suora PAZ-asennus |
+| **`main`** | v3.2 Julkaisu | Itsenäinen kameratyökalupaketti kolmitasoisella editorilla (UCM Quick / Fine Tune / God Mode), tiedostopohjaiset presetit, yhteisökatalogi, moniformaattivienti ja suora PAZ-asennus |
 | **`development`** | Kehitys | Seuraavan version kehityshaara |
 
 v3 sisältää kaikki v2:n kameraominaisuudet sekä uudistetun käyttöliittymän, tiedostopohjaiset presetit, kolmitasoisen editorin ja moniformaattiviennin. Suora PAZ-asennus on edelleen saatavilla v3:ssa toissijaisena vaihtoehtona.
@@ -245,7 +245,7 @@ UCM muokkaa vain offline-datatiedostoja. Se ei koske pelimuistia, injektoi koodi
 Normaalia -- pelipäivitykset ylikirjoittavat modatut tiedostot. Avaa UCM uudelleen ja napsauta Asenna (tai vie JSON uudelleen JSON Mod Managerille / CDUMM:lle). Asetuksesi tallennetaan automaattisesti.
 
 **Virustorjuntani merkitsi exen.**
-Tunnettu väärä positiivinen itsenäisten .NET-sovellusten kanssa. VirusTotal-skannaus on puhdas: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Täydellinen lähdekoodi on saatavilla täällä tarkastettavaksi ja itse käännettäväksi.
+Tunnettu väärä positiivinen itsenäisten .NET-sovellusten kanssa. VirusTotal-skannaus on puhdas: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Täydellinen lähdekoodi on saatavilla täällä tarkastettavaksi ja itse käännettäväksi.
 
 **Mitä vaakasiirron arvo 0 tarkoittaa?**
 0 = alkuperäinen kameran sijainti (hahmo hieman vasemmalla). 0.5 = hahmo keskellä ruutua. Negatiiviset arvot siirtävät enemmän vasemmalle, positiiviset arvot enemmän oikealle.
@@ -257,7 +257,7 @@ v3.x-käyttäjät: vaihda vain exe, kaikki presetit ja asetukset säilyvät. v2.
 
 ## Versiohistoria
 
-- **v3.1.2** -- Korjattu sacred-arvojen puuttuminen asennuksesta/vienneistä God Mode -välilehdellä. Katso [julkaisutiedot](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** -- Korjattu sacred-arvojen puuttuminen asennuksesta/vienneistä God Mode -välilehdellä. Katso [julkaisutiedot](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** -- Korjattu väärä positiivinen saastuneen varmuuskopion tunnistus puhtailla pelitiedostoilla.
 - **v3.1** -- Sacred God Mode -ohitukset (käyttäjän muokkaukset pysyvästi suojattu uudelleenrakennuksilta). Lukituksen automaattikiertokytkin (kiitos [sillib1980](https://github.com/sillib1980)). Vihreät sacred-ilmaisimet. Full Manual Control -asennuksen korjaus. Versiotietoinen päivityskerros. Katso [julkaisutiedot](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** -- Kaikki dialogit muutettu sovelluksen sisäisiksi peittojärjestelmiksi. God Mode -ohitukset säilyvät välilehtien vaihdon yli. Presettityypin valinta (UCM Managed vs Full Manual Control). Yhteisöpresettkatalogi siirretty päärepositorioon. 54 God Mode -attribuutin työkaluvihjettä. Pelikaatumiskorjauksia. Vanilla-validointi päivitetty kesäkuun 2026 pelipäivitykselle. 21-sivuinen Wiki.

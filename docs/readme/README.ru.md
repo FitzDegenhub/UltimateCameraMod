@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 уже доступна!** Переопределения Sacred God Mode, переключатель автоповорота при захвате цели и все исправления ошибок. Скачайте с **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** или **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 уже доступна!** Переопределения Sacred God Mode, переключатель автоповорота при захвате цели и все исправления ошибок. Скачайте с **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** или **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@
 
 | Ветка | Статус | Описание |
 |-------|--------|----------|
-| **`main`** | v3.1.2 Release | Автономный набор инструментов камеры с трехуровневым редактором (UCM Quick / Fine Tune / God Mode), пресетами на основе файлов, каталогом сообщества, мультиформатным экспортом и прямой установкой PAZ |
+| **`main`** | v3.2 Release | Автономный набор инструментов камеры с трехуровневым редактором (UCM Quick / Fine Tune / God Mode), пресетами на основе файлов, каталогом сообщества, мультиформатным экспортом и прямой установкой PAZ |
 | **`development`** | Разработка | Ветка разработки следующей версии |
 
 v3 включает все функции камеры из v2, а также переработанный интерфейс, пресеты на основе файлов, трехуровневый редактор и мультиформатный экспорт. Прямая установка PAZ по-прежнему доступна в v3 как дополнительная опция.
@@ -245,7 +245,7 @@ UCM модифицирует только офлайн-файлы данных. 
 Это нормально -- обновления игры перезаписывают измененные файлы. Откройте UCM заново и нажмите "Установить" (или повторно экспортируйте JSON для JSON Mod Manager / CDUMM). Ваши настройки сохраняются автоматически.
 
 **Мой антивирус пометил exe.**
-Известный ложноположительный результат для автономных приложений .NET. Проверка VirusTotal чистая: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Полный исходный код доступен здесь для проверки и самостоятельной сборки.
+Известный ложноположительный результат для автономных приложений .NET. Проверка VirusTotal чистая: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Полный исходный код доступен здесь для проверки и самостоятельной сборки.
 
 **Что означает горизонтальное смещение 0?**
 0 = ванильная позиция камеры (персонаж немного левее). 0.5 = персонаж по центру экрана. Отрицательные значения сдвигают еще левее, положительные -- еще правее.
@@ -257,7 +257,7 @@ UCM модифицирует только офлайн-файлы данных. 
 
 ## История версий
 
-- **v3.1.2** -- Исправлены священные значения, отсутствовавшие в Установке/экспорте на вкладке God Mode. См. [примечания к релизу](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** -- Исправлены священные значения, отсутствовавшие в Установке/экспорте на вкладке God Mode. См. [примечания к релизу](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** -- Исправлено ложноположительное обнаружение поврежденной резервной копии на чистых файлах игры.
 - **v3.1** -- Переопределения Sacred God Mode (пользовательские правки навсегда защищены от перестроений). Переключатель автоповорота при захвате цели (благодарность [sillib1980](https://github.com/sillib1980)). Зеленые индикаторы священных значений. Исправление установки Full Manual Control. Оверлей обновления с учетом версий. См. [примечания к релизу](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** -- Все диалоги преобразованы в систему оверлеев внутри приложения. Переопределения God Mode сохраняются при переключении вкладок. Выбор типа пресета (UCM Managed vs Full Manual Control). Каталог пресетов сообщества перемещен в основной репозиторий. 54 всплывающие подсказки атрибутов God Mode. Исправления вылетов игры. Ванильная валидация обновлена для патча игры июня 2026. Wiki из 21 страницы.

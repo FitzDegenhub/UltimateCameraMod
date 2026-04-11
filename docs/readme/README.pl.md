@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 jest juz dostepna!** Nadpisywanie Sacred God Mode, przelacznik Lock-on Auto-Rotate i wszystkie poprawki bledow. Pobierz z **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** lub **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 jest juz dostepna!** Nadpisywanie Sacred God Mode, przelacznik Lock-on Auto-Rotate i wszystkie poprawki bledow. Pobierz z **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** lub **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Samodzielny zestaw narzedzi kamery dla Crimson Desert. Pelny GUI, podglad kamery
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Samodzielny zestaw narzedzi kamery dla Crimson Desert. Pelny GUI, podglad kamery
 
 | Galaz | Status | Opis |
 |-------|--------|------|
-| **`main`** | Wydanie v3.1.2 | Samodzielny zestaw narzedzi kamery z trzypoziomowym edytorem (UCM Quick / Fine Tune / God Mode), presetami opartymi na plikach, katalogiem spolecznosci, eksportem wieloformatowym i bezposrednia instalacja PAZ |
+| **`main`** | Wydanie v3.2 | Samodzielny zestaw narzedzi kamery z trzypoziomowym edytorem (UCM Quick / Fine Tune / God Mode), presetami opartymi na plikach, katalogiem spolecznosci, eksportem wieloformatowym i bezposrednia instalacja PAZ |
 | **`development`** | Rozwoj | Galaz rozwojowa nastepnej wersji |
 
 v3 zawiera wszystkie funkcje kamery z v2 oraz przeprojektowany interfejs, presety oparte na plikach, trzypoziomowy edytor i eksport wieloformatowy. Bezposrednia instalacja PAZ jest nadal dostepna w v3 jako opcja drugorzedna.
@@ -245,7 +245,7 @@ UCM modyfikuje tylko pliki danych offline. Nie dotyka pamieci gry, nie wstrzykuj
 To normalne -- aktualizacje gry nadpisuja zmodyfikowane pliki. Ponownie otworz UCM i kliknij Zainstaluj (lub ponownie eksportuj JSON dla JSON Mod Manager / CDUMM). Twoje ustawienia sa zapisywane automatycznie.
 
 **Moj antywirus oznaczy exe.**
-Znany falszywy alarm z samodzielnymi aplikacjami .NET. Skan VirusTotal jest czysty: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Pelny kod zrodlowy jest dostepny tutaj do przegladniecia i samodzielnego zbudowania.
+Znany falszywy alarm z samodzielnymi aplikacjami .NET. Skan VirusTotal jest czysty: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Pelny kod zrodlowy jest dostepny tutaj do przegladniecia i samodzielnego zbudowania.
 
 **Co oznacza przesuniecie poziome 0?**
 0 = pozycja kamery vanilla (postac lekko po lewej). 0.5 = postac wycentrowana na ekranie. Wartosci ujemne przesuwaja dalej w lewo, wartosci dodatnie dalej w prawo.
@@ -257,7 +257,7 @@ Uzytkownicy v3.x: po prostu zastap exe, wszystkie presety i ustawienia sa zachow
 
 ## Historia wersji
 
-- **v3.1.2** -- Naprawiono brakujace wartosci sacred w Instalacji/eksportach na zakladce God Mode. Zobacz [notatki wydania](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** -- Naprawiono brakujace wartosci sacred w Instalacji/eksportach na zakladce God Mode. Zobacz [notatki wydania](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** -- Naprawiono falszywo-pozytywne wykrywanie uszkodzonej kopii zapasowej na czystych plikach gry.
 - **v3.1** -- Nadpisywanie Sacred God Mode (edycje uzytkownika trwale chronione przed przebudowa). Przelacznik Lock-on Auto-Rotate (dzieki [sillib1980](https://github.com/sillib1980)). Zielone wskazniki sacred. Poprawka instalacji Pelnej Kontroli Recznej. Nakladka swiadomosci wersji przy aktualizacji. Zobacz [notatki wydania](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** -- Wszystkie okna dialogowe przekonwertowane na system nakladek w aplikacji. Nadpisania God Mode zachowywane miedzy przelaczaniem zakladek. Wybor typu presetu (Zarzadzany przez UCM vs Pelna Kontrola Reczna). Katalog presetow spolecznosci przeniesiony do glownego repozytorium. 54 podpowiedzi atrybutow God Mode. Poprawki awarii gry. Walidacja vanilla zaktualizowana dla latki gry z czerwca 2026. 21-stronicowe Wiki.

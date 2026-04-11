@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 er her!** Sacred God Mode-tilsidesaettelser, Lock-on Auto-Rotate-skift og alle fejlrettelser. Download fra **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** eller **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 er her!** Sacred God Mode-tilsidesaettelser, Lock-on Auto-Rotate-skift og alle fejlrettelser. Download fra **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** eller **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Selvstaendigt kameravaerktoj til Crimson Desert. Fuldt GUI, kameraforhaandsvisni
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Selvstaendigt kameravaerktoj til Crimson Desert. Fuldt GUI, kameraforhaandsvisni
 
 | Gren | Status | Hvad det er |
 |------|--------|-------------|
-| **`main`** | v3.1.2 Release | Selvstaendigt kameravaerktoj med tre-trins editor (UCM Quick / Fine Tune / God Mode), filbaserede presets, faellesskabskatalog, eksport i flere formater og direkte PAZ-installation |
+| **`main`** | v3.2 Release | Selvstaendigt kameravaerktoj med tre-trins editor (UCM Quick / Fine Tune / God Mode), filbaserede presets, faellesskabskatalog, eksport i flere formater og direkte PAZ-installation |
 | **`development`** | Udvikling | Udviklingsgren til naeste version |
 
 v3 inkluderer alle kamerafunktioner fra v2 plus et redesignet interface, filbaserede presets, en tre-trins editor og eksport i flere formater. Direkte PAZ-installation er stadig tilgaengelig i v3 som et sekundaert alternativ.
@@ -245,7 +245,7 @@ UCM aendrer kun offline-datafiler. Den rorer ikke spilhukommelsen, injicerer ing
 Normalt -- spilopdateringer overskriver moddede filer. Aabn UCM igen og klik paa Installer (eller geneksporter JSON til JSON Mod Manager / CDUMM). Dine indstillinger gemmes automatisk.
 
 **Mit antivirusprogram markerede exe-filen.**
-Kendt falsk positiv med selvstaendige .NET-apps. VirusTotal-scanningen er ren: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Fuld kildekode er tilgaengelig her til gennemgang og egen kompilering.
+Kendt falsk positiv med selvstaendige .NET-apps. VirusTotal-scanningen er ren: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Fuld kildekode er tilgaengelig her til gennemgang og egen kompilering.
 
 **Hvad betyder horisontal forskydning 0?**
 0 = vanilla kameraposition (karakteren lidt til venstre). 0,5 = karakteren centreret paa skaermen. Negative vaerdier flytter laengere til venstre, positive vaerdier flytter laengere til hojre.
@@ -257,7 +257,7 @@ v3.x-brugere: udskift bare exe-filen, alle presets og indstillinger bevares. v2.
 
 ## Versionshistorik
 
-- **v3.1.2** -- Rettelse for sacred-vaerdier der manglede fra Install/eksporter paa God Mode-fanen. Se [udgivelsesnoter](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** -- Rettelse for sacred-vaerdier der manglede fra Install/eksporter paa God Mode-fanen. Se [udgivelsesnoter](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** -- Rettelse for falsk-positiv detektering af beskadiget sikkerhedskopi paa rene spilfiler.
 - **v3.1** -- Sacred God Mode-tilsidesaettelser (brugerredigeringer permanent beskyttet mod genopbygninger). Lock-on Auto-Rotate-skift (tak til [sillib1980](https://github.com/sillib1980)). Gronne sacred-indikatorer. Rettelse for Full Manual Control-installation. Versionsbevidst opgraderingsoverlay. Se [udgivelsesnoter](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** -- Alle dialoger konverteret til overlay-system i appen. God Mode-tilsidesaettelser bevares paa tvaers af faneskift. Valg af presettype (UCM Managed vs Full Manual Control). Faellesskabets presetkatalog flyttet til hovedrepoet. 54 God Mode-attribut-tooltips. Spilnedbrudsfixes. Vanilla-validering opdateret til spilpatchen juni 2026. 21-siders Wiki.
