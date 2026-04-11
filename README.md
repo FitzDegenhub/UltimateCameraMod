@@ -2,7 +2,7 @@
 
 ---
 
-> **v3.1.2 is here!** Sacred God Mode overrides, Lock-on Auto-Rotate toggle, and all bug fixes. Download from **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** or **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
+> **v3.2 is here!** 19 languages, Center HUD for ultrawide, God Mode now shows all 570+ camera sections, and more. Download from **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** or **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)**.
 
 # Ultimate Camera Mod - Crimson Desert
 
@@ -14,11 +14,11 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 
 <p align="center">
 
-[![Download v3.1.2](https://img.shields.io/badge/Download-v3.1.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2)
+[![Download v3.2](https://img.shields.io/badge/Download-v3.2-brightgreen?style=for-the-badge&logo=github)](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2)
 [![Nexus Mods](https://img.shields.io/badge/Nexus_Mods-UCM-d98f40?style=for-the-badge&logo=nexusmods&logoColor=white)](https://www.nexusmods.com/crimsondesert/mods/438)
 [![Wiki](https://img.shields.io/badge/Wiki-Documentation-8B5CF6?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)
 
-[![VirusTotal v3.1.2](https://img.shields.io/badge/VirusTotal_v3.1.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021)
+[![VirusTotal v3.2](https://img.shields.io/badge/VirusTotal_v3.2-Clean-blue?style=for-the-badge&logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==)
 [![Reddit Discussion](https://img.shields.io/badge/Reddit-Discussion-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/CrimsonDesert/comments/1sfou61/ucm_ultimate_camera_mod_v3_crimson_desert_full/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
@@ -56,7 +56,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 
 | Branch | Status | What it is |
 |--------|--------|------------|
-| **`main`** | v3.1.2 Release | Standalone camera toolkit with three-tier editor (UCM Quick / Fine Tune / God Mode), file-based presets, community catalog, multi-format export, and direct PAZ install |
+| **`main`** | v3.2 Release | Standalone camera toolkit with three-tier editor, 19 languages, Center HUD, 570+ God Mode camera sections, file-based presets, community catalog, multi-format export, and direct PAZ install |
 | **`development`** | Development | Next version development branch |
 
 v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
@@ -79,6 +79,8 @@ v3 includes every camera feature from v2 plus a redesigned UI, file-based preset
 | **Horizontal shift on all mounts** | Horse, elephant, wyvern, canoe, warmachine, and broom all respect your shift setting with proportional scaling |
 | **Skill aiming consistency** | Lantern, Blinding Flash, Bow, and all aim/zoom/interaction skills respect horizontal shift. No camera snap when activating abilities |
 | **Steadycam smoothing** | Normalized blend timing and velocity sway across 30+ camera states: idle, walk, run, sprint, combat, guard, rush/charge, freefall, super jump, rope pull/swing, knockback, all lock-on variants, mount lock-on, revive lock-on, aggro/wanted, warmachine, and all mount states. Every value is community-tunable via the Fine Tune editor |
+| **Center HUD** | Centers gameplay HUD elements for ultrawide displays. 16:9 (1920px) or 21:9 (2520px) safe areas. Modifies HTML/CSS in PAZ archive independently from camera. Credits to wsres |
+| **19 languages** | Full UI localization with live switching from the title bar. EN, KO, JA, ZH-CN, ZH-TW, TH, ID, TR, PL, IT, SV, NB, DA, FI, DE, FR, ES, PT-BR, RU |
 | **Sacred God Mode** | Values you edit in God Mode are permanently protected from Quick/Fine Tune rebuilds. Green indicators show which values are sacred. Per-preset storage |
 
 > **v3 design philosophy: value edits only, no structural injection.**
@@ -93,7 +95,7 @@ v3 organizes editing into three tabs so you can go as deep as you want:
 |------|-----|--------------|
 | 1 | **UCM Quick** | The fast layer - distance/height/shift sliders, FoV, centered camera, lock-on zoom (-60% to +60%), lock-on auto-rotate, mount sync, steadycam, live camera + FoV previews |
 | 2 | **Fine Tune** | Curated deep-tuning. Searchable sections for on-foot zoom levels, horse/mount zoom, global FoV, special mounts & traversal, combat & lock-on, camera smoothing, and aiming & crosshair position. Builds on top of UCM Quick |
-| 3 | **God Mode** | Full raw XML editor - every parameter in a searchable, filterable DataGrid grouped by camera state. Vanilla comparison column. Sacred overrides (green) protected from rebuilds. "Sacred only" filter. 54 attribute tooltips |
+| 3 | **God Mode** | Full raw XML editor - all 570+ camera sections (not just Player) in a searchable, filterable DataGrid. Gimmicks, mounts, dragons, cutscenes, minigames, world map, and more. Vanilla comparison column. Sacred overrides (green) protected from rebuilds. "Sacred only" filter. 54 attribute tooltips |
 
 ### File-based preset system (v3)
 
@@ -137,6 +139,7 @@ Includes title, version, author, Nexus URL, and description fields for JSON/XML.
 
 ### Quality of life
 
+- **Live language switching** - 19 languages, pick from the title bar dropdown and the entire UI updates instantly
 - **Auto game detection** - Steam, Epic Games, Xbox / Game Pass
 - **Automatic backup** - vanilla backup before any modification; one-click restore. Version-aware with auto-cleanup on upgrade
 - **Install config banner** - shows your full active config (FoV, distance, height, shift, settings)
@@ -199,15 +202,7 @@ Start-Process "src/UltimateCameraMod.V3/bin/Release/net6.0-windows/UltimateCamer
 ## Project structure
 
 ```
-src/UltimateCameraMod/              Shared library + v2.x WPF app
-├── Controls/                       CameraPreview, FovPreview
-├── Models/                         PresetCodec, data models
-├── Paz/                            ArchiveWriter, CompressionUtils, PAZ I/O
-├── Services/                       CameraMod, GameDetector, JsonModExporter, GameInstallBaselineTracker
-├── MainWindow.xaml                 v2.x UI
-└── UltimateCameraMod.csproj
-
-src/UltimateCameraMod.V3/           v3 export-first WPF app (references shared code above)
+src/UltimateCameraMod.V3/           v3 standalone WPF app (all code consolidated)
 ├── Controls/                       CameraPreview, FovPreview (v3 variants)
 ├── Models/                         PresetManagerItem, ImportedPreset
 ├── Assets/                         ucm.ico, ucm-app-icon.png
@@ -245,7 +240,7 @@ UCM modifies offline data files only. It does not touch game memory, inject code
 Normal - game updates overwrite modded files. Re-open UCM and click Install (or re-export JSON for JSON Mod Manager / CDUMM). Your settings are saved automatically.
 
 **My antivirus flagged the exe.**
-Known false positive with self-contained .NET apps. VirusTotal scan is clean: [v3.1.2](https://www.virustotal.com/gui/file/7c5ddbfce28cabecb799a00b87ad4c4641c30c9db65cd2560c6a91d578852021). Full source is available here to review and build yourself.
+Known false positive with self-contained .NET apps. VirusTotal scan is clean: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Full source is available here to review and build yourself.
 
 **What does horizontal shift 0 mean?**
 0 = vanilla camera position (character slightly to the left). 0.5 = character centered on screen. Negative values move further left, positive values move further right.
@@ -257,7 +252,7 @@ v3.x users: just replace the exe, all presets and settings are preserved. v2.x u
 
 ## Version history
 
-- **v3.1.2** - Fix sacred values missing from Install/exports on God Mode tab. See [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1.2).
+- **v3.2** - 19 languages with live switching. Center HUD for ultrawide. God Mode shows all 570+ camera sections. Security fixes (path traversal, SHA-256 verification). Multiple localization and UI bug fixes. See [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2).
 - **v3.1.1** - Fix false-positive tainted backup detection on clean game files.
 - **v3.1** - Sacred God Mode overrides (user edits permanently protected from rebuilds). Lock-on Auto-Rotate toggle (credits to [sillib1980](https://github.com/sillib1980)). Green sacred indicators. Full Manual Control install fix. Version-aware upgrade overlay. See [release notes](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1).
 - **v3.0.2** - All dialogs converted to in-app overlay system. God Mode overrides persist across tab switches. Preset type selection (UCM Managed vs Full Manual Control). Community preset catalog moved to main repo. 54 God Mode attribute tooltips. Game crash fixes. Vanilla validation updated for June 2026 game patch. 21-page Wiki.
@@ -276,6 +271,7 @@ v3.x users: just replace the exe, all presets and settings are preserved. v2.x u
 
 - **0xFitz** - UCM development, camera tuning, advanced editor
 - **[@sillib1980](https://github.com/sillib1980)** - Discovered Lock-on Auto-Rotate camera fields
+- **wsres** - Center HUD technique for ultrawide displays
 
 ### C# rewrite (v2.0)
 - **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - CrimsonDesertTools - C# PAZ/PAMT parser, ChaCha20 encryption, LZ4 compression, PaChecksum, archive repacker (.NET 8, MIT)
