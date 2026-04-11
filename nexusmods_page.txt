@@ -1,0 +1,363 @@
+[center][size=6][b][img]https://raw.githubusercontent.com/FitzDegenhub/UltimateCameraMod/main/screenshots/v3.x/header.png[/img]
+[color=#ffd966]Ultimate Camera Mod[/color][/b][/size]
+[size=3]The definitive camera toolkit for Crimson Desert[/size]
+
+[size=2][color=#d98f40]v3.2  |  by 0xFitz  |  19 Languages  |  570+ Camera Sections[/color][/size]
+
+[url=https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest]GitHub Releases[/url]  |  [url=https://github.com/FitzDegenhub/UltimateCameraMod]Source Code[/url]  |  [url=https://github.com/FitzDegenhub/UltimateCameraMod/wiki]Wiki & Docs[/url]  |  [url=https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==]VirusTotal 0/64 Clean[/url][/center]
+
+[line]
+
+[center][size=5][b][color=#ffd966]If you used v2.x, forget everything you knew.[/color][/b][/size]
+[size=3]UCM v3 is a ground-up redesign. New editor. New preset system. New export pipeline.
+Three tiers of control, a community preset catalog, and a file format built for sharing.
+Same one-click install. Same safety. Way more power.[/size][/center]
+
+[line]
+
+[size=4][b]What is UCM?[/b][/size]
+
+Ultimate Camera Mod is a standalone Windows app that gives you full control over Crimson Desert's third-person camera. Pick from hand-tuned presets, build your own with sliders, or go deep and tweak every single camera parameter in the game.
+
+[size=3][color=#d98f40]Why UCM?[/color][/size]
+
+[list]
+[*][b]Game-patch proof[/b] - UCM builds your camera from your own game files. When Crimson Desert updates, just hit Install and you're back in action. No waiting on mod authors to release updated files.[/*]
+[*][b]Three levels of control[/b] - Quick sliders for casual users, Fine Tune cards for enthusiasts, God Mode raw XML for the deep end. Use whichever level fits you.[/*]
+[*][b]19 languages[/b] - Full UI localization with live switching. English, Korean, Japanese, Chinese (Simplified/Traditional), Thai, Indonesian, Turkish, Polish, Italian, Swedish, Norwegian, Danish, Finnish, German, French, Spanish, Portuguese Brazilian, Russian.[/*]
+[*][b]Community preset catalog[/b] - Browse and download camera presets from other players directly in-app. One click to install someone else's setup.[/*]
+[*][b]Mod manager compatible[/b] - Export JSON patches for [url=https://www.nexusmods.com/crimsondesert/mods/113]JSON Mod Manager[/url] or [url=https://www.nexusmods.com/crimsondesert/mods/207]CDUMM[/url]. UCM fits into your existing mod workflow.[/*]
+[*][b]Shareable presets[/b] - Export your camera as a .ucmpreset file and share it with anyone. They import it, done.[/*]
+[*][b]Safe and reversible[/b] - No DLL injection, no memory hacking, no internet required. Pure game-file modification with automatic backup. One click to restore vanilla at any time.[/*]
+[*][b]Single exe, zero dependencies[/b] - No installer. No runtime to download. Place it anywhere and run.[/*]
+[*][b]Open source under MIT[/b] - Every line of code is on GitHub. Build from source if you want.[/*]
+[/list]
+
+[line]
+
+[center][size=5][b][color=#ffd966]Three-Tier Editor[/color][/b][/size]
+[size=3]Start simple. Go deeper when you want to.[/size][/center]
+
+UCM v3 replaces the old single-tab layout with three progressive tiers of control. Use whichever level fits your needs.
+
+[size=3][color=#d98f40]Tier 1: UCM Quick[/color][/size]
+
+The fast lane. Sliders for distance, height, and horizontal shift. Dropdown for FoV. Checkboxes for features. A live camera preview updates in real time as you adjust. This is where most people will live.
+
+[list]
+[*][b]Distance[/b] (1.5 to 12.0) controls how far the camera sits behind the character[/*]
+[*][b]Height[/b] (-1.6 to 1.5) adjusts vertical position[/*]
+[*][b]Horizontal Shift[/b] (-3.0 to 3.0) moves the character's screen position using proportional scaling across all zoom levels[/*]
+[*][b]Field of View[/b] from vanilla 40 up to 80, with per-aspect-ratio recommendations[/*]
+[*][b]Centered Camera[/b] locks the camera dead-center behind the character across 150+ camera states[/*]
+[*][b]Lock-on Zoom[/b] slider from -60% (zoom in on target) to +60% (pull back wide)[/*]
+[*][b]Lock-on Auto-Rotate[/b] toggle to disable camera snap-to-target when locking on[/*]
+[*][b]Steadycam[/b] smoothing across 30+ camera states, eliminating jolting transitions[/*]
+[*][b]Center HUD[/b] (new in v3.2) centers gameplay HUD elements for ultrawide displays. Choose between 16:9 (1920px) or 21:9 (2520px) safe areas. Credits to wsres.[/*]
+[*][b]Mount Camera Sync[/b] matches mount camera height to your player camera[/*]
+[*][b]Live Preview[/b] shows camera distance, height, shift position, and FoV cone in real time[/*]
+[/list]
+
+[size=3][color=#d98f40]Tier 2: Fine Tune[/color][/size]
+
+Curated control cards organized by category. More granular than Quick, without being overwhelming.
+
+[list]
+[*]On-foot zoom levels[/*]
+[*]Horse and mount zoom levels[/*]
+[*]Global FoV overrides[/*]
+[*]Special mount cameras (elephant, wyvern, canoe, warmachine, broom)[/*]
+[*]Traversal cameras (climbing, gliding, swimming)[/*]
+[*]Combat and lock-on behavior[/*]
+[*]Camera smoothing parameters[/*]
+[*]Aiming and crosshair positioning[/*]
+[/list]
+
+[size=3][color=#d98f40]Tier 3: God Mode[/color][/size]
+
+The raw XML. All 570+ camera sections in the game exposed in a searchable, filterable DataGrid. Not just player cameras -- gimmicks, mounts, dragons, cutscenes, minigames, world map, and more.
+
+[list]
+[*]Every camera state: walking, running, combat, guard, mounted, indoor, gliding, dragons, gimmicks, minigames, and more[/*]
+[*]Every attribute: FOV, distance, height, offsets, blend times, damp speeds, target rates, zoom levels[/*]
+[*][b]Vanilla column[/b] shows original values alongside your edits[/*]
+[*][b]Sacred overrides[/b] (new in v3.1): values you edit in God Mode are permanently protected from Quick/Fine Tune rebuilds, shown with [color=#00ff00]green indicators[/color][/*]
+[*][b]54 attribute tooltips[/b] explaining what each parameter actually does[/*]
+[*]Search, filter, group by camera state, expand/collapse all[/*]
+[*]Modified values highlighted in gold[/*]
+[/list]
+
+[line]
+
+[center][size=5][b][color=#ffd966]Preset System[/color][/b][/size]
+[size=3]File-based. Shareable. Organized.[/size][/center]
+
+v3 introduces a proper preset manager with a collapsible sidebar and the [b].ucmpreset[/b] file format.
+
+[size=3][color=#d98f40]Sidebar Groups[/color][/size]
+
+[list]
+[*][b]Game Default[/b] - True Vanilla decoded from your game backup, zero modifications[/*]
+[*][b]UCM Presets[/b] - 7 official hand-tuned styles (downloadable on demand via the catalog)[/*]
+[*][b]Community Presets[/b] - Presets shared by other players, browsable in-app[/*]
+[*][b]My Presets[/b] - Your custom creations[/*]
+[*][b]Imported[/b] - Presets imported from files or other users[/*]
+[/list]
+
+[size=3][color=#d98f40]UCM Presets[/color][/size]
+
+[list]
+[*][b]Heroic[/b] - Shoulder-level over-the-shoulder with smoothed transitions. Great framing for exploration and combat.[/*]
+[*][b]Panoramic[/b] - Wide filmic pullback at head-height. Cinematic default recommendation.[/*]
+[*][b]Close-Up[/b] - Tight shoulder OTS with lock-on pull-back. Similar to a 16:9 feel on ultrawide.[/*]
+[*][b]Low Rider[/b] - Hip-level camera showing full body and horizon line.[/*]
+[*][b]Knee Cam[/b] - Knee-height dramatic low angle.[/*]
+[*][b]Dirt Cam[/b] - Ground-level extreme low camera for cinematic screenshots.[/*]
+[*][b]Survival[/b] - Tight OTS with offset, horror-game feel (RE2/Dead Space vibes).[/*]
+[/list]
+
+[size=3][color=#d98f40]Community Presets[/color][/size]
+
+[list]
+[*][b]Proper 3rd Person Camera[/b] by orangeees - RDR2-inspired lower, grounded view[/*]
+[*][b]Proper 3rd Person Camera (Wide FoV)[/b] by orangeees - Same grounded feel, wider field of view[/*]
+[*][b]Shoulder Camera[/b] by latranchedepain - Tight shoulder framing[/*]
+[/list]
+
+Want your preset in the catalog? Export your .ucmpreset file and either DM me here on Nexus or submit a pull request to the [url=https://github.com/FitzDegenhub/UltimateCameraMod]GitHub repo[/url] with your file. If it gets added, it'll show up in everyone's in-app community catalog automatically.
+
+[size=3][color=#d98f40]Create Your Own[/color][/size]
+
+[list]
+[*]Create, duplicate, rename, and delete presets freely[/*]
+[*]Choose between [b]Managed by UCM[/b] (UCM handles camera rules) or [b]Full Manual Control[/b] (God Mode only, no UCM rules applied)[/*]
+[*]Lock/unlock presets with the padlock icon to prevent accidental edits[/*]
+[*]Everything auto-saves as you work[/*]
+[/list]
+
+[line]
+
+[center][size=5][b][color=#ffd966]Multi-Format Export & Mod Manager Support[/color][/b][/size]
+[size=3]v3 is export-first. Get your camera setup out of the app however you need it.[/size][/center]
+
+[size=3][color=#ffc107][b]Prefer using a mod manager?[/b] UCM has you covered.[/color][/size]
+
+UCM v3 natively exports JSON patches that are fully compatible with the community's mod managers. Tune your camera in UCM, hit Export, and load the output straight into your mod manager of choice. No need to use UCM's built-in Install if you'd rather manage everything through one tool.
+
+[b]Supported mod managers:[/b]
+[list]
+[*][url=https://www.nexusmods.com/crimsondesert/mods/113][b]JSON Mod Manager[/b][/url] by [url=https://www.nexusmods.com/profile/PhorgeForge]PhorgeForge[/url] - UCM exports JSON byte patches with modinfo metadata, ready to load directly[/*]
+[*][url=https://www.nexusmods.com/crimsondesert/mods/207][b]CDUMM (Crimson Desert Unified Mod Manager)[/b][/url] by [url=https://www.nexusmods.com/profile/kindiboy]kindiboy[/url] - Same JSON export format, fully compatible[/*]
+[/list]
+
+[size=3][color=#d98f40]All export formats:[/color][/size]
+
+[list]
+[*][b]JSON[/b] - Byte-level patches + modinfo metadata for mod managers[/*]
+[*][b]XML[/b] - Raw playercamerapreset.xml for manual editing or other tools[/*]
+[*][b]0.paz[/b] - Fully patched archive file, drop it in the game's 0010 folder[/*]
+[*][b].ucmpreset[/b] - Full UCM preset file for sharing with other UCM users[/*]
+[/list]
+
+You can still one-click Install directly from UCM if you prefer to keep things simple. The export system just means UCM now fits into however you like to manage your mods.
+
+[line]
+
+[size=4][b]Feature Highlights[/b][/size]
+
+[size=3][color=#d98f40]Field of View[/color][/size]
+
+7 FoV options from vanilla 40 up to 80, with recommendations for different aspect ratios:
+
+[list]
+[*]No change (40) - Vanilla[/*]
+[*]+10 (50) - Minimal increase, good for 16:9[/*]
+[*]+15 (55) - Subtle improvement[/*]
+[*]+20 (60) - Sweet spot for 21:9 ultrawide[/*]
+[*]+25 (65) - Great for 21:9 and 32:9[/*]
+[*]+30 (70) - Perfect for 32:9 super-ultrawide[/*]
+[*]+40 (80) - Extreme wide, slight fisheye[/*]
+[/list]
+
+FoV is applied universally across all camera states (guard, aim, mount, glide, cinematic) so there are no jarring transitions when the game switches states.
+
+[size=3][color=#d98f40]Steadycam Smoothing[/color][/size]
+
+Completely revamped camera smoothing system covering 30+ camera states. Drastically reduces the jolting and jarring transitions between movement states that plague the vanilla camera. The community can fine-tune individual states through God Mode.
+
+[size=3][color=#d98f40]Lock-on System[/color][/size]
+
+Two new controls for lock-on combat:
+[list]
+[*][b]Lock-on Zoom[/b] - A slider from -60% to +60% that lets you zoom in tight on your target or pull back for battlefield awareness. Independent of Steadycam.[/*]
+[*][b]Lock-on Auto-Rotate[/b] - Toggle off the camera snap that whips around to face your target. Keep camera control in your hands during combat.[/*]
+[/list]
+
+[size=3][color=#d98f40]Horizontal Shift Everywhere[/color][/size]
+
+Your horizontal shift setting is respected across the entire game:
+[list]
+[*]All on-foot states[/*]
+[*]All mounts: horse, elephant, wyvern, canoe, warmachine, broom[/*]
+[*]All aim/skill abilities: lantern, bow, blinding flash, and more[/*]
+[*]Proportional scaling keeps the character at the same screen position across all zoom levels[/*]
+[/list]
+
+[size=3][color=#d98f40]Sacred God Mode (v3.1)[/color][/size]
+
+The biggest addition since v3 launched. When you edit a value in God Mode, it becomes [color=#00ff00]sacred[/color] - permanently protected from UCM's automatic rebuilds when you change Quick or Fine Tune settings. Your hand-tuned values are never overwritten. Locked sliders show tooltips explaining which sacred value is protecting them.
+
+This means you can use UCM Quick for the broad strokes, then drop into God Mode to perfect specific values, and those values stay exactly where you put them.
+
+[line]
+
+[size=4][b]Quality of Life[/b][/size]
+
+[list]
+[*][b]Live Language Switching[/b] - Pick your language from the title bar dropdown and the entire UI updates instantly, including sidebar headings and status messages[/*]
+[*][b]Auto Game Detection[/b] - Finds your Crimson Desert across Steam, Epic Games, and Xbox/Game Pass[/*]
+[*][b]Automatic Backup[/b] - Creates a vanilla backup before any modification. One-click restore at any time[/*]
+[*][b]Game Patch Awareness[/b] - Detects when the game has been updated and warns you[/*]
+[*][b]Install Config Banner[/b] - Shows your full active config so you always know what's installed[/*]
+[*][b]In-App Overlays[/b] - All dialogs are themed dark cards with gold borders, no more Windows popups[/*]
+[*][b]Update Notifications[/b] - Checks GitHub releases on launch and shows a banner when new versions drop[/*]
+[*][b]Version Upgrade Overlay[/b] - Shows "What's New" on first launch after upgrading[/*]
+[*][b]Preset Catalog Browser[/b] - Browse and download official and community presets in-app[/*]
+[*][b]Settings Persistence[/b] - Everything remembered between sessions[/*]
+[*][b]Resizable Window[/b] - Drag edges to resize, size persists[/*]
+[*][b]Portable[/b] - Single .exe. No installer. No dependencies. Place it anywhere and run.[/*]
+[/list]
+
+[line]
+
+[size=4][b]Installation[/b][/size]
+
+[size=3][color=#d98f40]First Time[/color][/size]
+
+[list=1]
+[*]Download and extract the zip[/*]
+[*]Run [b]UltimateCameraMod.V3.exe[/b][/*]
+[*]The app will auto-detect your game installation[/*]
+[*]Choose a preset or build your own[/*]
+[*]Click [b]Install[/b][/*]
+[*]Launch the game[/*]
+[/list]
+
+[size=3][color=#d98f40]Restoring Vanilla[/color][/size]
+
+Click [b]Restore Vanilla[/b]. Your original game files are restored from the automatic backup. Done.
+
+[size=3][color=#d98f40]After Game Updates[/color][/size]
+
+[color=#ffc107][b]Important:[/b][/color] Game updates overwrite modded files. After each update, re-open UCM and click Install again. Your settings are saved automatically.
+
+[size=3][color=#d98f40]Coming from v2.x?[/color][/size]
+
+v3 will auto-migrate your legacy JSON presets to the new .ucmpreset format on first launch. Your old settings carry over.
+
+[line]
+
+[size=4][b]Compatibility[/b][/size]
+
+[list]
+[*][b]Platforms:[/b] Steam, Epic Games, Xbox/Game Pass[/*]
+[*][b]OS:[/b] Windows 10/11 (x64)[/*]
+[*][b]Display:[/b] Any aspect ratio - 16:9, 21:9, 32:9, and everything in between[/*]
+[*][b]Mod Managers:[/b] Export JSON patches compatible with JSON Mod Manager and CDUMM[/*]
+[/list]
+
+[line]
+
+[size=4][b]How It Works[/b][/size]
+
+[list=1]
+[*]UCM locates the game's PAZ archive containing [font=Courier]playercamerapreset.xml[/font][/*]
+[*]Creates a backup of the original file (only once, never overwrites a clean backup)[/*]
+[*]Decrypts the archive entry using ChaCha20 + Jenkins hash key derivation[/*]
+[*]Decompresses via LZ4[/*]
+[*]Applies your camera values as pure value-edits (no structural XML injection)[/*]
+[*]Re-compresses, re-encrypts, and writes the modified entry back into the archive[/*]
+[/list]
+
+No external dependencies at runtime. Single self-contained executable. No memory injection, no DLLs, no hooks.
+
+[line]
+
+[size=4][b]FAQ[/b][/size]
+
+[b]Q: Will this get me banned?[/b]
+A: UCM modifies offline data files only. It does not touch game memory, inject code, or interact with running processes. No mod author can guarantee compatibility with anti-cheat systems, so use your own discretion in any online/multiplayer modes.
+
+[b]Q: Can I use this with other mods?[/b]
+A: Yes, as long as they don't modify the same PAZ archive entry ([font=Courier]playercamerapreset.xml[/font]). UCM will detect if your game files have already been modified. The JSON export format is designed to work alongside other mods through mod managers.
+
+[b]Q: The game updated and my camera reset.[/b]
+A: Normal. Game updates overwrite modded files. Re-open UCM and click Install. Your settings are saved automatically.
+
+[b]Q: My antivirus flagged the exe.[/b]
+A: Known false positive with self-contained .NET applications. The exe is built from fully open-source code under MIT license. You can review every line on GitHub, verify with VirusTotal, or build from source yourself.
+
+[b]Q: What's the difference between Managed and Full Manual Control presets?[/b]
+A: Managed presets let UCM handle camera rules (FoV consistency, mount sync, steadycam, etc.) based on your Quick/Fine Tune settings. Full Manual Control presets give you a raw XML canvas in God Mode with no UCM rules applied.
+
+[b]Q: How do I share my camera setup?[/b]
+A: Export as a .ucmpreset file and share it directly. Or export as JSON for mod managers. Other UCM users can import your .ucmpreset through the Import dialog.
+
+[b]Q: What does horizontal shift 0 mean?[/b]
+A: 0 is the vanilla camera position (character slightly left of center). 0.5 centers the character on screen. The shift uses proportional scaling so the character holds position across all zoom levels.
+
+[line]
+
+[size=4][b]Community & Sharing[/b][/size]
+
+[size=3][color=#ffc107]The camera isn't solved. That's the point.[/color][/size]
+
+Crimson Desert has over 150 camera states, each with dozens of parameters. No single developer can tune all of that for every playstyle and display. UCM was built with sharing at its core.
+
+That's why I created the [b].ucmpreset[/b] file format. It captures your entire camera configuration - every slider, every checkbox, every God Mode tweak - in a single file. Export yours, hand it to someone, they import it and get your exact setup. No guesswork, no manual copying.
+
+And it's not limited to UCM users. If you find someone online who uploaded a raw [b]0.paz[/b] archive or a [b]playercamerapreset.xml[/b] file, you can import that too. UCM reads it, loads the values into the editor, and you can tweak from there. Whatever format the camera data comes in, UCM can work with it.
+
+[size=3][color=#d98f40]The Community Catalog[/color][/size]
+
+UCM has a built-in preset catalog that ships community presets directly to your app. No downloading from websites, no dragging files around. Open the catalog, pick a preset, and it's yours.
+
+If you've built a camera setup you're proud of, submit it. DM me here on Nexus or open a PR on [url=https://github.com/FitzDegenhub/UltimateCameraMod]GitHub[/url] with your .ucmpreset file, and it'll show up in everyone's catalog automatically.
+
+[size=3][color=#d98f40]Community Discoveries[/color][/size]
+
+This stuff is already happening. The guard-camera zoom snap that plagued vanilla? Solved by a single user tweaking one FOV value in God Mode. The lock-on auto-rotate toggle? Discovered by community member [url=https://www.nexusmods.com/profile/sillib]@sillib1980[/url] and shipped as a feature in v3.1. The more people dig into this, the better it gets for everyone.
+
+[line]
+
+[size=4][b]Credits[/b][/size]
+
+[list]
+[*][b]0xFitz[/b] - UCM development, camera tuning, three-tier editor, ultrawide HUD support[/*]
+[/list]
+
+[size=3][color=#d98f40]Community[/color][/size]
+[list]
+[*][b][url=https://www.nexusmods.com/profile/sillib]@sillib1980[/url][/b] - Discovered lock-on auto-rotate camera fields[/*]
+[*][b]wsres[/b] - Center HUD technique for ultrawide[/*]
+[*][b]orangeees[/b] - Proper 3rd Person Camera presets[/*]
+[*][b]latranchedepain[/b] - Shoulder Camera preset[/*]
+[/list]
+
+[size=3][color=#d98f40]C# Core Libraries[/color][/size]
+[list]
+[*][b][url=https://github.com/MrIkso/CrimsonDesertTools]MrIkso[/url][/b] - CrimsonDesertTools: PAZ/PAMT parser, ChaCha20 encryption, LZ4, archive repacker[/*]
+[*][b][url=https://github.com/mcraiha/CSharp-ChaCha20-NetStandard]mcraiha[/url][/b] - Pure C# ChaCha20 stream cipher implementation[/*]
+[/list]
+
+[size=3][color=#d98f40]Original Python Research[/color][/size]
+[list]
+[*][b][url=https://github.com/lazorr410/crimson-desert-unpacker]lazorr410[/url][/b] - crimson-desert-unpacker: PAZ tooling, decryption research[/*]
+[*][b]Maszradine[/b] - CDCamera: camera rules, steadycam system, style presets[/*]
+[*][b]manymanecki[/b] - CrimsonCamera: dynamic PAZ modification architecture[/*]
+[/list]
+
+[line]
+
+[center][size=3][color=#808080]Open source under MIT  |  [url=https://github.com/FitzDegenhub/UltimateCameraMod]GitHub[/url]  |  [url=https://ko-fi.com/0xfitz]Buy me a coffee[/url][/color][/size]
+[size=2][color=#808080]If you enjoy the mod, an endorsement goes a long way.[/color][/size][/center]
