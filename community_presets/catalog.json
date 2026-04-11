@@ -1,6 +1,6 @@
 {
   "catalog_version": 1,
-  "updated_at": "2026-04-11T11:30:00Z",
+  "updated_at": "2026-04-11T09:22:40Z",
   "presets": [
     {
       "id": "proper-3rd-person-camera-by-orangeees",
@@ -15,27 +15,15 @@
       "tags": []
     },
     {
-      "id": "rdr2-by-orangeees",
-      "file": "rdr2-by-orangeees.ucmpreset",
-      "name": "RDR2",
+      "id": "proper-3rd-person-camera-wide-fov-by-orangeees",
+      "file": "proper-3rd-person-camera-wide-fov-by-orangeees.ucmpreset",
+      "name": "Proper 3rd Person Camera (Wide FOV Variant)",
       "author": "orangeees",
-      "description": "A curated RDR2-inspired camera mod for Crimson Desert that delivers a lower, more grounded third-person view, preserves manual camera distance switching, softens movement zoom, improves horse camer...",
-      "url": "https://www.nexusmods.com/crimsondesert/mods/112",
+      "description": "Wide FOV Variant for Proper 3rd Person Camera designed for ultrawide screen users. A curated RDR2-inspired camera mod for Crimson Desert that delivers a lower, more grounded third-person view, preserves manual camera distance switching, softens movement zoom, improves horse camera behavior, and s...",
+      "url": "https://www.nexusmods.com/crimsondesert/mods/112?tab=description",
       "version": "",
-      "sha256": "3dfb126628c64e335bd0f2bb52ca2908ef78ae209294e515b92d9af5c1ab9987",
-      "size_bytes": 317122,
-      "tags": []
-    },
-    {
-      "id": "testing-by-0xfitz",
-      "file": "testing-by-0xfitz.ucmpreset",
-      "name": "Testing",
-      "author": "0xFitz",
-      "description": "Testing preset v4",
-      "url": "https://www.nexusmods.com/crimsondesert/mods/438",
-      "version": "",
-      "sha256": "b24496102ee4915d7c25255a70fe2b80f1547b235a4c305d4bbee18adb50de6a",
-      "size_bytes": 324091,
+      "sha256": "fb1d5d764c091ca37f4d6df4389dbbe3a2492579d3ad61ef6dd3f80fb4871f5d",
+      "size_bytes": 440336,
       "tags": []
     }
   ]
