@@ -27,7 +27,7 @@ namespace UltimateCameraMod.V3;
 
 public partial class MainWindow : Window
 {
-    private const string Ver = "3.1.2";
+    private const string Ver = "3.2";
 
     private static string L(string key) => TranslationSource.Instance[key];
 
@@ -316,6 +316,16 @@ public partial class MainWindow : Window
             File.WriteAllText(LanguagePath, json);
         }
         catch { }
+        _presetCatalogFingerprint = null;
+        RefreshPresetManagerLists(preserveSelection: true);
+
+        // Re-set status bar text for the current mode
+        SetStatus(_activeMode switch
+        {
+            "advanced" => L("Status_FineTuneMode"),
+            "expert" => L("Status_GodModeMode"),
+            _ => L("Status_UcmQuickMode")
+        }, "TextDim");
     }
 
     public MainWindow()
@@ -616,8 +626,8 @@ public partial class MainWindow : Window
                     try { System.IO.File.WriteAllText(tutorialDonePath, "done"); } catch { }
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedToVersion"), Ver),
-                            L("Dlg_UpdateChangelog"));
+                        _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedTitle"), Ver),
+                            L("Dlg_UpdatedBody"));
                     }), System.Windows.Threading.DispatcherPriority.Loaded);
                 }
                 else
@@ -634,9 +644,10 @@ public partial class MainWindow : Window
                 // Existing user upgrading between versions (e.g. v3.0.2 -> v3.1)
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string fromText = string.IsNullOrEmpty(savedVersion) ? "" : string.Format(L("Dlg_UpdateFromVersion"), savedVersion);
-                    _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedToVersion"), Ver),
-                        string.Format(L("Dlg_UpdateChangelogFrom"), fromText));
+                    _ = ShowAlertOverlayAsync(string.Format(L("Dlg_UpdatedTitle"), Ver),
+                        string.IsNullOrEmpty(savedVersion)
+                            ? L("Dlg_UpdatedBody")
+                            : string.Format(L("Dlg_UpdatedBodyFrom"), savedVersion));
                 }), System.Windows.Threading.DispatcherPriority.Loaded);
             }
             // Users can click Browse to download UCM presets when ready

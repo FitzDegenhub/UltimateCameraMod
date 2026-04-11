@@ -32,9 +32,7 @@ public partial class MainWindow : Window
         try
         {
             string vanillaXml = CameraMod.ReadVanillaXml(_gameDir);
-            _advAllRows = CameraMod.ParseXmlToRows(vanillaXml)
-                .Where(r => r.Section.StartsWith("Player_", StringComparison.Ordinal))
-                .ToList();
+            _advAllRows = CameraMod.ParseXmlToRows(vanillaXml);
 
             string liveXml = _sessionXml ?? CameraMod.ReadLiveXml(_gameDir);
             var liveRows = CameraMod.ParseXmlToRows(liveXml);

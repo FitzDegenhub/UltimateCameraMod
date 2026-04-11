@@ -691,19 +691,27 @@ Have you verified your game files?</value></data>
   <data name="Dlg_UpdatedBody" xml:space="preserve"><value>Welcome back! UCM has been updated.
 
 What's new:
-- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds
-- Lock-on Auto-Rotate toggle (credits to @sillib1980)
-- Green indicators for sacred values in God Mode
-- Fix: sacred values now correctly included in Install and all exports
+- 19 languages supported with live language switching
+- Center HUD for ultrawide displays (16:9 / 21:9 safe areas)
+- God Mode now shows all 570+ camera sections (not just Player)
+- Sidebar headings update instantly when switching language
+- Shoulder Cam preset removed (incompatible with April 11 patch)
+- Security: path traversal fix and SHA-256 download verification
+- Fix: exported .ucmpreset files had hardcoded default settings
+- Fix: "by Author" label showing raw key instead of author name
 
 Your presets and settings have been preserved.</value></data>
   <data name="Dlg_UpdatedBodyFrom" xml:space="preserve"><value>Welcome back! UCM has been updated from v{0}.
 
 What's new:
-- Sacred God Mode: your edits are permanently protected from Quick/Fine Tune rebuilds
-- Lock-on Auto-Rotate toggle (credits to @sillib1980)
-- Green indicators for sacred values in God Mode
-- Fix: sacred values now correctly included in Install and all exports
+- 19 languages supported with live language switching
+- Center HUD for ultrawide displays (16:9 / 21:9 safe areas)
+- God Mode now shows all 570+ camera sections (not just Player)
+- Sidebar headings update instantly when switching language
+- Shoulder Cam preset removed (incompatible with April 11 patch)
+- Security: path traversal fix and SHA-256 download verification
+- Fix: exported .ucmpreset files had hardcoded default settings
+- Fix: "by Author" label showing raw key instead of author name
 
 Your presets and settings have been preserved.</value></data>
 

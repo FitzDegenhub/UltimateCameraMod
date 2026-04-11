@@ -6,7 +6,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
-## [Unreleased]
+## [v3.2] - 2026-04-11
 
 ### Project
 - **v2.5 source consolidated into V3** - Removed the legacy `src/UltimateCameraMod/` project folder. The 16 shared source files (Models, Services, Paz) that V3 was pulling via csproj linked compiles now live directly inside `src/UltimateCameraMod.V3/`. Single project, no more cross-folder dependencies.

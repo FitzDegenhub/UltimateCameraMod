@@ -26,7 +26,7 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
                     <TextBlock Text="{loc:Loc Title_Brand}" FontSize="15" FontWeight="Bold"
                                Foreground="{StaticResource AccentBrush}"/>
-                    <TextBlock Text="  v3.1.2  |  by 0xFitz" FontSize="10"
+                    <TextBlock Text="  v3.2  |  by 0xFitz" FontSize="10"
                                Foreground="{StaticResource TextDimBrush}" VerticalAlignment="Center" Margin="8,0,0,0"/>
                     <Ellipse x:Name="VersionDot" Width="7" Height="7" Fill="#555" Margin="12,0,0,0" VerticalAlignment="Center"/>
                     <TextBlock x:Name="VersionStatus" Text="{loc:Loc Status_Checking}" FontSize="9"

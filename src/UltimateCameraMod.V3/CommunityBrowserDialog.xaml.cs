@@ -150,7 +150,7 @@ public partial class CommunityBrowserDialog : UserControl
 
         var authorBlock = new TextBlock
         {
-            Text = string.IsNullOrWhiteSpace(entry.Author) ? "" : string.Format(L("Label_ByAuthor"), entry.Author),
+            Text = string.IsNullOrWhiteSpace(entry.Author) ? "" : $"by {entry.Author}",
             FontSize = 10,
             Foreground = (Brush)FindResource("TextDimBrush"),
             Margin = new Thickness(0, 2, 0, 0)

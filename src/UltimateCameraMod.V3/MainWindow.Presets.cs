@@ -94,7 +94,7 @@ public partial class MainWindow : Window
             {
                 Name = "\0",
                 KindId = "style",
-                KindLabel = "UCM style",
+                KindLabel = L("Label_KindUcmStyle"),
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -108,7 +108,7 @@ public partial class MainWindow : Window
             {
                 Name = "\0",
                 KindId = "default",
-                KindLabel = "Game default",
+                KindLabel = L("Label_KindDefault"),
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -125,7 +125,7 @@ public partial class MainWindow : Window
             {
                 Name = "\0",
                 KindId = "community",
-                KindLabel = "Community",
+                KindLabel = L("Label_KindCommunity"),
                 FilePath = "",
                 IsLocked = true,
                 IsPlaceholder = true
@@ -590,7 +590,7 @@ public partial class MainWindow : Window
             string src = _loadedPresetSourceLabel;
             ActivePresetAuthor.Text = string.IsNullOrWhiteSpace(src) || src == "scratch" || src == "shipped_camera"
                 ? ""
-                : string.Format(L("Label_ByAuthor"), src);
+                : $"by {src}";
         }
         if (ActivePresetLinkBtn != null)
         {
@@ -602,9 +602,11 @@ public partial class MainWindow : Window
     private void OnActivePresetLinkClick(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrWhiteSpace(_loadedPresetUrl)) return;
+        if (!Uri.TryCreate(_loadedPresetUrl, UriKind.Absolute, out var uri)
+            || (uri.Scheme != "https" && uri.Scheme != "http")) return;
         try
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(_loadedPresetUrl) { UseShellExecute = true });
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(uri.AbsoluteUri) { UseShellExecute = true });
         }
         catch { }
     }
