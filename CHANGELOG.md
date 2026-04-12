@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioning foll
 
 ---
 
+## [v3.2.1] - Unreleased
+
+### Bug Fixes
+- **New preset inheriting God Mode edits** - Creating a new managed preset was baking God Mode sacred overrides from the previously active preset into the new preset's XML. New presets now always start from vanilla + Quick settings only.
+
+---
+
 ## [v3.2] - 2026-04-11
 
 ### Project
