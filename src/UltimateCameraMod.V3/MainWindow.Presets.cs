@@ -869,9 +869,8 @@ public partial class MainWindow : Window
             }
             else
             {
-                // Managed by UCM: current behavior
-                CaptureSessionXml();
-                string xml = _sessionXml ?? BuildCuratedSessionXml();
+                // Managed by UCM: start from vanilla + Quick settings only (no God Mode carry-over)
+                string xml = BuildSimpleSessionXml();
 
                 preset = new Dictionary<string, object>
                 {
