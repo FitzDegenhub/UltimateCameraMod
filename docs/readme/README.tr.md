@@ -2,11 +2,11 @@
 
 ---
 
-> **v3.2 yayinlandi!** Sacred God Mode gecersiz kilma, Lock-on Auto-Rotate acma/kapama ve tum hata duzeltmeleri. **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** veya **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)** uzerinden indirin.
+> **v3.2 yayınlandı!** Sacred God Mode geçersiz kılma, Lock-on Auto-Rotate açma/kapama ve tüm hata düzeltmeleri. **[GitHub Releases](https://github.com/FitzDegenhub/UltimateCameraMod/releases/latest)** veya **[Nexus Mods](https://www.nexusmods.com/crimsondesert/mods/438)** üzerinden indirin.
 
 # Ultimate Camera Mod - Crimson Desert
 
-Crimson Desert icin bagimsiz kamera araci. Tam GUI, canli kamera onizleme, uc katmanli duzenleme, dosya tabanli preset'ler, **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** ve **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) icin **JSON disa aktarma** ve genis ekran HUD destegi.
+Crimson Desert için bağımsız kamera aracı. Tam GUI, canlı kamera önizleme, üç katmanlı düzenleme, dosya tabanlı preset'ler, **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** ve **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) için **JSON dışa aktarma** ve geniş ekran HUD desteği.
 
 <p align="center">
   <img src="../../screenshots/banner.png" alt="Ultimate Camera Mod - Crimson Desert banner" width="100%" />
@@ -25,164 +25,164 @@ Crimson Desert icin bagimsiz kamera araci. Tam GUI, canli kamera onizleme, uc ka
 
 </p>
 
-> Yardima mi ihtiyaciniz var? Kurulum kilavuzlari, kamera ayarlarinin aciklamalari, preset yonetimi, sorun giderme ve gelistirici belgeleri icin **[Wiki](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)** sayfasina goz atin.
+> Yardıma mı ihtiyacınız var? Kurulum kılavuzları, kamera ayarlarının açıklamaları, preset yönetimi, sorun giderme ve geliştirici belgeleri için **[Wiki](https://github.com/FitzDegenhub/UltimateCameraMod/wiki)** sayfasına göz atın.
 
 ---
 
 <details>
-<summary><strong>Ekran goruntuleri (v3.x)</strong> -- genisletmek icin tiklayin</summary>
+<summary><strong>Ekran görüntüleri (v3.x)</strong> -- genişletmek için tıklayın</summary>
 <br>
 
-**UCM Quick** -- mesafe, yukseklik, kaydirma, FoV, lock-on zoom, steadycam, canli onizlemeler
+**UCM Quick** -- mesafe, yükseklik, kaydırma, FoV, lock-on zoom, steadycam, canlı önizlemeler
 ![UCM Quick](../../screenshots/v3.x/ucm_quick.png)
 
-**Fine Tune** -- aranabilir cerceveli kartlarla secilmis derin ayar
+**Fine Tune** -- aranabilir çerçeveli kartlarla seçilmiş derin ayar
 ![Fine Tune](../../screenshots/v3.x/finetune.png)
 
-**God Mode** -- vanilla karsilastirmali tam ham XML duzenleyici
+**God Mode** -- vanilla karşılaştırmalı tam ham XML düzenleyici
 ![God Mode](../../screenshots/v3.x/godmode.png)
 
-**JSON Disa Aktarma** -- JSON Mod Manager / CDUMM icin disa aktarma
+**JSON Dışa Aktarma** -- JSON Mod Manager / CDUMM için dışa aktarma
 ![Export JSON](../../screenshots/v3.x/exportjson_menu.png)
 
-**Ice Aktarma** -- .ucmpreset, XML, PAZ veya Mod Manager paketlerinden ice aktarma
+**İçe Aktarma** -- .ucmpreset, XML, PAZ veya Mod Manager paketlerinden içe aktarma
 ![Import](../../screenshots/v3.x/import_screen.png)
 
 </details>
 
 ---
 
-## Dal genel bakisi
+## Dal genel bakışı
 
-| Dal | Durum | Aciklama |
+| Dal | Durum | Açıklama |
 |-----|-------|----------|
-| **`main`** | v3.2 Surum | Uc katmanli duzenleyici (UCM Quick / Fine Tune / God Mode), dosya tabanli preset'ler, topluluk katalogu, coklu format disa aktarma ve dogrudan PAZ kurulumu iceren bagimsiz kamera araci |
-| **`development`** | Gelistirme | Sonraki surum gelistirme dali |
+| **`main`** | v3.2 Sürüm | Üç katmanlı düzenleyici (UCM Quick / Fine Tune / God Mode), dosya tabanlı preset'ler, topluluk kataloğu, çoklu format dışa aktarma ve doğrudan PAZ kurulumu içeren bağımsız kamera aracı |
+| **`development`** | Geliştirme | Sonraki sürüm geliştirme dalı |
 
-v3, v2'deki tum kamera ozelliklerini yeniden tasarlanmis bir arayuz, dosya tabanli preset'ler, uc katmanli duzenleyici ve coklu format disa aktarma ile birlikte icermektedir. Dogrudan PAZ kurulumu, v3'te ikincil bir secenek olarak hala mevcuttur.
+v3, v2'deki tüm kamera özelliklerini yeniden tasarlanmış bir arayüz, dosya tabanlı preset'ler, üç katmanlı düzenleyici ve çoklu format dışa aktarma ile birlikte içermektedir. Doğrudan PAZ kurulumu, v3'te ikincil bir seçenek olarak hâlâ mevcuttur.
 
 ---
 
-## Ozellikler
+## Özellikler
 
 ### Kamera kontrolleri
 
-| Ozellik | Detaylar |
+| Özellik | Detaylar |
 |---------|----------|
-| **8 yerlesik preset** | Panoramic, Heroic, Vanilla, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival - canli onizleme ile |
-| **Ozel kamera** | Mesafe (1.5-12), yukseklik (-1.6-1.5) ve yatay kaydirma (-3-3) icin kaydiriciler. Orantisal olcekleme, tum yakinlastirma seviyelerinde karakteri ayni ekran konumunda tutar |
-| **Gorus alani** | Vanilla 40 dereceden 80 dereceye kadar. Savunma, nisan, binek, suzulme ve sinematik durumlarda evrensel FoV tutarliligi |
-| **Merkezlenmis kamera** | 150'den fazla kamera durumunda karakteri tam ortaya alarak sol ofsetli omuz kamerasini ortadan kaldirir |
-| **Lock-on zoom** | -%60 (hedefe yakinlastirma) ile +%60 (geri cekilme) arasinda kaydirici. Tum lock-on, savunma ve hamle durumlarini etkiler. Steadycam'den bagimsiz calisir |
-| **Lock-on auto-rotate** | Kilitleme sirasinda kameranin hedefe yapismasini devre disi birakin. Arkanizda kalan dusmanlara kameranin hizla donmesini onler. [@sillib1980](https://github.com/sillib1980)'e tesekkurler |
-| **Binek kamera senkronizasyonu** | Binek kameralari sectiginiz oyuncu kamera yuksekligine uyum saglar |
-| **Tum bineklerde yatay kaydirma** | At, fil, ejderha, kano, savas makinesi ve supurge, orantisal olcekleme ile kaydirma ayariniza uyar |
-| **Yetenek nisan tutarliligi** | Fener, Kor Etme Isigi, Yay ve tum nisan/yakinlastirma/etkilesim yetenekleri yatay kaydirmayi uygular. Yetenekleri etkinlestirirken kamera atlama yapmaz |
-| **Steadycam yumustama** | 30'dan fazla kamera durumunda normallestirilmis karistirma zamanlama ve hiz sallanimi: bosta, yurume, kosma, sprint, savas, savunma, hamle/sarj, serbest dusus, super ziplama, ip cekme/sallanma, geri tepme, tum lock-on varyantlari, binek lock-on, diriltme lock-on, tahrik/aranma, savas makinesi ve tum binek durumlari. Her deger, Fine Tune duzenleyicisi araciligiyla topluluk tarafindan ayarlanabilir |
-| **Sacred God Mode** | God Mode'da duzenlediginiz degerler, Quick/Fine Tune yeniden olusturmalarina karsi kalici olarak korunur. Yesil gostergeler hangi degerlerin korunmus oldugunu gosterir. Preset bazinda depolama |
+| **8 yerleşik preset** | Panoramic, Heroic, Vanilla, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival - canlı önizleme ile |
+| **Özel kamera** | Mesafe (1.5-12), yükseklik (-1.6-1.5) ve yatay kaydırma (-3-3) için kaydırıcılar. Orantısal ölçekleme, tüm yakınlaştırma seviyelerinde karakteri aynı ekran konumunda tutar |
+| **Görüş alanı** | Vanilla 40 dereceden 80 dereceye kadar. Savunma, nişan, binek, süzülme ve sinematik durumlarda evrensel FoV tutarlılığı |
+| **Merkezlenmiş kamera** | 150'den fazla kamera durumunda karakteri tam ortaya alarak sol ofsetli omuz kamerasını ortadan kaldırır |
+| **Lock-on zoom** | -%60 (hedefe yakınlaştırma) ile +%60 (geri çekilme) arasında kaydırıcı. Tüm lock-on, savunma ve hamle durumlarını etkiler. Steadycam'den bağımsız çalışır |
+| **Lock-on auto-rotate** | Kilitleme sırasında kameranın hedefe yapışmasını devre dışı bırakın. Arkanızda kalan düşmanlara kameranın hızla dönmesini önler. [@sillib1980](https://github.com/sillib1980)'e teşekkürler |
+| **Binek kamera senkronizasyonu** | Binek kameraları seçtiğiniz oyuncu kamera yüksekliğine uyum sağlar |
+| **Tüm bineklerde yatay kaydırma** | At, fil, ejderha, kano, savaş makinesi ve süpürge, orantısal ölçekleme ile kaydırma ayarınıza uyar |
+| **Yetenek nişan tutarlılığı** | Fener, Kör Etme Işığı, Yay ve tüm nişan/yakınlaştırma/etkileşim yetenekleri yatay kaydırmayı uygular. Yetenekleri etkinleştirirken kamera atlama yapmaz |
+| **Steadycam yumuşatma** | 30'dan fazla kamera durumunda normalleştirilmiş karıştırma zamanlama ve hız sallanımı: boşta, yürüme, koşma, sprint, savaş, savunma, hamle/şarj, serbest düşüş, süper zıplama, ip çekme/sallanma, geri tepme, tüm lock-on varyantları, binek lock-on, diriltme lock-on, tahrik/aranma, savaş makinesi ve tüm binek durumları. Her değer, Fine Tune düzenleyicisi aracılığıyla topluluk tarafından ayarlanabilir |
+| **Sacred God Mode** | God Mode'da düzenlediğiniz değerler, Quick/Fine Tune yeniden oluşturmalarına karşı kalıcı olarak korunur. Yeşil göstergeler hangi değerlerin korunmuş olduğunu gösterir. Preset bazında depolama |
 
-> **v3 tasarim felsefesi: sadece deger duzenleme, yapisal enjeksiyon yok.**
+> **v3 tasarım felsefesi: sadece değer düzenleme, yapısal enjeksiyon yok.**
 >
-> Onceki surumler kamera dosyasina yeni XML satirlari enjekte ediyordu (ekstra yakinlastirma seviyeleri, at birinci kisi modu, ek yakinlastirma katmanlariyla at kamerasi revizyonu). v3 bu ozellikleri bilerek kaldirir. Yapi enjeksiyonunun oyun guncellemelerinden sonra bozulma olasiligi cok daha yuksektir ve nis kamera modlari icin kisisel tercihler, mod yoneticileri araciligiyla dagitilan ozel modlarla daha iyi karsilanir. UCM artik yalnizca mevcut degerleri degistirir -- ayni satir sayisi, ayni eleman yapisi, ayni ozellikler. Bu, preset'lerin paylasimini daha guvenli ve oyun yamalari arasinda daha dayanikli kilar.
+> Önceki sürümler kamera dosyasına yeni XML satırları enjekte ediyordu (ekstra yakınlaştırma seviyeleri, at birinci kişi modu, ek yakınlaştırma katmanlarıyla at kamerası revizyonu). v3 bu özellikleri bilerek kaldırır. Yapı enjeksiyonunun oyun güncellemelerinden sonra bozulma olasılığı çok daha yüksektir ve niş kamera modları için kişisel tercihler, mod yöneticileri aracılığıyla dağıtılan özel modlarla daha iyi karşılanır. UCM artık yalnızca mevcut değerleri değiştirir -- aynı satır sayısı, aynı eleman yapısı, aynı özellikler. Bu, preset'lerin paylaşımını daha güvenli ve oyun yamaları arasında daha dayanıklı kılar.
 
-### Uc katmanli duzenleyici (v3)
+### Üç katmanlı düzenleyici (v3)
 
-v3, istediginiz kadar derine inebilmeniz icin duzenlemeyi uc sekmeye ayirir:
+v3, istediğiniz kadar derine inebilmeniz için düzenlemeyi üç sekmeye ayırır:
 
 | Katman | Sekme | Ne yapar |
 |--------|-------|----------|
-| 1 | **UCM Quick** | Hizli katman - mesafe/yukseklik/kaydirma kaydiricilari, FoV, merkezlenmis kamera, lock-on zoom (-%60 ile +%60), lock-on auto-rotate, binek senkronizasyonu, steadycam, canli kamera + FoV onizlemeleri |
-| 2 | **Fine Tune** | Secilmis derin ayar. Yaya yakinlastirma seviyeleri, at/binek yakinlastirma, genel FoV, ozel binekler ve gezinti, savas ve lock-on, kamera yumustama ve nisan ve nisangah pozisyonu icin aranabilir bolumler. UCM Quick uzerine insa eder |
-| 3 | **God Mode** | Tam ham XML duzenleyici - kamera durumuna gore gruplandilmis, aranabilir, filtrelenebilir DataGrid'de her parametre. Vanilla karsilastirma sutunu. Yeniden olusturmalara karsi korunan Sacred gecersiz kilmalar (yesil). "Yalnizca Sacred" filtresi. 54 ozellik ipucu |
+| 1 | **UCM Quick** | Hızlı katman - mesafe/yükseklik/kaydırma kaydırıcıları, FoV, merkezlenmiş kamera, lock-on zoom (-%60 ile +%60), lock-on auto-rotate, binek senkronizasyonu, steadycam, canlı kamera + FoV önizlemeleri |
+| 2 | **Fine Tune** | Seçilmiş derin ayar. Yaya yakınlaştırma seviyeleri, at/binek yakınlaştırma, genel FoV, özel binekler ve gezinti, savaş ve lock-on, kamera yumuşatma ve nişan ve nişangah pozisyonu için aranabilir bölümler. UCM Quick üzerine inşa eder |
+| 3 | **God Mode** | Tam ham XML düzenleyici - kamera durumuna göre gruplandırılmış, aranabilir, filtrelenebilir DataGrid'de her parametre. Vanilla karşılaştırma sütunu. Yeniden oluşturmalara karşı korunan Sacred geçersiz kılmalar (yeşil). "Yalnızca Sacred" filtresi. 54 özellik ipucu |
 
-### Dosya tabanli preset sistemi (v3)
+### Dosya tabanlı preset sistemi (v3)
 
-- **`.ucmpreset` dosya formati** - UCM kamera preset'leri icin paylasilabilir ozel format. Herhangi bir preset klasorune birakin, calisir
-- **Yan cubuk yoneticisi** - daraltilabilir gruplandirmali bolumlerle: Oyun Varsayilani, UCM Preset'leri, Topluluk Preset'leri, Preset'lerim, Ice Aktarilmis
-- Yan cubuktan **Yeni / Kopyala / Yeniden Adlandir / Sil**
-- Kazara duzenlemeyi onlemek icin preset'leri **kilitleyin** - UCM preset'leri kalici olarak kilitlidir; kullanici preset'leri asma kilidi simgesiyle acilip kapatilabilir
-- **Gercek Vanilla preset'i** - oyun yedeginizdeki ham cozulmus `playercamerapreset`, hicbir degisiklik uygulanmamis. Hizli kaydiriclar gercek oyun temel degerlerine senkronize edilir
-- **Ice aktarma** - `.ucmpreset`, ham XML, PAZ arsivleri veya Mod Manager paketlerinden. `.ucmpreset` ice aktarmalari tam UCM kaydirici kontrolu saglar; ham XML/PAZ/mod manager ice aktarmalari bagimsiz preset'lerdir (yalnizca God Mode duzenleme, UCM kurallari uygulanmaz) - orijinal mod yazarinin degerlerini korumak icin
-- **Otomatik kayit** - kilitlenmemis preset'lerdeki degisiklikler otomatik olarak preset dosyasina yazilir (geciktirilmis)
-- Ilk baslangicta eski `.json` preset'lerden `.ucmpreset`'e otomatik gec
+- **`.ucmpreset` dosya formatı** - UCM kamera preset'leri için paylaşılabilir özel format. Herhangi bir preset klasörüne bırakın, çalışır
+- **Yan çubuk yöneticisi** - daraltılabilir gruplandırmalı bölümlerle: Oyun Varsayılanı, UCM Preset'leri, Topluluk Preset'leri, Preset'lerim, İçe Aktarılmış
+- Yan çubuktan **Yeni / Kopyala / Yeniden Adlandır / Sil**
+- Kazara düzenlemeyi önlemek için preset'leri **kilitleyin** - UCM preset'leri kalıcı olarak kilitlidir; kullanıcı preset'leri asma kilidi simgesiyle açılıp kapatılabilir
+- **Gerçek Vanilla preset'i** - oyun yedeğinizdeki ham çözülmüş `playercamerapreset`, hiçbir değişiklik uygulanmamış. Hızlı kaydırıcılar gerçek oyun temel değerlerine senkronize edilir
+- **İçe aktarma** - `.ucmpreset`, ham XML, PAZ arşivleri veya Mod Manager paketlerinden. `.ucmpreset` içe aktarmaları tam UCM kaydırıcı kontrolü sağlar; ham XML/PAZ/mod manager içe aktarmaları bağımsız preset'lerdir (yalnızca God Mode düzenleme, UCM kuralları uygulanmaz) - orijinal mod yazarının değerlerini korumak için
+- **Otomatik kayıt** - kilitlenmemiş preset'lerdeki değişiklikler otomatik olarak preset dosyasına yazılır (geciktirilmiş)
+- İlk başlangıçta eski `.json` preset'lerden `.ucmpreset`'e otomatik geç
 
-### Preset kataloglari (v3)
+### Preset katalogları (v3)
 
-Preset'leri dogrudan UCM icerisinden gozatip indirin. Tek tikla indirme, hesap gerekli degil.
+Preset'leri doğrudan UCM içerisinden gözatıp indirin. Tek tıkla indirme, hesap gerekli değil.
 
-- **UCM Preset'leri** - 7 resmi kamera stili (Heroic, Panoramic, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival). Tanimlar GitHub'da barindiriliyor, oturum XML'i oyun dosyalariniz + guncel kamera kurallarinizla yerel olarak olusturuluyor. Kamera kurallari guncellendiginde otomatik yeniden olusturur
-- **[Topluluk preset'leri](https://github.com/FitzDegenhub/UltimateCameraMod/tree/main/community_presets)** - ana depodaki topluluk tarafindan katki saglanmis preset'ler, katalog GitHub Actions tarafindan otomatik olusturulur
-- Her yan cubuk grup basliginda **Gozat butonu** katalog tarayicisini acar
-- Her preset ad, yazar, aciklama, etiketler ve yazarin Nexus sayfasina baglanti gosterir
-- **Guncelleme algilama** - katalogda daha yeni bir surum mevcut oldugunda yanip sonen guncelleme simgesi. Guncellemeyi indirmek icin tiklayin, istege bagli olarak Preset'lerim'e yedekleme
-- Indirilen preset'ler yan cubukta gorunur (varsayilan olarak kilitli - duzenlemek icin kopyalayin)
-- Guvenlik icin **2MB dosya boyutu siniri** ve JSON dogrulamasi
+- **UCM Preset'leri** - 7 resmi kamera stili (Heroic, Panoramic, Close-Up, Low Rider, Knee Cam, Dirt Cam, Survival). Tanımlar GitHub'da barındırılıyor, oturum XML'i oyun dosyalarınız + güncel kamera kurallarınızla yerel olarak oluşturuluyor. Kamera kuralları güncellendiğinde otomatik yeniden oluşturur
+- **[Topluluk preset'leri](https://github.com/FitzDegenhub/UltimateCameraMod/tree/main/community_presets)** - ana depodaki topluluk tarafından katkı sağlanmış preset'ler, katalog GitHub Actions tarafından otomatik oluşturulur
+- Her yan çubuk grup başlığında **Gözat butonu** katalog tarayıcısını açar
+- Her preset ad, yazar, açıklama, etiketler ve yazarın Nexus sayfasına bağlantı gösterir
+- **Güncelleme algılama** - katalogda daha yeni bir sürüm mevcut olduğunda yanıp sönen güncelleme simgesi. Güncellemeyi indirmek için tıklayın, isteğe bağlı olarak Preset'lerim'e yedekleme
+- İndirilen preset'ler yan çubukta görünür (varsayılan olarak kilitli - düzenlemek için kopyalayın)
+- Güvenlik için **2MB dosya boyutu sınırı** ve JSON doğrulaması
 
-**Preset'inizi toplulukla paylasmak mi istiyorsunuz?** UCM'den `.ucmpreset` olarak disa aktarin, ardindan:
-- `community_presets/` klasorune preset'inizi ekleyen bir [Pull Request](https://github.com/FitzDegenhub/UltimateCameraMod/pulls) gonderin
-- Veya `.ucmpreset` dosyanizi Discord/Nexus uzerinden 0xFitz'e gonderin, sizin icin ekleyelim
+**Preset'inizi toplulukla paylaşmak mı istiyorsunuz?** UCM'den `.ucmpreset` olarak dışa aktarın, ardından:
+- `community_presets/` klasörüne preset'inizi ekleyen bir [Pull Request](https://github.com/FitzDegenhub/UltimateCameraMod/pulls) gönderin
+- Veya `.ucmpreset` dosyanızı Discord/Nexus üzerinden 0xFitz'e gönderin, sizin için ekleyelim
 
-### Coklu format disa aktarma (v3)
+### Çoklu format dışa aktarma (v3)
 
-**Paylasim icin disa aktar** diyalogu oturumunuzu dort sekilde cikarir:
+**Paylaşım için dışa aktar** diyaloğu oturumunuzu dört şekilde çıkarır:
 
-| Format | Kullanim alani |
+| Format | Kullanım alanı |
 |--------|----------------|
-| **JSON** (mod yoneticileri) | **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) veya **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) icin byte yamalari + `modinfo`. UCM'de disa aktarin, kullandiginiz yoneticiye ice aktarin; alicilarin UCM'ye ihtiyaci yoktur. **Hazirla** yalnizca canli `playercamerapreset` girisi UCM'nin vanilla yedegi ile hala eslesiyorsa sunulur (zaten kamera modlari uyguladiysaniz oyun dosyalarini dogrulayin). |
-| **XML** | Diger araclar veya manuel duzenleme icin ham `playercamerapreset.xml` |
-| **0.paz** | Oyunun `0010` klasorune birakilmaya hazir yamalanmis arsiv |
-| **.ucmpreset** | Diger UCM kullanicilari icin tam UCM preset'i |
+| **JSON** (mod yöneticileri) | **[JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113)** (PhorgeForge) veya **[Crimson Desert Ultimate Mods Manager](https://www.nexusmods.com/crimsondesert/mods/207)** (CDUMM) için byte yamaları + `modinfo`. UCM'de dışa aktarın, kullandığınız yöneticiye içe aktarın; alıcıların UCM'ye ihtiyacı yoktur. **Hazırla** yalnızca canlı `playercamerapreset` girişi UCM'nin vanilla yedeği ile hâlâ eşleşiyorsa sunulur (zaten kamera modları uyguladıysanız oyun dosyalarını doğrulayın). |
+| **XML** | Diğer araçlar veya manuel düzenleme için ham `playercamerapreset.xml` |
+| **0.paz** | Oyunun `0010` klasörüne bırakılmaya hazır yamalanmış arşiv |
+| **.ucmpreset** | Diğer UCM kullanıcıları için tam UCM preset'i |
 
-JSON/XML icin baslik, surum, yazar, Nexus URL ve aciklama alanlari icermektedir. `.json` kaydetmeden once yama bolgesi sayisini ve degisen byte'lari gosterir.
+JSON/XML için başlık, sürüm, yazar, Nexus URL ve açıklama alanları içermektedir. `.json` kaydetmeden önce yama bölgesi sayısını ve değişen byte'ları gösterir.
 
-### Yasam kalitesi
+### Yaşam kalitesi
 
-- **Otomatik oyun algilama** - Steam, Epic Games, Xbox / Game Pass
-- **Otomatik yedekleme** - herhangi bir degisiklikten once vanilla yedegi; tek tikla geri yukleme. Surum farkindaligi ile yukseltmede otomatik temizleme
-- **Kurulum yapilandirma banneri** - tam aktif yapilandirmanizi gosterir (FoV, mesafe, yukseklik, kaydirma, ayarlar)
-- **Oyun yamasi farkindaligi** - uygulamadan sonra kurulum meta verilerini takip eder; oyun guncellenmis olabilecegi durumlarda uyarir, boylece yeniden disa aktarabilirsiniz
-- **Canli kamera + FoV onizlemesi** - yatay kaydirma ve gorus alani konisi ile mesafe duyarli kusbakisi gorunum
-- **Guncelleme bildirimleri** - baslatmada GitHub surumlerini kontrol eder
-- **Oyun klasoru kisayolu** - basliktan oyun dizininizi acar
-- **Windows gorev cubugu kimligi** - shell ozellik deposu araciligiyla uygun simge gruplama ve baslik cubugu simgesi
-- **Ayar kaliciligi** - tum secimler oturumlar arasinda hatirlanir
-- **Yeniden boyutlanabilir pencere** - boyut oturumlar arasinda korunur
-- **Tasinabilir** - tek `.exe`, yükleyici gerektirmez
+- **Otomatik oyun algılama** - Steam, Epic Games, Xbox / Game Pass
+- **Otomatik yedekleme** - herhangi bir değişiklikten önce vanilla yedeği; tek tıkla geri yükleme. Sürüm farkındalığı ile yükseltmede otomatik temizleme
+- **Kurulum yapılandırma banneri** - tam aktif yapılandırmanızı gösterir (FoV, mesafe, yükseklik, kaydırma, ayarlar)
+- **Oyun yaması farkındalığı** - uygulamadan sonra kurulum meta verilerini takip eder; oyun güncellenmiş olabileceği durumlarda uyarır, böylece yeniden dışa aktarabilirsiniz
+- **Canlı kamera + FoV önizlemesi** - yatay kaydırma ve görüş alanı konisi ile mesafe duyarlı kuşbakışı görünüm
+- **Güncelleme bildirimleri** - başlatmada GitHub sürümlerini kontrol eder
+- **Oyun klasörü kısayolu** - başlıktan oyun dizininizi açar
+- **Windows görev çubuğu kimliği** - shell özellik deposu aracılığıyla uygun simge gruplama ve başlık çubuğu simgesi
+- **Ayar kalıcılığı** - tüm seçimler oturumlar arasında hatırlanır
+- **Yeniden boyutlanabilir pencere** - boyut oturumlar arasında korunur
+- **Taşınabilir** - tek `.exe`, yükleyici gerektirmez
 
 ### Felsefe
 
-> **Henuz kimse Crimson Desert'in kamerasini mukemmellestirmedi -- ve asil mesele de bu.**
+> **Henüz kimse Crimson Desert'in kamerasını mükemmelleştirmedi -- ve asıl mesele de bu.**
 >
-> Vanilla oyunda her biri duzenlerle parametreye sahip 150'den fazla kamera durumu var. Hicbir gelistirici tek basina bunlarin tumunu her oyun tarzi ve ekran icin ayarlayamaz. UCM bunun icin var -- size mukemmel kameranin ne oldugunu soylelemek icin degil, kendiniz bulmaniz ve baskalariyla paylasmaniz icin araclari vermek icin.
+> Vanilla oyunda her biri düzenlerle parametreye sahip 150'den fazla kamera durumu var. Hiçbir geliştirici tek başına bunların tümünü her oyun tarzı ve ekran için ayarlayamaz. UCM bunun için var -- size mükemmel kameranın ne olduğunu söylemek için değil, kendiniz bulmanız ve başkalarıyla paylaşmanız için araçları vermek için.
 >
-> Ayarladiginiz her deger disa aktarilip paylasilabilir. Savas sirasinda kamera atlamasini ortadan kaldiran lock-on auto-rotate duzeltmesi, God Mode'da deney yapan tek bir topluluk uyesi tarafindan kesfedildi. Bu tur topluluk odakli ince ayar tam olarak bu aracin varlik amaci.
+> Ayarladığınız her değer dışa aktarılıp paylaşılabilir. Savaş sırasında kamera atlamasını ortadan kaldıran lock-on auto-rotate düzeltmesi, God Mode'da deney yapan tek bir topluluk üyesi tarafından keşfedildi. Bu tür topluluk odaklı ince ayar tam olarak bu aracın varlık amacı.
 
-### Preset paylasimi
+### Preset paylaşımı
 
-Kamera ayarinizi `.ucmpreset` dosyasi olarak disa aktarip baskalariyla paylasin. Topluluk katalogundan, Nexus Mods'tan veya diger oyunculardan preset'leri ice aktarin. UCM ayrica JSON ([JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113) ve [CDUMM](https://www.nexusmods.com/crimsondesert/mods/207) icin), ham XML ve dogrudan PAZ kurulumuna da disa aktarma yapar.
+Kamera ayarınızı `.ucmpreset` dosyası olarak dışa aktarıp başkalarıyla paylaşın. Topluluk kataloğundan, Nexus Mods'tan veya diğer oyunculardan preset'leri içe aktarın. UCM ayrıca JSON ([JSON Mod Manager](https://www.nexusmods.com/crimsondesert/mods/113) ve [CDUMM](https://www.nexusmods.com/crimsondesert/mods/207) için), ham XML ve doğrudan PAZ kurulumuna da dışa aktarma yapar.
 
 ---
 
-## Nasil calisir
+## Nasıl çalışır
 
-1. `playercamerapreset.xml` iceren oyunun PAZ arsivini bulur
-2. Orijinal dosyanin bir yedegini olusturur (yalnizca bir kez -- temiz bir yedegin uzerine asla yazmaz)
-3. Arsiv girisinin sifresini cozer (ChaCha20 + Jenkins hash anahtar turetimi)
-4. LZ4 ile acilir
-5. Secimlerinize gore XML kamera parametrelerini ayristirip degistirir
-6. Yeniden sikistirir, yeniden sifreler ve degistirilmis girisi arsive geri yazar
+1. `playercamerapreset.xml` içeren oyunun PAZ arşivini bulur
+2. Orijinal dosyanın bir yedeğini oluşturur (yalnızca bir kez -- temiz bir yedeğin üzerine asla yazmaz)
+3. Arşiv girişinin şifresini çözer (ChaCha20 + Jenkins hash anahtar türetimi)
+4. LZ4 ile açılır
+5. Seçimlerinize göre XML kamera parametrelerini ayrıştırıp değiştirir
+6. Yeniden sıkıştırır, yeniden şifreler ve değiştirilmiş girişi arşive geri yazar
 
-DLL enjeksiyonu yok, bellek mudahalesi yok, internet baglantisi gerekli degil -- saf veri dosyasi degisikligi.
+DLL enjeksiyonu yok, bellek müdahalesi yok, internet bağlantısı gerekli değil -- saf veri dosyası değişikliği.
 
 ---
 
 ## Kaynaktan derleme
 
-[.NET 6 SDK](https://dotnet.microsoft.com/download/net/6.0) (veya ustunu) gerektirir. Windows x64.
+[.NET 6 SDK](https://dotnet.microsoft.com/download/net/6.0) (veya üstünü) gerektirir. Windows x64.
 
-### v3 (onerilen)
+### v3 (önerilen)
 
-Derlemeden once calisan herhangi bir ornegi kapatin -- exe kopyalama adimi dosya kilitliyse basarisiz olur.
+Derlemeden önce çalışan herhangi bir örneği kapatın -- exe kopyalama adımı dosya kilitliyse başarısız olur.
 
 ```powershell
 Stop-Process -Name "UltimateCameraMod.V3" -Force -ErrorAction SilentlyContinue
@@ -190,40 +190,40 @@ dotnet build "src/UltimateCameraMod.V3/UltimateCameraMod.V3.csproj" -c Release
 Start-Process "src/UltimateCameraMod.V3/bin/Release/net6.0-windows/UltimateCameraMod.V3.exe"
 ```
 
-### Bagimliliklar (NuGet - otomatik olarak geri yuklenir)
+### Bağımlılıklar (NuGet - otomatik olarak geri yüklenir)
 
-- [K4os.Compression.LZ4](https://www.nuget.org/packages/K4os.Compression.LZ4/) - LZ4 blok sikistirma/acma
+- [K4os.Compression.LZ4](https://www.nuget.org/packages/K4os.Compression.LZ4/) - LZ4 blok sıkıştırma/açma
 
 ---
 
-## Proje yapisi
+## Proje yapısı
 
 ```
-src/UltimateCameraMod/              Paylasilan kutuphane + v2.x WPF uygulamasi
+src/UltimateCameraMod/              Paylaşılan kütüphane + v2.x WPF uygulaması
 ├── Controls/                       CameraPreview, FovPreview
 ├── Models/                         PresetCodec, veri modelleri
 ├── Paz/                            ArchiveWriter, CompressionUtils, PAZ I/O
 ├── Services/                       CameraMod, GameDetector, JsonModExporter, GameInstallBaselineTracker
-├── MainWindow.xaml                 v2.x Arayuz
+├── MainWindow.xaml                 v2.x Arayüz
 └── UltimateCameraMod.csproj
 
-src/UltimateCameraMod.V3/           v3 disa aktarma oncelikli WPF uygulamasi (yukardaki paylasilan koda referans verir)
-├── Controls/                       CameraPreview, FovPreview (v3 varyantlari)
+src/UltimateCameraMod.V3/           v3 dışa aktarma öncelikli WPF uygulaması (yukarıdaki paylaşılan koda referans verir)
+├── Controls/                       CameraPreview, FovPreview (v3 varyantları)
 ├── Models/                         PresetManagerItem, ImportedPreset
 ├── Assets/                         ucm.ico, ucm-app-icon.png
-├── ShippedPresets/                  Ilk baslatmada dagitilan gomulu topluluk preset'leri
-├── MainWindow.xaml                 Iki panelli kabuk: yan cubuk + sekmeli duzenleyici
-├── ExportJsonDialog.xaml           Coklu format disa aktarma sihirbazi (JSON, XML, 0.paz, .ucmpreset)
-├── ImportPresetDialog.xaml         .ucmpreset / XML / PAZ'dan ice aktarma
-├── ImportMetadataDialog.xaml       Preset meta veri girisi (ad, yazar, aciklama, URL)
-├── CommunityBrowserDialog.xaml     GitHub'dan topluluk preset'lerini gozat ve indir
-├── NewPresetDialog.xaml            Yeni preset olustur / adlandir
-├── ShellTaskbarPropertyStore.cs    Shell ozellik deposu araciligiyla Windows gorev cubugu simgesi
-├── ApplicationIdentity.cs          Paylasilan App User Model ID
+├── ShippedPresets/                  İlk başlatmada dağıtılan gömülü topluluk preset'leri
+├── MainWindow.xaml                 İki panelli kabuk: yan çubuk + sekmeli düzenleyici
+├── ExportJsonDialog.xaml           Çoklu format dışa aktarma sihirbazı (JSON, XML, 0.paz, .ucmpreset)
+├── ImportPresetDialog.xaml         .ucmpreset / XML / PAZ'dan içe aktarma
+├── ImportMetadataDialog.xaml       Preset meta veri girişi (ad, yazar, açıklama, URL)
+├── CommunityBrowserDialog.xaml     GitHub'dan topluluk preset'lerini gözat ve indir
+├── NewPresetDialog.xaml            Yeni preset oluştur / adlandır
+├── ShellTaskbarPropertyStore.cs    Shell özellik deposu aracılığıyla Windows görev çubuğu simgesi
+├── ApplicationIdentity.cs          Paylaşılan App User Model ID
 └── UltimateCameraMod.V3.csproj
 
-community_presets/                  Topluluk tarafindan katki saglanmis kamera preset'leri
-ucm_presets/                        Resmi UCM stil preset tanimlari
+community_presets/                  Topluluk tarafından katkı sağlanmış kamera preset'leri
+ucm_presets/                        Resmi UCM stil preset tanımları
 ```
 
 ---
@@ -231,65 +231,65 @@ ucm_presets/                        Resmi UCM stil preset tanimlari
 ## Uyumluluk
 
 - **Platformlar:** Steam, Epic Games, Xbox / Game Pass
-- **Isletim Sistemi:** Windows 10/11 (x64)
-- **Ekran:** Herhangi bir en-boy orani - 16:9, 21:9, 32:9
+- **İşletim Sistemi:** Windows 10/11 (x64)
+- **Ekran:** Herhangi bir en-boy oranı - 16:9, 21:9, 32:9
 
 ---
 
 ## SSS
 
-**Bu ban yemememe neden olur mu?**
-UCM yalnizca cevrimdisi veri dosyalarini degistirir. Oyun bellegine dokunmaz, kod enjekte etmez veya calisan islemlerle etkilesime girmez. Cevrimici/cok oyunculu modlarda kendi takdirinize bagli olarak kullanin.
+**Bu ban yememe neden olur mu?**
+UCM yalnızca çevrimdışı veri dosyalarını değiştirir. Oyun belleğine dokunmaz, kod enjekte etmez veya çalışan işlemlerle etkileşime girmez. Çevrimiçi/çok oyunculu modlarda kendi takdirinize bağlı olarak kullanın.
 
-**Oyun guncellendi ve kameram vanillaya dondu.**
-Normal -- oyun guncellemeleri modlanmis dosyalarin uzerine yazar. UCM'yi yeniden acin ve Kur'a tiklayin (veya JSON Mod Manager / CDUMM icin JSON'u yeniden disa aktarin). Ayarlariniz otomatik olarak kaydedilir.
+**Oyun güncellendi ve kameram vanillaya döndü.**
+Normal -- oyun güncellemeleri modlanmış dosyaların üzerine yazar. UCM'yi yeniden açın ve Kur'a tıklayın (veya JSON Mod Manager / CDUMM için JSON'u yeniden dışa aktarın). Ayarlarınız otomatik olarak kaydedilir.
 
-**Antivirusum exe'yi isaretledi.**
-Bagimsiz .NET uygulamalarinda bilinen yanlis pozitif. VirusTotal taramasi temiz: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Tam kaynak kodu burada incelenip kendiniz derlenebilir.
+**Antivirüsüm exe'yi işaretledi.**
+Bağımsız .NET uygulamalarında bilinen yanlış pozitif. VirusTotal taraması temiz: [v3.2](https://www.virustotal.com/gui/file-analysis/ZWMzZGM4MGM3ZWFlZTY5MTFmZDYwYzNkODFlZGM4Mjg6MTc3NTkxMzY4Mg==). Tam kaynak kodu burada incelenip kendiniz derlenebilir.
 
-**Yatay kaydirma 0 ne anlama geliyor?**
-0 = vanilla kamera konumu (karakter hafifce solda). 0.5 = karakter ekranda ortalanmis. Negatif degerler daha sola, pozitif degerler daha saga tasir.
+**Yatay kaydırma 0 ne anlama geliyor?**
+0 = vanilla kamera konumu (karakter hafifçe solda). 0.5 = karakter ekranda ortalanmış. Negatif değerler daha sola, pozitif değerler daha sağa taşır.
 
-**Onceki surumden yukseltme mi yapiyorsunuz?**
-v3.x kullancilari: sadece exe'yi degistirin, tum preset'ler ve ayarlar korunur. v2.x kullanicilari: eski UCM klasorunu silin, Steam'de oyun dosyalarini dogrulayin, ardindan v3.1'i yeni bir klasorden calistirin. Detayli talimatlar icin [surum notlarina](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) bakin.
-
----
-
-## Surum gecmisi
-
-- **v3.2** - God Mode sekmesinde Install/disa aktarmalarda eksik sacred degerleri duzeltildi. [Surum notlarina](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2) bakin.
-- **v3.1.1** - Temiz oyun dosyalarinda yanlis-pozitif bozulmus yedek algilama duzeltildi.
-- **v3.1** - Sacred God Mode gecersiz kilmalari (kullanici duzenlemeleri yeniden olusturmalara karsi kalici olarak korunur). Lock-on Auto-Rotate acma/kapama ([sillib1980](https://github.com/sillib1980)'e tesekkurler). Yesil sacred gostergeleri. Tam Manuel Kontrol kurulum duzeltmesi. Surum farkindaligi yukseltme kaplama. [Surum notlarina](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) bakin.
-- **v3.0.2** - Tum diyaloglar uygulama ici kaplama sistemine donusturuldu. God Mode gecersiz kilmalari sekme gecisleri arasinda devam eder. Preset tur secimi (UCM Yonetimli veya Tam Manuel Kontrol). Topluluk preset katalogu ana depoya tasindi. 54 God Mode ozellik ipucu. Oyun cokme duzeltmeleri. Haziran 2026 oyun yamasi icin vanilla dogrulama guncellendi. 21 sayfalik Wiki.
-- **v3.0.1** - Disa aktarma oncelikli yeniden tasarim. Uc katmanli duzenleyici (UCM Quick / Fine Tune / God Mode). `.ucmpreset` dosya formati. Dosya tabanli preset sistemi. UCM ve topluluk preset kataloglari. Coklu format disa aktarma. Steadycam 30+ kamera durumuna genisletildi. Lock-on zoom kaydiricisi.
-- **v2.5** - Son v2.x surumu.
-- **v2.4** - Orantisal yatay kaydirma, tum binekler ve nisan yeteneklerinde kaydirma, at kamerasi revizyonu, surum farkindalikli yedekler, FoV onizlemesi, yeniden boyutlanabilir pencere.
-- **v2.3** - 16:9 icin yatay kaydirma duzeltmesi, delta tabanli kaydirici, tam kurulum yapilandirma banneri.
-- **v2.2** - Steadycam, ekstra yakinlastirma seviyeleri, at birinci kisi, yatay kaydirma, evrensel FoV, yetenek nisan tutarliligi, XML Ice Aktarma, preset paylasimi, guncelleme bildirimleri.
-- **v2.1** - Ozel preset kaydiriclarinin tum yakinlastirma seviyelerine yazmamasini duzeltildi.
-- **v2.0** - Python'dan C# / .NET 6 / WPF'ye tam yeniden yazim. Gelismis XML duzenleyici, preset yonetimi, otomatik oyun algilama.
-- **v1.5** - customtkinter GUI ile Python surumu.
+**Önceki sürümden yükseltme mi yapıyorsunuz?**
+v3.x kullanıcıları: sadece exe'yi değiştirin, tüm preset'ler ve ayarlar korunur. v2.x kullanıcıları: eski UCM klasörünü silin, Steam'de oyun dosyalarını doğrulayın, ardından v3.1'i yeni bir klasörden çalıştırın. Detaylı talimatlar için [sürüm notlarına](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) bakın.
 
 ---
 
-## Katkida bulunanlar ve tesekkurler
+## Sürüm geçmişi
 
-- **0xFitz** - UCM gelistirme, kamera ayarlama, gelismis duzenleyici
-- **[@sillib1980](https://github.com/sillib1980)** - Lock-on Auto-Rotate kamera alanlarini kesfetti
+- **v3.2** - God Mode sekmesinde Install/dışa aktarmalarda eksik sacred değerleri düzeltildi. [Sürüm notlarına](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.2) bakın.
+- **v3.1.1** - Temiz oyun dosyalarında yanlış-pozitif bozulmuş yedek algılama düzeltildi.
+- **v3.1** - Sacred God Mode geçersiz kılmaları (kullanıcı düzenlemeleri yeniden oluşturmalara karşı kalıcı olarak korunur). Lock-on Auto-Rotate açma/kapama ([sillib1980](https://github.com/sillib1980)'e teşekkürler). Yeşil sacred göstergeleri. Tam Manuel Kontrol kurulum düzeltmesi. Sürüm farkındalığı yükseltme kaplama. [Sürüm notlarına](https://github.com/FitzDegenhub/UltimateCameraMod/releases/tag/v3.1) bakın.
+- **v3.0.2** - Tüm diyaloglar uygulama içi kaplama sistemine dönüştürüldü. God Mode geçersiz kılmaları sekme geçişleri arasında devam eder. Preset tür seçimi (UCM Yönetimli veya Tam Manuel Kontrol). Topluluk preset kataloğu ana depoya taşındı. 54 God Mode özellik ipucu. Oyun çökme düzeltmeleri. Haziran 2026 oyun yaması için vanilla doğrulama güncellendi. 21 sayfalık Wiki.
+- **v3.0.1** - Dışa aktarma öncelikli yeniden tasarım. Üç katmanlı düzenleyici (UCM Quick / Fine Tune / God Mode). `.ucmpreset` dosya formatı. Dosya tabanlı preset sistemi. UCM ve topluluk preset katalogları. Çoklu format dışa aktarma. Steadycam 30+ kamera durumuna genişletildi. Lock-on zoom kaydırıcısı.
+- **v2.5** - Son v2.x sürümü.
+- **v2.4** - Orantısal yatay kaydırma, tüm binekler ve nişan yeteneklerinde kaydırma, at kamerası revizyonu, sürüm farkındalıklı yedekler, FoV önizlemesi, yeniden boyutlanabilir pencere.
+- **v2.3** - 16:9 için yatay kaydırma düzeltmesi, delta tabanlı kaydırıcı, tam kurulum yapılandırma banneri.
+- **v2.2** - Steadycam, ekstra yakınlaştırma seviyeleri, at birinci kişi, yatay kaydırma, evrensel FoV, yetenek nişan tutarlılığı, XML İçe Aktarma, preset paylaşımı, güncelleme bildirimleri.
+- **v2.1** - Özel preset kaydırıcılarının tüm yakınlaştırma seviyelerine yazmamasını düzeltildi.
+- **v2.0** - Python'dan C# / .NET 6 / WPF'ye tam yeniden yazım. Gelişmiş XML düzenleyici, preset yönetimi, otomatik oyun algılama.
+- **v1.5** - customtkinter GUI ile Python sürümü.
 
-### C# yeniden yazimi (v2.0)
-- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - CrimsonDesertTools - C# PAZ/PAMT ayristirici, ChaCha20 sifreleme, LZ4 sikistirma, PaChecksum, arsiv yeniden paketleyici (.NET 8, MIT)
-- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** - Saf C# ChaCha20 akis sifresi uygulamasi (BSD)
-- **[MrIkso on Reshax](https://reshax.com/topic/18908-need-help-extracting-paz-pamt-files-from-crimson-desert-blackspace-engine/page/2/?&_rid=3118#findComment-103796)** - PAZ yeniden paketleme kilavuzu: 16-byte hizalama, PAMT sagi toplami, PAPGT kok indeks yamalama
+---
 
-### Orijinal Python surumu (v1.5)
-- **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** - crimson-desert-unpacker - PAZ arsiv araclari, sifre cozme arastirmasi
-- **Maszradine** - CDCamera - Kamera kurallari, steadycam sistemi, stil preset'leri
-- **manymanecki** - CrimsonCamera - Dinamik PAZ degisiklik mimarisi
+## Katkıda bulunanlar ve teşekkürler
+
+- **0xFitz** - UCM geliştirme, kamera ayarlama, gelişmiş düzenleyici
+- **[@sillib1980](https://github.com/sillib1980)** - Lock-on Auto-Rotate kamera alanlarını keşfetti
+
+### C# yeniden yazımı (v2.0)
+- **[MrIkso](https://github.com/MrIkso/CrimsonDesertTools)** - CrimsonDesertTools - C# PAZ/PAMT ayrıştırıcı, ChaCha20 şifreleme, LZ4 sıkıştırma, PaChecksum, arşiv yeniden paketleyici (.NET 8, MIT)
+- **[mcraiha](https://github.com/mcraiha/CSharp-ChaCha20-NetStandard)** - Saf C# ChaCha20 akış şifresi uygulaması (BSD)
+- **[MrIkso on Reshax](https://reshax.com/topic/18908-need-help-extracting-paz-pamt-files-from-crimson-desert-blackspace-engine/page/2/?&_rid=3118#findComment-103796)** - PAZ yeniden paketleme kılavuzu: 16-byte hizalama, PAMT sağı toplamı, PAPGT kök indeks yamalama
+
+### Orijinal Python sürümü (v1.5)
+- **[lazorr410](https://github.com/lazorr410/crimson-desert-unpacker)** - crimson-desert-unpacker - PAZ arşiv araçları, şifre çözme araştırması
+- **Maszradine** - CDCamera - Kamera kuralları, steadycam sistemi, stil preset'leri
+- **manymanecki** - CrimsonCamera - Dinamik PAZ değişiklik mimarisi
 
 ## Destek
 
-Bunu faydali buluyorsaniz, gelistirmeyi desteklemeyi dusunun:
+Bunu faydalı buluyorsanız, geliştirmeyi desteklemeyi düşünün:
 
 [![Buy me a coffee](https://img.shields.io/badge/Buy_me_a_coffee-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/0xfitz)
 
