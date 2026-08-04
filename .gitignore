@@ -18,6 +18,10 @@ src/.claude/
 
 # Runtime data
 backups/
+ucm_backups/
+linux/ucm_backups/
+__pycache__/
+*.pyc
 custom_presets/
 advanced_presets/
 ucm_presets/
