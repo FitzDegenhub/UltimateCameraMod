@@ -1,3 +1,5 @@
+
+
 ﻿**English** | [한국어](docs/readme/README.ko.md) | [日本語](docs/readme/README.ja.md) | [简体中文](docs/readme/README.zh-CN.md) | [繁體中文](docs/readme/README.zh-Hant.md) | [ไทย](docs/readme/README.th.md) | [Bahasa Indonesia](docs/readme/README.id.md) | [Türkçe](docs/readme/README.tr.md) | [Polski](docs/readme/README.pl.md) | [Italiano](docs/readme/README.it.md) | [Svenska](docs/readme/README.sv.md) | [Norsk](docs/readme/README.nb.md) | [Dansk](docs/readme/README.da.md) | [Suomi](docs/readme/README.fi.md) | [Deutsch](docs/readme/README.de.md) | [Français](docs/readme/README.fr.md) | [Español](docs/readme/README.es.md) | [Português (BR)](docs/readme/README.pt-BR.md) | [Русский](docs/readme/README.ru.md)
 
 ---
@@ -59,7 +61,7 @@ Standalone camera toolkit for Crimson Desert. Full GUI, live camera preview, thr
 | **`main`** | v3.2 Release | Standalone camera toolkit with three-tier editor, 19 languages, Center HUD, 570+ God Mode camera sections, file-based presets, community catalog, multi-format export, and direct PAZ install |
 | **`development`** | Development | Next version development branch |
 
-v3 includes every camera feature from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
+v3 includes the core camera controls from v2 plus a redesigned UI, file-based presets, a three-tier editor, and multi-format export. Direct PAZ install is still available in v3 as a secondary option.
 
 ---
 
